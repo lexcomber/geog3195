@@ -2,7 +2,7 @@
 title: "testy2"
 ---
 
-This is a Quarto website.
+This is a Quarto website building locally.
 
 To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
 
