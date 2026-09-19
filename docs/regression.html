@@ -1,0 +1,1680 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Unit 4 Regression | GEOG3915 GeoComputation and Spatial Analysis practicals</title>
+  <meta name="description" content="This contains materials to support the University of Leeds GEOG3195 module, delivered by Lex Comber" />
+  <meta name="generator" content="bookdown 0.48 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Unit 4 Regression | GEOG3915 GeoComputation and Spatial Analysis practicals" />
+  <meta property="og:type" content="book" />
+  <meta property="og:image" content="https://bookdown.org/lexcomber/geog3915/images/GIS_in_the_bin.jpg" />
+  <meta property="og:description" content="This contains materials to support the University of Leeds GEOG3195 module, delivered by Lex Comber" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Unit 4 Regression | GEOG3915 GeoComputation and Spatial Analysis practicals" />
+  
+  <meta name="twitter:description" content="This contains materials to support the University of Leeds GEOG3195 module, delivered by Lex Comber" />
+  <meta name="twitter:image" content="https://bookdown.org/lexcomber/geog3915/images/GIS_in_the_bin.jpg" />
+
+<meta name="author" content="Lex Comber" />
+
+
+<meta name="date" content="2026-09-20" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="spatial-interpolation.html"/>
+<link rel="next" href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">GEOG3915 Practicals</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Getting Started</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#installing-rrstudio"><i class="fa fa-check"></i><b>1.1</b> Installing R/RStudio</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#r-rstudio-refresh"><i class="fa fa-check"></i><b>1.2</b> R / RStudio Refresh</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="index.html"><a href="index.html#the-rstudio-interface"><i class="fa fa-check"></i><b>1.2.1</b> The RStudio Interface</a></li>
+<li class="chapter" data-level="1.2.2" data-path="index.html"><a href="index.html#ways-of-working"><i class="fa fa-check"></i><b>1.2.2</b> Ways of working</a></li>
+<li class="chapter" data-level="1.2.3" data-path="index.html"><a href="index.html#projects-files-and-folder-management"><i class="fa fa-check"></i><b>1.2.3</b> Projects, Files and Folder Management</a></li>
+<li class="chapter" data-level="1.2.4" data-path="index.html"><a href="index.html#practicals"><i class="fa fa-check"></i><b>1.2.4</b> Practicals</a></li>
+<li class="chapter" data-level="1.2.5" data-path="index.html"><a href="index.html#packages"><i class="fa fa-check"></i><b>1.2.5</b> Packages</a></li>
+<li class="chapter" data-level="1.2.6" data-path="index.html"><a href="index.html#further-resources"><i class="fa fa-check"></i><b>1.2.6</b> Further Resources</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#using-r-as-a-gis"><i class="fa fa-check"></i><b>1.3</b> Using R as a GIS</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="index.html"><a href="index.html#data"><i class="fa fa-check"></i><b>1.3.1</b> Data</a></li>
+<li class="chapter" data-level="1.3.2" data-path="index.html"><a href="index.html#creating-point-data"><i class="fa fa-check"></i><b>1.3.2</b> Creating point data</a></li>
+<li class="chapter" data-level="1.3.3" data-path="index.html"><a href="index.html#spatial-operations"><i class="fa fa-check"></i><b>1.3.3</b> Spatial Operations</a></li>
+<li class="chapter" data-level="1.3.4" data-path="index.html"><a href="index.html#merging-spatial-features-and-buffers"><i class="fa fa-check"></i><b>1.3.4</b> Merging spatial features and Buffers</a></li>
+<li class="chapter" data-level="1.3.5" data-path="index.html"><a href="index.html#point-in-polygon-and-area-calculations"><i class="fa fa-check"></i><b>1.3.5</b> Point-in-polygon and Area calculations</a></li>
+<li class="chapter" data-level="1.3.6" data-path="index.html"><a href="index.html#creating-distance-attributes"><i class="fa fa-check"></i><b>1.3.6</b> Creating distance attributes</a></li>
+<li class="chapter" data-level="1.3.7" data-path="index.html"><a href="index.html#reading-and-writing-data-in-and-out-of-rrstudio"><i class="fa fa-check"></i><b>1.3.7</b> Reading and writing data in and out of R/RStudio</a></li>
+<li class="chapter" data-level="1.3.8" data-path="index.html"><a href="index.html#answers-to-tasks"><i class="fa fa-check"></i><b>1.3.8</b> Answers to Tasks</a></li>
+<li class="chapter" data-level="1.3.9" data-path="index.html"><a href="index.html#useful-resources"><i class="fa fa-check"></i><b>1.3.9</b> Useful Resources</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html"><i class="fa fa-check"></i><b>2</b> Exploratory Data Analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#overview"><i class="fa fa-check"></i>Overview</a></li>
+<li class="chapter" data-level="2.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#data-data-summaries-and-generic-plotting-in-r"><i class="fa fa-check"></i><b>2.1</b> Data, data summaries and generic plotting in R</a></li>
+<li class="chapter" data-level="2.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#an-introduction-to-visualisation-using-the-ggplot2-package"><i class="fa fa-check"></i><b>2.2</b> An introduction to visualisation using the <code>ggplot2</code> package</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#ggplot-basics"><i class="fa fa-check"></i><b>2.2.1</b> <code>ggplot</code> basics</a></li>
+<li class="chapter" data-level="2.2.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#groups-with-ggplot"><i class="fa fa-check"></i><b>2.2.2</b> Groups with <code>ggplot</code></a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#data-wrangling-with-dplyr"><i class="fa fa-check"></i><b>2.3</b> Data wrangling with <code>dplyr</code></a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#summary"><i class="fa fa-check"></i><b>2.3.1</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#using-piping-syntax"><i class="fa fa-check"></i><b>2.4</b> Using piping syntax</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#select"><i class="fa fa-check"></i><b>2.4.1</b> <code>select</code></a></li>
+<li class="chapter" data-level="2.4.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#mutate"><i class="fa fa-check"></i><b>2.4.2</b> <code>mutate</code></a></li>
+<li class="chapter" data-level="2.4.3" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#group_by-and-summarise-changing-the-unit-of-observation"><i class="fa fa-check"></i><b>2.4.3</b> <code>group_by</code> and <code>summarise</code>: changing the unit of observation</a></li>
+<li class="chapter" data-level="2.4.4" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#a-final-example"><i class="fa fa-check"></i><b>2.4.4</b> A final example</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#answers-to-tasks-1"><i class="fa fa-check"></i>Answers to Tasks</a></li>
+<li class="chapter" data-level="" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#additional-resources"><i class="fa fa-check"></i>Additional Resources</a></li>
+<li class="chapter" data-level="" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#optional-enhanced-mapping-with-the-ggplot2-package"><i class="fa fa-check"></i>Optional: enhanced mapping with the <code>ggplot2</code> package</a></li>
+<li class="chapter" data-level="" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#appendix-named-colours"><i class="fa fa-check"></i>Appendix: Named Colours</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="spatial-interpolation.html"><a href="spatial-interpolation.html"><i class="fa fa-check"></i><b>3</b> Spatial Interpolation</a>
+<ul>
+<li class="chapter" data-level="" data-path="spatial-interpolation.html"><a href="spatial-interpolation.html#overview-1"><i class="fa fa-check"></i>Overview</a></li>
+<li class="chapter" data-level="3.1" data-path="spatial-interpolation.html"><a href="spatial-interpolation.html#kernel-density-estimation-point-observations"><i class="fa fa-check"></i><b>3.1</b> Kernel Density Estimation (point observations)</a></li>
+<li class="chapter" data-level="3.2" data-path="spatial-interpolation.html"><a href="spatial-interpolation.html#inverse-distance-weighting-point-values"><i class="fa fa-check"></i><b>3.2</b> Inverse Distance Weighting (point values)</a></li>
+<li class="chapter" data-level="3.3" data-path="spatial-interpolation.html"><a href="spatial-interpolation.html#area-weighted-interpolation-area-to-area"><i class="fa fa-check"></i><b>3.3</b> Area Weighted interpolation (area to area)</a></li>
+<li class="chapter" data-level="3.4" data-path="spatial-interpolation.html"><a href="spatial-interpolation.html#dasymetric-interpolation"><i class="fa fa-check"></i><b>3.4</b> Dasymetric Interpolation</a></li>
+<li class="chapter" data-level="" data-path="spatial-interpolation.html"><a href="spatial-interpolation.html#answers-to-tasks-2"><i class="fa fa-check"></i>Answers to Tasks</a></li>
+<li class="chapter" data-level="" data-path="spatial-interpolation.html"><a href="spatial-interpolation.html#optional-fine-tuning-idw"><i class="fa fa-check"></i>Optional: Fine tuning IDW</a>
+<ul>
+<li class="chapter" data-level="" data-path="spatial-interpolation.html"><a href="spatial-interpolation.html#answer-to-additional-task"><i class="fa fa-check"></i>Answer to Additional Task</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>4</b> Regression</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#overview-2"><i class="fa fa-check"></i>Overview</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#which-regression-approach"><i class="fa fa-check"></i>Which regression approach?</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#packages-1"><i class="fa fa-check"></i>Packages</a></li>
+</ul></li>
+<li class="chapter" data-level="4.1" data-path="regression.html"><a href="regression.html#standard-linear-regression-models-ols"><i class="fa fa-check"></i><b>4.1</b> Standard linear regression models (OLS)</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#specifying-the-model"><i class="fa fa-check"></i>Specifying the model</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="regression.html"><a href="regression.html#binomial-logistic-regression-for-binary-variables"><i class="fa fa-check"></i><b>4.2</b> Binomial Logistic Regression for binary variables</a></li>
+<li class="chapter" data-level="4.3" data-path="regression.html"><a href="regression.html#poisson-regression-for-count-variables"><i class="fa fa-check"></i><b>4.3</b> Poisson Regression for count variables</a></li>
+<li class="chapter" data-level="4.4" data-path="regression.html"><a href="regression.html#outliers-and-robust-regression"><i class="fa fa-check"></i><b>4.4</b> Outliers and Robust regression</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#addendum-prediction-vs-inference"><i class="fa fa-check"></i>Addendum: Prediction vs Inference</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#answers-to-tasks-3"><i class="fa fa-check"></i>Answers to Tasks</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#optional-the-maup"><i class="fa fa-check"></i>Optional: the MAUP</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="regression.html"><a href="regression.html#introduction"><i class="fa fa-check"></i><b>4.4.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.4.2" data-path="regression.html"><a href="regression.html#impact-on-correlations-of-counts"><i class="fa fa-check"></i><b>4.4.2</b> Impact on Correlations of Counts</a></li>
+<li class="chapter" data-level="4.4.3" data-path="regression.html"><a href="regression.html#impact-on-models"><i class="fa fa-check"></i><b>4.4.3</b> Impact on models</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#additional-resources-1"><i class="fa fa-check"></i>Additional Resources</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><i class="fa fa-check"></i><b>5</b> Spatial Models: spatial autocorrelation and cluster analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#overview-3"><i class="fa fa-check"></i>Overview</a></li>
+<li class="chapter" data-level="" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#data-and-packages"><i class="fa fa-check"></i>Data and Packages</a></li>
+<li class="chapter" data-level="5.1" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#defining-nearby-neighbour-lists"><i class="fa fa-check"></i><b>5.1</b> Defining nearby: neighbour lists</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#neigbours-by-ajacency"><i class="fa fa-check"></i><b>5.1.1</b> Neigbours by ajacency</a></li>
+<li class="chapter" data-level="5.1.2" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#neighbours-by-nearest-n"><i class="fa fa-check"></i><b>5.1.2</b> Neighbours by nearest <span class="math inline">\(n\)</span></a></li>
+<li class="chapter" data-level="5.1.3" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#neighbours-by-distance"><i class="fa fa-check"></i><b>5.1.3</b> Neighbours by distance</a></li>
+<li class="chapter" data-level="5.1.4" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#summary-1"><i class="fa fa-check"></i><b>5.1.4</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#spatial-autocorrelation-and-clusters"><i class="fa fa-check"></i><b>5.2</b> Spatial Autocorrelation and Clusters</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#neighbours-and-lagged-mean-plots"><i class="fa fa-check"></i><b>5.2.1</b> Neighbours and Lagged Mean Plots</a></li>
+<li class="chapter" data-level="5.2.2" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#morans-i-for-determining-clusters-and-spatial-autocorrelation"><i class="fa fa-check"></i><b>5.2.2</b> Moran’s I for determining Clusters and Spatial Autocorrelation</a></li>
+<li class="chapter" data-level="5.2.3" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#lisa-for-determining-local-clusters-and-spatial-autocorrelation"><i class="fa fa-check"></i><b>5.2.3</b> LISA for determining <em>local</em> clusters and spatial autocorrelation</a></li>
+<li class="chapter" data-level="5.2.4" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#getis-ord-g-statistic"><i class="fa fa-check"></i><b>5.2.4</b> Getis-Ord G statistic</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#answers-to-tasks-4"><i class="fa fa-check"></i>Answers to Tasks</a></li>
+<li class="chapter" data-level="" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#useful-links"><i class="fa fa-check"></i>Useful Links</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html"><i class="fa fa-check"></i><b>6</b> Spatial Varying Coefficient Models</a>
+<ul>
+<li class="chapter" data-level="" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#overview-4"><i class="fa fa-check"></i>Overview</a></li>
+<li class="chapter" data-level="" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#data-and-packages-1"><i class="fa fa-check"></i>Data and Packages</a></li>
+<li class="chapter" data-level="6.1" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#local-vs-global-models"><i class="fa fa-check"></i><b>6.1</b> Local vs Global models</a></li>
+<li class="chapter" data-level="6.2" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#geographically-weighted-regression"><i class="fa fa-check"></i><b>6.2</b> Geographically Weighted Regression</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#description"><i class="fa fa-check"></i><b>6.2.1</b> Description</a></li>
+<li class="chapter" data-level="6.2.2" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#undertaking-a-gwr"><i class="fa fa-check"></i><b>6.2.2</b> Undertaking a GWR</a></li>
+<li class="chapter" data-level="6.2.3" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#evaluating-the-results"><i class="fa fa-check"></i><b>6.2.3</b> Evaluating the results</a></li>
+<li class="chapter" data-level="6.2.4" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#mapping-gwr-outputs"><i class="fa fa-check"></i><b>6.2.4</b> Mapping GWR outputs</a></li>
+<li class="chapter" data-level="6.2.5" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#gwr-summary"><i class="fa fa-check"></i><b>6.2.5</b> GWR Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#multi-scale-gwr"><i class="fa fa-check"></i><b>6.3</b> Multi-scale GWR</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#description-1"><i class="fa fa-check"></i><b>6.3.1</b> Description</a></li>
+<li class="chapter" data-level="6.3.2" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#undertaking-a-mgwr"><i class="fa fa-check"></i><b>6.3.2</b> Undertaking a MGWR</a></li>
+<li class="chapter" data-level="6.3.3" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#evaluating-the-results-1"><i class="fa fa-check"></i><b>6.3.3</b> Evaluating the results</a></li>
+<li class="chapter" data-level="6.3.4" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#mapping-mgwr-outputs"><i class="fa fa-check"></i><b>6.3.4</b> Mapping MGWR outputs</a></li>
+<li class="chapter" data-level="6.3.5" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#comparing-gwr-and-mgwr"><i class="fa fa-check"></i><b>6.3.5</b> Comparing GWR and MGWR</a></li>
+<li class="chapter" data-level="6.3.6" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#mgwr-summary"><i class="fa fa-check"></i><b>6.3.6</b> MGWR Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#optional-generalised-additive-models"><i class="fa fa-check"></i>Optional: Generalised Additive Models</a>
+<ul>
+<li class="chapter" data-level="6.3.7" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#description-2"><i class="fa fa-check"></i><b>6.3.7</b> Description</a></li>
+<li class="chapter" data-level="6.3.8" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#undertaking-a-ggp-gam"><i class="fa fa-check"></i><b>6.3.8</b> Undertaking a GGP-GAM</a></li>
+<li class="chapter" data-level="6.3.9" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#evaluating-the-results-2"><i class="fa fa-check"></i><b>6.3.9</b> Evaluating the results</a></li>
+<li class="chapter" data-level="6.3.10" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#ggp-gam-svcs"><i class="fa fa-check"></i><b>6.3.10</b> GGP-GAM SVCs</a></li>
+<li class="chapter" data-level="6.3.11" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#ggp-gam-summary"><i class="fa fa-check"></i><b>6.3.11</b> GGP-GAM summary</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#answers-to-tasks-5"><i class="fa fa-check"></i>Answers to Tasks</a></li>
+<li class="chapter" data-level="" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#references"><i class="fa fa-check"></i>References</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html"><i class="fa fa-check"></i><b>7</b> Classification and Alternative Representations</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#classification"><i class="fa fa-check"></i><b>7.1</b> Classification</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#overview-5"><i class="fa fa-check"></i><b>7.1.1</b> Overview</a></li>
+<li class="chapter" data-level="7.1.2" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#pca-transformation"><i class="fa fa-check"></i><b>7.1.2</b> PCA transformation</a></li>
+<li class="chapter" data-level="7.1.3" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#k-means-cluster-analysis"><i class="fa fa-check"></i><b>7.1.3</b> <span class="math inline">\(k\)</span>-means Cluster Analysis</a></li>
+<li class="chapter" data-level="7.1.4" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#diagnostics"><i class="fa fa-check"></i><b>7.1.4</b> Diagnostics</a></li>
+<li class="chapter" data-level="7.1.5" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#mapping"><i class="fa fa-check"></i><b>7.1.5</b> Mapping</a></li>
+<li class="chapter" data-level="7.1.6" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#further-resources-1"><i class="fa fa-check"></i><b>7.1.6</b> Further Resources</a></li>
+<li class="chapter" data-level="7.1.7" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#references-1"><i class="fa fa-check"></i><b>7.1.7</b> References</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#optional-alternative-spatial-visualisations"><i class="fa fa-check"></i><b>7.2</b> Optional: Alternative spatial visualisations</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#overview-6"><i class="fa fa-check"></i><b>7.2.1</b> Overview</a></li>
+<li class="chapter" data-level="7.2.2" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#the-invisibility-problem"><i class="fa fa-check"></i><b>7.2.2</b> The invisibility problem</a></li>
+<li class="chapter" data-level="7.2.3" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#cartograms"><i class="fa fa-check"></i><b>7.2.3</b> Cartograms</a></li>
+<li class="chapter" data-level="7.2.4" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#hexagonal-binning-and-tile-maps"><i class="fa fa-check"></i><b>7.2.4</b> Hexagonal binning and Tile maps</a></li>
+<li class="chapter" data-level="7.2.5" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#references-2"><i class="fa fa-check"></i><b>7.2.5</b> References</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="creating-documents-in-rmarkdown.html"><a href="creating-documents-in-rmarkdown.html"><i class="fa fa-check"></i><b>8</b> Creating documents in RMarkdown</a>
+<ul>
+<li class="chapter" data-level="" data-path="creating-documents-in-rmarkdown.html"><a href="creating-documents-in-rmarkdown.html#overview-7"><i class="fa fa-check"></i>Overview</a></li>
+<li class="chapter" data-level="8.1" data-path="creating-documents-in-rmarkdown.html"><a href="creating-documents-in-rmarkdown.html#resources"><i class="fa fa-check"></i><b>8.1</b> Resources</a></li>
+<li class="chapter" data-level="8.2" data-path="creating-documents-in-rmarkdown.html"><a href="creating-documents-in-rmarkdown.html#tasks"><i class="fa fa-check"></i><b>8.2</b> Tasks</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">GEOG3915 GeoComputation and Spatial Analysis practicals</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="regression" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">Unit 4</span> Regression<a href="regression.html#regression" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="overview-2" class="section level2 unnumbered hasAnchor">
+<h2>Overview<a href="regression.html#overview-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The main part of this practical shows how create models for understanding and for prediction. Confusingly these are both referred to as <em>inference</em> in the literature and so later in the worksheet there is small section distinguishing between these.</p>
+<p>After this introduction the practical has the following parts:</p>
+<ol style="list-style-type: decimal">
+<li>standard linear regression, or ordinary least squares (OLS) regression.</li>
+<li>generalised linear models (GLMs) with binomial (or logistic) regression</li>
+<li>generalised linear models (GLMs) with Poisson regression.</li>
+<li>the influence of outliers and robust regression</li>
+</ol>
+<p>An understanding these is important as it underpins the ideas behind spatial regressions and spatial models covered in later sessions.</p>
+<p>An R script with all the code for this practical is provided.</p>
+<div class="noticebox">
+<p>There is an excellent, recent and in-depth overview here which you may find useful to look at after the practical:
+<a href="https://mlu-explain.github.io/linear-regression/" class="uri">https://mlu-explain.github.io/linear-regression/</a></p>
+</div>
+<div id="which-regression-approach" class="section level3 unnumbered hasAnchor">
+<h3>Which regression approach?<a href="regression.html#which-regression-approach" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>So when do we use the different regression approaches? The key consideration relates to the distribution of the response variable. The response variable is the thing we are trying to make a model of, the <span class="math inline">\(y\)</span>. The target or predictor variables, the <span class="math inline">\(x\)</span>’s are what we use to model <span class="math inline">\(y\)</span>.</p>
+<p><strong>Standard OLS Regression</strong>
+Standard OLS (ordinary least squares) regression is used when the response variable is normally distributed. Typically it is a continuous numeric variable that is expected to have a linear relationship with the predictor variables. That is, the response variable increases or decreases linearly with changes in the predictor variables. OLS seeks to determine coefficients for each predictor variable that describe how changes in the predictor variable are associated with changes in the target variable.</p>
+<p><strong>GLM Logistic or Binomial regression</strong>
+A Binomial distribution is one with 2 peaks at each end of the distribution. It is typically found when the response variable is binary or dichotomous - a Yes-No or True-False response. Rather than determine coefficients estimates that show how response variable change with predictors, in logistic regression they estimate provide an estimate of the probability one of the two responses using a GLM (generalised linear model).</p>
+<p><strong>GLM Poisson regression</strong>
+A Poisson distribution is one that is skewed to one end of the distribution or another. Count variables tend to bunch in this way, but percentages can as well. These are numeric but typically have integer or whole number values (1, 2, 10, 345, etc). Examples include counts of people with a degree in population survey. Variables with a Poisson distribution typically have an equal mean and variance. Similar to logistic regression, the Poisson GLM estimates probabilities of the observing the count.</p>
+<p><strong>Robust Regression</strong>
+Outliers are observation in the data that have different characteristics to other observations. They can weaken models and affect the regression coefficient estimates. They can be ignored (the data are the data after all!), removed and a standard regression applied, or their influence in the model can be down weighted using what is called a robust regression</p>
+</div>
+<div id="packages-1" class="section level3 unnumbered hasAnchor">
+<h3>Packages<a href="regression.html#packages-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>You will need to load the following packages, testing for the presence on your R installation as before (although in a different way!):</p>
+<div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb211-1"><a href="regression.html#cb211-1" tabindex="-1"></a>packages <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;sf&quot;</span>, <span class="st">&quot;tidyverse&quot;</span>,<span class="st">&quot;tmap&quot;</span>, <span class="st">&quot;readxl&quot;</span>, <span class="st">&quot;rgl&quot;</span>, <span class="st">&quot;car&quot;</span>, <span class="st">&quot;MASS&quot;</span>, <span class="st">&quot;spdep&quot;</span>, <span class="st">&quot;readxl&quot;</span>, <span class="st">&quot;cowplot&quot;</span>)</span>
+<span id="cb211-2"><a href="regression.html#cb211-2" tabindex="-1"></a><span class="co"># check which packages are not installed</span></span>
+<span id="cb211-3"><a href="regression.html#cb211-3" tabindex="-1"></a>not_installed <span class="ot">&lt;-</span> packages[<span class="sc">!</span>packages <span class="sc">%in%</span> <span class="fu">installed.packages</span>()[, <span class="st">&quot;Package&quot;</span>]]</span>
+<span id="cb211-4"><a href="regression.html#cb211-4" tabindex="-1"></a><span class="co"># install missing packages</span></span>
+<span id="cb211-5"><a href="regression.html#cb211-5" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">length</span>(not_installed) <span class="sc">&gt;</span> <span class="dv">1</span>) {</span>
+<span id="cb211-6"><a href="regression.html#cb211-6" tabindex="-1"></a>  <span class="fu">install.packages</span>(not_installed, <span class="at">repos =</span> <span class="st">&quot;https://cran.rstudio.com/&quot;</span>, <span class="at">dep =</span> T)</span>
+<span id="cb211-7"><a href="regression.html#cb211-7" tabindex="-1"></a>}</span>
+<span id="cb211-8"><a href="regression.html#cb211-8" tabindex="-1"></a><span class="co"># load the packages</span></span>
+<span id="cb211-9"><a href="regression.html#cb211-9" tabindex="-1"></a><span class="fu">library</span>(sf)         <span class="co"># for spatial data</span></span>
+<span id="cb211-10"><a href="regression.html#cb211-10" tabindex="-1"></a><span class="fu">library</span>(tidyverse)  <span class="co"># for data wrangling &amp; mapping (ggplot2)</span></span>
+<span id="cb211-11"><a href="regression.html#cb211-11" tabindex="-1"></a><span class="fu">library</span>(readxl)     <span class="co"># for loading Excel data</span></span>
+<span id="cb211-12"><a href="regression.html#cb211-12" tabindex="-1"></a><span class="fu">library</span>(rgl)        <span class="co"># for 3d plotting </span></span>
+<span id="cb211-13"><a href="regression.html#cb211-13" tabindex="-1"></a><span class="do">## NB If you have a MAc you will need to install XQuartz for the rgl package </span></span>
+<span id="cb211-14"><a href="regression.html#cb211-14" tabindex="-1"></a><span class="co"># - see https://www.xquartz.org</span></span>
+<span id="cb211-15"><a href="regression.html#cb211-15" tabindex="-1"></a><span class="fu">library</span>(car)        <span class="co"># for some stats tools</span></span>
+<span id="cb211-16"><a href="regression.html#cb211-16" tabindex="-1"></a><span class="fu">library</span>(MASS)       <span class="co"># for robust regression</span></span>
+<span id="cb211-17"><a href="regression.html#cb211-17" tabindex="-1"></a><span class="fu">library</span>(readxl)     <span class="co"># for loading remote Excel data</span></span>
+<span id="cb211-18"><a href="regression.html#cb211-18" tabindex="-1"></a><span class="fu">library</span>(cowplot)    <span class="co"># for combining plots</span></span></code></pre></div>
+</div>
+</div>
+<div id="standard-linear-regression-models-ols" class="section level2 hasAnchor" number="4.1">
+<h2><span class="header-section-number">4.1</span> Standard linear regression models (OLS)<a href="regression.html#standard-linear-regression-models-ols" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Regression models are <em>the</em> standard method for constructing predictive and explanatory models. They tell us how changes in one variable (the target variable or independent variable, <span class="math inline">\(y\)</span>) are <em>associated with</em> changes in explanatory variables, or dependent variables, <span class="math inline">\(x_1\)</span>, <span class="math inline">\(x_2\)</span>, etc. They underpin classic statistical inference and most of the approaches that are commonly referred to as <em>machine learning</em> and <em>AI</em> - these are really just fancy flavours of regression.</p>
+<p>Classic linear regression is referred to Ordinary least squares (OLS) regression because they estimate the relationship between one or more independent variables and a dependent variable, <span class="math inline">\(y\)</span> using a hyperplane (i.e. a multi-dimensional line - more on this later!) that minimises the sum of the squared difference between the observed values of <span class="math inline">\(y\)</span> and the values predicted by the model (<span class="math inline">\(\hat{y\ }\)</span>, called ‘<span class="math inline">\(y\)</span>-hat’).</p>
+<p>What we are looking for in the plots and table above are correlations that look like straight lines, showing that values in one variable change <em>linearly</em> with changes in another. The correlations between the variables indicate that a number of the variables are highly correlated (&lt; -0.7 or &gt; +0.7) with each other and with the response variable <code>MedInc</code>, and others less so. This provides us with confidence that we can construct a reasonable model from this data - at least some of the variables are correlated with <code>MedInc</code>.</p>
+<p>We will start with a hypothesized model of <em>Median Income</em> in the state of Georgia at a county level, that is associated with rurality (<code>PctRurual</code>), whether people went to university (<code>PctBach</code>), how old the population is (<code>PctEld</code>), the number of people that are foreign born (<code>PctFB</code>), the percentage of the population classed as being in poverty (<code>PctPov</code>) and as being black (<code>PctBlack</code>) (<strong>NB</strong> I recognise that there are lots of issues with these labels but that is another module / session).</p>
+<p>In R we can construct a regression model using the function <code>lm</code> which stands for <em>linear model</em>. This is a standard OLS regression function, and although simple it is very powerful. There are many variants and functions for manipulating <code>lm</code> outputs: remember R was originally a stats package.</p>
+<p>The equation for a basic linear regression is:</p>
+<p><span class="math display">\[\begin{equation}
+y_i = \beta_{0} + \sum_{k=1}^{m}\beta_{k}x_{ik} + \epsilon_i
+\label{eq:lm2}
+\end{equation}\]</span></p>
+<p>where for observations indexed by <span class="math inline">\(i=1 \dots n\)</span>, <span class="math inline">\(y_i\)</span> is the response variable, <span class="math inline">\(x_{ik}\)</span> is the value of the <span class="math inline">\(k^{th}\)</span> predictor variable, <span class="math inline">\(m\)</span> is the number of predictor variables, <span class="math inline">\(\beta_0\)</span> is the intercept term, <span class="math inline">\(\beta_k\)</span> is the regression coefficient for the <span class="math inline">\(k_{th}\)</span> predictor variable and <span class="math inline">\(\epsilon_i\)</span> is the random error term that is independently normally distributed with zero mean and common variance <span class="math inline">\(\sigma^2\)</span>. OLS is commonly used for model estimation in linear regression models.</p>
+<p>You will need to load the <code>georgia</code> data. This is a commonly used dataset in R (for example, it is contained within the <code>spgwr</code>, <code>GWmodel</code> and <code>GISTools</code> packages and is now being used in the <code>gwverse</code> package <span class="citation">(<a href="#ref-comber2022gwverse">Comber et al. 2022</a>)</span>. It has census data for the counties in Georgia, USA.</p>
+<div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb212-1"><a href="regression.html#cb212-1" tabindex="-1"></a><span class="fu">download.file</span>(<span class="st">&quot;https://github.com/gwverse/gw/blob/main/data/georgia.rda?raw=True&quot;</span>,</span>
+<span id="cb212-2"><a href="regression.html#cb212-2" tabindex="-1"></a>              <span class="st">&quot;./georgia.RData&quot;</span>, <span class="at">mode =</span> <span class="st">&quot;wb&quot;</span>)</span>
+<span id="cb212-3"><a href="regression.html#cb212-3" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;georgia.RData&quot;</span>)</span></code></pre></div>
+<p>You should examine this in the usual way:</p>
+<div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="regression.html#cb213-1" tabindex="-1"></a><span class="co"># spatial data</span></span>
+<span id="cb213-2"><a href="regression.html#cb213-2" tabindex="-1"></a>georgia</span>
+<span id="cb213-3"><a href="regression.html#cb213-3" tabindex="-1"></a><span class="co"># sumamry of variables</span></span>
+<span id="cb213-4"><a href="regression.html#cb213-4" tabindex="-1"></a><span class="fu">summary</span>(georgia)</span>
+<span id="cb213-5"><a href="regression.html#cb213-5" tabindex="-1"></a><span class="co"># a map of the counties </span></span>
+<span id="cb213-6"><a href="regression.html#cb213-6" tabindex="-1"></a><span class="fu">ggplot</span>(georgia) <span class="sc">+</span> <span class="fu">geom_sf</span>(<span class="at">fill =</span> <span class="cn">NA</span>)</span></code></pre></div>
+<p>And have a look at the target variable:</p>
+<div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb214-1"><a href="regression.html#cb214-1" tabindex="-1"></a><span class="fu">ggplot</span>(georgia) <span class="sc">+</span> <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> MedInc)) <span class="sc">+</span></span>
+<span id="cb214-2"><a href="regression.html#cb214-2" tabindex="-1"></a>  <span class="fu">scale_fill_distiller</span>(<span class="at">palette =</span> <span class="st">&quot;Blues&quot;</span>) <span class="sc">+</span></span>
+<span id="cb214-3"><a href="regression.html#cb214-3" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:medinc"></span>
+<img src="_main_files/figure-html/medinc-1.png" alt="A map of the Median Income variable." width="672" />
+<p class="caption">
+Figure 4.1: A map of the Median Income variable.
+</p>
+</div>
+<p>You will see that <code>georgia</code> contains a number of variables for the counties including the percentage of the population in each County that:</p>
+<ul>
+<li>is Rural (<code>PctRural</code>)</li>
+<li>have a college degree (<code>PctBach</code>)</li>
+<li>are elderly (<code>PctEld</code>)</li>
+<li>that are foreign born (<code>PctFB</code>)</li>
+<li>that are classed as being in poverty (<code>PctPov</code>)</li>
+<li>that are black (<code>PctBlack</code>)</li>
+</ul>
+<p>and the median income of the county (<code>MedInc</code> in dollars)</p>
+<p>And as we have done some EDA now, you might want to explore the properties of the attributes in <code>georgia</code> layer. Note we will be creating models of median income (<code>MedInc</code>). Do these summaries tell us anything useful? (Answer: yes they do!) The code below plots histograms and paired scatterplots of the variables. Note the use of <code>dplyr::select</code> below to force R to use the <code>select</code> function in <code>dplyr</code>. This is because other functions also called <code>select</code> may have been loaded by other packages.</p>
+<div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb215-1"><a href="regression.html#cb215-1" tabindex="-1"></a><span class="do">## variable histograms</span></span>
+<span id="cb215-2"><a href="regression.html#cb215-2" tabindex="-1"></a><span class="co"># set the pipe and drop the sf geometry</span></span>
+<span id="cb215-3"><a href="regression.html#cb215-3" tabindex="-1"></a>georgia <span class="sc">|&gt;</span> <span class="fu">st_drop_geometry</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb215-4"><a href="regression.html#cb215-4" tabindex="-1"></a>  <span class="co"># select the numerical variables of interest</span></span>
+<span id="cb215-5"><a href="regression.html#cb215-5" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(ID, TotPop90<span class="sc">:</span>PctBlack, MedInc) <span class="sc">|&gt;</span></span>
+<span id="cb215-6"><a href="regression.html#cb215-6" tabindex="-1"></a>  <span class="co"># convert to long format</span></span>
+<span id="cb215-7"><a href="regression.html#cb215-7" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>ID) <span class="sc">|&gt;</span></span>
+<span id="cb215-8"><a href="regression.html#cb215-8" tabindex="-1"></a>  <span class="co"># pass to a faceted ggplot </span></span>
+<span id="cb215-9"><a href="regression.html#cb215-9" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> value)) <span class="sc">+</span> <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">30</span>, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>, <span class="at">fill =</span> <span class="st">&quot;salmon&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb215-10"><a href="regression.html#cb215-10" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>name, <span class="at">scales =</span> <span class="st">&quot;free&quot;</span>, <span class="at">ncol =</span> <span class="dv">4</span>)</span>
+<span id="cb215-11"><a href="regression.html#cb215-11" tabindex="-1"></a><span class="co"># correlations</span></span>
+<span id="cb215-12"><a href="regression.html#cb215-12" tabindex="-1"></a>cor.tab <span class="ot">=</span> georgia <span class="sc">%&gt;%</span> <span class="fu">st_drop_geometry</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb215-13"><a href="regression.html#cb215-13" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(MedInc, TotPop90<span class="sc">:</span>PctBlack) <span class="sc">%&gt;%</span> <span class="fu">cor</span>() </span>
+<span id="cb215-14"><a href="regression.html#cb215-14" tabindex="-1"></a><span class="fu">round</span>(cor.tab, <span class="dv">3</span>)</span>
+<span id="cb215-15"><a href="regression.html#cb215-15" tabindex="-1"></a><span class="co"># paired scatterplots</span></span>
+<span id="cb215-16"><a href="regression.html#cb215-16" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_drop_geometry</span>(georgia[, <span class="fu">c</span>(<span class="dv">14</span>, <span class="dv">3</span><span class="sc">:</span><span class="dv">8</span>)]), </span>
+<span id="cb215-17"><a href="regression.html#cb215-17" tabindex="-1"></a>     <span class="at">pch =</span> <span class="dv">1</span>, <span class="at">cex =</span> <span class="fl">0.7</span>, <span class="at">col =</span> <span class="st">&quot;grey30&quot;</span>, <span class="at">upper.panel=</span>panel.smooth)</span></code></pre></div>
+<p>In our case, the response variable <span class="math inline">\(y\)</span> is median income (<code>MedInc</code>), and the 6 (i.e. <span class="math inline">\(k\)</span>) socio-economic variables are <code>PctRural</code>, <code>PctBach</code>, <code>PctEld</code>, <code>PctFB</code>, <code>PctPov</code>, <code>PctBlack</code> are the different predictor variables, the <span class="math inline">\(k\)</span> different <span class="math inline">\(x\)</span>’s.</p>
+<div id="specifying-the-model" class="section level3 unnumbered hasAnchor">
+<h3>Specifying the model<a href="regression.html#specifying-the-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The basic formula in R to specify a <em>linear regression model</em>, <code>lm</code> is as follows (don’t run this - just <strong>look</strong> at it!):</p>
+<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb216-1"><a href="regression.html#cb216-1" tabindex="-1"></a><span class="co"># don&#39;t run this! </span></span>
+<span id="cb216-2"><a href="regression.html#cb216-2" tabindex="-1"></a>model <span class="ot">=</span> <span class="fu">lm</span>(variable_we_are_trying_to_predict <span class="sc">~</span> predictor_variable1 <span class="sc">+</span></span>
+<span id="cb216-3"><a href="regression.html#cb216-3" tabindex="-1"></a>              predictor_variable2...)</span></code></pre></div>
+<p>where the <code>~</code> sign (tilde) separates the variable we are trying to model (the response variable) from the variables we will use to predict it, the predictor variables. The predictor variables are usually separated by a <code>+</code> sign - meaning that they are linear terms in the model added together.</p>
+<p>We can specify our first model.</p>
+<div class="sourceCode" id="cb217"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb217-1"><a href="regression.html#cb217-1" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula =</span> MedInc<span class="sc">~</span>PctRural<span class="sc">+</span>PctBach<span class="sc">+</span>PctEld<span class="sc">+</span>PctFB<span class="sc">+</span>PctPov<span class="sc">+</span>PctBlack, <span class="at">data =</span> georgia) </span></code></pre></div>
+<p>The <code>summary</code> function here provides a print out of the model:</p>
+<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="regression.html#cb218-1" tabindex="-1"></a><span class="fu">summary</span>(m)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = MedInc ~ PctRural + PctBach + PctEld + PctFB + PctPov + 
+##     PctBlack, data = georgia)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -12420.3  -2989.7   -616.3   2209.5  25820.1 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 52598.95    3108.93  16.919  &lt; 2e-16 ***
+## PctRural       73.77      20.43   3.611 0.000414 ***
+## PctBach       697.26     112.21   6.214 4.73e-09 ***
+## PctEld       -788.62     179.79  -4.386 2.14e-05 ***
+## PctFB       -1290.30     473.88  -2.723 0.007229 ** 
+## PctPov       -954.00     104.59  -9.121 4.19e-16 ***
+## PctBlack       33.13      37.17   0.891 0.374140    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 5155 on 152 degrees of freedom
+## Multiple R-squared:  0.7685, Adjusted R-squared:  0.7593 
+## F-statistic: 84.09 on 6 and 152 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>There are lots of things to look at in the summary of the model but we will focus on 3 aspects:</p>
+<p>First, <strong>Significance</strong>. If we examine the model we can see that nearly all of the dependent variables are significant predictors of <em>Median Income</em>. The level of significance is indicated by the <em>p-value</em> in the column <span class="math inline">\(Pr(&gt;|t|)\)</span> and the asterisks <span class="math inline">\(*\)</span>. For each coefficient <span class="math inline">\(\beta_k\)</span> these are the significance levels associated with the <strong>NULL hypothesis</strong> <span class="math inline">\(\textsf{H}_0 : \beta_k = 0\)</span> against the alternative <span class="math inline">\(\textsf{H}_1 : \beta_k \ne 0\)</span>. This corresponds to the probability that one would obtain a <span class="math inline">\(t\)</span>-statistic for <span class="math inline">\(\beta_k\)</span> at least as large as the one observed given <span class="math inline">\(\textsf{H}_0\)</span> is true.</p>
+<p>The p-value provides a measure of how surprising the relationship is and indicative of whether the relationship between <span class="math inline">\(x_k\)</span> and <span class="math inline">\(y\)</span> found in this data could have been found by chance. Very small p-values suggest that the level of association found here could <strong>not</strong> have come from a random sample of data. Cutting to the chase, small p-values mean strong evidence for a non-zero regression coefficient.</p>
+<p>So in this case we can say:</p>
+<ul>
+<li>‘changes in <code>PctFB</code> are significantly associated with changes in <code>MedInc</code> at the <span class="math inline">\(0.001\)</span> level’. This means that the association between the predictor and the response variables is not one that would be found by chance in a series of random samples <span class="math inline">\(99.999\%\)</span> of the time. Formally we can reject the Null hypothesis that <em>there is no relationship between changes in MedInc and PctFB</em></li>
+<li>‘changes in <code>PctRural</code>, <code>PctBach</code>, <code>PctEld</code>, and <code>PctPov</code> are significantly associated with changes in <code>MedInc</code> at the at the <span class="math inline">\(&lt;0.001\)</span> level’, which is actually an indicator of less than <span class="math inline">\(0.001\)</span>. So were are even more confident that the observed relationship between these variables and MedInc are not by chance and can again confidently reject the Null hypotheses.</li>
+<li><code>PctBlack</code> was not found to be significantly associated with <code>MedInc</code>.</li>
+</ul>
+<p>Second, the <strong>Coefficient Estimates</strong>. These are the <span class="math inline">\(\beta_{k}\)</span> values that tell you the <em>rate of change</em> between <span class="math inline">\(x_k\)</span> and <span class="math inline">\(y\)</span> in the column ‘Estimate’ in the summary table. The first of these is the <em>Intercept</em>. This is <span class="math inline">\(\beta_0\)</span> in the regression equation and tells you the value of <span class="math inline">\(y\)</span> if <span class="math inline">\(x_1 \cdots x_k\)</span> are all zero.</p>
+<p>For the dependent or predictor variables, <span class="math inline">\(x_k\)</span>, we can now see how changes of 1 unit for the different predictor variables are associated with changes in <code>MedInc</code>:</p>
+<ul>
+<li>The association of <code>PctRural</code> is positive but small: each increase in 1% of <code>PctRural</code> is associated with an increase of $73.7 in median income;</li>
+<li>The association of <code>PctBach</code> is positive, with each additional 1% of the population with a bachelors degree associated with an in increase of $697;</li>
+<li>each increase of 1% of <code>PctEld</code> is associated with a decrease in median income of $789;</li>
+<li>each increase of 1% of <code>PctFB</code> is associated with a decrease in median income of $1290;</li>
+<li>each increase of 1% of <code>PctPov</code> is associated with a decrease in median income of $954;</li>
+</ul>
+<p>So the regression model <code>m</code> gives us an idea of how different factors are <strong><em>associated with</em></strong> the target variable for Median Income in the counties of the state of Georgia and their interaction. Note the way that this is described: we have no indication of causality between the factors and Median Income, and so we cannot say that changes in coefficient estimates would explain changes in Median Income, rather they are <strong><em>associated with</em></strong> Median Income changes. This syntax is important - these are statistical associations.</p>
+<p>Third, the <strong>model fit</strong> given by the <span class="math inline">\(R^2\)</span> value. This provides a measure of model fit. This is calculated as the difference between the actual values of <span class="math inline">\(y\)</span> (e.g. of <code>MedInc</code>) and the values predicted by the model - sometimes written as <span class="math inline">\(\hat{y\ }\)</span> (called ‘<span class="math inline">\(y\)</span>-hat’). A good description is here <a href="http://blog.minitab.com/blog/adventures-in-statistics-2/regression-analysis-how-do-i-interpret-r-squared-and-assess-the-goodness-of-fit" class="uri">http://blog.minitab.com/blog/adventures-in-statistics-2/regression-analysis-how-do-i-interpret-r-squared-and-assess-the-goodness-of-fit</a></p>
+<p>Generally <span class="math inline">\(R^2\)</span>’s of greater than 0.7 indicate a reasonably well fitting model. Some users of this method describe a low <span class="math inline">\(R^2\)</span> as ‘bad’ - they are not - it just means you a have a more imprecise model - the predictions are a bit wrong-er! Essentially there is a sliding scale of reliability of the predictions - based on the relative amounts of deterministic and random variability in the system being analysed - and <span class="math inline">\(R^2\)</span> is a measure of this.</p>
+<div class="qbox">
+<div class="center">
+<p><strong>Task 1</strong></p>
+</div>
+<p>Create an OLS model with the <code>PctEld</code> variable as the target variable and <code>PctRural</code>, <code>PctPov</code>, <code>PctBach</code> and <code>PctFB</code> as the target variables. Interpret the model outputs including the coefficient estimates, significance and model fit.</p>
+</div>
+</div>
+</div>
+<div id="binomial-logistic-regression-for-binary-variables" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> Binomial Logistic Regression for binary variables<a href="regression.html#binomial-logistic-regression-for-binary-variables" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Generalized Linear Models (GLMs) allow regression models to be specified in situations where the response and / or the predictor variables do not have a normal distribution. An example is where the response is a True-False, Yes-No or 1-0. The practical replicates some of the results from <span class="citation">Comber et al. (<a href="#ref-comber2011spatial">2011</a>)</span>, evaluating geographic and perceived access to health facilities. It develops an analysis of a binary response variable describing perceptions of difficulty in GP access in Leicestershire using data collected via a survey.</p>
+<p>You should load some new data :</p>
+<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb220-1"><a href="regression.html#cb220-1" tabindex="-1"></a>data.pt <span class="ot">=</span> <span class="fu">st_read</span>(<span class="st">&quot;place_survey_pts.gpkg&quot;</span>, <span class="at">quiet =</span> T)</span></code></pre></div>
+<p>Have a look at this data and its attributes in the usual way:</p>
+<div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb221-1"><a href="regression.html#cb221-1" tabindex="-1"></a><span class="co"># spatial data </span></span>
+<span id="cb221-2"><a href="regression.html#cb221-2" tabindex="-1"></a>data.pt</span></code></pre></div>
+<pre><code>## Simple feature collection with 8530 features and 20 fields
+## Geometry type: POINT
+## Dimension:     XY
+## Bounding box:  xmin: 428996.3 ymin: 278160.6 xmax: 488368.7 ymax: 339447.7
+## Projected CRS: OSGB36 / British National Grid
+## First 10 features:
+##         REF1               GP                    Dentist          Chemist
+## 1  705030002      Fairly easy                Fairly easy      Fairly easy
+## 2  705030004      Fairly easy Neither easy nor difficult      Fairly easy
+## 3  705030005      Fairly easy                Fairly easy      Fairly easy
+## 4  705030890        Very easy                  Very easy        Very easy
+## 5  705030891   Very difficult             Very difficult   Very difficult
+## 6  705030894 Fairly difficult           Fairly difficult Fairly difficult
+## 7  705030895      Fairly easy                Fairly easy      Fairly easy
+## 8  705030899      Fairly easy                Fairly easy      Fairly easy
+## 9  705030095        Very easy                  Very easy        Very easy
+## 10 705030101        Very easy                  Very easy        Very easy
+##                     LocalHosp    Health     Illness IMD2007ALL      Hosp       AE       Doc
+## 1                 Fairly easy      Good Do not have  13.506194  9115.503 13763.71 4097.7625
+## 2  Neither easy nor difficult      Good Do not have  13.506194  8227.506 13280.71 3384.7649
+## 3                 Fairly easy Very good Do not have  13.506194  8401.373 13454.58 3558.6326
+## 4  Neither easy nor difficult Very good Do not have   7.728222 13995.208 18111.41 3135.1070
+## 5              Very difficult Very good Do not have   7.728222 14055.528 18171.73 3074.7871
+## 6            Fairly difficult      Good Do not have   7.728222 13905.840 18345.04 2723.0989
+## 7                 Fairly easy Very good Do not have   7.728222 14877.166 19316.37 3694.4257
+## 8  Neither easy nor difficult Very good Do not have   7.728222 15033.763 19472.97 3851.0225
+## 9  Neither easy nor difficult      Good Do not have   5.714707 13837.316 17467.90 1188.2823
+## 10           Fairly difficult      Good Do not have  11.839684 13271.580 18243.05  413.1231
+##         label  popeast popnorth                       rural            oac    REF1_1 cars
+## 1  31UEFU0010 440376.8 300305.5 Hamlet &amp; Isolated Dwellings    Countryside 705030002    4
+## 2  31UEFU0010 440376.8 300305.5 Hamlet &amp; Isolated Dwellings    Countryside 705030004    2
+## 3  31UEFU0010 440376.8 300305.5 Hamlet &amp; Isolated Dwellings    Countryside 705030005    2
+## 4  31UEGA0002 439700.0 305037.9                     Village    Countryside 705030890    2
+## 5  31UEGA0002 439700.0 305037.9                     Village    Countryside 705030891    3
+## 6  31UEGA0002 439700.0 305037.9                     Village    Countryside 705030894    1
+## 7  31UEGA0011 439571.9 306769.6                     Village    Countryside 705030895    2
+## 8  31UEGA0011 439571.9 306769.6                     Village    Countryside 705030899    3
+## 9  31UEFW0006 443344.2 305529.1 Hamlet &amp; Isolated Dwellings    Countryside 705030095    1
+## 10 31UEFW0004 442862.8 305615.2             Town and Fringe Typical Traits 705030101    1
+##    coords_x1 coords_x2                      geom
+## 1   440376.8  300305.5 POINT (440376.8 300305.5)
+## 2   440376.8  300305.5 POINT (440376.8 300305.5)
+## 3   440376.8  300305.5 POINT (440376.8 300305.5)
+## 4   439700.0  305037.9   POINT (439700 305037.9)
+## 5   439700.0  305037.9   POINT (439700 305037.9)
+## 6   439700.0  305037.9   POINT (439700 305037.9)
+## 7   439571.9  306769.6 POINT (439571.9 306769.6)
+## 8   439571.9  306769.6 POINT (439571.9 306769.6)
+## 9   443344.2  305529.1 POINT (443344.2 305529.1)
+## 10  442862.8  305615.2 POINT (442862.8 305615.2)</code></pre>
+<div class="sourceCode" id="cb223"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb223-1"><a href="regression.html#cb223-1" tabindex="-1"></a><span class="co"># summary</span></span>
+<span id="cb223-2"><a href="regression.html#cb223-2" tabindex="-1"></a><span class="fu">summary</span>(data.pt)</span></code></pre></div>
+<pre><code>##       REF1                   GP            Dentist          Chemist         LocalHosp   
+##  Min.   :705000001   Length   :8530   Length   :8530   Length   :8530   Length   :8530  
+##  1st Qu.:705012238   N.unique :   7   N.unique :   7   N.unique :   7   N.unique :   7  
+##  Median :705031305   N.blank  :   0   N.blank  :   0   N.blank  :   0   N.blank  :   0  
+##  Mean   :705030817   Min.nchar:   9   Min.nchar:   9   Min.nchar:   9   Min.nchar:   9  
+##  3rd Qu.:705050463   Max.nchar:  29   Max.nchar:  29   Max.nchar:  29   Max.nchar:  29  
+##  Max.   :705063148                                                                      
+##        Health          Illness       IMD2007ALL          Hosp                AE       
+##  Length   :8530   Length   :8530   Min.   : 0.000   Min.   :   35.31   Min.   : 3115  
+##  N.unique :   6   N.unique :   3   1st Qu.: 5.795   1st Qu.: 4754.64   1st Qu.: 7829  
+##  N.blank  :   0   N.blank  :   0   Median : 8.548   Median : 7640.60   Median :13435  
+##  Min.nchar:   3   Min.nchar:   7   Mean   :10.506   Mean   : 9482.88   Mean   :13803  
+##  Max.nchar:  12   Max.nchar:  12   3rd Qu.:13.422   3rd Qu.:12898.21   3rd Qu.:19023  
+##                                    Max.   :50.983   Max.   :26891.84   Max.   :28811  
+##       Doc             label         popeast          popnorth            rural     
+##  Min.   :   0   Length   :8530   Min.   :428996   Min.   :278161   Length   :8530  
+##  1st Qu.: 658   N.unique :1962   1st Qu.:446560   1st Qu.:297519   N.unique :   5  
+##  Median :1088   N.blank  :   0   Median :455275   Median :304299   N.blank  :   0  
+##  Mean   :1445   Min.nchar:  10   Mean   :456315   Mean   :306403   Min.nchar:   4  
+##  3rd Qu.:1709   Max.nchar:  13   3rd Qu.:463235   3rd Qu.:316888   Max.nchar:  27  
+##  Max.   :8526                    Max.   :488369   Max.   :339448                   
+##         oac           REF1_1               cars         coords_x1        coords_x2     
+##  Length   :8530   Min.   :705000001   Min.   :0.000   Min.   :428996   Min.   :278161  
+##  N.unique :   8   1st Qu.:705012238   1st Qu.:1.000   1st Qu.:446560   1st Qu.:297519  
+##  N.blank  :   0   Median :705031305   Median :1.000   Median :455275   Median :304299  
+##  Min.nchar:   4   Mean   :705030817   Mean   :1.359   Mean   :456315   Mean   :306403  
+##  Max.nchar:  28   3rd Qu.:705050463   3rd Qu.:2.000   3rd Qu.:463235   3rd Qu.:316888  
+##                   Max.   :705063148   Max.   :4.000   Max.   :488369   Max.   :339448  
+##             geom     
+##  POINT        :8530  
+##  epsg:27700   :   0  
+##  +proj=tmer...:   0  
+##                      
+##                      
+## </code></pre>
+<div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb225-1"><a href="regression.html#cb225-1" tabindex="-1"></a><span class="co"># map of locations</span></span>
+<span id="cb225-2"><a href="regression.html#cb225-2" tabindex="-1"></a><span class="fu">ggplot</span>(data.pt) <span class="sc">+</span> </span>
+<span id="cb225-3"><a href="regression.html#cb225-3" tabindex="-1"></a>  <span class="fu">geom_sf</span>() <span class="sc">+</span> <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:ptdata"></span>
+<img src="_main_files/figure-html/ptdata-1.png" alt="A map of the observation locations." width="672" />
+<p class="caption">
+Figure 4.2: A map of the observation locations.
+</p>
+</div>
+<p>You should see that there are 8530 data points, distributed around Leicestershire and that there are a number of attributes of potential interest.</p>
+<p>What we are interested in this analysis is the degree to which different factors can examine respondent perceptions of their difficulty in accessing GP surgeries. The following variables will be used in this analysis:</p>
+<ul>
+<li><code>GP</code>: perceptions of difficulty in their access to GPs;</li>
+<li><code>Health</code>: their declared health status;</li>
+<li><code>Illness</code>: whether they have a limiting long term illness;</li>
+<li><code>Doc</code>: distance from the respondent’s home postcode to the nearest GP surgery - this was calculated after the survey;</li>
+<li><code>cars</code>: the number of cars they own, specifically we can use this to determine non-car ownership.</li>
+</ul>
+<p>A bit of pre-processing is needed to get these into a format that is suitable for analysis. First the data is subsetted to include the variables of interest.</p>
+<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb226-1"><a href="regression.html#cb226-1" tabindex="-1"></a>data.pt <span class="ot">&lt;-</span> data.pt <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">select</span>(GP, Health, Illness, Doc, cars) </span></code></pre></div>
+<p>The text descriptions for <code>GP</code>, <code>Health</code>, <code>Illness</code> and <code>cars</code> need to be converted to binary variables and the piping syntax with <code>transmute</code> can be used to wrangle our data into a suitable format:</p>
+<div class="sourceCode" id="cb227"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb227-1"><a href="regression.html#cb227-1" tabindex="-1"></a><span class="co"># convert the data </span></span>
+<span id="cb227-2"><a href="regression.html#cb227-2" tabindex="-1"></a>data.pt <span class="sc">|&gt;</span> </span>
+<span id="cb227-3"><a href="regression.html#cb227-3" tabindex="-1"></a>  <span class="fu">transmute</span>(</span>
+<span id="cb227-4"><a href="regression.html#cb227-4" tabindex="-1"></a>    <span class="at">DocDiff =</span> (GP <span class="sc">==</span> <span class="st">&quot;Fairly difficult&quot;</span> <span class="sc">|</span> GP <span class="sc">==</span> <span class="st">&quot;Very difficult&quot;</span>)<span class="sc">+</span><span class="dv">0</span>,</span>
+<span id="cb227-5"><a href="regression.html#cb227-5" tabindex="-1"></a>    <span class="at">BadHealth =</span> (Health <span class="sc">==</span> <span class="st">&quot;Bad&quot;</span> <span class="sc">|</span> Health <span class="sc">==</span>    <span class="st">&quot;Very bad&quot;</span>)<span class="sc">+</span><span class="dv">0</span>,</span>
+<span id="cb227-6"><a href="regression.html#cb227-6" tabindex="-1"></a>    <span class="at">Illness =</span> (Illness <span class="sc">==</span> <span class="st">&quot;Do have&quot;</span>)<span class="sc">+</span><span class="dv">0</span>,</span>
+<span id="cb227-7"><a href="regression.html#cb227-7" tabindex="-1"></a>    <span class="at">NoCar =</span> (cars <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">+</span><span class="dv">0</span>,</span>
+<span id="cb227-8"><a href="regression.html#cb227-8" tabindex="-1"></a>    <span class="at">DocDist =</span> Doc<span class="sc">/</span><span class="dv">1000</span>) <span class="ot">-&gt;</span> data.pt</span></code></pre></div>
+<p>Note that the code snippet above has converted the logical <code>TRUE</code> and <code>FALSE</code> values to 1s and 0s by adding the <code>+0</code> to the end of the logical tests, and that distance has been converted to km.</p>
+<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="regression.html#cb228-1" tabindex="-1"></a>data.pt</span></code></pre></div>
+<pre><code>## Simple feature collection with 8530 features and 5 fields
+## Geometry type: POINT
+## Dimension:     XY
+## Bounding box:  xmin: 428996.3 ymin: 278160.6 xmax: 488368.7 ymax: 339447.7
+## Projected CRS: OSGB36 / British National Grid
+## First 10 features:
+##    DocDiff BadHealth Illness NoCar   DocDist                      geom
+## 1        0         0       0     0 4.0977625 POINT (440376.8 300305.5)
+## 2        0         0       0     0 3.3847649 POINT (440376.8 300305.5)
+## 3        0         0       0     0 3.5586326 POINT (440376.8 300305.5)
+## 4        0         0       0     0 3.1351070   POINT (439700 305037.9)
+## 5        1         0       0     0 3.0747871   POINT (439700 305037.9)
+## 6        1         0       0     0 2.7230989   POINT (439700 305037.9)
+## 7        0         0       0     0 3.6944257 POINT (439571.9 306769.6)
+## 8        0         0       0     0 3.8510225 POINT (439571.9 306769.6)
+## 9        0         0       0     0 1.1882823 POINT (443344.2 305529.1)
+## 10       0         0       0     0 0.4131231 POINT (442862.8 305615.2)</code></pre>
+<p>Logistic regression should be used when modelling a binary outcome from a set of continuous and / or binary predictor variables. We are now in a position to create a logistic regression model and have a look at the results. Note the specification of the family as <code>binomial</code> with a logit link in the code below.</p>
+<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="regression.html#cb230-1" tabindex="-1"></a><span class="co">#create the model</span></span>
+<span id="cb230-2"><a href="regression.html#cb230-2" tabindex="-1"></a>m.glm <span class="ot">=</span> <span class="fu">glm</span>(<span class="at">formula =</span> DocDiff<span class="sc">~</span>Illness <span class="sc">+</span> BadHealth <span class="sc">+</span> DocDist <span class="sc">+</span> NoCar, </span>
+<span id="cb230-3"><a href="regression.html#cb230-3" tabindex="-1"></a>            <span class="at">data =</span> data.pt, </span>
+<span id="cb230-4"><a href="regression.html#cb230-4" tabindex="-1"></a>            <span class="at">family=</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">&quot;logit&quot;</span>))</span>
+<span id="cb230-5"><a href="regression.html#cb230-5" tabindex="-1"></a><span class="co"># inspect the results</span></span>
+<span id="cb230-6"><a href="regression.html#cb230-6" tabindex="-1"></a><span class="fu">summary</span>(m.glm) </span></code></pre></div>
+<pre><code>## 
+## Call:
+## glm(formula = DocDiff ~ Illness + BadHealth + DocDist + NoCar, 
+##     family = binomial(link = &quot;logit&quot;), data = data.pt)
+## 
+## Coefficients:
+##             Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept) -4.10048    0.10373 -39.530  &lt; 2e-16 ***
+## Illness      0.58943    0.11042   5.338 9.39e-08 ***
+## BadHealth    0.52257    0.17616   2.966  0.00301 ** 
+## DocDist      0.29524    0.02988   9.879  &lt; 2e-16 ***
+## NoCar        1.33701    0.11031  12.121  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 3318.6  on 8529  degrees of freedom
+## Residual deviance: 3039.5  on 8525  degrees of freedom
+## AIC: 3049.5
+## 
+## Number of Fisher Scoring iterations: 6</code></pre>
+<p>This shows that all of the inputs are significant predictors of experiencing difficulty over GP access. This model is of the form:</p>
+<p><span class="math display">\[\begin{equation}
+pr(y_1 = 1) = logit(\beta_0 + \beta_{1}x_{1}+\beta_{2}x_{2}+\beta_{3}x_{3}+\beta_{4}x_{4})
+\label{eq:eglm}
+\end{equation}\]</span></p>
+<p>where the logit function is defined as</p>
+<p><span class="math display">\[\begin{equation}
+logit(Q) = \frac{exp(Q)}{1 + exp(Q)}
+\end{equation}\]</span></p>
+<p>and <span class="math inline">\(y_1\)</span> is a 0/1 indicator showing whether the respondent expressed difficulty in their access to GPs, <span class="math inline">\(x_1\)</span> is an 0/1 indicator variable showing whether the respondent said they had a Long Term Illness, <span class="math inline">\(x_2\)</span> is an indicator variable stating whether the respondent considered they were in Bad Health, <span class="math inline">\(x_3\)</span> is the distance from the respondent to their nearest GP surgery based on road network distance and <span class="math inline">\(x_4\)</span> is a 0/1 indication of car ownership.</p>
+<p>So what does the model say? We have to use <strong>the exponential</strong> or <strong>antilog</strong> of the coefficient estimates using the <code>exp</code> function to generate probabilities (odds ratios). The confidence intervals that show the range of plausible values (i.e. within a 95% probability of not being found by chance), in absence of a model fit statistic.</p>
+<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb232-1"><a href="regression.html#cb232-1" tabindex="-1"></a><span class="co"># odds ratios</span></span>
+<span id="cb232-2"><a href="regression.html#cb232-2" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">coef</span>(m.glm)) </span></code></pre></div>
+<pre><code>## (Intercept)     Illness   BadHealth     DocDist       NoCar 
+##  0.01656477  1.80295494  1.68634808  1.34344909  3.80765553</code></pre>
+<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb234-1"><a href="regression.html#cb234-1" tabindex="-1"></a><span class="co"># confidence intervals</span></span>
+<span id="cb234-2"><a href="regression.html#cb234-2" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">confint</span>(m.glm, <span class="at">level =</span> <span class="fl">0.95</span>)) </span></code></pre></div>
+<pre><code>## Waiting for profiling to be done...</code></pre>
+<pre><code>##                  2.5 %    97.5 %
+## (Intercept) 0.01346685 0.0202271
+## Illness     1.45106558 2.2376869
+## BadHealth   1.18425653 2.3651566
+## DocDist     1.26583777 1.4233458
+## NoCar       3.06412578 4.7230562</code></pre>
+<p>What these show is that the probability of respondents experiencing difficulty in accessing their GP …</p>
+<ul>
+<li>is 1.8 times more likely for those with Long Term Illness than for those without, with a CI or likely range of between 1.5 and 2.2 times;</li>
+<li>is 3.8 times more likely for those without a car than for those who have one, with a CI of between 3.1 and 4.7 times;</li>
+<li>is 1.7 times more likely for respondents with Bad Health than for those without, with a CI of between 1.2 and 2.4;</li>
+<li>increases by 34% (1.34) for each extra km to the nearest GP surgery, with a CI of between 27% and 42% .</li>
+</ul>
+<p>The paper by <span class="citation">Comber et al. (<a href="#ref-comber2011spatial">2011</a>)</span> has very slightly different results due to some data cleaning differences. It also shows how these odds ratio (likelihoods) vary spatially and demonstrates that distance does not work in this way for hospitals (one of the main aims of the paper was to unpick <em>access</em> and <em>accessibility</em> in the health and geography literature).</p>
+<div class="qbox">
+<div class="center">
+<p><strong>Task 2</strong></p>
+</div>
+<p>Create and interpret a binomial GLM with the target variable of <code>LocalHosp</code> (difficulty in access to a local hospital) using the following target variables:</p>
+<ul>
+<li><code>Health</code>: their declared health status;</li>
+<li><code>Illness</code>: whether they have a limiting long term illness;</li>
+<li><code>Hosp</code>: distance from the respondent’s home postcode to the nearest GP surgery - this was calculated after the survey;</li>
+<li><code>cars</code>: the number of cars they own, specifically we can use this to determine non-car ownership.</li>
+</ul>
+<p>A bit of pre-processing is needed to get these into a format that is suitable for analysis. First the data reloaded and then subsetted to include the variables of interest.</p>
+<div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb237-1"><a href="regression.html#cb237-1" tabindex="-1"></a>data.pt <span class="ot">=</span> <span class="fu">st_read</span>(<span class="st">&quot;place_survey_pts.gpkg&quot;</span>, <span class="at">quiet =</span> T)</span>
+<span id="cb237-2"><a href="regression.html#cb237-2" tabindex="-1"></a>data.pt <span class="ot">&lt;-</span> data.pt <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(LocalHosp, Health, Illness, Hosp, cars) </span></code></pre></div>
+<p>Again the text descriptions need to be converted to binary variables:</p>
+<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb238-1"><a href="regression.html#cb238-1" tabindex="-1"></a><span class="co"># convert the data </span></span>
+<span id="cb238-2"><a href="regression.html#cb238-2" tabindex="-1"></a>data.pt <span class="sc">%&gt;%</span> </span>
+<span id="cb238-3"><a href="regression.html#cb238-3" tabindex="-1"></a>  <span class="fu">transmute</span>(</span>
+<span id="cb238-4"><a href="regression.html#cb238-4" tabindex="-1"></a>    <span class="at">HospDiff =</span> (LocalHosp <span class="sc">==</span> <span class="st">&quot;Fairly difficult&quot;</span> <span class="sc">|</span> LocalHosp <span class="sc">==</span> <span class="st">&quot;Very difficult&quot;</span>) <span class="sc">+</span> <span class="dv">0</span>,</span>
+<span id="cb238-5"><a href="regression.html#cb238-5" tabindex="-1"></a>    <span class="at">BadHealth =</span> (Health <span class="sc">==</span> <span class="st">&quot;Bad&quot;</span> <span class="sc">|</span> Health <span class="sc">==</span> <span class="st">&quot;Very bad&quot;</span>) <span class="sc">+</span> <span class="dv">0</span>,</span>
+<span id="cb238-6"><a href="regression.html#cb238-6" tabindex="-1"></a>    <span class="at">Illness =</span> (Illness <span class="sc">==</span> <span class="st">&quot;Do have&quot;</span>) <span class="sc">+</span> <span class="dv">0</span>,</span>
+<span id="cb238-7"><a href="regression.html#cb238-7" tabindex="-1"></a>    <span class="at">NoCar =</span> (cars <span class="sc">==</span> <span class="dv">0</span>) <span class="sc">+</span> <span class="dv">0</span>,</span>
+<span id="cb238-8"><a href="regression.html#cb238-8" tabindex="-1"></a>    <span class="at">HospDist =</span> Hosp<span class="sc">/</span><span class="dv">1000</span>) <span class="ot">-&gt;</span> data.pt</span></code></pre></div>
+<p><strong>NB</strong> You are advised to attempt the tasks after the timetabled practical session. Worked answers are provided in the last section of the worksheet.</p>
+</div>
+</div>
+<div id="poisson-regression-for-count-variables" class="section level2 hasAnchor" number="4.3">
+<h2><span class="header-section-number">4.3</span> Poisson Regression for count variables<a href="regression.html#poisson-regression-for-count-variables" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>An important assumption in OLS is that the <span class="math inline">\(y_i\)</span> variable is assumed to have a normal distribution, whose mean is determined by the predictor variables (as <span class="math inline">\(\beta_0 + \sum_k \beta_kx_{ik}\)</span>) and whose variance is <span class="math inline">\(\sigma^2\)</span>. For many data, this is not the case: counts, binary responses (Yes/No, True/False, etc).</p>
+<p>Suppose the value of <span class="math inline">\(y_i\)</span> was a count of some phenomenon - for example the number of crimes committed in a month, or the number of houses sold (rather than the price). Then, the normal distribution is not a sensible model because:</p>
+<ul>
+<li><span class="math inline">\(y_i\)</span> can only take integer values</li>
+<li><span class="math inline">\(y_i\)</span> takes a minimum value of zero</li>
+</ul>
+<p>or, more bluntly, <span class="math inline">\(y_i\)</span> is <strong>not</strong> normally distributed! Typically count data are modelled by the Poisson distribution:</p>
+<p><span class="math display">\[
+\textsf{Prob}(y_i=j) = \frac{e^{-\lambda}\lambda^j}{j!}
+\]</span>
+where <span class="math inline">\(\lambda\)</span> is the mean value of <span class="math inline">\(y_i\)</span>. There is a constraint that <span class="math inline">\(\lambda &gt; 0\)</span>. Here <span class="math inline">\(\lambda\)</span> is a constant parameter, but if this depended on some predictor variables, we would have a prediction model similar to OLS, but with <span class="math inline">\(y_i\)</span> as a Poisson distributed count variable rather than a normally distributed continuous one.
+In principal, one could specify the model so that <span class="math inline">\(\lambda_i\)</span>, the mean value for observation <span class="math inline">\(i\)</span>, is given by <span class="math inline">\(\lambda_i = \beta_0 + \sum_k\beta_kx_{ij}\)</span> however, this could lead to problems if a negative value of <span class="math inline">\(\lambda_i\)</span> were predicted. One way of overcoming this is to specify a log-transformed relationship:</p>
+<p><span class="math display">\[
+\log(\lambda_i) = \beta_0 + \sum_{k=1}^{k=m} \beta_k x_{ik}
+\]</span></p>
+<p>which is the standard form for Poisson regression.</p>
+<p>Taking antilogs on both sides, the effect on the expected value is a multiplicative one:</p>
+<p><span class="math display">\[
+\lambda_i = e^{\beta_0} \times e^{\beta_1 x_{i1}} \times \cdots e^{\beta_k x_{ik}}
+\]</span></p>
+<p>so that the expected number of observations changes by a <em>scale factor</em> (i.e. a ratio) for a unit change in a predictor variable. In particular for a coefficient <span class="math inline">\(\beta_k\)</span>, the factor is <span class="math inline">\(e^{\beta_k}\)</span> - this is useful in interpreting the model.</p>
+<p>A final - and extra - feature found in some Poisson regression model is the idea of an <em>offset</em>. For many geographical count-based regressions, there is a ‘population at risk’ - for example the total population of an area when counting people having a particular illness. In this case an expected count is essentially a rate of occurrence multiplied by the population at risk. The model can be written as</p>
+<p><span class="math display">\[
+\lambda_i = P_i \times e^{\beta_0} \times e^{\beta_1 x_{i1}} \times \cdots e^{\beta_k x_{ik}}
+\]</span>
+where <span class="math inline">\(P_i\)</span> is the population at risk. Writing <span class="math inline">\(P_i\)</span> as <span class="math inline">\(e^{\log(P_i)}\)</span> this is really just another predictor term (in <span class="math inline">\(\log(P_i)\)</span>) but with the coefficient being fixed at the value 1, rather than being calibrated. Such a term can be specified in R - and is referred to as an <em>offset</em> term.</p>
+<p>We can download some crime data for Georgia from here <a href="https://georgiadata.org/data/data-tables" class="uri">https://georgiadata.org/data/data-tables</a> and then read into our session using the <code>readxl</code> package</p>
+<div class="sourceCode" id="cb239"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb239-1"><a href="regression.html#cb239-1" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb239-2"><a href="regression.html#cb239-2" tabindex="-1"></a>crime <span class="ot">=</span> <span class="fu">read_excel</span>(<span class="st">&quot;georgia.xlsx&quot;</span>, <span class="at">sheet =</span> <span class="st">&quot;index_crime&quot;</span>)</span></code></pre></div>
+<p>You can examine what is loaded</p>
+<div class="sourceCode" id="cb240"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb240-1"><a href="regression.html#cb240-1" tabindex="-1"></a>crime</span>
+<span id="cb240-2"><a href="regression.html#cb240-2" tabindex="-1"></a><span class="fu">names</span>(crime)</span></code></pre></div>
+<p>Here, we will use the <code>2019 Total Index Crimes Reported</code> variable which you can examine the distribution of after converting to integer (counts) and linking to the <code>georgia</code> layer:</p>
+<div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb241-1"><a href="regression.html#cb241-1" tabindex="-1"></a><span class="co"># reformat crime </span></span>
+<span id="cb241-2"><a href="regression.html#cb241-2" tabindex="-1"></a><span class="co"># notice the renaming with mutate and the selection of the variables</span></span>
+<span id="cb241-3"><a href="regression.html#cb241-3" tabindex="-1"></a>crime <span class="ot">&lt;-</span> </span>
+<span id="cb241-4"><a href="regression.html#cb241-4" tabindex="-1"></a>  crime <span class="sc">|&gt;</span> </span>
+<span id="cb241-5"><a href="regression.html#cb241-5" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">County =</span> <span class="fu">tolower</span>(County),</span>
+<span id="cb241-6"><a href="regression.html#cb241-6" tabindex="-1"></a>         <span class="at">Crime =</span> <span class="fu">as.integer</span>(<span class="st">`</span><span class="at">2020 Reported Violent Crime Rate per 100,000 Population</span><span class="st">`</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb241-7"><a href="regression.html#cb241-7" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(County, Crime)</span>
+<span id="cb241-8"><a href="regression.html#cb241-8" tabindex="-1"></a><span class="co"># link to georgia </span></span>
+<span id="cb241-9"><a href="regression.html#cb241-9" tabindex="-1"></a>georgia <span class="ot">&lt;-</span> </span>
+<span id="cb241-10"><a href="regression.html#cb241-10" tabindex="-1"></a>  georgia <span class="sc">|&gt;</span> </span>
+<span id="cb241-11"><a href="regression.html#cb241-11" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Name =</span> <span class="fu">tolower</span>(Name)) <span class="sc">|&gt;</span></span>
+<span id="cb241-12"><a href="regression.html#cb241-12" tabindex="-1"></a>  <span class="fu">left_join</span>(crime, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;Name&quot;</span> <span class="ot">=</span> <span class="st">&quot;County&quot;</span>))</span>
+<span id="cb241-13"><a href="regression.html#cb241-13" tabindex="-1"></a><span class="co"># histogram</span></span>
+<span id="cb241-14"><a href="regression.html#cb241-14" tabindex="-1"></a><span class="fu">ggplot</span>(georgia, <span class="fu">aes</span>(<span class="at">x =</span> Crime)) <span class="sc">+</span></span>
+<span id="cb241-15"><a href="regression.html#cb241-15" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">20</span>, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>, <span class="at">fill =</span> <span class="st">&quot;salmon&quot;</span>)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:ch3fig2"></span>
+<img src="_main_files/figure-html/ch3fig2-1.png" alt="The distribution of the crime data." width="672" />
+<p class="caption">
+Figure 4.3: The distribution of the crime data.
+</p>
+</div>
+<p>Here the response variable is <code>Crime</code>. This is the <span class="math inline">\(y\)</span>-variable. A number of variables are used as predictors:</p>
+<ul>
+<li><code>PctPov</code>: an indicator of economic and social deprivation. Higher values correspond to more deprived areas.</li>
+<li><code>PctBach</code>: the percentage of people with bachelors degrees.</li>
+<li><code>PctFB</code>: the percentage of people with who are foreign born.</li>
+<li><code>TotPop90</code>: the population at risk - the log of this will be the offset variable here.</li>
+</ul>
+<p>The regression is set out below:</p>
+<div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb242-1"><a href="regression.html#cb242-1" tabindex="-1"></a>m.pois <span class="ot">&lt;-</span> <span class="fu">glm</span>(<span class="at">formula =</span> Crime<span class="sc">~</span>PctPov <span class="sc">+</span> PctBach <span class="sc">+</span> PctFB <span class="sc">+</span> <span class="fu">offset</span>(<span class="fu">log</span>(TotPop90)),</span>
+<span id="cb242-2"><a href="regression.html#cb242-2" tabindex="-1"></a>              <span class="at">data=</span>georgia, </span>
+<span id="cb242-3"><a href="regression.html#cb242-3" tabindex="-1"></a>              <span class="at">family=</span><span class="fu">poisson</span>())</span>
+<span id="cb242-4"><a href="regression.html#cb242-4" tabindex="-1"></a><span class="fu">summary</span>(m.pois)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## glm(formula = Crime ~ PctPov + PctBach + PctFB + offset(log(TotPop90)), 
+##     family = poisson(), data = georgia)
+## 
+## Coefficients:
+##              Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept) -5.399411   0.027419 -196.92   &lt;2e-16 ***
+## PctPov       0.065010   0.000987   65.87   &lt;2e-16 ***
+## PctBach     -0.068933   0.001567  -43.99   &lt;2e-16 ***
+## PctFB       -0.135629   0.007665  -17.70   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for poisson family taken to be 1)
+## 
+##     Null deviance: 45077  on 158  degrees of freedom
+## Residual deviance: 22370  on 155  degrees of freedom
+## AIC: 23311
+## 
+## Number of Fisher Scoring iterations: 5</code></pre>
+<p>The poverty coefficient (<code>PctPov</code>) is positive and significant. The <code>PctBach</code> (degrees) and <code>PctFB</code> (foreign born) are both negative and and significant, suggesting a link between crime risk with higher levels of poverty, lower levels of people with degrees and who are foreign born. Again the antilogs of the coefficients are used to interpret the coefficients using the function, <code>exp</code>:</p>
+<div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb244-1"><a href="regression.html#cb244-1" tabindex="-1"></a><span class="co"># coefficients</span></span>
+<span id="cb244-2"><a href="regression.html#cb244-2" tabindex="-1"></a><span class="fu">coef</span>(m.pois)</span></code></pre></div>
+<pre><code>## (Intercept)      PctPov     PctBach       PctFB 
+## -5.39941086  0.06500999 -0.06893345 -0.13562875</code></pre>
+<div class="sourceCode" id="cb246"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb246-1"><a href="regression.html#cb246-1" tabindex="-1"></a><span class="co"># antilogs</span></span>
+<span id="cb246-2"><a href="regression.html#cb246-2" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">coef</span>(m.pois)) </span></code></pre></div>
+<pre><code>## (Intercept)      PctPov     PctBach       PctFB 
+## 0.004519243 1.067169689 0.933388793 0.873166736</code></pre>
+<p>These show that an increase of 1% of</p>
+<ul>
+<li>poverty corresponds to 7% rise in the crime rate</li>
+<li>bachelor degrees corresponds to the 7% decrease in the crime rate</li>
+<li>foreign born corresponds to to 13% decrease in the crime rate</li>
+</ul>
+<p>Again we generate confidence intervals that show the range of plausible values (i.e. within a 95% probability of not being found by chance), in absence of a model fit statistic.</p>
+<div class="sourceCode" id="cb248"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb248-1"><a href="regression.html#cb248-1" tabindex="-1"></a><span class="co"># confidence intervals</span></span>
+<span id="cb248-2"><a href="regression.html#cb248-2" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">exp</span>(<span class="fu">confint</span>(m.pois, <span class="at">level =</span> <span class="fl">0.95</span>)), <span class="dv">3</span>)</span></code></pre></div>
+<pre><code>## Waiting for profiling to be done...</code></pre>
+<pre><code>##             2.5 % 97.5 %
+## (Intercept) 0.004  0.005
+## PctPov      1.065  1.069
+## PctBach     0.931  0.936
+## PctFB       0.860  0.886</code></pre>
+<p>In this case the CIs are very tight, suggesting a strong model fit.</p>
+</div>
+<div id="outliers-and-robust-regression" class="section level2 hasAnchor" number="4.4">
+<h2><span class="header-section-number">4.4</span> Outliers and Robust regression<a href="regression.html#outliers-and-robust-regression" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>So we have made an OLS model <code>m</code>. We have a measure of model fit and some idea of the relationships between the independent variable (or target variable <span class="math inline">\(y\)</span>) and the dependent variables (or explanatory variables, or predictor variables <span class="math inline">\(x_1\)</span>, <span class="math inline">\(x_2\)</span>, etc) through the coefficient estimates, and we know the degree to which those relationships might be found by chance through the p-values indicating significance.</p>
+<p>Now the model has been fitted to find the line in multivariate feature space that best fits the data points. This is how OLS works. To illustrate what is meant by this, the code below creates a second model using just 2 variables to predict Median Income:</p>
+<div class="sourceCode" id="cb251"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb251-1"><a href="regression.html#cb251-1" tabindex="-1"></a><span class="co"># 2nd OLS model</span></span>
+<span id="cb251-2"><a href="regression.html#cb251-2" tabindex="-1"></a>m2 <span class="ot">=</span> <span class="fu">lm</span>(MedInc<span class="sc">~</span>PctEld<span class="sc">+</span>PctBach, <span class="at">data =</span> georgia) </span>
+<span id="cb251-3"><a href="regression.html#cb251-3" tabindex="-1"></a><span class="co"># summary</span></span>
+<span id="cb251-4"><a href="regression.html#cb251-4" tabindex="-1"></a><span class="fu">summary</span>(m2)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = MedInc ~ PctEld + PctBach, data = georgia)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -27452  -4604   -751   2842  36394 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  50012.7     3555.2  14.067  &lt; 2e-16 ***
+## PctEld       -1620.3      227.6  -7.120 3.71e-11 ***
+## PctBach        562.5      123.1   4.571 9.83e-06 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 7832 on 156 degrees of freedom
+## Multiple R-squared:  0.4515, Adjusted R-squared:  0.4445 
+## F-statistic: 64.21 on 2 and 156 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>Although both covariates are significant, this is a much looser model, with a much lower <span class="math inline">\(R^2\)</span>.</p>
+<p>What a linear regression model tries to do is to find the hyperplane that minimising the distance between it and all the observations, the data points. The best fitting hyperplane is the one that has the minimum summed distance between each observation value and the plane. We can visualise this for our second model using a 3D plot. The code below should generate a pop-out window that you can manipulate (rotate, zoom, etc):</p>
+<div class="sourceCode" id="cb253"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb253-1"><a href="regression.html#cb253-1" tabindex="-1"></a><span class="fu">plot3d</span>(m2, <span class="at">col=</span><span class="st">&quot;orange&quot;</span>, <span class="at">type =</span> <span class="st">&#39;s&#39;</span>, <span class="at">size=</span><span class="dv">1</span>,</span>
+<span id="cb253-2"><a href="regression.html#cb253-2" tabindex="-1"></a>       <span class="at">vars =</span> georgia <span class="sc">|&gt;</span> <span class="fu">st_drop_geometry</span>() <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">select</span>(MedInc, PctEld, PctBach) )</span>
+<span id="cb253-3"><a href="regression.html#cb253-3" tabindex="-1"></a><span class="co"># run the code below to see the plot in your RStudio session </span></span>
+<span id="cb253-4"><a href="regression.html#cb253-4" tabindex="-1"></a><span class="co"># rglwidget(width = 600, height = 1100, reuse = FALSE)</span></span></code></pre></div>
+<p>If you rotate this, you will see that some of the observations (points) are very close to the hyperplane and others are far away. This means that the model describes the relationship between <code>MedInc</code> and <code>PctEld</code> and <code>PctFB</code>well for the data points near to the plane, but less well for those further way. The ones that are far away are called model <strong>outliers</strong>. Essentially these are observations (data points) that the model, indicated by the plane in this case, does not predict very well.</p>
+<p>We will examine outliers in this section.</p>
+<div class="noticebox">
+<p><strong>Outliers</strong> are records or observations that the model does not describe very well, either vastly over-predicting Median Income or under-predicting it. In the <code>m2</code> model above these were easy to find, since they were just the points lying a long way from the regression plane. However, when there are multiple predictors then the hyperplane is fitted to a multi-dimensional space, which in the case of model <code>m</code> created earlier is a 7-dimensional space, which is difficult to visualise and explore.</p>
+</div>
+<p>For outliers, a useful diagnostic is the <em>studentised residual</em>. Plotting these and looking for notably high or low values is a helpful way of spotting outliers in the regression model. A simple way of doing this is just to plot the residuals in order:</p>
+<div class="sourceCode" id="cb254"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb254-1"><a href="regression.html#cb254-1" tabindex="-1"></a>s.resids <span class="ot">&lt;-</span> <span class="fu">rstudent</span>(m2)</span>
+<span id="cb254-2"><a href="regression.html#cb254-2" tabindex="-1"></a><span class="fu">plot</span>(s.resids,<span class="at">type=</span><span class="st">&#39;h&#39;</span>)</span>
+<span id="cb254-3"><a href="regression.html#cb254-3" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>,<span class="dv">2</span>),<span class="at">col=</span><span class="st">&#39;lightskyblue&#39;</span>)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:ch3fig3"></span>
+<img src="_main_files/figure-html/ch3fig3-1.png" alt="A plot of the studentised residuals." width="672" />
+<p class="caption">
+Figure 4.4: A plot of the studentised residuals.
+</p>
+</div>
+<p>Here we see some residuals are relatively high. Normally, one might expect standardised residuals to lie between -2 and +2. Adding lines to this plot helps to identify when this is not the case - as is done above.</p>
+<p>Another useful job is to identify which are the outlying cases.</p>
+<div class="sourceCode" id="cb255"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb255-1"><a href="regression.html#cb255-1" tabindex="-1"></a><span class="co"># create a tibble of georgia and the residuals</span></span>
+<span id="cb255-2"><a href="regression.html#cb255-2" tabindex="-1"></a>df_out <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">Name=</span>georgia<span class="sc">$</span>Name,<span class="at">Residual=</span>s.resids)</span>
+<span id="cb255-3"><a href="regression.html#cb255-3" tabindex="-1"></a><span class="co"># select observations whose absolute residual value is &gt; 2</span></span>
+<span id="cb255-4"><a href="regression.html#cb255-4" tabindex="-1"></a>df_out[<span class="fu">abs</span>(df_out<span class="sc">$</span>Residual)<span class="sc">&gt;</span><span class="dv">2</span>,]</span></code></pre></div>
+<pre><code>## # A tibble: 7 × 2
+##   Name          Residual
+##   &lt;chr&gt;            &lt;dbl&gt;
+## 1 chattahoochee    -2.74
+## 2 clarke           -3.98
+## 3 fayette           3.29
+## 4 forsyth           5.03
+## 5 harris            2.19
+## 6 henry             2.21
+## 7 towns             2.29</code></pre>
+<p>Negative values here indicate a much <em>lower</em> actual income than the model predicts, positive values suggest it is much <em>higher</em> than predicted by the model.</p>
+<p>Finally, we need to check another model assumption in <code>lm</code> - that the error term <span class="math inline">\(\epsilon_i\)</span>’s are normally distributed. The best way to do this is via a <em>qq-plot</em> which plots the <em>empirical</em> quantiles of a variable whose distribution we are interested in against the <em>theoretical</em> distribution we are testing for. If the variable is from this distribution, the results should yield a straight line - frequently a reference line is provided to test this. Here <code>s.resids</code> is the variable of interest - the studentised residuals, and these are compared to the <span class="math inline">\(t\)</span> distribution. Although the <span class="math inline">\(\epsilon_i\)</span>’s have a normal distribution, theory shows that the studentised residuals derived from a sample coming from this model have a <span class="math inline">\(t\)</span> distribution. However, the <code>qqPlot</code> function from the package <code>car</code> does all the work, and requires only the regression model object to create a plot:</p>
+<div class="sourceCode" id="cb257"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb257-1"><a href="regression.html#cb257-1" tabindex="-1"></a><span class="fu">qqPlot</span>(m2)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:ch3fig4"></span>
+<img src="_main_files/figure-html/ch3fig4-1.png" alt="A qq plot of the model residuals." width="672" />
+<p class="caption">
+Figure 4.5: A qq plot of the model residuals.
+</p>
+</div>
+<p>This demonstrates that mostly the residuals do conform to this, with a couple of extreme outliers at the each end - labelled in the plot. Consulting the earlier table suggests these are Clarke and Forsyth Counties.</p>
+<div class="sourceCode" id="cb258"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb258-1"><a href="regression.html#cb258-1" tabindex="-1"></a>df_out[<span class="fu">c</span>(<span class="dv">29</span>, <span class="dv">58</span>), ]</span></code></pre></div>
+<pre><code>## # A tibble: 2 × 2
+##   Name    Residual
+##   &lt;chr&gt;      &lt;dbl&gt;
+## 1 clarke     -3.98
+## 2 forsyth     5.03</code></pre>
+<p>It is also important to consider spatial patterns in the residuals, from a geographical viewpoint. The code below plots the spatial distribution of the outliers, defined as being further than 2 standard deviations away from the mean:</p>
+<div class="sourceCode" id="cb260"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb260-1"><a href="regression.html#cb260-1" tabindex="-1"></a><span class="co"># add the residuals to the data </span></span>
+<span id="cb260-2"><a href="regression.html#cb260-2" tabindex="-1"></a>georgia<span class="sc">$</span>s.resids <span class="ot">=</span> s.resids</span>
+<span id="cb260-3"><a href="regression.html#cb260-3" tabindex="-1"></a><span class="co"># indicate if they are outliers</span></span>
+<span id="cb260-4"><a href="regression.html#cb260-4" tabindex="-1"></a>georgia<span class="sc">$</span>outlier <span class="ot">&lt;-</span> <span class="fu">cut</span>(georgia<span class="sc">$</span>s.resids,</span>
+<span id="cb260-5"><a href="regression.html#cb260-5" tabindex="-1"></a>                       <span class="at">breaks=</span><span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="sc">-</span><span class="dv">2</span>, <span class="dv">2</span>, <span class="cn">Inf</span>), </span>
+<span id="cb260-6"><a href="regression.html#cb260-6" tabindex="-1"></a>                       <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;low&quot;</span>,<span class="st">&quot;normal&quot;</span>,<span class="st">&quot;high&quot;</span>))</span>
+<span id="cb260-7"><a href="regression.html#cb260-7" tabindex="-1"></a><span class="co"># map the spatial distribution of outliers</span></span>
+<span id="cb260-8"><a href="regression.html#cb260-8" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> georgia) <span class="sc">+</span> </span>
+<span id="cb260-9"><a href="regression.html#cb260-9" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> outlier))  </span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:ch3fig5"></span>
+<img src="_main_files/figure-html/ch3fig5-1.png" alt="A map of the outliers - observations where Median Income is over-estimated (red) and under-estimated by the model." width="672" />
+<p class="caption">
+Figure 4.6: A map of the outliers - observations where Median Income is over-estimated (red) and under-estimated by the model.
+</p>
+</div>
+<p>So the presence of a few outliers weakens our models and might ‘throw’ the regression coefficient estimates. One way to investigate this is to remove the outlying observations and re-fit the model. The removal is best done using the <code>dplyr</code> approach and the <code>filter</code> function, before re-fitting the model.</p>
+<div class="sourceCode" id="cb261"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb261-1"><a href="regression.html#cb261-1" tabindex="-1"></a><span class="co"># original model</span></span>
+<span id="cb261-2"><a href="regression.html#cb261-2" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula =</span> MedInc<span class="sc">~</span>PctRural<span class="sc">+</span>PctBach<span class="sc">+</span>PctEld<span class="sc">+</span>PctFB<span class="sc">+</span>PctPov<span class="sc">+</span>PctBlack, <span class="at">data =</span> georgia) </span>
+<span id="cb261-3"><a href="regression.html#cb261-3" tabindex="-1"></a><span class="co"># filter outliers</span></span>
+<span id="cb261-4"><a href="regression.html#cb261-4" tabindex="-1"></a>georgia <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="fu">abs</span>(<span class="fu">rstudent</span>(m)) <span class="sc">&lt;=</span> <span class="dv">2</span>) <span class="ot">-&gt;</span> georgia.f</span>
+<span id="cb261-5"><a href="regression.html#cb261-5" tabindex="-1"></a><span class="co"># filtered model</span></span>
+<span id="cb261-6"><a href="regression.html#cb261-6" tabindex="-1"></a>m.f <span class="ot">&lt;-</span> <span class="fu">lm</span>(MedInc<span class="sc">~</span>PctRural<span class="sc">+</span>PctBach<span class="sc">+</span>PctEld<span class="sc">+</span>PctFB<span class="sc">+</span>PctPov<span class="sc">+</span>PctBlack, <span class="at">data =</span> georgia.f)</span></code></pre></div>
+<p>This done, the <code>compareCoefs</code> function in <code>car</code> lets the results and their standard errors (SE) be compared:</p>
+<div class="sourceCode" id="cb262"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb262-1"><a href="regression.html#cb262-1" tabindex="-1"></a><span class="fu">compareCoefs</span>(m,m.f,<span class="at">print=</span>T, <span class="at">pvals =</span> T)</span></code></pre></div>
+<table>
+<caption><span id="tab:unnamed-chunk-169">Table 4.1: </span>A comparison of regression models with outliers (Model 1) and without (Model 2).</caption>
+<colgroup>
+<col width="13%" />
+<col width="10%" />
+<col width="9%" />
+<col width="22%" />
+<col width="10%" />
+<col width="9%" />
+<col width="22%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="right">Model 1</th>
+<th align="right">SE 1</th>
+<th align="right">Pr(&gt;|z|) 1</th>
+<th align="right">Model 2</th>
+<th align="right">SE 2</th>
+<th align="right">Pr(&gt;|z|) 2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">52598.947</td>
+<td align="right">3108.933</td>
+<td align="right">0.000</td>
+<td align="right">52904.556</td>
+<td align="right">2644.075</td>
+<td align="right">0.000</td>
+</tr>
+<tr class="even">
+<td align="left">PctRural</td>
+<td align="right">73.771</td>
+<td align="right">20.432</td>
+<td align="right">0.000</td>
+<td align="right">67.450</td>
+<td align="right">16.686</td>
+<td align="right">0.000</td>
+</tr>
+<tr class="odd">
+<td align="left">PctBach</td>
+<td align="right">697.256</td>
+<td align="right">112.208</td>
+<td align="right">0.000</td>
+<td align="right">727.747</td>
+<td align="right">104.936</td>
+<td align="right">0.000</td>
+</tr>
+<tr class="even">
+<td align="left">PctEld</td>
+<td align="right">-788.619</td>
+<td align="right">179.790</td>
+<td align="right">0.000</td>
+<td align="right">-924.904</td>
+<td align="right">146.770</td>
+<td align="right">0.000</td>
+</tr>
+<tr class="odd">
+<td align="left">PctFB</td>
+<td align="right">-1290.304</td>
+<td align="right">473.881</td>
+<td align="right">0.006</td>
+<td align="right">-1484.786</td>
+<td align="right">459.329</td>
+<td align="right">0.001</td>
+</tr>
+<tr class="even">
+<td align="left">PctPov</td>
+<td align="right">-954.003</td>
+<td align="right">104.591</td>
+<td align="right">0.000</td>
+<td align="right">-886.720</td>
+<td align="right">92.269</td>
+<td align="right">0.000</td>
+</tr>
+<tr class="odd">
+<td align="left">PctBlack</td>
+<td align="right">33.132</td>
+<td align="right">37.170</td>
+<td align="right">0.373</td>
+<td align="right">42.998</td>
+<td align="right">31.465</td>
+<td align="right">0.172</td>
+</tr>
+</tbody>
+</table>
+<p>There are a couple of things to consider when comparing Model 1 and Model 2:</p>
+<ol style="list-style-type: decimal">
+<li>the difference between the coefficient estimates</li>
+<li>the change in the Standard Errors between the models</li>
+<li>the change in the p-values (<code>Pr(&gt;|z|)</code>)</li>
+</ol>
+<p>It can be seen that some of the coefficient estimates alter notably between the models with and without outliers. Some are small differences but others are large: consider effect on <code>PctFB</code> and <code>PctBlack</code>.</p>
+<p><strong>Robust regression</strong> offers a more nuanced approach. Here, instead of simply ignoring or removing the outliers, it is assumed that for whatever reason, they are subject to much more variance than the remaining observations - possibly due to some characteristic of the sampling process, or - more likely here - due to some unusual circumstances in the geographical locality (for example the presence of a large university skewing income figures in and around Atlanta compared to most of the State). Rather than totally ignoring such observations, in a robust regression, they are down weighted to allow for this. This is less extreme than removing outliers - which in a sense is extreme down weighting to the value zero!</p>
+<p>There are a number of approaches to robust regression - here we will use one proposed by <span class="citation">Huber (<a href="#ref-huber2011robust">2011</a>)</span>. This uses an algorithm as below:</p>
+<ol style="list-style-type: decimal">
+<li>Fit a standard regression model and note the residuals.</li>
+<li>Compute the weight for each observation as a function of absolute residual size.</li>
+<li>Refit the regression model with these weights. Update the residual values.</li>
+<li>Repeat from step 2 until regression coefficient estimates converge.</li>
+</ol>
+<p>This is all implemented in the <code>rlm</code> function in the package <code>MASS</code>. It is very easy to use - once you have loaded <code>MASS</code> it just works like <code>lm</code>:</p>
+<div class="sourceCode" id="cb263"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb263-1"><a href="regression.html#cb263-1" tabindex="-1"></a>m.r <span class="ot">&lt;-</span> <span class="fu">rlm</span>(MedInc<span class="sc">~</span>PctRural<span class="sc">+</span>PctBach<span class="sc">+</span>PctEld<span class="sc">+</span>PctFB<span class="sc">+</span>PctPov<span class="sc">+</span>PctBlack, <span class="at">data =</span> georgia)</span>
+<span id="cb263-2"><a href="regression.html#cb263-2" tabindex="-1"></a>m.r</span></code></pre></div>
+<pre><code>## Call:
+## rlm(formula = MedInc ~ PctRural + PctBach + PctEld + PctFB + 
+##     PctPov + PctBlack, data = georgia)
+## Converged in 9 iterations
+## 
+## Coefficients:
+## (Intercept)    PctRural     PctBach      PctEld       PctFB      PctPov    PctBlack 
+## 51607.73916    63.37478   677.87963  -777.78234 -1224.69054  -880.53199    31.79542 
+## 
+## Degrees of freedom: 159 total; 152 residual
+## Scale estimate: 4190</code></pre>
+<p>Here the coefficient estimates are printed out, and it may also be seen that the model converged in 9 iterations, and that the scale factor <span class="math inline">\(\tau\)</span> was estimated as 4190. As with <code>lm</code> you can print out a summary:</p>
+<div class="sourceCode" id="cb265"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb265-1"><a href="regression.html#cb265-1" tabindex="-1"></a><span class="fu">summary</span>(m.r)</span></code></pre></div>
+<pre><code>## 
+## Call: rlm(formula = MedInc ~ PctRural + PctBach + PctEld + PctFB + 
+##     PctPov + PctBlack, data = georgia)
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -12848.5  -2832.6   -176.5   2501.2  27420.4 
+## 
+## Coefficients:
+##             Value      Std. Error t value   
+## (Intercept) 51607.7392  2737.7192    18.8506
+## PctRural       63.3748    17.9920     3.5224
+## PctBach       677.8796    98.8100     6.8604
+## PctEld       -777.7823   158.3230    -4.9126
+## PctFB       -1224.6905   417.2985    -2.9348
+## PctPov       -880.5320    92.1023    -9.5604
+## PctBlack       31.7954    32.7318     0.9714
+## 
+## Residual standard error: 4188 on 152 degrees of freedom</code></pre>
+<p>Finally, coefficients from all three approaches can be compared:</p>
+<div class="sourceCode" id="cb267"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb267-1"><a href="regression.html#cb267-1" tabindex="-1"></a>coef_tab <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">OLS=</span><span class="fu">coef</span>(m),<span class="st">`</span><span class="at">Outliers Deleted</span><span class="st">`</span><span class="ot">=</span><span class="fu">coef</span>(m.f),<span class="at">Robust=</span><span class="fu">coef</span>(m.r))</span>
+<span id="cb267-2"><a href="regression.html#cb267-2" tabindex="-1"></a>coef_tab</span></code></pre></div>
+<table>
+<caption><span id="tab:unnamed-chunk-172">Table 4.2: </span>A comparison of regression model coefficient estimates.</caption>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="right">OLS</th>
+<th align="right">Outliers.Deleted</th>
+<th align="right">Robust</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">52598.947</td>
+<td align="right">52904.556</td>
+<td align="right">51607.739</td>
+</tr>
+<tr class="even">
+<td align="left">PctRural</td>
+<td align="right">73.771</td>
+<td align="right">67.450</td>
+<td align="right">63.375</td>
+</tr>
+<tr class="odd">
+<td align="left">PctBach</td>
+<td align="right">697.256</td>
+<td align="right">727.747</td>
+<td align="right">677.880</td>
+</tr>
+<tr class="even">
+<td align="left">PctEld</td>
+<td align="right">-788.619</td>
+<td align="right">-924.904</td>
+<td align="right">-777.782</td>
+</tr>
+<tr class="odd">
+<td align="left">PctFB</td>
+<td align="right">-1290.304</td>
+<td align="right">-1484.786</td>
+<td align="right">-1224.691</td>
+</tr>
+<tr class="even">
+<td align="left">PctPov</td>
+<td align="right">-954.003</td>
+<td align="right">-886.720</td>
+<td align="right">-880.532</td>
+</tr>
+<tr class="odd">
+<td align="left">PctBlack</td>
+<td align="right">33.132</td>
+<td align="right">42.998</td>
+<td align="right">31.795</td>
+</tr>
+</tbody>
+</table>
+<p>For some coefficients, the robust estimate is closer to the standard OLS, and for others, it is closer to the <code>Outliers.Deleted</code> estimate. However in others, it differs from OLS, but not in the same direction as the <code>Outliers.Deleted</code> case.</p>
+<p>So the options for models when data have outliers that ‘throw’ the model are</p>
+<ol style="list-style-type: decimal">
+<li>Ignore them: the data is the data and provides a true picture of measurements that were made</li>
+<li>Filter them: just use the observations that predict the target variable well</li>
+<li>Down weight them: use a robust regression</li>
+</ol>
+<p>As a precautionary approach, I suggest working with the robust approach if there are some notable outliers. However, it could be argued that the approach of removing them entirely is misleading - essentially trying to pass off a model as universal but intentionally ignoring observations that contradict it. Although that might be quite extreme, the point holds to some extent, even with robust regression: those counties <em>do</em> have those statistics, and so should perhaps not be ignored entirely.</p>
+</div>
+<div id="addendum-prediction-vs-inference" class="section level2 unnumbered hasAnchor">
+<h2>Addendum: Prediction vs Inference<a href="regression.html#addendum-prediction-vs-inference" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>You will need to the OLS regression models created earlier into your workspace:</p>
+<div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb268-1"><a href="regression.html#cb268-1" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula =</span> MedInc<span class="sc">~</span>PctRural<span class="sc">+</span>PctBach<span class="sc">+</span>PctEld<span class="sc">+</span>PctFB<span class="sc">+</span>PctPov<span class="sc">+</span>PctBlack, <span class="at">data =</span> georgia) </span></code></pre></div>
+<p>Recall that the regression model <code>m</code> gives us an idea of how different factors are <em>associated</em> in different ways with Median Income in the counties of the state of Georgia and their interaction. This is key to understanding all predictive and explanatory models, whether spatial or not.</p>
+<p>If we can examine the model we can make a series of statements about how the various factors relate to the target variable, <code>MedInc</code> representing County median income (in 1000s of dollars):</p>
+<div class="sourceCode" id="cb269"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb269-1"><a href="regression.html#cb269-1" tabindex="-1"></a><span class="fu">summary</span>(m)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = MedInc ~ PctRural + PctBach + PctEld + PctFB + PctPov + 
+##     PctBlack, data = georgia)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -12420.3  -2989.7   -616.3   2209.5  25820.1 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 52598.95    3108.93  16.919  &lt; 2e-16 ***
+## PctRural       73.77      20.43   3.611 0.000414 ***
+## PctBach       697.26     112.21   6.214 4.73e-09 ***
+## PctEld       -788.62     179.79  -4.386 2.14e-05 ***
+## PctFB       -1290.30     473.88  -2.723 0.007229 ** 
+## PctPov       -954.00     104.59  -9.121 4.19e-16 ***
+## PctBlack       33.13      37.17   0.891 0.374140    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 5155 on 152 degrees of freedom
+## Multiple R-squared:  0.7685, Adjusted R-squared:  0.7593 
+## F-statistic: 84.09 on 6 and 152 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>There are 2 things to note:</p>
+<p>First, the phrasing of the interpretation of the model outputs is key:</p>
+<ul>
+<li>“each additional 1% of the population that has a degree is <strong><em>associated with</em></strong> an increase of $697.256 in median income”</li>
+<li>“each additional 1% of the population that is elderly is <strong><em>associated with</em></strong> an increase of $-788.619 in median income” (i.e. a decrease)</li>
+<li>etc</li>
+</ul>
+<p>This is <strong>inference</strong>. These coefficient estimate enhance our <strong>understanding</strong> of the process being investigated. We are not as yet able to say anything about what is <em>causing</em> these variations in Median Income as we have no theoretical model to infer causality.</p>
+<p>Second, <code>m</code>, as with any model, can be used for <strong>Prediction</strong>. In this case, to predict county level Median Income given inputs for the model factors (predictor variables). The table below shows some hypothetical data for hypothetical Counties and the predicted Median Income for these:</p>
+<div class="sourceCode" id="cb271"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb271-1"><a href="regression.html#cb271-1" tabindex="-1"></a><span class="co"># create some test data </span></span>
+<span id="cb271-2"><a href="regression.html#cb271-2" tabindex="-1"></a>test <span class="ot">=</span> <span class="fu">data.frame</span>(</span>
+<span id="cb271-3"><a href="regression.html#cb271-3" tabindex="-1"></a>  <span class="at">PctRural =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">70</span>, <span class="dv">50</span>, <span class="dv">70</span>, <span class="dv">10</span>),</span>
+<span id="cb271-4"><a href="regression.html#cb271-4" tabindex="-1"></a>  <span class="at">PctBach  =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">25</span>),</span>
+<span id="cb271-5"><a href="regression.html#cb271-5" tabindex="-1"></a>  <span class="at">PctEld   =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">12</span>, <span class="dv">15</span>),</span>
+<span id="cb271-6"><a href="regression.html#cb271-6" tabindex="-1"></a>  <span class="at">PctFB    =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">5</span>),</span>
+<span id="cb271-7"><a href="regression.html#cb271-7" tabindex="-1"></a>  <span class="at">PctPov   =</span> <span class="fu">c</span>(<span class="dv">20</span>, <span class="dv">10</span>, <span class="dv">8</span>, <span class="dv">25</span>, <span class="dv">25</span>),  </span>
+<span id="cb271-8"><a href="regression.html#cb271-8" tabindex="-1"></a>  <span class="at">PctBlack =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">75</span>, <span class="dv">20</span>, <span class="dv">30</span>, <span class="dv">75</span>)) </span>
+<span id="cb271-9"><a href="regression.html#cb271-9" tabindex="-1"></a><span class="co"># predict using the model</span></span>
+<span id="cb271-10"><a href="regression.html#cb271-10" tabindex="-1"></a>predIncome <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">predict</span>(m, <span class="at">newdata =</span> test), <span class="dv">3</span>)</span>
+<span id="cb271-11"><a href="regression.html#cb271-11" tabindex="-1"></a><span class="co"># display</span></span>
+<span id="cb271-12"><a href="regression.html#cb271-12" tabindex="-1"></a><span class="fu">data.frame</span>(test, <span class="at">Predicted.Income =</span> predIncome)</span></code></pre></div>
+<table>
+<caption><span id="tab:unnamed-chunk-178">Table 4.3: </span>Predicted Median Income values from the model ‘m’</caption>
+<thead>
+<tr class="header">
+<th align="right">PctRural</th>
+<th align="right">PctBach</th>
+<th align="right">PctEld</th>
+<th align="right">PctFB</th>
+<th align="right">PctPov</th>
+<th align="right">PctBlack</th>
+<th align="right">Predicted.Income</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">10</td>
+<td align="right">5</td>
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="right">20</td>
+<td align="right">5</td>
+<td align="right">35041.00</td>
+</tr>
+<tr class="even">
+<td align="right">70</td>
+<td align="right">5</td>
+<td align="right">5</td>
+<td align="right">1</td>
+<td align="right">10</td>
+<td align="right">75</td>
+<td align="right">48960.65</td>
+</tr>
+<tr class="odd">
+<td align="right">50</td>
+<td align="right">10</td>
+<td align="right">5</td>
+<td align="right">1</td>
+<td align="right">8</td>
+<td align="right">20</td>
+<td align="right">51057.26</td>
+</tr>
+<tr class="even">
+<td align="right">70</td>
+<td align="right">10</td>
+<td align="right">12</td>
+<td align="right">5</td>
+<td align="right">25</td>
+<td align="right">30</td>
+<td align="right">25964.39</td>
+</tr>
+<tr class="odd">
+<td align="right">10</td>
+<td align="right">25</td>
+<td align="right">15</td>
+<td align="right">5</td>
+<td align="right">25</td>
+<td align="right">75</td>
+<td align="right">31122.10</td>
+</tr>
+</tbody>
+</table>
+<p>In summary, statistical models are constructed for 2 primary purposes: to predict or to infer some process. The distinction between the two activities has sometimes been blurred as the volume of activities in data analytics and statistics has increased, and the background training of those involved these activities has diversified. Sometimes the terminology is confusing, especially the use of the term <em>inference</em> or <em>infer</em>.</p>
+<p>In truth, both prediction and inference seek to <em>infer</em> <span class="math inline">\(y\)</span> from <span class="math inline">\(x\)</span> in some way through some function <span class="math inline">\(f\)</span>, where <span class="math inline">\(x\)</span> represents the inputs (predictor, independent, etc) variables and <span class="math inline">\(y\)</span> is the target (or dependent) variable and <span class="math inline">\(\epsilon\)</span> is some random error term:</p>
+<p><span class="math display">\[\begin{equation}
+y = f(x) + \epsilon{}
+\label{eq:eg}
+\end{equation}\]</span></p>
+<p>It is always useful to return to core knowledge to (re-)establish fundamental paradigms, and in this case to consider how others regard the distinction between prediction and other kinds of inference:</p>
+<blockquote>
+<p>…in a real estate setting, one may seek to relate values of homes to inputs such as crime rate, zoning, distance from a river, air quality, schools, income level of community, size of houses, and so forth. In this case one might be interested in how the individual input variables affect the prices—that is, <em>how much extra will a house be worth if it has a view of the river</em>? This is an <strong>inference problem</strong>. Alternatively, one may simply be interested in predicting the value of a home given its characteristics: <em>is this house under- or over-valued?</em> This is a <strong>prediction problem</strong>. (<span class="citation">James et al. (<a href="#ref-james2013introduction">2013</a>)</span>; p20, bold emphasis added).</p>
+</blockquote>
+<p>Viewed through this lens, prediction and inference can be distinguished as follows:</p>
+<p><strong>Prediction</strong> uses the estimated function <span class="math inline">\(f\)</span> to forecast <span class="math inline">\(y\)</span>, for example over unsampled areas when data for those areas becomes available, or into the future, given different future states.</p>
+<p><strong>Inference</strong> uses estimated function <span class="math inline">\(f\)</span> to understand the impact of the the inputs <span class="math inline">\(x\)</span> on the outcome <span class="math inline">\(y\)</span>. It is often associated with process understanding, with the aim of, for example, determining how much of <span class="math inline">\(y\)</span> is explained by a particular <span class="math inline">\(x\)</span>, for example <span class="math inline">\(x_i\)</span>, through its partial derivative <span class="math inline">\(\partial{f} / \partial{x_i}\)</span>.</p>
+<p>The aim in both cases is to identify the function <span class="math inline">\(f\)</span> that best approximates the relationships or structure in the data. And, although Prediction and Inference are both in a sense <em>inferential</em> with one focusing on forecasting and the other on process understanding, and both may use the same estimation procedure to determine <span class="math inline">\(f\)</span>, the major difference is that they have different procedural considerations. This is especially the case for how the issues around independence and collinearity amongst predictor variables are treated for example: highly correlated input variables may make it difficult to separate variable effects in when the objective is inference, whereas this does not matter for prediction, which is concerned only with the accuracy and reliability of the forecast.</p>
+</div>
+<div id="answers-to-tasks-3" class="section level2 unnumbered hasAnchor">
+<h2>Answers to Tasks<a href="regression.html#answers-to-tasks-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Task 1</strong>
+Create an OLS model with the <code>PctEld</code> variable as the target variable and <code>PctRural</code>, <code>PctPov</code>, <code>PctBach</code> and <code>PctFB</code> as the target variables. Interpret the model outputs including the coefficient estimates, significance and model fit.</p>
+<p>The model is specified and summarised below</p>
+<div class="sourceCode" id="cb272"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb272-1"><a href="regression.html#cb272-1" tabindex="-1"></a><span class="co"># Task 1</span></span>
+<span id="cb272-2"><a href="regression.html#cb272-2" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">lm</span>(PctEld<span class="sc">~</span>PctRural<span class="sc">+</span>PctPov<span class="sc">+</span>PctFB<span class="sc">+</span>PctBach, <span class="at">data =</span> georgia)</span>
+<span id="cb272-3"><a href="regression.html#cb272-3" tabindex="-1"></a><span class="fu">summary</span>(m)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = PctEld ~ PctRural + PctPov + PctFB + PctBach, data = georgia)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -5.6344 -1.3926 -0.2233  1.2571 11.7801 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  7.246854   1.271934   5.698 6.00e-08 ***
+## PctRural     0.020454   0.008992   2.275  0.02430 *  
+## PctPov       0.194533   0.028182   6.903 1.25e-10 ***
+## PctFB       -0.563562   0.208723  -2.700  0.00771 ** 
+## PctBach     -0.006093   0.050055  -0.122  0.90328    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 2.325 on 154 degrees of freedom
+## Multiple R-squared:  0.4447, Adjusted R-squared:  0.4303 
+## F-statistic: 30.84 on 4 and 154 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>This can be interpreted as follows:</p>
+<ul>
+<li>all of the predictor variables are statistically significant except <code>PctBach</code></li>
+<li>the coefficient estimates of the significant predictors indicate that
+<ul>
+<li>each 1% increase in <code>PctRural</code> is associated with a 0.02% increase in <code>PctEld</code> suggesting that is has a very weak effect</li>
+<li>each 1% increase in <code>PctPov</code> is associated with a 0.19% increase in <code>PctEld</code> suggesting that is has a somewhat weak but positive effect</li>
+<li>each 1% increase in <code>PctFB</code> is associated with a 0.56% decrease in <code>PctEld</code> suggesting that is has a strong negative effect</li>
+</ul></li>
+<li>the model fit is fairly low (an <span class="math inline">\(R^2\)</span> of 0.44)</li>
+</ul>
+<p><strong>Task 2</strong>
+Create and interpret a binomial GLM with the target variable of <code>LocalHosp</code> (difficulty in access to a local hospital) using the following target variables:</p>
+<ul>
+<li><code>Health</code>: their declared health status;</li>
+<li><code>Illness</code>: whether they have a limiting long term illness;</li>
+<li><code>Hosp</code>: distance from the respondent’s home postcode to the nearest GP surgery - this was calculated after the survey;</li>
+<li><code>cars</code>: the number of cars they own, specifically we can use this to determine non-car ownership.</li>
+</ul>
+<p>A bit of pre-processing is needed to get these into a format that is suitable for analysis. First the data reloaded and then subsetted to include the variables of interest.</p>
+<div class="sourceCode" id="cb274"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb274-1"><a href="regression.html#cb274-1" tabindex="-1"></a><span class="co"># Task 2</span></span>
+<span id="cb274-2"><a href="regression.html#cb274-2" tabindex="-1"></a>data.pt <span class="ot">=</span> <span class="fu">st_read</span>(<span class="st">&quot;place_survey_pts.gpkg&quot;</span>, <span class="at">quiet =</span> T)</span>
+<span id="cb274-3"><a href="regression.html#cb274-3" tabindex="-1"></a>data.pt <span class="ot">&lt;-</span> data.pt <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(LocalHosp, Health, Illness, Hosp, cars) </span></code></pre></div>
+<p>Again the text descriptions need to be converted to binary variables:</p>
+<div class="sourceCode" id="cb275"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb275-1"><a href="regression.html#cb275-1" tabindex="-1"></a><span class="co"># convert the data </span></span>
+<span id="cb275-2"><a href="regression.html#cb275-2" tabindex="-1"></a>data.pt <span class="sc">%&gt;%</span> </span>
+<span id="cb275-3"><a href="regression.html#cb275-3" tabindex="-1"></a>  <span class="fu">transmute</span>(</span>
+<span id="cb275-4"><a href="regression.html#cb275-4" tabindex="-1"></a>    <span class="at">HospDiff =</span> (LocalHosp <span class="sc">==</span> <span class="st">&quot;Fairly difficult&quot;</span> <span class="sc">|</span> LocalHosp <span class="sc">==</span> <span class="st">&quot;Very difficult&quot;</span>)<span class="sc">+</span><span class="dv">0</span>,</span>
+<span id="cb275-5"><a href="regression.html#cb275-5" tabindex="-1"></a>    <span class="at">BadHealth =</span> (Health <span class="sc">==</span> <span class="st">&quot;Bad&quot;</span> <span class="sc">|</span> Health <span class="sc">==</span>    <span class="st">&quot;Very bad&quot;</span>)<span class="sc">+</span><span class="dv">0</span>,</span>
+<span id="cb275-6"><a href="regression.html#cb275-6" tabindex="-1"></a>    <span class="at">Illness =</span> (Illness <span class="sc">==</span> <span class="st">&quot;Do have&quot;</span>)<span class="sc">+</span><span class="dv">0</span>,</span>
+<span id="cb275-7"><a href="regression.html#cb275-7" tabindex="-1"></a>    <span class="at">NoCar =</span> (cars <span class="sc">==</span> <span class="dv">0</span>)<span class="sc">+</span><span class="dv">0</span>,</span>
+<span id="cb275-8"><a href="regression.html#cb275-8" tabindex="-1"></a>    <span class="at">HospDist =</span> Hosp<span class="sc">/</span><span class="dv">1000</span>) <span class="ot">-&gt;</span> data.pt</span></code></pre></div>
+<div class="sourceCode" id="cb276"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb276-1"><a href="regression.html#cb276-1" tabindex="-1"></a><span class="co">#create the model</span></span>
+<span id="cb276-2"><a href="regression.html#cb276-2" tabindex="-1"></a>m.glm <span class="ot">=</span> <span class="fu">glm</span>(<span class="at">formula =</span> HospDiff<span class="sc">~</span>Illness <span class="sc">+</span> BadHealth <span class="sc">+</span> HospDist <span class="sc">+</span> NoCar, </span>
+<span id="cb276-3"><a href="regression.html#cb276-3" tabindex="-1"></a>            <span class="at">data =</span> data.pt, </span>
+<span id="cb276-4"><a href="regression.html#cb276-4" tabindex="-1"></a>            <span class="at">family=</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">&quot;logit&quot;</span>))</span>
+<span id="cb276-5"><a href="regression.html#cb276-5" tabindex="-1"></a><span class="co"># inspect the results</span></span>
+<span id="cb276-6"><a href="regression.html#cb276-6" tabindex="-1"></a><span class="fu">summary</span>(m.glm) </span></code></pre></div>
+<pre><code>## 
+## Call:
+## glm(formula = HospDiff ~ Illness + BadHealth + HospDist + NoCar, 
+##     family = binomial(link = &quot;logit&quot;), data = data.pt)
+## 
+## Coefficients:
+##              Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept) -1.583811   0.053153 -29.797  &lt; 2e-16 ***
+## Illness      0.233799   0.059518   3.928 8.56e-05 ***
+## BadHealth    0.404305   0.118860   3.402  0.00067 ***
+## HospDist     0.001931   0.004076   0.474  0.63566    
+## NoCar        0.479664   0.068617   6.990 2.74e-12 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 8583.8  on 8529  degrees of freedom
+## Residual deviance: 8482.7  on 8525  degrees of freedom
+## AIC: 8492.7
+## 
+## Number of Fisher Scoring iterations: 4</code></pre>
+<div class="sourceCode" id="cb278"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb278-1"><a href="regression.html#cb278-1" tabindex="-1"></a><span class="co"># odds ratios</span></span>
+<span id="cb278-2"><a href="regression.html#cb278-2" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">coef</span>(m.glm)) </span></code></pre></div>
+<pre><code>## (Intercept)     Illness   BadHealth    HospDist       NoCar 
+##   0.2051916   1.2633908   1.4982615   1.0019330   1.6155322</code></pre>
+<div class="sourceCode" id="cb280"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb280-1"><a href="regression.html#cb280-1" tabindex="-1"></a><span class="co"># confidence intervals</span></span>
+<span id="cb280-2"><a href="regression.html#cb280-2" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">confint</span>(m.glm, <span class="at">level =</span> <span class="fl">0.95</span>)) </span></code></pre></div>
+<pre><code>## Waiting for profiling to be done...</code></pre>
+<pre><code>##                 2.5 %    97.5 %
+## (Intercept) 0.1847910 0.2276029
+## Illness     1.1238324 1.4191901
+## BadHealth   1.1841057 1.8875011
+## HospDist    0.9939228 1.0099336
+## NoCar       1.4111448 1.8467651</code></pre>
+<p>What these show is that there are significant statistical relationships between all of the variables and experiencing difficulty in access to Local Hospitals. The proportion of respondents experiencing access difficulty…</p>
+<ul>
+<li>increases with Long Term Illness (1.3 times more likely than for those without long term illness), with a CI or likely range of between 1.1 and 1.4 times;</li>
+<li>increases with a lack of car ownership (1.6 times more likely than for those who own a car), with a CI of between 1.4 and 1.8 times;</li>
+<li>increases if the respondent has Bad Health (1.5 times more likely than for those with Bad Health), with a CI of between 1.2 and 1.9;</li>
+</ul>
+<p>Distance (<code>HospDist</code>) is not significant and as also reflected in the odds ratios of around 1</p>
+</div>
+<div id="optional-the-maup" class="section level2 unnumbered hasAnchor">
+<h2>Optional: the MAUP<a href="regression.html#optional-the-maup" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="introduction" class="section level3 hasAnchor" number="4.4.1">
+<h3><span class="header-section-number">4.4.1</span> Introduction<a href="regression.html#introduction" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The Modifiable Areal Unit Problem (or MAUP) is a manifestation of the Ecological Fallacy (<span class="citation">Robinson (<a href="#ref-robinson2009ecological">2009</a>)</span>) in spatial data (<span class="citation">Openshaw (<a href="#ref-openshaw1984catmog">1984a</a>)</span>, <span class="citation">Openshaw (<a href="#ref-openshaw1984ecological">1984b</a>)</span>). In outline, the MAUP posits that statistical relationships, trends and correlations trends may exhibit very different properties when data are aggregated over different reporting units at different scales as they frequently are in analyses of spatial data. A common example is census data reported over different geographies. In this additional activities you will examine the impact of the MAUP using census data aggregated over different geographies.</p>
+<p>The MAUP describes the distortion of rate calculations and their impact on statistical analyses whether aimed at prediction or inference. It results in differences in outcomes when data or processes are summarised in some way over different spatial units, which are then used inputs to a model. The model outputs will vary when constructed from data aggregated over different areal units (<span class="citation">Openshaw (<a href="#ref-openshaw1984catmog">1984a</a>)</span>) because of differences in scale that drive the aggregation. Openshaw’s original publication on the MAUP can be downloaded from <a href="http://www.qmrg.org.uk/catmog/index.html" class="uri">http://www.qmrg.org.uk/catmog/index.html</a>.</p>
+<p>The MAUP is a long standing and well recognised issue in geography, but is only starting to be discovered in other domains that use spatial data such as landscape ecology, climate change, land use decision making. And of course, in this time of the many new forms of big spatial data (from crowdsourcing, sensors, social media analysis etc), consideration of the MAUP has never been more important. The additional reading at the end of the session provides some accessible examples.</p>
+<p>We have just made some model and inferred some relationships between the target variable median income and various socio-economic factors. This was done for the state of Georgia n the USA with data aggregated over the 159 counties in Georgia. The code below loads another version of the Georgia data, constructed from the same population data, but now aggregated over 35 zones.</p>
+<div class="sourceCode" id="cb283"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb283-1"><a href="regression.html#cb283-1" tabindex="-1"></a><span class="co"># load the data</span></span>
+<span id="cb283-2"><a href="regression.html#cb283-2" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;georgia_z.RData&quot;</span>)</span></code></pre></div>
+<p>We can examine the distribution of the <code>MedInc</code> variable over the counties and the zones using <code>ggplot2</code> :</p>
+<div class="sourceCode" id="cb284"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb284-1"><a href="regression.html#cb284-1" tabindex="-1"></a>p1 <span class="ot">=</span> </span>
+<span id="cb284-2"><a href="regression.html#cb284-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(georgia) <span class="sc">+</span> <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> MedInc)) <span class="sc">+</span></span>
+<span id="cb284-3"><a href="regression.html#cb284-3" tabindex="-1"></a>  <span class="fu">scale_fill_distiller</span>(<span class="at">palette =</span> <span class="st">&quot;YlGnBu&quot;</span>) </span>
+<span id="cb284-4"><a href="regression.html#cb284-4" tabindex="-1"></a>p2 <span class="ot">=</span> </span>
+<span id="cb284-5"><a href="regression.html#cb284-5" tabindex="-1"></a>  <span class="fu">ggplot</span>(georgia_z) <span class="sc">+</span> <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> MedInc)) <span class="sc">+</span></span>
+<span id="cb284-6"><a href="regression.html#cb284-6" tabindex="-1"></a>  <span class="fu">scale_fill_distiller</span>(<span class="at">palette =</span> <span class="st">&quot;YlGnBu&quot;</span>) </span></code></pre></div>
+<p>We can examine the distributions in the data after creating a data, frame for each:</p>
+<div class="sourceCode" id="cb285"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb285-1"><a href="regression.html#cb285-1" tabindex="-1"></a>g <span class="ot">=</span> georgia <span class="sc">|&gt;</span> <span class="fu">st_drop_geometry</span>() <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">select</span>(MedInc, PctRural<span class="sc">:</span> PctBlack)</span>
+<span id="cb285-2"><a href="regression.html#cb285-2" tabindex="-1"></a>gz <span class="ot">=</span> georgia_z <span class="sc">|&gt;</span> <span class="fu">st_drop_geometry</span>() <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">select</span>(MedInc, PctRural<span class="sc">:</span> PctBlack)</span>
+<span id="cb285-3"><a href="regression.html#cb285-3" tabindex="-1"></a><span class="fu">summary</span>(g)</span></code></pre></div>
+<pre><code>##      MedInc         PctRural         PctBach          PctEld          PctFB      
+##  Min.   :23456   Min.   :  2.50   Min.   : 4.20   Min.   : 1.46   Min.   :0.040  
+##  1st Qu.:29773   1st Qu.: 54.70   1st Qu.: 7.60   1st Qu.: 9.81   1st Qu.:0.415  
+##  Median :34307   Median : 72.30   Median : 9.40   Median :12.07   Median :0.720  
+##  Mean   :37147   Mean   : 70.18   Mean   :10.95   Mean   :11.74   Mean   :1.131  
+##  3rd Qu.:41204   3rd Qu.:100.00   3rd Qu.:12.00   3rd Qu.:13.70   3rd Qu.:1.265  
+##  Max.   :81603   Max.   :100.00   Max.   :37.50   Max.   :22.96   Max.   :6.740  
+##      PctPov         PctBlack    
+##  Min.   : 2.60   Min.   : 0.00  
+##  1st Qu.:14.05   1st Qu.:11.75  
+##  Median :18.60   Median :27.64  
+##  Mean   :19.34   Mean   :27.39  
+##  3rd Qu.:24.65   3rd Qu.:40.06  
+##  Max.   :35.90   Max.   :79.64</code></pre>
+<div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb287-1"><a href="regression.html#cb287-1" tabindex="-1"></a><span class="fu">summary</span>(g)</span></code></pre></div>
+<pre><code>##      MedInc         PctRural         PctBach          PctEld          PctFB      
+##  Min.   :23456   Min.   :  2.50   Min.   : 4.20   Min.   : 1.46   Min.   :0.040  
+##  1st Qu.:29773   1st Qu.: 54.70   1st Qu.: 7.60   1st Qu.: 9.81   1st Qu.:0.415  
+##  Median :34307   Median : 72.30   Median : 9.40   Median :12.07   Median :0.720  
+##  Mean   :37147   Mean   : 70.18   Mean   :10.95   Mean   :11.74   Mean   :1.131  
+##  3rd Qu.:41204   3rd Qu.:100.00   3rd Qu.:12.00   3rd Qu.:13.70   3rd Qu.:1.265  
+##  Max.   :81603   Max.   :100.00   Max.   :37.50   Max.   :22.96   Max.   :6.740  
+##      PctPov         PctBlack    
+##  Min.   : 2.60   Min.   : 0.00  
+##  1st Qu.:14.05   1st Qu.:11.75  
+##  Median :18.60   Median :27.64  
+##  Mean   :19.34   Mean   :27.39  
+##  3rd Qu.:24.65   3rd Qu.:40.06  
+##  Max.   :35.90   Max.   :79.64</code></pre>
+<p>You can see that there are differences - notably in the high values of median income, but a similar picture is present.</p>
+</div>
+<div id="impact-on-correlations-of-counts" class="section level3 hasAnchor" number="4.4.2">
+<h3><span class="header-section-number">4.4.2</span> Impact on Correlations of Counts<a href="regression.html#impact-on-correlations-of-counts" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Then the <code>cor</code> function can be applied to the data frame, and for legibility the <code>round</code> function is also applied:</p>
+<div class="sourceCode" id="cb289"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb289-1"><a href="regression.html#cb289-1" tabindex="-1"></a><span class="co"># generate correlations</span></span>
+<span id="cb289-2"><a href="regression.html#cb289-2" tabindex="-1"></a>cor_g <span class="ot">=</span> <span class="fu">cor</span>(g)</span>
+<span id="cb289-3"><a href="regression.html#cb289-3" tabindex="-1"></a>cor_z <span class="ot">=</span> <span class="fu">cor</span>(gz)</span>
+<span id="cb289-4"><a href="regression.html#cb289-4" tabindex="-1"></a><span class="co"># examine</span></span>
+<span id="cb289-5"><a href="regression.html#cb289-5" tabindex="-1"></a><span class="fu">round</span>(cor_g, <span class="dv">3</span>)</span></code></pre></div>
+<pre><code>##          MedInc PctRural PctBach PctEld  PctFB PctPov PctBlack
+## MedInc    1.000   -0.169   0.523 -0.615  0.320 -0.818   -0.536
+## PctRural -0.169    1.000  -0.619  0.390 -0.547  0.174   -0.069
+## PctBach   0.523   -0.619   1.000 -0.458  0.672 -0.402   -0.109
+## PctEld   -0.615    0.390  -0.458  1.000 -0.483  0.568    0.297
+## PctFB     0.320   -0.547   0.672 -0.483  1.000 -0.329   -0.112
+## PctPov   -0.818    0.174  -0.402  0.568 -0.329  1.000    0.736
+## PctBlack -0.536   -0.069  -0.109  0.297 -0.112  0.736    1.000</code></pre>
+<div class="sourceCode" id="cb291"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb291-1"><a href="regression.html#cb291-1" tabindex="-1"></a><span class="fu">round</span>(cor_z, <span class="dv">3</span>)</span></code></pre></div>
+<pre><code>##          MedInc PctRural PctBach PctEld  PctFB PctPov PctBlack
+## MedInc    1.000   -0.443   0.660 -0.651  0.703 -0.858   -0.423
+## PctRural -0.443    1.000  -0.720  0.640 -0.664  0.297   -0.196
+## PctBach   0.660   -0.720   1.000 -0.644  0.877 -0.461   -0.067
+## PctEld   -0.651    0.640  -0.644  1.000 -0.662  0.599    0.201
+## PctFB     0.703   -0.664   0.877 -0.662  1.000 -0.560   -0.192
+## PctPov   -0.858    0.297  -0.461  0.599 -0.560  1.000    0.712
+## PctBlack -0.423   -0.196  -0.067  0.201 -0.192  0.712    1.000</code></pre>
+<p>There are some important differences in the correlations at different scales, with the following having correlations that have a difference greater than 0.2:</p>
+<ul>
+<li>MedInc and PctRural</li>
+<li>MedInc and PctFB</li>
+<li>PctRural and PctEld</li>
+<li>PctBach and PctFB</li>
+<li>PctFb and PctPov</li>
+</ul>
+<p>These show important difference in the levels of correlation, which are just based on frequency counts, and similar patterns would be shown if we did the same analysis for rates or percentages.</p>
+</div>
+<div id="impact-on-models" class="section level3 hasAnchor" number="4.4.3">
+<h3><span class="header-section-number">4.4.3</span> Impact on models<a href="regression.html#impact-on-models" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The code below recreates the OLS model from above using the original data and the data aggregated into zones</p>
+<div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb293-1"><a href="regression.html#cb293-1" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula =</span> MedInc<span class="sc">~</span>PctRural<span class="sc">+</span>PctBach<span class="sc">+</span>PctEld<span class="sc">+</span>PctFB<span class="sc">+</span>PctPov<span class="sc">+</span>PctBlack, </span>
+<span id="cb293-2"><a href="regression.html#cb293-2" tabindex="-1"></a>       <span class="at">data =</span> georgia) </span>
+<span id="cb293-3"><a href="regression.html#cb293-3" tabindex="-1"></a>mz <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula =</span> MedInc<span class="sc">~</span>PctRural<span class="sc">+</span>PctBach<span class="sc">+</span>PctEld<span class="sc">+</span>PctFB<span class="sc">+</span>PctPov<span class="sc">+</span>PctBlack, </span>
+<span id="cb293-4"><a href="regression.html#cb293-4" tabindex="-1"></a>        <span class="at">data =</span> georgia_z) </span></code></pre></div>
+<p>When we examine the model summaries, very different inferences are drawn both in terms of the variables that are significant, and the coefficient estimates describing the rate at which changes in the different predictors variables are associated with the changes in Median Income:</p>
+<div class="sourceCode" id="cb294"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb294-1"><a href="regression.html#cb294-1" tabindex="-1"></a><span class="fu">summary</span>(m)</span>
+<span id="cb294-2"><a href="regression.html#cb294-2" tabindex="-1"></a><span class="fu">summary</span>(mz)</span></code></pre></div>
+<p>This is also shown when the coefficients are compared directly. Notice, for example the huge difference in coefficients and significance values for PctFB:</p>
+<div class="sourceCode" id="cb295"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb295-1"><a href="regression.html#cb295-1" tabindex="-1"></a><span class="fu">compareCoefs</span>(m,mz,<span class="at">print=</span>T, <span class="at">pvals =</span> T)</span></code></pre></div>
+<pre><code>## Calls:
+## 1: lm(formula = MedInc ~ PctRural + PctBach + PctEld + PctFB + PctPov + PctBlack, data = 
+##   georgia)
+## 2: lm(formula = MedInc ~ PctRural + PctBach + PctEld + PctFB + PctPov + PctBlack, data = 
+##   georgia_z)
+## 
+##             Model 1 Model 2
+## (Intercept)   52599   44077
+## SE             3109    4910
+## Pr(&gt;|z|)    &lt; 2e-16 &lt; 2e-16
+##                            
+## PctRural       73.8    60.0
+## SE             20.4    40.3
+## Pr(&gt;|z|)    0.00031 0.13620
+##                            
+## PctBach         697     369
+## SE              112     216
+## Pr(&gt;|z|)    5.2e-10 0.08826
+##                            
+## PctEld         -789     -65
+## SE              180     329
+## Pr(&gt;|z|)    1.2e-05 0.84351
+##                            
+## PctFB         -1290     678
+## SE              474    1055
+## Pr(&gt;|z|)    0.00647 0.52015
+##                            
+## PctPov         -954   -1125
+## SE              105     168
+## Pr(&gt;|z|)    &lt; 2e-16 2.3e-11
+##                            
+## PctBlack       33.1   160.8
+## SE             37.2    60.3
+## Pr(&gt;|z|)    0.37273 0.00763
+## </code></pre>
+<p><strong>So…</strong> all of this implies that the trends and relationships in the data that you identify in your models, in your statistical analyses, etc, are heavily contingent on the scales at which the data are aggregated, and thus your understanding of the problem in hand. This is the Modifiable Areal Unit Problem!</p>
+</div>
+</div>
+<div id="additional-resources-1" class="section level2 unnumbered hasAnchor">
+<h2>Additional Resources<a href="regression.html#additional-resources-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Regression</p>
+<ul>
+<li>OLS regression: <a href="https://ademos.people.uic.edu/Chapter12.html" class="uri">https://ademos.people.uic.edu/Chapter12.html</a></li>
+<li>Poisson and logistic regression: <a href="https://ademos.people.uic.edu/Chapter19.html" class="uri">https://ademos.people.uic.edu/Chapter19.html</a></li>
+<li>a description of the assumptions behind OLS regression: <a href="https://statisticsbyjim.com/regression/ols-linear-regression-assumptions/" class="uri">https://statisticsbyjim.com/regression/ols-linear-regression-assumptions/</a></li>
+<li>a description of how OLS works (ignore the equations!): <a href="https://towardsdatascience.com/understanding-the-ols-method-for-simple-linear-regression-e0a4e8f692cc" class="uri">https://towardsdatascience.com/understanding-the-ols-method-for-simple-linear-regression-e0a4e8f692cc</a></li>
+<li>a tutorial doing an OLS by hand: <a href="http://science.clemson.edu/physics/labs/tutorials/excel/regression.html" class="uri">http://science.clemson.edu/physics/labs/tutorials/excel/regression.html</a></li>
+</ul>
+<p>The MAUP</p>
+<ul>
+<li>Nice accessible lecture about the MAUP: <a href="https://www.ed.ac.uk/files/imports/fileManager/RFlowerdew_Slides.pdf" class="uri">https://www.ed.ac.uk/files/imports/fileManager/RFlowerdew_Slides.pdf</a></li>
+<li>Commentary on Big Data: Brunsdon, C. and Comber, A., 2020. Opening practice: supporting reproducibility and critical spatial data science. <em>Journal of Geographical Systems</em>, pp.1-20 - see <a href="https://link.springer.com/article/10.1007/s10109-020-00334-2" class="uri">https://link.springer.com/article/10.1007/s10109-020-00334-2</a></li>
+</ul>
+
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-comber2011spatial" class="csl-entry">
+Comber, Alexis J, Chris Brunsdon, and Robert Radburn. 2011. <span>“A Spatial Analysis of Variations in Health Access: Linking Geography, Socio-Economic Status and Access Perceptions.”</span> <em>International Journal of Health Geographics</em> 10 (1): 1–11.
+</div>
+<div id="ref-comber2022gwverse" class="csl-entry">
+Comber, Alexis, Martin Callaghan, Paul Harris, Binbin Lu, Nick Malleson, and Chris Brunsdon. 2022. <span>“Gwverse: A Template for a New Generic Geographically Weighted r Package.”</span> <em>Geographical Analysis</em> 54 (3): 685–709.
+</div>
+<div id="ref-huber2011robust" class="csl-entry">
+Huber, Peter J. 2011. <span>“Robust Statistics.”</span> In <em>International Encyclopedia of Statistical Science</em>. Springer.
+</div>
+<div id="ref-james2013introduction" class="csl-entry">
+James, Gareth, Daniela Witten, Trevor Hastie, and Robert Tibshirani. 2013. <em>An Introduction to Statistical Learning</em>. Vol. 112. Springer.
+</div>
+<div id="ref-openshaw1984catmog" class="csl-entry">
+Openshaw, Stan. 1984a. <span>“CATMOG 38: The Modifiable Areal Unit Problem.”</span> <em>Norwich: Geo-Abstracts</em>.
+</div>
+<div id="ref-openshaw1984ecological" class="csl-entry">
+Openshaw, Stan. 1984b. <span>“Ecological Fallacies and the Analysis of Areal Census Data.”</span> <em>Environment and Planning A</em> 16 (1): 17–31.
+</div>
+<div id="ref-robinson2009ecological" class="csl-entry">
+Robinson, William S. 2009. <span>“Ecological Correlations and the Behavior of Individuals.”</span> <em>International Journal of Epidemiology</em> 38 (2): 337–41.
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="spatial-interpolation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["_main.pdf", "_main.epub"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

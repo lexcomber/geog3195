@@ -1,0 +1,21 @@
+.Rproj.user/
+.Rhistory
+.RData
+.Ruserdata
+.DS_Store
+.Rapp.history
+
+# Bookdown build folders
+_book/
+_main_cache/
+_main_files/
+
+# Other generated/cache files
+rosm.cache/
+rsconnect/
+
+# Alternative Quarto site
+gitsite/
+
+# Old / miscellaneous material
+other_stuff/

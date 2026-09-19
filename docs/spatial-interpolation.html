@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Unit 3 Spatial Interpolation | GEOG3915 GeoComputation and Spatial Analysis practicals</title>
+  <meta name="description" content="This contains materials to support the University of Leeds GEOG3195 module, delivered by Lex Comber" />
+  <meta name="generator" content="bookdown 0.48 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Unit 3 Spatial Interpolation | GEOG3915 GeoComputation and Spatial Analysis practicals" />
+  <meta property="og:type" content="book" />
+  <meta property="og:image" content="https://bookdown.org/lexcomber/geog3915/images/GIS_in_the_bin.jpg" />
+  <meta property="og:description" content="This contains materials to support the University of Leeds GEOG3195 module, delivered by Lex Comber" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Unit 3 Spatial Interpolation | GEOG3915 GeoComputation and Spatial Analysis practicals" />
+  
+  <meta name="twitter:description" content="This contains materials to support the University of Leeds GEOG3195 module, delivered by Lex Comber" />
+  <meta name="twitter:image" content="https://bookdown.org/lexcomber/geog3915/images/GIS_in_the_bin.jpg" />
+
+<meta name="author" content="Lex Comber" />
+
+
+<meta name="date" content="2026-09-20" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="exploratory-data-analysis.html"/>
+<link rel="next" href="regression.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">GEOG3915 Practicals</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Getting Started</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#installing-rrstudio"><i class="fa fa-check"></i><b>1.1</b> Installing R/RStudio</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#r-rstudio-refresh"><i class="fa fa-check"></i><b>1.2</b> R / RStudio Refresh</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="index.html"><a href="index.html#the-rstudio-interface"><i class="fa fa-check"></i><b>1.2.1</b> The RStudio Interface</a></li>
+<li class="chapter" data-level="1.2.2" data-path="index.html"><a href="index.html#ways-of-working"><i class="fa fa-check"></i><b>1.2.2</b> Ways of working</a></li>
+<li class="chapter" data-level="1.2.3" data-path="index.html"><a href="index.html#projects-files-and-folder-management"><i class="fa fa-check"></i><b>1.2.3</b> Projects, Files and Folder Management</a></li>
+<li class="chapter" data-level="1.2.4" data-path="index.html"><a href="index.html#practicals"><i class="fa fa-check"></i><b>1.2.4</b> Practicals</a></li>
+<li class="chapter" data-level="1.2.5" data-path="index.html"><a href="index.html#packages"><i class="fa fa-check"></i><b>1.2.5</b> Packages</a></li>
+<li class="chapter" data-level="1.2.6" data-path="index.html"><a href="index.html#further-resources"><i class="fa fa-check"></i><b>1.2.6</b> Further Resources</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#using-r-as-a-gis"><i class="fa fa-check"></i><b>1.3</b> Using R as a GIS</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="index.html"><a href="index.html#data"><i class="fa fa-check"></i><b>1.3.1</b> Data</a></li>
+<li class="chapter" data-level="1.3.2" data-path="index.html"><a href="index.html#creating-point-data"><i class="fa fa-check"></i><b>1.3.2</b> Creating point data</a></li>
+<li class="chapter" data-level="1.3.3" data-path="index.html"><a href="index.html#spatial-operations"><i class="fa fa-check"></i><b>1.3.3</b> Spatial Operations</a></li>
+<li class="chapter" data-level="1.3.4" data-path="index.html"><a href="index.html#merging-spatial-features-and-buffers"><i class="fa fa-check"></i><b>1.3.4</b> Merging spatial features and Buffers</a></li>
+<li class="chapter" data-level="1.3.5" data-path="index.html"><a href="index.html#point-in-polygon-and-area-calculations"><i class="fa fa-check"></i><b>1.3.5</b> Point-in-polygon and Area calculations</a></li>
+<li class="chapter" data-level="1.3.6" data-path="index.html"><a href="index.html#creating-distance-attributes"><i class="fa fa-check"></i><b>1.3.6</b> Creating distance attributes</a></li>
+<li class="chapter" data-level="1.3.7" data-path="index.html"><a href="index.html#reading-and-writing-data-in-and-out-of-rrstudio"><i class="fa fa-check"></i><b>1.3.7</b> Reading and writing data in and out of R/RStudio</a></li>
+<li class="chapter" data-level="1.3.8" data-path="index.html"><a href="index.html#answers-to-tasks"><i class="fa fa-check"></i><b>1.3.8</b> Answers to Tasks</a></li>
+<li class="chapter" data-level="1.3.9" data-path="index.html"><a href="index.html#useful-resources"><i class="fa fa-check"></i><b>1.3.9</b> Useful Resources</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html"><i class="fa fa-check"></i><b>2</b> Exploratory Data Analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#overview"><i class="fa fa-check"></i>Overview</a></li>
+<li class="chapter" data-level="2.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#data-data-summaries-and-generic-plotting-in-r"><i class="fa fa-check"></i><b>2.1</b> Data, data summaries and generic plotting in R</a></li>
+<li class="chapter" data-level="2.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#an-introduction-to-visualisation-using-the-ggplot2-package"><i class="fa fa-check"></i><b>2.2</b> An introduction to visualisation using the <code>ggplot2</code> package</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#ggplot-basics"><i class="fa fa-check"></i><b>2.2.1</b> <code>ggplot</code> basics</a></li>
+<li class="chapter" data-level="2.2.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#groups-with-ggplot"><i class="fa fa-check"></i><b>2.2.2</b> Groups with <code>ggplot</code></a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#data-wrangling-with-dplyr"><i class="fa fa-check"></i><b>2.3</b> Data wrangling with <code>dplyr</code></a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#summary"><i class="fa fa-check"></i><b>2.3.1</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#using-piping-syntax"><i class="fa fa-check"></i><b>2.4</b> Using piping syntax</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#select"><i class="fa fa-check"></i><b>2.4.1</b> <code>select</code></a></li>
+<li class="chapter" data-level="2.4.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#mutate"><i class="fa fa-check"></i><b>2.4.2</b> <code>mutate</code></a></li>
+<li class="chapter" data-level="2.4.3" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#group_by-and-summarise-changing-the-unit-of-observation"><i class="fa fa-check"></i><b>2.4.3</b> <code>group_by</code> and <code>summarise</code>: changing the unit of observation</a></li>
+<li class="chapter" data-level="2.4.4" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#a-final-example"><i class="fa fa-check"></i><b>2.4.4</b> A final example</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#answers-to-tasks-1"><i class="fa fa-check"></i>Answers to Tasks</a></li>
+<li class="chapter" data-level="" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#additional-resources"><i class="fa fa-check"></i>Additional Resources</a></li>
+<li class="chapter" data-level="" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#optional-enhanced-mapping-with-the-ggplot2-package"><i class="fa fa-check"></i>Optional: enhanced mapping with the <code>ggplot2</code> package</a></li>
+<li class="chapter" data-level="" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#appendix-named-colours"><i class="fa fa-check"></i>Appendix: Named Colours</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="spatial-interpolation.html"><a href="spatial-interpolation.html"><i class="fa fa-check"></i><b>3</b> Spatial Interpolation</a>
+<ul>
+<li class="chapter" data-level="" data-path="spatial-interpolation.html"><a href="spatial-interpolation.html#overview-1"><i class="fa fa-check"></i>Overview</a></li>
+<li class="chapter" data-level="3.1" data-path="spatial-interpolation.html"><a href="spatial-interpolation.html#kernel-density-estimation-point-observations"><i class="fa fa-check"></i><b>3.1</b> Kernel Density Estimation (point observations)</a></li>
+<li class="chapter" data-level="3.2" data-path="spatial-interpolation.html"><a href="spatial-interpolation.html#inverse-distance-weighting-point-values"><i class="fa fa-check"></i><b>3.2</b> Inverse Distance Weighting (point values)</a></li>
+<li class="chapter" data-level="3.3" data-path="spatial-interpolation.html"><a href="spatial-interpolation.html#area-weighted-interpolation-area-to-area"><i class="fa fa-check"></i><b>3.3</b> Area Weighted interpolation (area to area)</a></li>
+<li class="chapter" data-level="3.4" data-path="spatial-interpolation.html"><a href="spatial-interpolation.html#dasymetric-interpolation"><i class="fa fa-check"></i><b>3.4</b> Dasymetric Interpolation</a></li>
+<li class="chapter" data-level="" data-path="spatial-interpolation.html"><a href="spatial-interpolation.html#answers-to-tasks-2"><i class="fa fa-check"></i>Answers to Tasks</a></li>
+<li class="chapter" data-level="" data-path="spatial-interpolation.html"><a href="spatial-interpolation.html#optional-fine-tuning-idw"><i class="fa fa-check"></i>Optional: Fine tuning IDW</a>
+<ul>
+<li class="chapter" data-level="" data-path="spatial-interpolation.html"><a href="spatial-interpolation.html#answer-to-additional-task"><i class="fa fa-check"></i>Answer to Additional Task</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>4</b> Regression</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#overview-2"><i class="fa fa-check"></i>Overview</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#which-regression-approach"><i class="fa fa-check"></i>Which regression approach?</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#packages-1"><i class="fa fa-check"></i>Packages</a></li>
+</ul></li>
+<li class="chapter" data-level="4.1" data-path="regression.html"><a href="regression.html#standard-linear-regression-models-ols"><i class="fa fa-check"></i><b>4.1</b> Standard linear regression models (OLS)</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#specifying-the-model"><i class="fa fa-check"></i>Specifying the model</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="regression.html"><a href="regression.html#binomial-logistic-regression-for-binary-variables"><i class="fa fa-check"></i><b>4.2</b> Binomial Logistic Regression for binary variables</a></li>
+<li class="chapter" data-level="4.3" data-path="regression.html"><a href="regression.html#poisson-regression-for-count-variables"><i class="fa fa-check"></i><b>4.3</b> Poisson Regression for count variables</a></li>
+<li class="chapter" data-level="4.4" data-path="regression.html"><a href="regression.html#outliers-and-robust-regression"><i class="fa fa-check"></i><b>4.4</b> Outliers and Robust regression</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#addendum-prediction-vs-inference"><i class="fa fa-check"></i>Addendum: Prediction vs Inference</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#answers-to-tasks-3"><i class="fa fa-check"></i>Answers to Tasks</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#optional-the-maup"><i class="fa fa-check"></i>Optional: the MAUP</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="regression.html"><a href="regression.html#introduction"><i class="fa fa-check"></i><b>4.4.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.4.2" data-path="regression.html"><a href="regression.html#impact-on-correlations-of-counts"><i class="fa fa-check"></i><b>4.4.2</b> Impact on Correlations of Counts</a></li>
+<li class="chapter" data-level="4.4.3" data-path="regression.html"><a href="regression.html#impact-on-models"><i class="fa fa-check"></i><b>4.4.3</b> Impact on models</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#additional-resources-1"><i class="fa fa-check"></i>Additional Resources</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><i class="fa fa-check"></i><b>5</b> Spatial Models: spatial autocorrelation and cluster analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#overview-3"><i class="fa fa-check"></i>Overview</a></li>
+<li class="chapter" data-level="" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#data-and-packages"><i class="fa fa-check"></i>Data and Packages</a></li>
+<li class="chapter" data-level="5.1" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#defining-nearby-neighbour-lists"><i class="fa fa-check"></i><b>5.1</b> Defining nearby: neighbour lists</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#neigbours-by-ajacency"><i class="fa fa-check"></i><b>5.1.1</b> Neigbours by ajacency</a></li>
+<li class="chapter" data-level="5.1.2" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#neighbours-by-nearest-n"><i class="fa fa-check"></i><b>5.1.2</b> Neighbours by nearest <span class="math inline">\(n\)</span></a></li>
+<li class="chapter" data-level="5.1.3" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#neighbours-by-distance"><i class="fa fa-check"></i><b>5.1.3</b> Neighbours by distance</a></li>
+<li class="chapter" data-level="5.1.4" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#summary-1"><i class="fa fa-check"></i><b>5.1.4</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#spatial-autocorrelation-and-clusters"><i class="fa fa-check"></i><b>5.2</b> Spatial Autocorrelation and Clusters</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#neighbours-and-lagged-mean-plots"><i class="fa fa-check"></i><b>5.2.1</b> Neighbours and Lagged Mean Plots</a></li>
+<li class="chapter" data-level="5.2.2" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#morans-i-for-determining-clusters-and-spatial-autocorrelation"><i class="fa fa-check"></i><b>5.2.2</b> Moran’s I for determining Clusters and Spatial Autocorrelation</a></li>
+<li class="chapter" data-level="5.2.3" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#lisa-for-determining-local-clusters-and-spatial-autocorrelation"><i class="fa fa-check"></i><b>5.2.3</b> LISA for determining <em>local</em> clusters and spatial autocorrelation</a></li>
+<li class="chapter" data-level="5.2.4" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#getis-ord-g-statistic"><i class="fa fa-check"></i><b>5.2.4</b> Getis-Ord G statistic</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#answers-to-tasks-4"><i class="fa fa-check"></i>Answers to Tasks</a></li>
+<li class="chapter" data-level="" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#useful-links"><i class="fa fa-check"></i>Useful Links</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html"><i class="fa fa-check"></i><b>6</b> Spatial Varying Coefficient Models</a>
+<ul>
+<li class="chapter" data-level="" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#overview-4"><i class="fa fa-check"></i>Overview</a></li>
+<li class="chapter" data-level="" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#data-and-packages-1"><i class="fa fa-check"></i>Data and Packages</a></li>
+<li class="chapter" data-level="6.1" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#local-vs-global-models"><i class="fa fa-check"></i><b>6.1</b> Local vs Global models</a></li>
+<li class="chapter" data-level="6.2" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#geographically-weighted-regression"><i class="fa fa-check"></i><b>6.2</b> Geographically Weighted Regression</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#description"><i class="fa fa-check"></i><b>6.2.1</b> Description</a></li>
+<li class="chapter" data-level="6.2.2" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#undertaking-a-gwr"><i class="fa fa-check"></i><b>6.2.2</b> Undertaking a GWR</a></li>
+<li class="chapter" data-level="6.2.3" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#evaluating-the-results"><i class="fa fa-check"></i><b>6.2.3</b> Evaluating the results</a></li>
+<li class="chapter" data-level="6.2.4" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#mapping-gwr-outputs"><i class="fa fa-check"></i><b>6.2.4</b> Mapping GWR outputs</a></li>
+<li class="chapter" data-level="6.2.5" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#gwr-summary"><i class="fa fa-check"></i><b>6.2.5</b> GWR Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#multi-scale-gwr"><i class="fa fa-check"></i><b>6.3</b> Multi-scale GWR</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#description-1"><i class="fa fa-check"></i><b>6.3.1</b> Description</a></li>
+<li class="chapter" data-level="6.3.2" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#undertaking-a-mgwr"><i class="fa fa-check"></i><b>6.3.2</b> Undertaking a MGWR</a></li>
+<li class="chapter" data-level="6.3.3" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#evaluating-the-results-1"><i class="fa fa-check"></i><b>6.3.3</b> Evaluating the results</a></li>
+<li class="chapter" data-level="6.3.4" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#mapping-mgwr-outputs"><i class="fa fa-check"></i><b>6.3.4</b> Mapping MGWR outputs</a></li>
+<li class="chapter" data-level="6.3.5" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#comparing-gwr-and-mgwr"><i class="fa fa-check"></i><b>6.3.5</b> Comparing GWR and MGWR</a></li>
+<li class="chapter" data-level="6.3.6" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#mgwr-summary"><i class="fa fa-check"></i><b>6.3.6</b> MGWR Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#optional-generalised-additive-models"><i class="fa fa-check"></i>Optional: Generalised Additive Models</a>
+<ul>
+<li class="chapter" data-level="6.3.7" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#description-2"><i class="fa fa-check"></i><b>6.3.7</b> Description</a></li>
+<li class="chapter" data-level="6.3.8" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#undertaking-a-ggp-gam"><i class="fa fa-check"></i><b>6.3.8</b> Undertaking a GGP-GAM</a></li>
+<li class="chapter" data-level="6.3.9" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#evaluating-the-results-2"><i class="fa fa-check"></i><b>6.3.9</b> Evaluating the results</a></li>
+<li class="chapter" data-level="6.3.10" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#ggp-gam-svcs"><i class="fa fa-check"></i><b>6.3.10</b> GGP-GAM SVCs</a></li>
+<li class="chapter" data-level="6.3.11" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#ggp-gam-summary"><i class="fa fa-check"></i><b>6.3.11</b> GGP-GAM summary</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#answers-to-tasks-5"><i class="fa fa-check"></i>Answers to Tasks</a></li>
+<li class="chapter" data-level="" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#references"><i class="fa fa-check"></i>References</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html"><i class="fa fa-check"></i><b>7</b> Classification and Alternative Representations</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#classification"><i class="fa fa-check"></i><b>7.1</b> Classification</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#overview-5"><i class="fa fa-check"></i><b>7.1.1</b> Overview</a></li>
+<li class="chapter" data-level="7.1.2" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#pca-transformation"><i class="fa fa-check"></i><b>7.1.2</b> PCA transformation</a></li>
+<li class="chapter" data-level="7.1.3" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#k-means-cluster-analysis"><i class="fa fa-check"></i><b>7.1.3</b> <span class="math inline">\(k\)</span>-means Cluster Analysis</a></li>
+<li class="chapter" data-level="7.1.4" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#diagnostics"><i class="fa fa-check"></i><b>7.1.4</b> Diagnostics</a></li>
+<li class="chapter" data-level="7.1.5" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#mapping"><i class="fa fa-check"></i><b>7.1.5</b> Mapping</a></li>
+<li class="chapter" data-level="7.1.6" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#further-resources-1"><i class="fa fa-check"></i><b>7.1.6</b> Further Resources</a></li>
+<li class="chapter" data-level="7.1.7" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#references-1"><i class="fa fa-check"></i><b>7.1.7</b> References</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#optional-alternative-spatial-visualisations"><i class="fa fa-check"></i><b>7.2</b> Optional: Alternative spatial visualisations</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#overview-6"><i class="fa fa-check"></i><b>7.2.1</b> Overview</a></li>
+<li class="chapter" data-level="7.2.2" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#the-invisibility-problem"><i class="fa fa-check"></i><b>7.2.2</b> The invisibility problem</a></li>
+<li class="chapter" data-level="7.2.3" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#cartograms"><i class="fa fa-check"></i><b>7.2.3</b> Cartograms</a></li>
+<li class="chapter" data-level="7.2.4" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#hexagonal-binning-and-tile-maps"><i class="fa fa-check"></i><b>7.2.4</b> Hexagonal binning and Tile maps</a></li>
+<li class="chapter" data-level="7.2.5" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#references-2"><i class="fa fa-check"></i><b>7.2.5</b> References</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="creating-documents-in-rmarkdown.html"><a href="creating-documents-in-rmarkdown.html"><i class="fa fa-check"></i><b>8</b> Creating documents in RMarkdown</a>
+<ul>
+<li class="chapter" data-level="" data-path="creating-documents-in-rmarkdown.html"><a href="creating-documents-in-rmarkdown.html#overview-7"><i class="fa fa-check"></i>Overview</a></li>
+<li class="chapter" data-level="8.1" data-path="creating-documents-in-rmarkdown.html"><a href="creating-documents-in-rmarkdown.html#resources"><i class="fa fa-check"></i><b>8.1</b> Resources</a></li>
+<li class="chapter" data-level="8.2" data-path="creating-documents-in-rmarkdown.html"><a href="creating-documents-in-rmarkdown.html#tasks"><i class="fa fa-check"></i><b>8.2</b> Tasks</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">GEOG3915 GeoComputation and Spatial Analysis practicals</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="spatial-interpolation" class="section level1 hasAnchor" number="3">
+<h1><span class="header-section-number">Unit 3</span> Spatial Interpolation<a href="spatial-interpolation.html#spatial-interpolation" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="overview-1" class="section level2 unnumbered hasAnchor">
+<h2>Overview<a href="spatial-interpolation.html#overview-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The overarching theme of this practical is <em>Spatial Interpolation</em>. As described in this week’s lecture spatial interpolation is the process of transforming spatial data from one geographical framework to another. This is not the same as re-projection (for example from an OSGB projection in metres to a WGS84 projection in degrees), rather is the reallocation of data to different spatial units.</p>
+<p>This session covers 2 distinct types of interpolation:</p>
+<ul>
+<li>Point interpolation to generate continuous surfaces of some <strong>point</strong> observation</li>
+<li>Area interpolation to transform between different <strong>area</strong> structures</li>
+</ul>
+<p>The <em>point interpolation</em> is based on Chapter 6 in <span class="citation">Brunsdon and Comber (<a href="#ref-brunsdon2018introduction">2025</a>)</span> and the <em>areal interpolation</em> is based on the worked examples provided in <span class="citation">Comber and Zeng (<a href="#ref-comber2019spatial">2019</a>)</span>. The practical covers these this in 4 sections below:</p>
+<ol style="list-style-type: decimal">
+<li>Kernel Density Estimation (point observations to surfaces - heat maps!)</li>
+<li>Inverse Distance Weighting (point values to surfaces)</li>
+<li>Area Weighted interpolation (area to area)</li>
+<li>Dasymetric interpolation (area to area)</li>
+</ol>
+<p>As ever an R script with all the code for this practical is provided.</p>
+<p>You will to load need the following packages:</p>
+<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="spatial-interpolation.html#cb152-1" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb152-2"><a href="spatial-interpolation.html#cb152-2" tabindex="-1"></a><span class="fu">library</span>(cowplot)</span>
+<span id="cb152-3"><a href="spatial-interpolation.html#cb152-3" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb152-4"><a href="spatial-interpolation.html#cb152-4" tabindex="-1"></a><span class="fu">library</span>(ggspatial)</span>
+<span id="cb152-5"><a href="spatial-interpolation.html#cb152-5" tabindex="-1"></a><span class="fu">library</span>(spdep)</span>
+<span id="cb152-6"><a href="spatial-interpolation.html#cb152-6" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb152-7"><a href="spatial-interpolation.html#cb152-7" tabindex="-1"></a><span class="fu">library</span>(gstat)</span></code></pre></div>
+</div>
+<div id="kernel-density-estimation-point-observations" class="section level2 hasAnchor" number="3.1">
+<h2><span class="header-section-number">3.1</span> Kernel Density Estimation (point observations)<a href="spatial-interpolation.html#kernel-density-estimation-point-observations" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>You will need to load some data into your R/Rstudio session after downloading from the VLE and saving to your working directory. The <code>.RData</code> files loads 2 <code>sf</code> (spatial) objects:</p>
+<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="spatial-interpolation.html#cb153-1" tabindex="-1"></a><span class="co"># load the RData file</span></span>
+<span id="cb153-2"><a href="spatial-interpolation.html#cb153-2" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;point_data.RData&quot;</span>)</span>
+<span id="cb153-3"><a href="spatial-interpolation.html#cb153-3" tabindex="-1"></a><span class="co"># look at what has been loaded</span></span>
+<span id="cb153-4"><a href="spatial-interpolation.html#cb153-4" tabindex="-1"></a><span class="fu">ls</span>()</span></code></pre></div>
+<p>The <code>hp</code> layer is a point layer of 2021 house sales in Leeds and <code>wards</code> is an areal data of the 33 wards in the Leeds metropolitan area. These have been created by linking data on house prices the ONS contain the address and postcode of each sale as well as the price and a postcode look up table again available via ONS, that lists each UK postcode with a number of descriptive attributes for each postcode. These are large datasets. The code in Appendix A shows how these were generated, if you are interested.</p>
+<p>Kernel Density Estimation (KDE) is a technique that creates a continuous representation of the distribution of a given variable.</p>
+<p>Now, you have used this approach when you have created <strong>density</strong> histograms of a single variable (1-Dimensional, 1D) in a dataset. A histogram allocates values to a column range in the histogram (the bins) and rescales the y-axis to show <strong>probabilities</strong> rather than counts. Note the log of prices taken here to transform the data to a normal distribution:</p>
+<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="spatial-interpolation.html#cb154-1" tabindex="-1"></a><span class="co"># using ggplot approaches</span></span>
+<span id="cb154-2"><a href="spatial-interpolation.html#cb154-2" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> hp, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">log</span>(price))) <span class="sc">+</span></span>
+<span id="cb154-3"><a href="spatial-interpolation.html#cb154-3" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y=</span><span class="fu">after_stat</span>(density)), <span class="at">bins =</span> <span class="dv">35</span>, <span class="at">fill=</span><span class="st">&quot;red4&quot;</span>, <span class="at">col=</span><span class="st">&quot;white&quot;</span>) <span class="sc">+</span></span>
+<span id="cb154-4"><a href="spatial-interpolation.html#cb154-4" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha=</span>.<span class="dv">5</span>, <span class="at">fill=</span><span class="st">&quot;#FF6666&quot;</span>) <span class="sc">+</span></span>
+<span id="cb154-5"><a href="spatial-interpolation.html#cb154-5" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">6</span><span class="sc">:</span><span class="dv">18</span>)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:ch4fig2"></span>
+<img src="_main_files/figure-html/ch4fig2-1.png" alt="An example of a density histogram." width="672" />
+<p class="caption">
+Figure 3.1: An example of a density histogram.
+</p>
+</div>
+<p>What a density histogram shows is the probability of finding a value in the data. So for example the probability of finding a value of 12 in logged house price in the dataset, in this case is about 0.75 (75%) and the probability of finding a logged price value of 13 is about 0.2 (20%).</p>
+<p>Now this 1D approach with house price, can be <strong>extended to a 2D</strong>, using the locations (Easting and Northing) of the <code>hp</code> data locations (note not the price: that is later!). This generates a smooth representation of the probability of observation locations through a 2D surface.</p>
+<p>In both cases, the density functions smooth out the binning, with this being for a value range in a histogram and 2D locations in a KDE heat map. The histogram returns the probability of finding an observation within a value range, and the KDE shows the probability of finding at an observation at a 2D locations, with bins composed of pixels in the study area.</p>
+<p>Here the probability is indicated by a colour rather than the position on the y-axis as in the histogram above.The simplest way to think about this is each (observed) point location <span class="math inline">\(\mathbf{x}_i\)</span> is random and drawn independently from an unknown distribution with probability density function <span class="math inline">\(f(\mathbf{x}_i)\)</span>. <strong>Note</strong> If we think of locations in space as a very fine pixel grid, and assume a probability density value is assigned to each pixel, then summing the pixels making up an arbitrary region on the map gives the probability that an event occurs in that area. It is generally more practical to assume an unknown distribution rather than for example a Gaussian distribution, since geographical patterns often take on fairly arbitrary shapes areas of raised risk will occur in a number of locations around a city, rather than a simplistic radial bell curve centred on the city’s mid-point. A common technique used to estimate <span class="math inline">\(f(\mathbf{x}_i)\)</span> is the KDE , which averages a series of small bumps (probability distributions in 2D, in fact) centred on each observed point.</p>
+<p>The code below uses the <code>geom_density_2d</code> and <code>geom_density_2d_filled</code> functions in <code>ggplot2</code> to generate a KDE of house transactions. You should note that this has nothing to do with price, it simply shows a probability of a house transaction being found in different parts of the city based on this data.</p>
+<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="spatial-interpolation.html#cb155-1" tabindex="-1"></a><span class="co"># extract the coordinates</span></span>
+<span id="cb155-2"><a href="spatial-interpolation.html#cb155-2" tabindex="-1"></a>coords <span class="ot">=</span> <span class="fu">data.frame</span>(<span class="fu">st_coordinates</span>(hp))</span>
+<span id="cb155-3"><a href="spatial-interpolation.html#cb155-3" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>coords, <span class="fu">aes</span>(<span class="at">x=</span>X, <span class="at">y=</span>Y)) <span class="sc">+</span> </span>
+<span id="cb155-4"><a href="spatial-interpolation.html#cb155-4" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb155-5"><a href="spatial-interpolation.html#cb155-5" tabindex="-1"></a>  <span class="fu">coord_sf</span>() <span class="sc">+</span></span>
+<span id="cb155-6"><a href="spatial-interpolation.html#cb155-6" tabindex="-1"></a>  <span class="fu">geom_density_2d_filled</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb155-7"><a href="spatial-interpolation.html#cb155-7" tabindex="-1"></a>  <span class="fu">geom_density_2d</span>(<span class="at">linewidth =</span> <span class="fl">0.25</span>, <span class="at">colour =</span> <span class="st">&quot;black&quot;</span>) <span class="sc">+</span></span>
+<span id="cb155-8"><a href="spatial-interpolation.html#cb155-8" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">fill=</span><span class="st">&quot;Probability&quot;</span>)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:ch4fig3"></span>
+<img src="_main_files/figure-html/ch4fig3-1.png" alt="An example of a density surface." width="672" />
+<p class="caption">
+Figure 3.2: An example of a density surface.
+</p>
+</div>
+<p>And a basemap can be included to add spatial context but note the need to specify the spatial layer (<code>hp</code>), the associated <code>geom_sf</code> mapping function and the to pass the <code>coords</code> object and associated aesthetics to do this.</p>
+<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="spatial-interpolation.html#cb156-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> hp) <span class="sc">+</span> </span>
+<span id="cb156-2"><a href="spatial-interpolation.html#cb156-2" tabindex="-1"></a>  <span class="fu">annotation_map_tile</span>(<span class="at">zoomin=</span><span class="dv">0</span>, <span class="at">type=</span><span class="st">&#39;osm&#39;</span>) <span class="sc">+</span> </span>
+<span id="cb156-3"><a href="spatial-interpolation.html#cb156-3" tabindex="-1"></a>  <span class="fu">geom_sf</span>() <span class="sc">+</span> <span class="fu">coord_sf</span>() <span class="sc">+</span></span>
+<span id="cb156-4"><a href="spatial-interpolation.html#cb156-4" tabindex="-1"></a>  <span class="fu">geom_density_2d_filled</span>(<span class="at">data=</span>coords, <span class="fu">aes</span>(<span class="at">x=</span>X, <span class="at">y=</span>Y), <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb156-5"><a href="spatial-interpolation.html#cb156-5" tabindex="-1"></a>  <span class="fu">geom_density_2d</span>(<span class="at">data=</span>coords, <span class="fu">aes</span>(<span class="at">x=</span>X, <span class="at">y=</span>Y), <span class="at">linewidth =</span> <span class="fl">0.25</span>, <span class="at">colour =</span> <span class="st">&quot;black&quot;</span>) <span class="sc">+</span></span>
+<span id="cb156-6"><a href="spatial-interpolation.html#cb156-6" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;&quot;</span>)<span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">&quot;&quot;</span>) <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">fill=</span><span class="st">&quot;Probability&quot;</span>)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:ch4fig4"></span>
+<img src="_main_files/figure-html/ch4fig4-1.png" alt="An example of a density surface, with a transparency term and an OSM backdrop." width="672" />
+<p class="caption">
+Figure 3.3: An example of a density surface, with a transparency term and an OSM backdrop.
+</p>
+</div>
+<p>However, this only <em>plots</em> the data. The code below defines a <em>function</em> to generate a KDE spatial point layer.</p>
+<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="spatial-interpolation.html#cb157-1" tabindex="-1"></a>kde_sf <span class="ot">=</span> <span class="cf">function</span> (pts, h, <span class="at">n =</span> <span class="dv">100</span>, <span class="at">lims =</span> <span class="cn">NULL</span>) </span>
+<span id="cb157-2"><a href="spatial-interpolation.html#cb157-2" tabindex="-1"></a>{</span>
+<span id="cb157-3"><a href="spatial-interpolation.html#cb157-3" tabindex="-1"></a>    xy <span class="ot">=</span> <span class="fu">st_coordinates</span>(pts)</span>
+<span id="cb157-4"><a href="spatial-interpolation.html#cb157-4" tabindex="-1"></a>    crs_val <span class="ot">=</span> <span class="fu">st_crs</span>(pts)</span>
+<span id="cb157-5"><a href="spatial-interpolation.html#cb157-5" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">missing</span>(h)) </span>
+<span id="cb157-6"><a href="spatial-interpolation.html#cb157-6" tabindex="-1"></a>        h <span class="ot">=</span> <span class="fu">c</span>(<span class="fu">bandwidth.nrd</span>(xy[, <span class="dv">1</span>]), <span class="fu">bandwidth.nrd</span>(xy[, <span class="dv">2</span>]))</span>
+<span id="cb157-7"><a href="spatial-interpolation.html#cb157-7" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">is.null</span>(lims)) {</span>
+<span id="cb157-8"><a href="spatial-interpolation.html#cb157-8" tabindex="-1"></a>        lims <span class="ot">=</span> <span class="fu">c</span>(<span class="fu">range</span>(xy[, <span class="dv">1</span>]), <span class="fu">range</span>(xy[, <span class="dv">2</span>]))</span>
+<span id="cb157-9"><a href="spatial-interpolation.html#cb157-9" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb157-10"><a href="spatial-interpolation.html#cb157-10" tabindex="-1"></a>        lims <span class="ot">=</span> <span class="fu">st_bbox</span>(lims)[<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">4</span>)]</span>
+<span id="cb157-11"><a href="spatial-interpolation.html#cb157-11" tabindex="-1"></a>    }</span>
+<span id="cb157-12"><a href="spatial-interpolation.html#cb157-12" tabindex="-1"></a>    kd <span class="ot">=</span> <span class="fu">kde2d</span>(xy[, <span class="dv">1</span>], xy[, <span class="dv">2</span>], h, n, lims)</span>
+<span id="cb157-13"><a href="spatial-interpolation.html#cb157-13" tabindex="-1"></a>    kd_df <span class="ot">=</span> <span class="fu">data.frame</span>(<span class="fu">expand.grid</span>(kd<span class="sc">$</span>x, kd<span class="sc">$</span>y), <span class="at">kde =</span> <span class="fu">array</span>(kd<span class="sc">$</span>z, <span class="fu">length</span>(kd<span class="sc">$</span>z)))</span>
+<span id="cb157-14"><a href="spatial-interpolation.html#cb157-14" tabindex="-1"></a>    kd_sf <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(kd_df, <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">&quot;Var1&quot;</span>, <span class="st">&quot;Var2&quot;</span>), <span class="at">crs =</span> crs_val)</span>
+<span id="cb157-15"><a href="spatial-interpolation.html#cb157-15" tabindex="-1"></a>    <span class="fu">return</span>(kd_sf)</span>
+<span id="cb157-16"><a href="spatial-interpolation.html#cb157-16" tabindex="-1"></a>}</span></code></pre></div>
+<p>This can be used to create an <code>sf</code> object of the KDE and mapped:</p>
+<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="spatial-interpolation.html#cb158-1" tabindex="-1"></a><span class="co"># create kde</span></span>
+<span id="cb158-2"><a href="spatial-interpolation.html#cb158-2" tabindex="-1"></a>kde_hp <span class="ot">=</span> <span class="fu">kde_sf</span>(hp, <span class="at">lims =</span> wards) </span>
+<span id="cb158-3"><a href="spatial-interpolation.html#cb158-3" tabindex="-1"></a><span class="co"># map the result</span></span>
+<span id="cb158-4"><a href="spatial-interpolation.html#cb158-4" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> wards) <span class="sc">+</span> <span class="fu">geom_sf</span>() <span class="sc">+</span></span>
+<span id="cb158-5"><a href="spatial-interpolation.html#cb158-5" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> kde_hp, <span class="fu">aes</span>(<span class="at">col =</span> kde)) <span class="sc">+</span> </span>
+<span id="cb158-6"><a href="spatial-interpolation.html#cb158-6" tabindex="-1"></a>  <span class="fu">scale_colour_viridis_c</span>(<span class="at">name =</span> <span class="st">&quot;&quot;</span>) </span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:ch4fig5"></span>
+<img src="_main_files/figure-html/ch4fig5-1.png" alt="A KDE of 2021 house sales in the Leeds area." width="672" />
+<p class="caption">
+Figure 3.4: A KDE of 2021 house sales in the Leeds area.
+</p>
+</div>
+<p>The maps allow us to see the distribution of house sale transactions but also to relate these to local context. In this case the location with a highest volume of house transactions are around the city centre - the area with the most houses! - with a doughnut around it indicating fewer transactions and several pockets in other smaller centres of population.</p>
+<div class="noticebox">
+<p>So what this shows is the probability of of observing a house that has been sold at each location. So really this <em>heat map</em> shows where things have been observed, but converted to probabilities over space. The data really are showing urban areas in this case!</p>
+</div>
+<p>We could examine this in detail using <code>ggplot</code> and filtering for probabilities greater than <span class="math inline">\(10^{-9}\)</span>:</p>
+<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="spatial-interpolation.html#cb159-1" tabindex="-1"></a>kde_hp <span class="sc">%&gt;%</span> <span class="fu">filter</span>(kde <span class="sc">&gt;</span> <span class="dv">10</span><span class="sc">^</span>(<span class="sc">-</span><span class="dv">9</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb159-2"><a href="spatial-interpolation.html#cb159-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">col =</span> kde)) <span class="sc">+</span> </span>
+<span id="cb159-3"><a href="spatial-interpolation.html#cb159-3" tabindex="-1"></a>  <span class="fu">annotation_map_tile</span>(<span class="at">zoomin=</span><span class="dv">0</span>, <span class="at">type=</span><span class="st">&#39;osm&#39;</span>) <span class="sc">+</span></span>
+<span id="cb159-4"><a href="spatial-interpolation.html#cb159-4" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb159-5"><a href="spatial-interpolation.html#cb159-5" tabindex="-1"></a>  <span class="fu">scale_colour_viridis_c</span>(<span class="at">name =</span> <span class="st">&quot;&quot;</span>) <span class="sc">+</span></span>
+<span id="cb159-6"><a href="spatial-interpolation.html#cb159-6" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">&quot;none&quot;</span>)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:ch4fig6"></span>
+<img src="_main_files/figure-html/ch4fig6-1.png" alt="A filtered KDE of 2021 house sales in the Leeds area with an OSM backdrop." width="672" />
+<p class="caption">
+Figure 3.5: A filtered KDE of 2021 house sales in the Leeds area with an OSM backdrop.
+</p>
+</div>
+<div class="qbox">
+<div class="center">
+<p><strong>Task 1</strong></p>
+</div>
+<p>Your task is to explore the effect of changing the input parameters to the function for creating KDEs. What happens if you change <code>n</code> and <code>h</code>? Can you work out what they are? The help for <code>kde2d</code> function at the heart of the function above might help you as well!</p>
+</div>
+</div>
+<div id="inverse-distance-weighting-point-values" class="section level2 hasAnchor" number="3.2">
+<h2><span class="header-section-number">3.2</span> Inverse Distance Weighting (point values)<a href="spatial-interpolation.html#inverse-distance-weighting-point-values" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The previous section showed how to visualize the distribution of a set of spatial objects represented as points, providing the <em>probability of an occurrence</em>. Often we are interested in understanding the distribution of a given value attached to each location. This is very commonly done with for example weather data collected at weather stations (points) that are used to say something about the weather in unsampled locations between those points.</p>
+<p>In these cases spatial interpolation can be used to create continuous surfaces for a particular phenomenon (e.g. temperature, house prices) given only a finite sample of observations. This can be done using Inverse Distance Weighting (IDW) for convenience. <span class="citation">Brunsdon and Comber (<a href="#ref-brunsdon2018introduction">2025</a>)</span> provide offer a useful description (p. 227):</p>
+<blockquote>
+<p><em>In the inverse distance weighting (IDW) approach to interpolation, to estimate the value of <span class="math inline">\(z\)</span> at location <span class="math inline">\(x\)</span> a weighted mean of nearby observations is taken […]. To accommodate the idea that observations of <span class="math inline">\(z\)</span> at points closer to <span class="math inline">\(x\)</span> should be given more importance in the interpolation, greater weight is given to these points</em></p>
+</blockquote>
+<p>So this is a another moving window or kernel based approach, that computes a value for each location in the study area based on the data under the kernel, with values from observations nearer to the kernel centre contributing more to the IDW value at that location.</p>
+<p>IDW can be done using the <code>idw</code> function in the <code>gstat</code> package.</p>
+<p>First, you will need a set of sample points at which the IDW estimates are computed. The <code>st_sample</code> function in the <code>sf</code> packages creates a sample grid.</p>
+<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="spatial-interpolation.html#cb160-1" tabindex="-1"></a>s.grid <span class="ot">=</span> <span class="fu">st_sample</span>(wards, <span class="dv">1500</span>, <span class="at">type =</span> <span class="st">&quot;regular&quot;</span>) </span>
+<span id="cb160-2"><a href="spatial-interpolation.html#cb160-2" tabindex="-1"></a><span class="co"># you could examine this by un-commenting the line below</span></span>
+<span id="cb160-3"><a href="spatial-interpolation.html#cb160-3" tabindex="-1"></a><span class="co"># plot(s.grid, pch = 4)</span></span></code></pre></div>
+<p>The <code>type='regular'</code> argument generate a regular grid of points covering the LSOA areas, with approximately 1500 points</p>
+<p>Next, the IDW estimate is created from the <code>hp</code> data using the <code>idw</code> function. This requires the model to be specified (here the formula is <code>price ~ 1</code>). The parameter <code>idp</code> (interpolation distance parameter) here is set to 1.</p>
+<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="spatial-interpolation.html#cb161-1" tabindex="-1"></a>idw.est <span class="ot">&lt;-</span> <span class="fu">idw</span>(<span class="at">formula =</span> price<span class="sc">~</span><span class="dv">1</span>, <span class="at">locations =</span> hp, </span>
+<span id="cb161-2"><a href="spatial-interpolation.html#cb161-2" tabindex="-1"></a>               <span class="at">newdata =</span> s.grid, <span class="at">idp =</span> <span class="fl">1.0</span>)</span></code></pre></div>
+<pre><code>## [inverse distance weighted interpolation]</code></pre>
+<p>The object <code>idw.est</code> is an <code>sf</code> points data layer containing the IDW estimates at each of the sample points (actually a rectangular grid) in a variable called <code>var1.pred</code>. It is possible to view this directly by choosing point colour to represent the values of <code>var1.pred</code>.</p>
+<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="spatial-interpolation.html#cb163-1" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb163-2"><a href="spatial-interpolation.html#cb163-2" tabindex="-1"></a>  <span class="fu">annotation_map_tile</span>(<span class="at">zoom =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
+<span id="cb163-3"><a href="spatial-interpolation.html#cb163-3" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> idw.est, <span class="fu">aes</span>(<span class="at">col =</span> var1.pred)) <span class="sc">+</span></span>
+<span id="cb163-4"><a href="spatial-interpolation.html#cb163-4" tabindex="-1"></a>  <span class="fu">scale_colour_distiller</span>(<span class="at">palette =</span> <span class="st">&quot;YlOrRd&quot;</span>, <span class="at">name =</span> <span class="st">&quot;Price&quot;</span>) <span class="sc">+</span></span>
+<span id="cb163-5"><a href="spatial-interpolation.html#cb163-5" tabindex="-1"></a>  <span class="fu">theme_linedraw</span>()</span></code></pre></div>
+<p>The mapped results show the areas of higher house prices in the city centre and towards the River Wharfe in the north of the region.</p>
+<p>Note that the formula we are using to model house prices (<code>price~1</code>), has the name of the variable we are interested in on the left of <code>~</code> , and everything to its right are the explanatory variables. As this is the simplest possible case and do not have further variables to add, so we simply write <code>1</code>. By default, <code>idw</code> uses all the available observations, weighted by distance, to provide an estimate for a given point.</p>
+<div class="qbox">
+<div class="center">
+<p><strong>Task 2</strong></p>
+</div>
+<p>Modify the call to <code>idw</code> above so that it restricts the maximum number of neighbours that are considered to 100. You will need to add argument <code>nmax = 100</code> and plot the results again. What is the effect and why do you think that is happening?</p>
+<p><strong>NB</strong> You may want to attempt this task after the timetabled practical session. Worked answers are provided in the last section of the worksheet.</p>
+</div>
+</div>
+<div id="area-weighted-interpolation-area-to-area" class="section level2 hasAnchor" number="3.3">
+<h2><span class="header-section-number">3.3</span> Area Weighted interpolation (area to area)<a href="spatial-interpolation.html#area-weighted-interpolation-area-to-area" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The aim in this part of the practical is to transform data from one areal unit (source zones) to another (target zones). There are many approaches areal interpolation (as described in <span class="citation">(<a href="#ref-comber2019spatial">Comber and Zeng 2019</a>)</span>). These are used to generate estimates of values for different areas to the original data. This is useful when fine scale data are unavailable or restricted to confidentiality or political reasons.</p>
+<p>The data from <span class="citation">Comber and Zeng (<a href="#ref-comber2019spatial">2019</a>)</span> over census areas in New Haven, Connecticut, USA are used in the areal interpolation exercises, The code used to generate the results in the paper are available from Lex Comber’s GitHub site (<a href="https://github.com/lexcomber/SpatInt/" class="uri">https://github.com/lexcomber/SpatInt/</a>). The code snippet below loads 2 <code>.RData</code> files with 3 <code>sf</code> objects:</p>
+<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="spatial-interpolation.html#cb164-1" tabindex="-1"></a><span class="co"># load some area data from Lex&#39;s GitHub site</span></span>
+<span id="cb164-2"><a href="spatial-interpolation.html#cb164-2" tabindex="-1"></a><span class="fu">download.file</span>(<span class="st">&quot;https://github.com/lexcomber/SpatInt/blob/master/DataIn.RData?raw=True&quot;</span>,</span>
+<span id="cb164-3"><a href="spatial-interpolation.html#cb164-3" tabindex="-1"></a>              <span class="st">&quot;./zones.RData&quot;</span>, <span class="at">mode =</span> <span class="st">&quot;wb&quot;</span>)</span>
+<span id="cb164-4"><a href="spatial-interpolation.html#cb164-4" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;zones.RData&quot;</span>)</span>
+<span id="cb164-5"><a href="spatial-interpolation.html#cb164-5" tabindex="-1"></a><span class="co"># a mask of non-residential land use</span></span>
+<span id="cb164-6"><a href="spatial-interpolation.html#cb164-6" tabindex="-1"></a><span class="fu">download.file</span>(<span class="st">&quot;https://github.com/lexcomber/SpatInt/blob/master/mask.RData?raw=True&quot;</span>,</span>
+<span id="cb164-7"><a href="spatial-interpolation.html#cb164-7" tabindex="-1"></a>              <span class="st">&quot;./mask.RData&quot;</span>, <span class="at">mode =</span> <span class="st">&quot;wb&quot;</span>)</span>
+<span id="cb164-8"><a href="spatial-interpolation.html#cb164-8" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;mask.RData&quot;</span>)</span></code></pre></div>
+<p>The projections and geometry of the <code>sf</code> layers needs to be tidied and then the data can be examined (ignore the warnings - this is why they are being tidied!):</p>
+<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="spatial-interpolation.html#cb165-1" tabindex="-1"></a><span class="co"># tidy the geometry</span></span>
+<span id="cb165-2"><a href="spatial-interpolation.html#cb165-2" tabindex="-1"></a>sz_sf <span class="ot">=</span> <span class="fu">st_make_valid</span>(sz_sf)</span>
+<span id="cb165-3"><a href="spatial-interpolation.html#cb165-3" tabindex="-1"></a><span class="co"># tidy the projections</span></span>
+<span id="cb165-4"><a href="spatial-interpolation.html#cb165-4" tabindex="-1"></a><span class="fu">st_crs</span>(sz_sf) <span class="ot">=</span> <span class="fu">st_crs</span>(sz_sf)</span>
+<span id="cb165-5"><a href="spatial-interpolation.html#cb165-5" tabindex="-1"></a><span class="fu">st_crs</span>(tz_sf) <span class="ot">=</span> <span class="fu">st_crs</span>(tz_sf)</span>
+<span id="cb165-6"><a href="spatial-interpolation.html#cb165-6" tabindex="-1"></a><span class="fu">st_crs</span>(mask_sf) <span class="ot">=</span> <span class="fu">st_crs</span>(mask_sf)</span></code></pre></div>
+<p>Now the aim in the Areal Interpolation is to transform House counts over <em>Source Zones</em> (<code>sz_sf</code>) to House counts over <em>Target Zones</em> (<code>tz_sf</code>). The data are mapped below using the <code>HSE_UNITS</code> (number of housing units - residential properties) in the source zone object (<code>sz_sf</code>) over census tracts in New Haven, Connecticut, USA. The aim is to generate estimates over a 500m grid. The map below shows Target and Source Zones using the <code>plot_grid</code> from the <code>cowplot</code> package to combined them:</p>
+<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="spatial-interpolation.html#cb166-1" tabindex="-1"></a>p1 <span class="ot">=</span> </span>
+<span id="cb166-2"><a href="spatial-interpolation.html#cb166-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(sz_sf) <span class="sc">+</span> </span>
+<span id="cb166-3"><a href="spatial-interpolation.html#cb166-3" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> HSE_UNITS)) <span class="sc">+</span></span>
+<span id="cb166-4"><a href="spatial-interpolation.html#cb166-4" tabindex="-1"></a>  <span class="fu">scale_fill_distiller</span>(<span class="at">palette =</span> <span class="st">&quot;YlGnBu&quot;</span>, <span class="at">name =</span> <span class="st">&quot;House</span><span class="sc">\n</span><span class="st">Count&quot;</span>) <span class="sc">+</span></span>
+<span id="cb166-5"><a href="spatial-interpolation.html#cb166-5" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text=</span><span class="fu">element_blank</span>(), <span class="at">axis.ticks=</span><span class="fu">element_blank</span>(), </span>
+<span id="cb166-6"><a href="spatial-interpolation.html#cb166-6" tabindex="-1"></a>        <span class="at">legend.position =</span> <span class="fu">c</span>(<span class="fl">0.2</span>, <span class="fl">0.3</span>))</span>
+<span id="cb166-7"><a href="spatial-interpolation.html#cb166-7" tabindex="-1"></a>p2 <span class="ot">=</span> </span>
+<span id="cb166-8"><a href="spatial-interpolation.html#cb166-8" tabindex="-1"></a>  <span class="fu">ggplot</span>(tz_sf) <span class="sc">+</span> </span>
+<span id="cb166-9"><a href="spatial-interpolation.html#cb166-9" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">col =</span> <span class="st">&quot;black&quot;</span>, <span class="at">lwd =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
+<span id="cb166-10"><a href="spatial-interpolation.html#cb166-10" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text=</span><span class="fu">element_blank</span>(), <span class="at">axis.ticks=</span><span class="fu">element_blank</span>()) </span>
+<span id="cb166-11"><a href="spatial-interpolation.html#cb166-11" tabindex="-1"></a><span class="fu">plot_grid</span>(p1,p2)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-122"></span>
+<img src="_main_files/figure-html/unnamed-chunk-122-1.png" alt="Source zones (left) and Target zones (right)." width="672" />
+<p class="caption">
+Figure 3.6: Source zones (left) and Target zones (right).
+</p>
+</div>
+<p>The best known and most widely used areal interpolation approach is areal weighting <span class="citation">(<a href="#ref-goodchild1980areal">Goodchild and Lam 1980</a>)</span>. This allocates the source zone attributes proportionately to the target zones based on the <strong>proportions of their intersecting areas</strong>. Area weighting is inherently volume preserving – that is the source zone values are maintained if the target zone values within the source zone are summed – and is easily implemented using polygon overlay operations.</p>
+<p>In R it can be implemented using the <code>st_interpolate_aw</code> function in the <code>sf</code> package:</p>
+<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="spatial-interpolation.html#cb167-1" tabindex="-1"></a>aw_res <span class="ot">&lt;-</span> <span class="fu">st_interpolate_aw</span>(sz_sf, tz_sf, <span class="at">extensive =</span> T)</span></code></pre></div>
+<p>You should inspect the results:</p>
+<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="spatial-interpolation.html#cb168-1" tabindex="-1"></a>aw_res</span></code></pre></div>
+<p>Now it is important to check that the interpolation has resulted in the correct number of houses being estimated in the target zones:</p>
+<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="spatial-interpolation.html#cb169-1" tabindex="-1"></a><span class="fu">sum</span>(aw_res<span class="sc">$</span>HSE_UNITS)</span></code></pre></div>
+<pre><code>## [1] 52484.8</code></pre>
+<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="spatial-interpolation.html#cb171-1" tabindex="-1"></a><span class="fu">sum</span>(sz_sf<span class="sc">$</span>HSE_UNITS)</span></code></pre></div>
+<pre><code>## [1] 54101</code></pre>
+<p>Here we can see that there is some distortion (3%) that needs to be corrected</p>
+<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="spatial-interpolation.html#cb173-1" tabindex="-1"></a><span class="co"># determine the correction factor </span></span>
+<span id="cb173-2"><a href="spatial-interpolation.html#cb173-2" tabindex="-1"></a>fac <span class="ot">&lt;-</span> <span class="fu">sum</span>(sz_sf<span class="sc">$</span>HSE_UNITS)<span class="sc">/</span><span class="fu">sum</span>(aw_res<span class="sc">$</span>HSE_UNITS)</span>
+<span id="cb173-3"><a href="spatial-interpolation.html#cb173-3" tabindex="-1"></a><span class="co"># and apply</span></span>
+<span id="cb173-4"><a href="spatial-interpolation.html#cb173-4" tabindex="-1"></a>aw_res<span class="sc">$</span>HSE_UNITS <span class="ot">=</span> aw_res<span class="sc">$</span>HSE_UNITS<span class="sc">*</span>fac</span></code></pre></div>
+<p>The results of Areal Weighting Interpolation can be mapped. How do you think this compares with the original figure?</p>
+<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="spatial-interpolation.html#cb174-1" tabindex="-1"></a><span class="co"># plot the interpolated data</span></span>
+<span id="cb174-2"><a href="spatial-interpolation.html#cb174-2" tabindex="-1"></a>aw_fig <span class="ot">=</span> </span>
+<span id="cb174-3"><a href="spatial-interpolation.html#cb174-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">data =</span> aw_res) <span class="sc">+</span> <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> HSE_UNITS)) <span class="sc">+</span> </span>
+<span id="cb174-4"><a href="spatial-interpolation.html#cb174-4" tabindex="-1"></a>  <span class="fu">scale_fill_distiller</span>(<span class="at">palette =</span> <span class="st">&quot;YlGnBu&quot;</span>, <span class="at">name =</span> <span class="st">&quot;House</span><span class="sc">\n</span><span class="st">Count&quot;</span>) <span class="sc">+</span></span>
+<span id="cb174-5"><a href="spatial-interpolation.html#cb174-5" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text=</span><span class="fu">element_blank</span>(), <span class="at">axis.ticks=</span><span class="fu">element_blank</span>(), </span>
+<span id="cb174-6"><a href="spatial-interpolation.html#cb174-6" tabindex="-1"></a>        <span class="at">legend.position =</span> <span class="fu">c</span>(<span class="fl">0.2</span>, <span class="fl">0.3</span>))</span>
+<span id="cb174-7"><a href="spatial-interpolation.html#cb174-7" tabindex="-1"></a><span class="fu">plot_grid</span>(p1, aw_fig)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:ch4fig8"></span>
+<img src="_main_files/figure-html/ch4fig8-1.png" alt="House counts interpolated from source zones to target zones." width="672" />
+<p class="caption">
+Figure 3.7: House counts interpolated from source zones to target zones.
+</p>
+</div>
+<p>The advantages of the Area Weighted approach are that it is quick, it makes few assumptions (perhaps too few! - see disadvantages) and it is easy to see how the interpolated values are generated: they are proportionate to the areas of intersection between the source and target zones.</p>
+<p>The disadvantages of this method are also obvious (and related): it assumes the relationship between the source zone attribute being interpolated and the target zone areas to be spatially homogeneous. That is, it assumes that <em>all</em> of each target zone area contain houses, an assumption that is rarely true in the real world (due to roads, parks, factors, shops etc). However, in the absence of information about these features, it remains a reasonable solution.</p>
+</div>
+<div id="dasymetric-interpolation" class="section level2 hasAnchor" number="3.4">
+<h2><span class="header-section-number">3.4</span> Dasymetric Interpolation<a href="spatial-interpolation.html#dasymetric-interpolation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>So the main disadvantage of standard area weighted interpolation is that it assumes that the relationship between the source zone attribute being interpolated and the target zone areas is spatially homogeneous: that the phenomenon (data / variable) being interpolated (e.g. population, houses, etc) is just as likely to be found in each part of each of the target zones. In reality this is rarely true, and can be at least partially addressed by the use of some additional or ancillary data that pertains to the variable of interest, to constrain the interpolation. For example, if interpolating house counts or population, then it would sensible to exclude areas in the target zones from the interpolation that have no houses or are not residential (e.g. parks, industrial areas, fields etc). This is Dasymetric Interpolation approach.</p>
+<p>Dasymetric mapping was pioneered by the Leicester group in the early 1990s. They linked remote sensing analyses to identify urban areas and urban density to help inform or constrain the interpolation of populations etc (see for example <span class="citation">(<a href="#ref-langford1994generating">Langford and Unwin 1994</a>; <a href="#ref-fisher1996modeling">Fisher and Langford 1996</a>)</span>). However there are now many new forms of data that can act as proxies for population and other activities and thus can be used to inform / constrain interpolation approaches - Point of Interest (PoI) check-ins, website listings, social media etc. These are reviewed and some are applied in <span class="citation">Zeng and Comber (<a href="#ref-zeng2020using">2020</a>)</span>.</p>
+<p>The dasymetric interpolation approach is the most cited of the methods that use ancillary information (see <span class="citation">(<a href="#ref-langford2013evaluation">Langford 2013</a>)</span> for a summary). Ancillary data includes areal features and linear or point features with buffers. It was first proposed as a cartographic technique to address some of the issues associated with choropleth mapping. The simplest dasymetric approach is to create a binary masks of areas that are included or excluded from the interpolation process. We will demonstrate this approach here</p>
+<p>Data of <em>non-residential</em> land use areas was downloaded and stored in <code>mask_sf</code>, as described in <span class="citation">Comber and Zeng (<a href="#ref-comber2019spatial">2019</a>)</span>. In this practical you will again interpolate source zone house counts but you will use the will use the non-residential data layer to mask out parts of the target zones to be <strong>excluded</strong> from the interpolation: i.e. you will constrain the interpolation to areas <em>likely</em> to contain houses.</p>
+<p>Recall the data you loaded from GitHub site, after a bit of manipulation, you can examine these by mapping them with an OSM backdrop. You may want to zoom in and out and check what has been omitted from the 500m grid cells. Note that you can turn layers on and off in the plot to inspect the context.</p>
+<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="spatial-interpolation.html#cb175-1" tabindex="-1"></a><span class="co"># transform the mask layer projection to match the others </span></span>
+<span id="cb175-2"><a href="spatial-interpolation.html#cb175-2" tabindex="-1"></a>mask_sf <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(mask_sf, <span class="fu">st_crs</span>(tz_sf))</span>
+<span id="cb175-3"><a href="spatial-interpolation.html#cb175-3" tabindex="-1"></a><span class="co"># and create the target zone mask</span></span>
+<span id="cb175-4"><a href="spatial-interpolation.html#cb175-4" tabindex="-1"></a>tz_m <span class="ot">&lt;-</span> <span class="fu">st_difference</span>(tz_sf, mask_sf)</span></code></pre></div>
+<pre><code>## Warning: attribute variables are assumed to be spatially constant throughout all geometries</code></pre>
+<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="spatial-interpolation.html#cb177-1" tabindex="-1"></a><span class="co"># plot</span></span>
+<span id="cb177-2"><a href="spatial-interpolation.html#cb177-2" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> tz_m) <span class="sc">+</span> </span>
+<span id="cb177-3"><a href="spatial-interpolation.html#cb177-3" tabindex="-1"></a>  <span class="fu">annotation_map_tile</span>(<span class="at">zoom =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
+<span id="cb177-4"><a href="spatial-interpolation.html#cb177-4" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">fill =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb177-5"><a href="spatial-interpolation.html#cb177-5" tabindex="-1"></a>  <span class="co"># now add the source zones</span></span>
+<span id="cb177-6"><a href="spatial-interpolation.html#cb177-6" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> sz_sf, <span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">lwd =</span> <span class="dv">1</span>, <span class="at">col =</span> <span class="st">&quot;black&quot;</span>) <span class="sc">+</span></span>
+<span id="cb177-7"><a href="spatial-interpolation.html#cb177-7" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text=</span><span class="fu">element_blank</span>(), <span class="at">axis.ticks=</span><span class="fu">element_blank</span>()) </span></code></pre></div>
+<pre><code>## Zoom: 12</code></pre>
+<div class="figure"><span style="display:block;" id="fig:ch4fig9"></span>
+<img src="_main_files/figure-html/ch4fig9-1.png" alt="A mask of residential areas, with source zone outlines and an OSM backdrop." width="672" />
+<p class="caption">
+Figure 3.8: A mask of residential areas, with source zone outlines and an OSM backdrop.
+</p>
+</div>
+<p>The masked data can be passed to the areal weighting algorithm, with the results weighted as before:</p>
+<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="spatial-interpolation.html#cb179-1" tabindex="-1"></a>dasy_res <span class="ot">&lt;-</span> <span class="fu">st_interpolate_aw</span>(sz_sf, tz_m, <span class="at">extensive =</span> T)</span></code></pre></div>
+<pre><code>## Warning in st_interpolate_aw.sf(sz_sf, tz_m, extensive = T): st_interpolate_aw assumes
+## attributes are constant or uniform over areas of x</code></pre>
+<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="spatial-interpolation.html#cb181-1" tabindex="-1"></a><span class="co"># rescale by ratio of loss of the total housing units </span></span>
+<span id="cb181-2"><a href="spatial-interpolation.html#cb181-2" tabindex="-1"></a><span class="co"># determine the correction factor </span></span>
+<span id="cb181-3"><a href="spatial-interpolation.html#cb181-3" tabindex="-1"></a>fac <span class="ot">&lt;-</span> <span class="fu">sum</span>(sz_sf<span class="sc">$</span>HSE_UNITS)<span class="sc">/</span><span class="fu">sum</span>(dasy_res<span class="sc">$</span>HSE_UNITS)</span>
+<span id="cb181-4"><a href="spatial-interpolation.html#cb181-4" tabindex="-1"></a><span class="co"># and apply</span></span>
+<span id="cb181-5"><a href="spatial-interpolation.html#cb181-5" tabindex="-1"></a>dasy_res<span class="sc">$</span>HSE_UNITS <span class="ot">=</span> dasy_res<span class="sc">$</span>HSE_UNITS<span class="sc">*</span>fac</span></code></pre></div>
+<p>Next, the result can be linked back to the original <em>unmasked</em> target zones:</p>
+<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb182-1"><a href="spatial-interpolation.html#cb182-1" tabindex="-1"></a><span class="co"># create a target zone ID</span></span>
+<span id="cb182-2"><a href="spatial-interpolation.html#cb182-2" tabindex="-1"></a>dasy_res<span class="sc">$</span>TID <span class="ot">&lt;-</span> tz_m<span class="sc">$</span>TID</span>
+<span id="cb182-3"><a href="spatial-interpolation.html#cb182-3" tabindex="-1"></a><span class="co"># get an index of Dasy result to original 500m grid  </span></span>
+<span id="cb182-4"><a href="spatial-interpolation.html#cb182-4" tabindex="-1"></a>index <span class="ot">&lt;-</span> <span class="fu">match</span>(dasy_res<span class="sc">$</span>TID, tz_sf<span class="sc">$</span>TID)</span>
+<span id="cb182-5"><a href="spatial-interpolation.html#cb182-5" tabindex="-1"></a><span class="co"># define a TZ output</span></span>
+<span id="cb182-6"><a href="spatial-interpolation.html#cb182-6" tabindex="-1"></a>dasy <span class="ot">&lt;-</span> tz_sf</span>
+<span id="cb182-7"><a href="spatial-interpolation.html#cb182-7" tabindex="-1"></a><span class="co"># allocate all areas 0</span></span>
+<span id="cb182-8"><a href="spatial-interpolation.html#cb182-8" tabindex="-1"></a>dasy<span class="sc">$</span>HSE_UNITS <span class="ot">&lt;-</span> <span class="dv">0</span>  </span>
+<span id="cb182-9"><a href="spatial-interpolation.html#cb182-9" tabindex="-1"></a><span class="co"># then allocate the matched results </span></span>
+<span id="cb182-10"><a href="spatial-interpolation.html#cb182-10" tabindex="-1"></a>dasy<span class="sc">$</span>HSE_UNITS[index] <span class="ot">&lt;-</span> dasy_res<span class="sc">$</span>HSE_UNITS</span></code></pre></div>
+<p>The map below shows the result of Dasymetric interpolation.</p>
+<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="spatial-interpolation.html#cb183-1" tabindex="-1"></a>dasy_fig <span class="ot">=</span> </span>
+<span id="cb183-2"><a href="spatial-interpolation.html#cb183-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">data =</span> dasy) <span class="sc">+</span> <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> HSE_UNITS)) <span class="sc">+</span> </span>
+<span id="cb183-3"><a href="spatial-interpolation.html#cb183-3" tabindex="-1"></a>  <span class="fu">scale_fill_distiller</span>(<span class="at">palette =</span> <span class="st">&quot;YlGnBu&quot;</span>, <span class="at">name =</span> <span class="st">&quot;House</span><span class="sc">\n</span><span class="st">Count&quot;</span>) <span class="sc">+</span></span>
+<span id="cb183-4"><a href="spatial-interpolation.html#cb183-4" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text=</span><span class="fu">element_blank</span>(), <span class="at">axis.ticks=</span><span class="fu">element_blank</span>(), </span>
+<span id="cb183-5"><a href="spatial-interpolation.html#cb183-5" tabindex="-1"></a>        <span class="at">legend.position =</span> <span class="fu">c</span>(<span class="fl">0.2</span>, <span class="fl">0.3</span>))</span>
+<span id="cb183-6"><a href="spatial-interpolation.html#cb183-6" tabindex="-1"></a>dasy_fig</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:ch4fig10"></span>
+<img src="_main_files/figure-html/ch4fig10-1.png" alt="The result of a Dasymetric interpolation of house counts." width="672" />
+<p class="caption">
+Figure 3.9: The result of a Dasymetric interpolation of house counts.
+</p>
+</div>
+<p>And this can be compared to the Area Weighted interpolation result</p>
+<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb184-1"><a href="spatial-interpolation.html#cb184-1" tabindex="-1"></a><span class="fu">plot_grid</span>(aw_fig, dasy_fig)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:ch4fig11"></span>
+<img src="_main_files/figure-html/ch4fig11-1.png" alt="The results of Area weighted interpolation (left) and Dasymetric interpolation (right)." width="672" />
+<p class="caption">
+Figure 3.10: The results of Area weighted interpolation (left) and Dasymetric interpolation (right).
+</p>
+</div>
+<p>The Dasymetric approach has a different set of assumptions: namely that population is evenly distributed in “residential” areas, which of course it is not but it perhaps provides a more informed estimation of house counts in these target zone areas. <span class="citation">Comber and Zeng (<a href="#ref-comber2019spatial">2019</a>)</span> summarise and compare a number of areal interpolation techniques, with coded examples.</p>
+</div>
+<div id="answers-to-tasks-2" class="section level2 unnumbered hasAnchor">
+<h2>Answers to Tasks<a href="spatial-interpolation.html#answers-to-tasks-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Task 1</strong>
+Your task is to explore the effect of changing the input parameters to the function for creating KDEs. What happens if you change <code>n</code> and <code>h</code>? Can you work out what they are? The help for <code>kde2</code> function at the heart of the function above might help you as well!</p>
+<p>The <code>n</code> parameter determines the resolution of the output - the number of points in the grid that is returned. Higher values generate denser grids. To show this try running</p>
+<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb185-1"><a href="spatial-interpolation.html#cb185-1" tabindex="-1"></a><span class="co"># Task 1</span></span>
+<span id="cb185-2"><a href="spatial-interpolation.html#cb185-2" tabindex="-1"></a>kde_hp <span class="ot">=</span> <span class="fu">kde_sf</span>(hp, <span class="at">n =</span> <span class="dv">10</span>, <span class="at">lims =</span> wards) </span>
+<span id="cb185-3"><a href="spatial-interpolation.html#cb185-3" tabindex="-1"></a><span class="co"># map the result</span></span>
+<span id="cb185-4"><a href="spatial-interpolation.html#cb185-4" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> wards) <span class="sc">+</span> <span class="fu">geom_sf</span>() <span class="sc">+</span> </span>
+<span id="cb185-5"><a href="spatial-interpolation.html#cb185-5" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> kde_hp, <span class="fu">aes</span>(<span class="at">col =</span> kde), <span class="at">shape =</span> <span class="dv">15</span>, <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb185-6"><a href="spatial-interpolation.html#cb185-6" tabindex="-1"></a>  <span class="fu">scale_colour_viridis_c</span>(<span class="at">name =</span> <span class="st">&quot;&quot;</span>) </span></code></pre></div>
+<p>The <code>h</code> parameter determines the bandwidth. This is the search space or distance around each observation over which the density estimation is made. If you think about this as smoothing parameter it determines the degree of smoothing. To show this try running the code with <code>h = 20000</code> and <code>h = 100</code></p>
+<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb186-1"><a href="spatial-interpolation.html#cb186-1" tabindex="-1"></a>kde_hp <span class="ot">=</span> <span class="fu">kde_sf</span>(hp, <span class="at">h =</span> <span class="dv">100</span>, <span class="at">lims =</span> wards) </span>
+<span id="cb186-2"><a href="spatial-interpolation.html#cb186-2" tabindex="-1"></a><span class="co"># insepct the result</span></span>
+<span id="cb186-3"><a href="spatial-interpolation.html#cb186-3" tabindex="-1"></a><span class="fu">dim</span>(kde_hp)</span>
+<span id="cb186-4"><a href="spatial-interpolation.html#cb186-4" tabindex="-1"></a><span class="co"># map the result</span></span>
+<span id="cb186-5"><a href="spatial-interpolation.html#cb186-5" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> wards) <span class="sc">+</span> <span class="fu">geom_sf</span>() <span class="sc">+</span> </span>
+<span id="cb186-6"><a href="spatial-interpolation.html#cb186-6" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> kde_hp, <span class="fu">aes</span>(<span class="at">col =</span> kde), <span class="at">size =</span> <span class="fl">0.01</span>) <span class="sc">+</span></span>
+<span id="cb186-7"><a href="spatial-interpolation.html#cb186-7" tabindex="-1"></a>  <span class="fu">scale_colour_viridis_c</span>(<span class="at">name =</span> <span class="st">&quot;&quot;</span>) </span></code></pre></div>
+<p><strong>Task 2</strong>
+Modify the call to <code>idw</code> above so that it restricts the maximum number of neighbours that are considered to 100. You will need to add argument <code>nmax = 100</code> and plot the results again. What is the effect and why do you think that is happening?</p>
+<p>The effect is to generate predictions that have greater variation spatially. This is because the estimation at each point in the grid uses a smaller number of more local prices to generate the estimated process. Thus the window, from which data are drawn to makes the estimation is smaller and the results are smoothed less.</p>
+<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="spatial-interpolation.html#cb187-1" tabindex="-1"></a><span class="co"># Task 2</span></span>
+<span id="cb187-2"><a href="spatial-interpolation.html#cb187-2" tabindex="-1"></a>idw.est <span class="ot">&lt;-</span> <span class="fu">idw</span>(<span class="at">formula =</span> price<span class="sc">~</span><span class="dv">1</span>,<span class="at">locations =</span> hp, </span>
+<span id="cb187-3"><a href="spatial-interpolation.html#cb187-3" tabindex="-1"></a>               <span class="at">newdata =</span> s.grid, <span class="at">idp=</span><span class="fl">1.0</span>, <span class="at">nmax =</span> <span class="dv">100</span>)</span>
+<span id="cb187-4"><a href="spatial-interpolation.html#cb187-4" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> idw.est) <span class="sc">+</span> </span>
+<span id="cb187-5"><a href="spatial-interpolation.html#cb187-5" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">col =</span> var1.pred)) <span class="sc">+</span></span>
+<span id="cb187-6"><a href="spatial-interpolation.html#cb187-6" tabindex="-1"></a>  <span class="fu">scale_colour_viridis_c</span>(<span class="at">name =</span> <span class="st">&quot;&quot;</span>) </span></code></pre></div>
+</div>
+<div id="optional-fine-tuning-idw" class="section level2 unnumbered hasAnchor">
+<h2>Optional: Fine tuning IDW<a href="spatial-interpolation.html#optional-fine-tuning-idw" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In the main practical you undertook of point interpolation of house price observations using Inverse Distance Weighting (IDW) to generate a surface. The IDW model was specified with the default parameters for the distance weighting and the number of observations to include in the estimation of house price. In Task 2 you were encouraged to adjust and explore the <code>nmax</code> parameter to the IDW function.</p>
+<p>In this part of the self-directed practical you will try to <strong>optimise</strong> the selection of input parameters to make the best predictive model.</p>
+<p>Recall that the IDW estimations were created using the code below:</p>
+<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="spatial-interpolation.html#cb188-1" tabindex="-1"></a><span class="co"># make the grid of locations</span></span>
+<span id="cb188-2"><a href="spatial-interpolation.html#cb188-2" tabindex="-1"></a>s.grid <span class="ot">=</span> <span class="fu">st_sample</span>(wards, <span class="dv">1500</span>, <span class="at">type =</span> <span class="st">&quot;regular&quot;</span>) </span>
+<span id="cb188-3"><a href="spatial-interpolation.html#cb188-3" tabindex="-1"></a><span class="co"># estimate price over those locations </span></span>
+<span id="cb188-4"><a href="spatial-interpolation.html#cb188-4" tabindex="-1"></a>idw.est <span class="ot">&lt;-</span> <span class="fu">idw</span>(<span class="at">formula =</span> price<span class="sc">~</span><span class="dv">1</span>, <span class="at">locations =</span> hp, </span>
+<span id="cb188-5"><a href="spatial-interpolation.html#cb188-5" tabindex="-1"></a>               <span class="at">newdata =</span> s.grid, <span class="at">idp =</span> <span class="fl">1.0</span>)</span></code></pre></div>
+<pre><code>## [inverse distance weighted interpolation]</code></pre>
+<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="spatial-interpolation.html#cb190-1" tabindex="-1"></a><span class="co"># examine the results </span></span>
+<span id="cb190-2"><a href="spatial-interpolation.html#cb190-2" tabindex="-1"></a><span class="fu">plot</span>(idw.est[, <span class="st">&quot;var1.pred&quot;</span>], <span class="at">pch =</span><span class="dv">16</span>)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:ch4fig12"></span>
+<img src="_main_files/figure-html/ch4fig12-1.png" alt="An example IDW surface." width="672" />
+<p class="caption">
+Figure 3.11: An example IDW surface.
+</p>
+</div>
+<p>To estimate the house price at each sample location in the grid, the <code>idw</code> function uses data from nearby observations.
+Task 2 asked you to explore the impact of changing (reducing) the number of observation points (<code>nmax</code>) used to estimate house price at each grid cell location, setting this value to 100 as below, which changed the degree of smoothing in the estimated surface:</p>
+<div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb191-1"><a href="spatial-interpolation.html#cb191-1" tabindex="-1"></a>idw.est <span class="ot">&lt;-</span> <span class="fu">idw</span>(price<span class="sc">~</span><span class="dv">1</span>,hp, <span class="at">newdata =</span> s.grid, <span class="at">idp =</span> <span class="fl">1.0</span>, <span class="at">nmax =</span> <span class="dv">100</span>)</span></code></pre></div>
+<pre><code>## [inverse distance weighted interpolation]</code></pre>
+<div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="spatial-interpolation.html#cb193-1" tabindex="-1"></a><span class="fu">plot</span>(idw.est[, <span class="st">&quot;var1.pred&quot;</span>], <span class="at">pch =</span><span class="dv">16</span>)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:ch4fig3a"></span>
+<img src="_main_files/figure-html/ch4fig3a-1.png" alt="IDW estimations of price using a smaller number of observations." width="672" />
+<p class="caption">
+Figure 3.12: IDW estimations of price using a smaller number of observations.
+</p>
+</div>
+<p>Here, the same distance weighting parameter was used but only the nearest 100 observations were used to estimate the house price at each grid location (compared to the main practical, in which <em>all</em> other data points were used), weighted them according to their distance to the location.</p>
+<p>This begs the questions 1) what is the right number of data points? and 2) what is the right distance weighting function? This are difficult to answer just by using different input parameters and mapping the results.</p>
+<p>The rest of this practical tries to answer these questions.</p>
+<p>The <code>idw</code> function used above and in the main practical returns a spatial object: <code>idw.est</code> is an <code>sf</code> format spatial object. What we need to do is to create a <strong>model</strong>, then use the model to make some predictions and then apply some <em>objective</em> measure to evaluate the predicted (or modelled) house price results, before applying this model repeatedly with different input parameters.</p>
+<p><strong>Create a Model</strong>
+To illustrate the prices, first, note that IDW can be used to create a model and the model can be used to predict the house prices over the <code>hp</code> locations (i.e. the observed house sales locations:</p>
+<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="spatial-interpolation.html#cb194-1" tabindex="-1"></a><span class="co"># create a model</span></span>
+<span id="cb194-2"><a href="spatial-interpolation.html#cb194-2" tabindex="-1"></a>mod.idw <span class="ot">&lt;-</span> <span class="fu">gstat</span>(<span class="at">formula =</span> price<span class="sc">~</span><span class="dv">1</span>, <span class="at">locations =</span> hp, <span class="at">nmax =</span> <span class="dv">100</span>, <span class="at">set=</span><span class="fu">list</span>(<span class="at">idp =</span> <span class="dv">1</span>)) </span>
+<span id="cb194-3"><a href="spatial-interpolation.html#cb194-3" tabindex="-1"></a><span class="co"># apply to the data</span></span>
+<span id="cb194-4"><a href="spatial-interpolation.html#cb194-4" tabindex="-1"></a>hp<span class="sc">$</span>pred.idw <span class="ot">&lt;-</span> <span class="fu">predict</span>(mod.idw, <span class="at">newdata=</span>hp, <span class="at">debug.level=</span><span class="dv">0</span>)<span class="sc">$</span>var1.pred</span></code></pre></div>
+<p>This can be examined in the usual way:</p>
+<div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb195-1"><a href="spatial-interpolation.html#cb195-1" tabindex="-1"></a><span class="fu">summary</span>(hp<span class="sc">$</span>pred.idw)</span></code></pre></div>
+<p><strong>Define an error measure</strong>
+We need to evaluate how good the IDW estimates are. To do this an error measure can be used to compare modelled and known values. One such measure is called Root Mean Square Error (RMSE). This is calculated by squaring the errors, or residual differences between observed Price, <span class="math inline">\(y\)</span>, and the predicted price <span class="math inline">\(\hat{y}\)</span>, for all <span class="math inline">\(n\)</span> observations in the validation subset, finding their mean and taking square root of the resulting mean:</p>
+<p><span class="math display">\[\begin{equation}
+\text{RMSE} = \sqrt{  \sum{  \frac{ (y - \hat{y})^2}{n} }}
+\label{eq:hrmse}
+\end{equation}\]</span></p>
+<p>We can define this in R as follows:</p>
+<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="spatial-interpolation.html#cb196-1" tabindex="-1"></a>RMSE <span class="ot">&lt;-</span> <span class="cf">function</span>(observed, predicted) { </span>
+<span id="cb196-2"><a href="spatial-interpolation.html#cb196-2" tabindex="-1"></a>  res <span class="ot">=</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>((predicted <span class="sc">-</span> observed)<span class="sc">^</span><span class="dv">2</span>, <span class="at">na.rm=</span><span class="cn">TRUE</span>))</span>
+<span id="cb196-3"><a href="spatial-interpolation.html#cb196-3" tabindex="-1"></a>  <span class="fu">return</span>(res)</span>
+<span id="cb196-4"><a href="spatial-interpolation.html#cb196-4" tabindex="-1"></a>}</span></code></pre></div>
+<div class="noticebox">
+<p><strong>NB</strong> You have just written a function, that takes 2 inputs, does something with them and then returns something else.. Functions generally do something and return a result of some kind.</p>
+</div>
+<p>And the results can be evaluated using the <code>RMSE</code> function defined above:</p>
+<div class="sourceCode" id="cb197"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb197-1"><a href="spatial-interpolation.html#cb197-1" tabindex="-1"></a><span class="fu">RMSE</span>(hp<span class="sc">$</span>price, hp<span class="sc">$</span>pred.idw)</span></code></pre></div>
+<p><strong>Define training and validation subsets</strong>
+We also need to separate model development and evaluation: models trained on one dataset will predict that data very well (as with the <code>mod.idw</code> model used to create <code>hp$pred.idw</code> above). However, we want to know how well they will perform on new data. One way is to hold back some known data points and to see how well the y are predicted with different input parameters to <code>idw</code>. This is done by splitting the input data into <em>training</em> and <em>validation</em> subsets. The idea is that different models are built using the <em>training</em> subset, for example with different values of <code>nmax</code> and <code>idp</code>, the models are used to predict the house price values of the known <em>validation</em> subset and then the predictions are evaluated by comparison with the known value.</p>
+<p>An 80:20 split into training and validation subsets can be defined as follows :</p>
+<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb198-1"><a href="spatial-interpolation.html#cb198-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">20200912</span>)  <span class="co"># for reproducibility</span></span>
+<span id="cb198-2"><a href="spatial-interpolation.html#cb198-2" tabindex="-1"></a>index <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">nrow</span>(hp), <span class="fl">0.2</span> <span class="sc">*</span> <span class="fu">nrow</span>(hp))</span>
+<span id="cb198-3"><a href="spatial-interpolation.html#cb198-3" tabindex="-1"></a><span class="co"># create subsets</span></span>
+<span id="cb198-4"><a href="spatial-interpolation.html#cb198-4" tabindex="-1"></a>trn <span class="ot">&lt;-</span> hp[<span class="sc">-</span>index,]   <span class="co"># training (80%)</span></span>
+<span id="cb198-5"><a href="spatial-interpolation.html#cb198-5" tabindex="-1"></a>tst <span class="ot">&lt;-</span> hp[index,]    <span class="co"># validation (20%)</span></span></code></pre></div>
+<p><strong>Define a tuning grid of model parameters</strong>
+We can optimize the <code>idw</code> input parameters for the distance decay model (defined by <code>idp</code>) and number of neighbours used in the to estimation (defined by <code>nmax</code>) by finding the combination of these that minimises the RMSE value. To do this we need to think about creating a <em>tuning grid</em> of input parameters combinations and creating the training and validation data subsets. The code below defines a tuning grid containing ranges of the <code>idp</code> and <code>nmax</code> parameters:</p>
+<div class="sourceCode" id="cb199"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb199-1"><a href="spatial-interpolation.html#cb199-1" tabindex="-1"></a>params <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">nmax_vals =</span> <span class="fu">seq</span>(<span class="dv">50</span>, <span class="dv">1700</span>, <span class="at">by =</span> <span class="dv">50</span>),</span>
+<span id="cb199-2"><a href="spatial-interpolation.html#cb199-2" tabindex="-1"></a>                      <span class="at">idp_vals  =</span> <span class="fu">seq</span>(<span class="fl">0.5</span>, <span class="dv">5</span>, <span class="at">by =</span> <span class="fl">0.5</span>))</span>
+<span id="cb199-3"><a href="spatial-interpolation.html#cb199-3" tabindex="-1"></a><span class="co"># define a result attribute in params</span></span>
+<span id="cb199-4"><a href="spatial-interpolation.html#cb199-4" tabindex="-1"></a>params<span class="sc">$</span>RMSE <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb199-5"><a href="spatial-interpolation.html#cb199-5" tabindex="-1"></a><span class="fu">dim</span>(params)</span></code></pre></div>
+<pre><code>## [1] 340   3</code></pre>
+<div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb201-1"><a href="spatial-interpolation.html#cb201-1" tabindex="-1"></a><span class="fu">head</span>(params)</span></code></pre></div>
+<pre><code>##   nmax_vals idp_vals RMSE
+## 1        50      0.5    0
+## 2       100      0.5    0
+## 3       150      0.5    0
+## 4       200      0.5    0
+## 5       250      0.5    0
+## 6       300      0.5    0</code></pre>
+<p>This contains 340 combinations of values to evaluate in an IDW and a variable called <code>RMSE</code> to take the evaluation result.</p>
+<p><strong>Evaluate different parameter combinations</strong>
+The parameters in the tuning grid can be passed into the IDW using a <em>for</em> loop. This is the first time you have seen one of these. What a for loop does is do the same thing a set number of times, with the number defined with the call to <code>for</code>. What the code <code>for(i in 1:340)</code> says is, <em>for each element <code>i</code> in the sequence 1 to 340 do the following …</em>, and then the stuff inside the curly brackets <code>{...}</code> defines what is done. In the first iteration, <code>i</code> is 1 and in the next iteration it changes value to the next value ion the sequence, in this case 2, then 3 etc until <code>i</code> is the value in the sequence, in this case 340. What this allows us to do is to pass the <em>i-th</em> element of the parameter grid into the model using <code>params$nmax_vals[i]</code> and <code>params$idp_vals[i]</code>. The result of each iteration is written to the <span class="math inline">\(i^{th}\)</span> element <code>params$RMSE</code>.</p>
+<p>The code below will take a some minutes to run (4 minutes on my computer but 30 minutes on one of the demonstrator’s computer!) but using <code>for</code> loops like this means that we do not have create 340 separate models one by one!</p>
+<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="spatial-interpolation.html#cb203-1" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">340</span>) {</span>
+<span id="cb203-2"><a href="spatial-interpolation.html#cb203-2" tabindex="-1"></a>  <span class="co"># make a model</span></span>
+<span id="cb203-3"><a href="spatial-interpolation.html#cb203-3" tabindex="-1"></a>  model.i <span class="ot">=</span> <span class="fu">gstat</span>(<span class="at">formula =</span> price<span class="sc">~</span><span class="dv">1</span>, </span>
+<span id="cb203-4"><a href="spatial-interpolation.html#cb203-4" tabindex="-1"></a>                   <span class="at">locations =</span> trn, </span>
+<span id="cb203-5"><a href="spatial-interpolation.html#cb203-5" tabindex="-1"></a>                   <span class="at">nmax =</span> params<span class="sc">$</span>nmax_vals[i], </span>
+<span id="cb203-6"><a href="spatial-interpolation.html#cb203-6" tabindex="-1"></a>                   <span class="at">set=</span><span class="fu">list</span>(<span class="at">idp =</span> params<span class="sc">$</span>idp_vals[i])) </span>
+<span id="cb203-7"><a href="spatial-interpolation.html#cb203-7" tabindex="-1"></a>  <span class="co"># apply to the data</span></span>
+<span id="cb203-8"><a href="spatial-interpolation.html#cb203-8" tabindex="-1"></a>  predicted.i <span class="ot">=</span> <span class="fu">predict</span>(model.i, <span class="at">newdata =</span> tst, <span class="at">debug.level=</span><span class="dv">0</span>)<span class="sc">$</span>var1.pred</span>
+<span id="cb203-9"><a href="spatial-interpolation.html#cb203-9" tabindex="-1"></a>  <span class="co"># calculate RMSE and write to the tune grid</span></span>
+<span id="cb203-10"><a href="spatial-interpolation.html#cb203-10" tabindex="-1"></a>  params<span class="sc">$</span>RMSE[i] <span class="ot">=</span> <span class="fu">RMSE</span>(tst<span class="sc">$</span>price, predicted.i)</span>
+<span id="cb203-11"><a href="spatial-interpolation.html#cb203-11" tabindex="-1"></a>  <span class="co"># include a counter... so you know something is happening! </span></span>
+<span id="cb203-12"><a href="spatial-interpolation.html#cb203-12" tabindex="-1"></a>  <span class="cf">if</span>(i<span class="sc">%%</span><span class="dv">10</span> <span class="sc">==</span> <span class="dv">0</span>) <span class="fu">cat</span>(i, <span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>)</span>
+<span id="cb203-13"><a href="spatial-interpolation.html#cb203-13" tabindex="-1"></a>}  </span></code></pre></div>
+<div class="noticebox">
+<p><strong>For Loops</strong></p>
+<p>You might want to have a look at some explanations of For loops:</p>
+<ul>
+<li>11 minute video: <a href="https://www.youtube.com/watch?v=h987LWDvqlQ" class="uri">https://www.youtube.com/watch?v=h987LWDvqlQ</a></li>
+<li>An RBloggers post: <a href="https://www.r-bloggers.com/2015/12/how-to-write-the-first-for-loop-in-r/" class="uri">https://www.r-bloggers.com/2015/12/how-to-write-the-first-for-loop-in-r/</a></li>
+<li>Hadley Wickam’s data science book - see only up to the end of Section 21.2 - <a href="https://r4ds.had.co.nz/iteration.html" class="uri">https://r4ds.had.co.nz/iteration.html</a></li>
+</ul>
+</div>
+<p><strong>Find the best parameters</strong>
+We can use the <code>which.min</code> function to find out the combination of <code>idp</code> and <code>nmax</code> has the lowest predictive error:</p>
+<div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb204-1"><a href="spatial-interpolation.html#cb204-1" tabindex="-1"></a>params[<span class="fu">which.min</span>(params<span class="sc">$</span>RMSE),]</span></code></pre></div>
+<pre><code>##    nmax_vals idp_vals RMSE
+## 64      1500        1    0</code></pre>
+<div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="spatial-interpolation.html#cb206-1" tabindex="-1"></a><span class="co"># assign the values </span></span>
+<span id="cb206-2"><a href="spatial-interpolation.html#cb206-2" tabindex="-1"></a>nmax <span class="ot">=</span> params[<span class="fu">which.min</span>(params<span class="sc">$</span>RMSE),<span class="st">&quot;nmax_vals&quot;</span>]</span>
+<span id="cb206-3"><a href="spatial-interpolation.html#cb206-3" tabindex="-1"></a>idp <span class="ot">=</span> params[<span class="fu">which.min</span>(params<span class="sc">$</span>RMSE),<span class="st">&quot;idp_vals&quot;</span>]</span></code></pre></div>
+<p>This suggests that number of neighbours should be 1500 and that distance decay function should be specified with a value somewhere around a 1th order decay (actually declining with <span class="math inline">\(d^{1}\)</span>).</p>
+<p><strong>Final model</strong>
+We can use these now to run the full model with our data:</p>
+<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="spatial-interpolation.html#cb207-1" tabindex="-1"></a>idw.est <span class="ot">&lt;-</span> <span class="fu">idw</span>(<span class="at">formula =</span> price<span class="sc">~</span><span class="dv">1</span>,<span class="at">locations =</span> hp, </span>
+<span id="cb207-2"><a href="spatial-interpolation.html#cb207-2" tabindex="-1"></a>               <span class="at">newdata =</span> s.grid, <span class="at">idp =</span> idp, <span class="at">nmax =</span> nmax)</span>
+<span id="cb207-3"><a href="spatial-interpolation.html#cb207-3" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> idw.est) <span class="sc">+</span> </span>
+<span id="cb207-4"><a href="spatial-interpolation.html#cb207-4" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">col =</span> var1.pred)) <span class="sc">+</span></span>
+<span id="cb207-5"><a href="spatial-interpolation.html#cb207-5" tabindex="-1"></a>  <span class="fu">scale_colour_viridis_c</span>(<span class="at">name =</span> <span class="st">&quot;&quot;</span>) </span></code></pre></div>
+<div class="qbox">
+<div class="center">
+<p><strong>Additional Task</strong></p>
+</div>
+<p>What are the potential limitations of this approach? To help you answer this - and there is no right answer just a series of things to think about - think about the different steps, and how these could be improved.</p>
+</div>
+<div id="answer-to-additional-task" class="section level3 unnumbered hasAnchor">
+<h3>Answer to Additional Task<a href="spatial-interpolation.html#answer-to-additional-task" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Additional Task</strong></p>
+<p>What are the potential limitations of this approach? To help you answer this - and there is no right answer just a series of things to think about - think about the different steps, and how these could be improved.</p>
+<p>I think the main things here are:</p>
+<ol style="list-style-type: decimal">
+<li>The training and validation split - it could be that sample in the 20% is not representative of the 80%. You could test this by examining their distributions and properties.</li>
+</ol>
+<div class="sourceCode" id="cb208"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb208-1"><a href="spatial-interpolation.html#cb208-1" tabindex="-1"></a><span class="co"># Additional Task</span></span>
+<span id="cb208-2"><a href="spatial-interpolation.html#cb208-2" tabindex="-1"></a><span class="fu">summary</span>(trn<span class="sc">$</span>price)</span>
+<span id="cb208-3"><a href="spatial-interpolation.html#cb208-3" tabindex="-1"></a><span class="fu">summary</span>(tst<span class="sc">$</span>price)</span></code></pre></div>
+<p>So we might want to get a training and validation split that minimise the differences between the distributions in these</p>
+<ol start="2" style="list-style-type: decimal">
+<li>The scaling of the parameter tuning grid the divisions using steps of 50 for the <code>nmax</code> parameter and 0.5 for the <code>idp</code> parameter. Might smaller steps have resulted in a better model? Although, smaller steps results in a longer tuning grid and will take more time to evaluate… The plot below shows a clear optimal range for <code>idp</code> between 2 and 3 , for example that we might want to investigate more deeply.</li>
+</ol>
+<div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="spatial-interpolation.html#cb209-1" tabindex="-1"></a><span class="fu">ggplot</span>(params, <span class="fu">aes</span>(<span class="at">x =</span> idp_vals, <span class="at">y =</span> RMSE)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span></code></pre></div>
+<p>This is not so evident for <code>nmax</code> and there does seem to be a clear inflection at 500m which might be worth investigating.</p>
+<div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb210-1"><a href="spatial-interpolation.html#cb210-1" tabindex="-1"></a><span class="fu">ggplot</span>(params, <span class="fu">aes</span>(<span class="at">x =</span> nmax_vals, <span class="at">y =</span> RMSE, <span class="at">colour =</span> <span class="fu">factor</span>(idp_vals))) <span class="sc">+</span> <span class="fu">geom_point</span>() </span></code></pre></div>
+
+</div>
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-brunsdon2018introduction" class="csl-entry">
+Brunsdon, Chris, and Lex Comber. 2025. <em>An Introduction to r for Spatial Analysis and Mapping (3e)</em>. Sage.
+</div>
+<div id="ref-comber2019spatial" class="csl-entry">
+Comber, Alexis, and Wen Zeng. 2019. <span>“Spatial Interpolation Using Areal Features: A Review of Methods and Opportunities Using New Forms of Data with Coded Illustrations.”</span> <em>Geography Compass</em> 13 (10): e12465.
+</div>
+<div id="ref-fisher1996modeling" class="csl-entry">
+Fisher, Peter F, and Mitchel Langford. 1996. <span>“Modeling Sensitivity to Accuracy in Classified Imagery: A Study of Areal Interpolation by Dasymetric Mapping.”</span> <em>The Professional Geographer</em> 48 (3): 299–309.
+</div>
+<div id="ref-goodchild1980areal" class="csl-entry">
+Goodchild, Michael F, and N Siu-Ngan Lam. 1980. <span>“Areal Interpolation: A Variant of the Traditional Spatial Problem.”</span> <em>Geo-Processing</em> 1 (3): 297–312.
+</div>
+<div id="ref-langford2013evaluation" class="csl-entry">
+Langford, Mitchel. 2013. <span>“An Evaluation of Small Area Population Estimation Techniques Using Open Access Ancillary Data.”</span> <em>Geographical Analysis</em> 45 (3): 324–44.
+</div>
+<div id="ref-langford1994generating" class="csl-entry">
+Langford, Mitchel, and David J Unwin. 1994. <span>“Generating and Mapping Population Density Surfaces Within a Geographical Information System.”</span> <em>The Cartographic Journal</em> 31 (1): 21–26.
+</div>
+<div id="ref-zeng2020using" class="csl-entry">
+Zeng, Wen, and Alexis Comber. 2020. <span>“Using Household Counts as Ancillary Information for Areal Interpolation of Population: Comparing Formal and Informal, Online Data Sources.”</span> <em>Computers, Environment and Urban Systems</em> 80: 101440.
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="exploratory-data-analysis.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="regression.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["_main.pdf", "_main.epub"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

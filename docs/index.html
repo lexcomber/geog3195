@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>GEOG3915 GeoComputation and Spatial Analysis practicals</title>
+  <meta name="description" content="This contains materials to support the University of Leeds GEOG3195 module, delivered by Lex Comber" />
+  <meta name="generator" content="bookdown 0.48 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="GEOG3915 GeoComputation and Spatial Analysis practicals" />
+  <meta property="og:type" content="book" />
+  <meta property="og:image" content="https://bookdown.org/lexcomber/geog3915/images/GIS_in_the_bin.jpg" />
+  <meta property="og:description" content="This contains materials to support the University of Leeds GEOG3195 module, delivered by Lex Comber" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="GEOG3915 GeoComputation and Spatial Analysis practicals" />
+  
+  <meta name="twitter:description" content="This contains materials to support the University of Leeds GEOG3195 module, delivered by Lex Comber" />
+  <meta name="twitter:image" content="https://bookdown.org/lexcomber/geog3915/images/GIS_in_the_bin.jpg" />
+
+<meta name="author" content="Lex Comber" />
+
+
+<meta name="date" content="2026-09-20" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+
+<link rel="next" href="exploratory-data-analysis.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">GEOG3915 Practicals</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Getting Started</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#installing-rrstudio"><i class="fa fa-check"></i><b>1.1</b> Installing R/RStudio</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#r-rstudio-refresh"><i class="fa fa-check"></i><b>1.2</b> R / RStudio Refresh</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="index.html"><a href="index.html#the-rstudio-interface"><i class="fa fa-check"></i><b>1.2.1</b> The RStudio Interface</a></li>
+<li class="chapter" data-level="1.2.2" data-path="index.html"><a href="index.html#ways-of-working"><i class="fa fa-check"></i><b>1.2.2</b> Ways of working</a></li>
+<li class="chapter" data-level="1.2.3" data-path="index.html"><a href="index.html#projects-files-and-folder-management"><i class="fa fa-check"></i><b>1.2.3</b> Projects, Files and Folder Management</a></li>
+<li class="chapter" data-level="1.2.4" data-path="index.html"><a href="index.html#practicals"><i class="fa fa-check"></i><b>1.2.4</b> Practicals</a></li>
+<li class="chapter" data-level="1.2.5" data-path="index.html"><a href="index.html#packages"><i class="fa fa-check"></i><b>1.2.5</b> Packages</a></li>
+<li class="chapter" data-level="1.2.6" data-path="index.html"><a href="index.html#further-resources"><i class="fa fa-check"></i><b>1.2.6</b> Further Resources</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#using-r-as-a-gis"><i class="fa fa-check"></i><b>1.3</b> Using R as a GIS</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="index.html"><a href="index.html#data"><i class="fa fa-check"></i><b>1.3.1</b> Data</a></li>
+<li class="chapter" data-level="1.3.2" data-path="index.html"><a href="index.html#creating-point-data"><i class="fa fa-check"></i><b>1.3.2</b> Creating point data</a></li>
+<li class="chapter" data-level="1.3.3" data-path="index.html"><a href="index.html#spatial-operations"><i class="fa fa-check"></i><b>1.3.3</b> Spatial Operations</a></li>
+<li class="chapter" data-level="1.3.4" data-path="index.html"><a href="index.html#merging-spatial-features-and-buffers"><i class="fa fa-check"></i><b>1.3.4</b> Merging spatial features and Buffers</a></li>
+<li class="chapter" data-level="1.3.5" data-path="index.html"><a href="index.html#point-in-polygon-and-area-calculations"><i class="fa fa-check"></i><b>1.3.5</b> Point-in-polygon and Area calculations</a></li>
+<li class="chapter" data-level="1.3.6" data-path="index.html"><a href="index.html#creating-distance-attributes"><i class="fa fa-check"></i><b>1.3.6</b> Creating distance attributes</a></li>
+<li class="chapter" data-level="1.3.7" data-path="index.html"><a href="index.html#reading-and-writing-data-in-and-out-of-rrstudio"><i class="fa fa-check"></i><b>1.3.7</b> Reading and writing data in and out of R/RStudio</a></li>
+<li class="chapter" data-level="1.3.8" data-path="index.html"><a href="index.html#answers-to-tasks"><i class="fa fa-check"></i><b>1.3.8</b> Answers to Tasks</a></li>
+<li class="chapter" data-level="1.3.9" data-path="index.html"><a href="index.html#useful-resources"><i class="fa fa-check"></i><b>1.3.9</b> Useful Resources</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html"><i class="fa fa-check"></i><b>2</b> Exploratory Data Analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#overview"><i class="fa fa-check"></i>Overview</a></li>
+<li class="chapter" data-level="2.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#data-data-summaries-and-generic-plotting-in-r"><i class="fa fa-check"></i><b>2.1</b> Data, data summaries and generic plotting in R</a></li>
+<li class="chapter" data-level="2.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#an-introduction-to-visualisation-using-the-ggplot2-package"><i class="fa fa-check"></i><b>2.2</b> An introduction to visualisation using the <code>ggplot2</code> package</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#ggplot-basics"><i class="fa fa-check"></i><b>2.2.1</b> <code>ggplot</code> basics</a></li>
+<li class="chapter" data-level="2.2.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#groups-with-ggplot"><i class="fa fa-check"></i><b>2.2.2</b> Groups with <code>ggplot</code></a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#data-wrangling-with-dplyr"><i class="fa fa-check"></i><b>2.3</b> Data wrangling with <code>dplyr</code></a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#summary"><i class="fa fa-check"></i><b>2.3.1</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#using-piping-syntax"><i class="fa fa-check"></i><b>2.4</b> Using piping syntax</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#select"><i class="fa fa-check"></i><b>2.4.1</b> <code>select</code></a></li>
+<li class="chapter" data-level="2.4.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#mutate"><i class="fa fa-check"></i><b>2.4.2</b> <code>mutate</code></a></li>
+<li class="chapter" data-level="2.4.3" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#group_by-and-summarise-changing-the-unit-of-observation"><i class="fa fa-check"></i><b>2.4.3</b> <code>group_by</code> and <code>summarise</code>: changing the unit of observation</a></li>
+<li class="chapter" data-level="2.4.4" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#a-final-example"><i class="fa fa-check"></i><b>2.4.4</b> A final example</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#answers-to-tasks-1"><i class="fa fa-check"></i>Answers to Tasks</a></li>
+<li class="chapter" data-level="" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#additional-resources"><i class="fa fa-check"></i>Additional Resources</a></li>
+<li class="chapter" data-level="" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#optional-enhanced-mapping-with-the-ggplot2-package"><i class="fa fa-check"></i>Optional: enhanced mapping with the <code>ggplot2</code> package</a></li>
+<li class="chapter" data-level="" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#appendix-named-colours"><i class="fa fa-check"></i>Appendix: Named Colours</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="spatial-interpolation.html"><a href="spatial-interpolation.html"><i class="fa fa-check"></i><b>3</b> Spatial Interpolation</a>
+<ul>
+<li class="chapter" data-level="" data-path="spatial-interpolation.html"><a href="spatial-interpolation.html#overview-1"><i class="fa fa-check"></i>Overview</a></li>
+<li class="chapter" data-level="3.1" data-path="spatial-interpolation.html"><a href="spatial-interpolation.html#kernel-density-estimation-point-observations"><i class="fa fa-check"></i><b>3.1</b> Kernel Density Estimation (point observations)</a></li>
+<li class="chapter" data-level="3.2" data-path="spatial-interpolation.html"><a href="spatial-interpolation.html#inverse-distance-weighting-point-values"><i class="fa fa-check"></i><b>3.2</b> Inverse Distance Weighting (point values)</a></li>
+<li class="chapter" data-level="3.3" data-path="spatial-interpolation.html"><a href="spatial-interpolation.html#area-weighted-interpolation-area-to-area"><i class="fa fa-check"></i><b>3.3</b> Area Weighted interpolation (area to area)</a></li>
+<li class="chapter" data-level="3.4" data-path="spatial-interpolation.html"><a href="spatial-interpolation.html#dasymetric-interpolation"><i class="fa fa-check"></i><b>3.4</b> Dasymetric Interpolation</a></li>
+<li class="chapter" data-level="" data-path="spatial-interpolation.html"><a href="spatial-interpolation.html#answers-to-tasks-2"><i class="fa fa-check"></i>Answers to Tasks</a></li>
+<li class="chapter" data-level="" data-path="spatial-interpolation.html"><a href="spatial-interpolation.html#optional-fine-tuning-idw"><i class="fa fa-check"></i>Optional: Fine tuning IDW</a>
+<ul>
+<li class="chapter" data-level="" data-path="spatial-interpolation.html"><a href="spatial-interpolation.html#answer-to-additional-task"><i class="fa fa-check"></i>Answer to Additional Task</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>4</b> Regression</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#overview-2"><i class="fa fa-check"></i>Overview</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#which-regression-approach"><i class="fa fa-check"></i>Which regression approach?</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#packages-1"><i class="fa fa-check"></i>Packages</a></li>
+</ul></li>
+<li class="chapter" data-level="4.1" data-path="regression.html"><a href="regression.html#standard-linear-regression-models-ols"><i class="fa fa-check"></i><b>4.1</b> Standard linear regression models (OLS)</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#specifying-the-model"><i class="fa fa-check"></i>Specifying the model</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="regression.html"><a href="regression.html#binomial-logistic-regression-for-binary-variables"><i class="fa fa-check"></i><b>4.2</b> Binomial Logistic Regression for binary variables</a></li>
+<li class="chapter" data-level="4.3" data-path="regression.html"><a href="regression.html#poisson-regression-for-count-variables"><i class="fa fa-check"></i><b>4.3</b> Poisson Regression for count variables</a></li>
+<li class="chapter" data-level="4.4" data-path="regression.html"><a href="regression.html#outliers-and-robust-regression"><i class="fa fa-check"></i><b>4.4</b> Outliers and Robust regression</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#addendum-prediction-vs-inference"><i class="fa fa-check"></i>Addendum: Prediction vs Inference</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#answers-to-tasks-3"><i class="fa fa-check"></i>Answers to Tasks</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#optional-the-maup"><i class="fa fa-check"></i>Optional: the MAUP</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="regression.html"><a href="regression.html#introduction"><i class="fa fa-check"></i><b>4.4.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.4.2" data-path="regression.html"><a href="regression.html#impact-on-correlations-of-counts"><i class="fa fa-check"></i><b>4.4.2</b> Impact on Correlations of Counts</a></li>
+<li class="chapter" data-level="4.4.3" data-path="regression.html"><a href="regression.html#impact-on-models"><i class="fa fa-check"></i><b>4.4.3</b> Impact on models</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#additional-resources-1"><i class="fa fa-check"></i>Additional Resources</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><i class="fa fa-check"></i><b>5</b> Spatial Models: spatial autocorrelation and cluster analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#overview-3"><i class="fa fa-check"></i>Overview</a></li>
+<li class="chapter" data-level="" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#data-and-packages"><i class="fa fa-check"></i>Data and Packages</a></li>
+<li class="chapter" data-level="5.1" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#defining-nearby-neighbour-lists"><i class="fa fa-check"></i><b>5.1</b> Defining nearby: neighbour lists</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#neigbours-by-ajacency"><i class="fa fa-check"></i><b>5.1.1</b> Neigbours by ajacency</a></li>
+<li class="chapter" data-level="5.1.2" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#neighbours-by-nearest-n"><i class="fa fa-check"></i><b>5.1.2</b> Neighbours by nearest <span class="math inline">\(n\)</span></a></li>
+<li class="chapter" data-level="5.1.3" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#neighbours-by-distance"><i class="fa fa-check"></i><b>5.1.3</b> Neighbours by distance</a></li>
+<li class="chapter" data-level="5.1.4" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#summary-1"><i class="fa fa-check"></i><b>5.1.4</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#spatial-autocorrelation-and-clusters"><i class="fa fa-check"></i><b>5.2</b> Spatial Autocorrelation and Clusters</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#neighbours-and-lagged-mean-plots"><i class="fa fa-check"></i><b>5.2.1</b> Neighbours and Lagged Mean Plots</a></li>
+<li class="chapter" data-level="5.2.2" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#morans-i-for-determining-clusters-and-spatial-autocorrelation"><i class="fa fa-check"></i><b>5.2.2</b> Moran’s I for determining Clusters and Spatial Autocorrelation</a></li>
+<li class="chapter" data-level="5.2.3" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#lisa-for-determining-local-clusters-and-spatial-autocorrelation"><i class="fa fa-check"></i><b>5.2.3</b> LISA for determining <em>local</em> clusters and spatial autocorrelation</a></li>
+<li class="chapter" data-level="5.2.4" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#getis-ord-g-statistic"><i class="fa fa-check"></i><b>5.2.4</b> Getis-Ord G statistic</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#answers-to-tasks-4"><i class="fa fa-check"></i>Answers to Tasks</a></li>
+<li class="chapter" data-level="" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#useful-links"><i class="fa fa-check"></i>Useful Links</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html"><i class="fa fa-check"></i><b>6</b> Spatial Varying Coefficient Models</a>
+<ul>
+<li class="chapter" data-level="" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#overview-4"><i class="fa fa-check"></i>Overview</a></li>
+<li class="chapter" data-level="" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#data-and-packages-1"><i class="fa fa-check"></i>Data and Packages</a></li>
+<li class="chapter" data-level="6.1" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#local-vs-global-models"><i class="fa fa-check"></i><b>6.1</b> Local vs Global models</a></li>
+<li class="chapter" data-level="6.2" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#geographically-weighted-regression"><i class="fa fa-check"></i><b>6.2</b> Geographically Weighted Regression</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#description"><i class="fa fa-check"></i><b>6.2.1</b> Description</a></li>
+<li class="chapter" data-level="6.2.2" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#undertaking-a-gwr"><i class="fa fa-check"></i><b>6.2.2</b> Undertaking a GWR</a></li>
+<li class="chapter" data-level="6.2.3" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#evaluating-the-results"><i class="fa fa-check"></i><b>6.2.3</b> Evaluating the results</a></li>
+<li class="chapter" data-level="6.2.4" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#mapping-gwr-outputs"><i class="fa fa-check"></i><b>6.2.4</b> Mapping GWR outputs</a></li>
+<li class="chapter" data-level="6.2.5" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#gwr-summary"><i class="fa fa-check"></i><b>6.2.5</b> GWR Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#multi-scale-gwr"><i class="fa fa-check"></i><b>6.3</b> Multi-scale GWR</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#description-1"><i class="fa fa-check"></i><b>6.3.1</b> Description</a></li>
+<li class="chapter" data-level="6.3.2" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#undertaking-a-mgwr"><i class="fa fa-check"></i><b>6.3.2</b> Undertaking a MGWR</a></li>
+<li class="chapter" data-level="6.3.3" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#evaluating-the-results-1"><i class="fa fa-check"></i><b>6.3.3</b> Evaluating the results</a></li>
+<li class="chapter" data-level="6.3.4" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#mapping-mgwr-outputs"><i class="fa fa-check"></i><b>6.3.4</b> Mapping MGWR outputs</a></li>
+<li class="chapter" data-level="6.3.5" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#comparing-gwr-and-mgwr"><i class="fa fa-check"></i><b>6.3.5</b> Comparing GWR and MGWR</a></li>
+<li class="chapter" data-level="6.3.6" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#mgwr-summary"><i class="fa fa-check"></i><b>6.3.6</b> MGWR Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#optional-generalised-additive-models"><i class="fa fa-check"></i>Optional: Generalised Additive Models</a>
+<ul>
+<li class="chapter" data-level="6.3.7" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#description-2"><i class="fa fa-check"></i><b>6.3.7</b> Description</a></li>
+<li class="chapter" data-level="6.3.8" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#undertaking-a-ggp-gam"><i class="fa fa-check"></i><b>6.3.8</b> Undertaking a GGP-GAM</a></li>
+<li class="chapter" data-level="6.3.9" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#evaluating-the-results-2"><i class="fa fa-check"></i><b>6.3.9</b> Evaluating the results</a></li>
+<li class="chapter" data-level="6.3.10" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#ggp-gam-svcs"><i class="fa fa-check"></i><b>6.3.10</b> GGP-GAM SVCs</a></li>
+<li class="chapter" data-level="6.3.11" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#ggp-gam-summary"><i class="fa fa-check"></i><b>6.3.11</b> GGP-GAM summary</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#answers-to-tasks-5"><i class="fa fa-check"></i>Answers to Tasks</a></li>
+<li class="chapter" data-level="" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#references"><i class="fa fa-check"></i>References</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html"><i class="fa fa-check"></i><b>7</b> Classification and Alternative Representations</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#classification"><i class="fa fa-check"></i><b>7.1</b> Classification</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#overview-5"><i class="fa fa-check"></i><b>7.1.1</b> Overview</a></li>
+<li class="chapter" data-level="7.1.2" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#pca-transformation"><i class="fa fa-check"></i><b>7.1.2</b> PCA transformation</a></li>
+<li class="chapter" data-level="7.1.3" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#k-means-cluster-analysis"><i class="fa fa-check"></i><b>7.1.3</b> <span class="math inline">\(k\)</span>-means Cluster Analysis</a></li>
+<li class="chapter" data-level="7.1.4" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#diagnostics"><i class="fa fa-check"></i><b>7.1.4</b> Diagnostics</a></li>
+<li class="chapter" data-level="7.1.5" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#mapping"><i class="fa fa-check"></i><b>7.1.5</b> Mapping</a></li>
+<li class="chapter" data-level="7.1.6" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#further-resources-1"><i class="fa fa-check"></i><b>7.1.6</b> Further Resources</a></li>
+<li class="chapter" data-level="7.1.7" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#references-1"><i class="fa fa-check"></i><b>7.1.7</b> References</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#optional-alternative-spatial-visualisations"><i class="fa fa-check"></i><b>7.2</b> Optional: Alternative spatial visualisations</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#overview-6"><i class="fa fa-check"></i><b>7.2.1</b> Overview</a></li>
+<li class="chapter" data-level="7.2.2" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#the-invisibility-problem"><i class="fa fa-check"></i><b>7.2.2</b> The invisibility problem</a></li>
+<li class="chapter" data-level="7.2.3" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#cartograms"><i class="fa fa-check"></i><b>7.2.3</b> Cartograms</a></li>
+<li class="chapter" data-level="7.2.4" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#hexagonal-binning-and-tile-maps"><i class="fa fa-check"></i><b>7.2.4</b> Hexagonal binning and Tile maps</a></li>
+<li class="chapter" data-level="7.2.5" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#references-2"><i class="fa fa-check"></i><b>7.2.5</b> References</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="creating-documents-in-rmarkdown.html"><a href="creating-documents-in-rmarkdown.html"><i class="fa fa-check"></i><b>8</b> Creating documents in RMarkdown</a>
+<ul>
+<li class="chapter" data-level="" data-path="creating-documents-in-rmarkdown.html"><a href="creating-documents-in-rmarkdown.html#overview-7"><i class="fa fa-check"></i>Overview</a></li>
+<li class="chapter" data-level="8.1" data-path="creating-documents-in-rmarkdown.html"><a href="creating-documents-in-rmarkdown.html#resources"><i class="fa fa-check"></i><b>8.1</b> Resources</a></li>
+<li class="chapter" data-level="8.2" data-path="creating-documents-in-rmarkdown.html"><a href="creating-documents-in-rmarkdown.html#tasks"><i class="fa fa-check"></i><b>8.2</b> Tasks</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">GEOG3915 GeoComputation and Spatial Analysis practicals</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="header">
+<h1 class="title">GEOG3915 GeoComputation and Spatial Analysis practicals</h1>
+<p class="author"><em>Lex Comber</em></p>
+<p class="date"><em>2026-09-20</em></p>
+</div>
+<div id="getting-started" class="section level1 hasAnchor" number="1">
+<h1><span class="header-section-number">Unit 1</span> Getting Started<a href="index.html#getting-started" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>This is an on-line book written to support the practicals for the GEOG3915 GeoComputation and Spatial Analysis module, delivered by Lex Comber of the School of Geography, from the University of Leeds. It draws from <em>An Introduction to Spatial Analysis and Mapping</em> by <span class="citation">Brunsdon and Comber (<a href="#ref-brunsdon2018introduction">2025</a>)</span> (link <a href="https://us.sagepub.com/en-us/nam/an-introduction-to-r-for-spatial-analysis-and-mapping/book258267">here</a>) which provides a foundation for spatial data handling, GIS-related operations and spatial analysis in R.</p>
+<p>Each chapter is self contained and with instructions for loading and data and packages as needed and some have an additional optional exercise that extend the technique being illustrated or describe important related approaches. The sequence of practicals and topics will build as we progress through the module.</p>
+<p><strong>BUT</strong> In some weeks, there may be more text and detailed information in the practical online web page than others. For example, this may include equations (sorry!), discussions about the techniques being explored, links to references of related work, etc. These provide you with the context and wider understanding around the techniques that are being applied in the practical.</p>
+<p>For these reasons it is strongly recommended that you read through the practical <strong>before</strong> attending the practical session.</p>
+<p>This week’s practical is intended to refresh your spatial data handling skills in R/RStudio. The firs part is intended as a refresher of how to work in R / RStudio and the second part illustrates how R / RStudio can be used to manipulate spatial data.</p>
+<div id="installing-rrstudio" class="section level2 hasAnchor" number="1.1">
+<h2><span class="header-section-number">1.1</span> Installing R/RStudio<a href="index.html#installing-rrstudio" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>You have 2 options for accessing Rstudio IDE (integrated development environment - essentially a nicer interface to R than just R!).</p>
+<p><strong>1. Install it on your own computer</strong> To do this, you download R and Rstudio but you <strong>MUST</strong> install R <strong>BEFORE</strong> you install RStudio. To get R go to the download pages on the R website – a quick search for ‘download R’ should take you there, but if not you could try:</p>
+<ul>
+<li><a href="http://cran.r-project.org/bin/windows/base/" class="uri">http://cran.r-project.org/bin/windows/base/</a> for Windows</li>
+<li><a href="http://cran.r-project.org/bin/macosx/" class="uri">http://cran.r-project.org/bin/macosx/</a> for Mac</li>
+<li><a href="http://cran.r-project.org/bin/linux/" class="uri">http://cran.r-project.org/bin/linux/</a> for Linux</li>
+</ul>
+<p>RStudio can be downloaded from <a href="https://posit.co/download/rstudio-desktop/" class="uri">https://posit.co/download/rstudio-desktop/</a> and the free distribution of RStudio Desktop is more than suﬀicient for this module (the version of RStudio is less important as this is essentially provides a wrapper for R).</p>
+<p><strong>2. University of Leeds, PC with AppsAnywhere</strong> You will need to do the following in Apps Anywhere:</p>
+<ol style="list-style-type: decimal">
+<li>Open R in AppsAnywhere</li>
+<li>Then open RStudio also in AppsAnywhere</li>
+</ol>
+</div>
+<div id="r-rstudio-refresh" class="section level2 hasAnchor" number="1.2">
+<h2><span class="header-section-number">1.2</span> R / RStudio Refresh<a href="index.html#r-rstudio-refresh" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The aim of this preliminary material is to make sure that you are able to access RStudio, have a secure understanding of some core concepts related to data structures and data operations, and are generally ready to go for the rest of the module. The text below introduces the RStudio interface, some ways of working and some strong suggestions about how you should organise your working folder. Finally, if you are unfamiliar with R should download the <code>week0.R</code> file, open it in RStudio and work work through the R code. This has a few reminders of syntax - don’t spend too long on it - a maximum of 30 mins.</p>
+<div id="the-rstudio-interface" class="section level3 hasAnchor" number="1.2.1">
+<h3><span class="header-section-number">1.2.1</span> The RStudio Interface<a href="index.html#the-rstudio-interface" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>It is expected that you will use <strong>the RStudio interface</strong> to R as it provides RStudio provides an IDE (an integrated development environment) via the 4 panes: the Console where code is entered (bottom left), a Source pane with R code (top left), the variables in the working Environment (top right), Files, Plots, Help etc (bottom right) - see the RStudio environment below. Users can set up their personal preferences for how they like their RStudio interface, by playing with the <strong>pane options</strong> at:<br />
+</p>
+<p><strong>Tools &gt; Global Options &gt; Pane Layout</strong></p>
+<div class="figure"><span style="display:block;" id="fig:ch1fig1"></span>
+<img src="images/rstudio_old.png" alt="The RStudio interface." width="100%" />
+<p class="caption">
+Figure 1.1: The RStudio interface.
+</p>
+</div>
+<p>In the figure above of the RStudio interface, an R file has been opened (but not saved!), and a line of code has been run. The code appears in the <strong>console</strong> pane (bottom left). The command line prompt in the Console window, the <code>&gt;</code>, is an invitation to start entering your commands. The object <code>x</code> appears in the <strong>environment</strong> pane. The current working folder is shown in the bottom right pane. There is a comment in the the R script and note that anything that follows a <code>#</code> is a comment and is ignored by R.</p>
+</div>
+<div id="ways-of-working" class="section level3 hasAnchor" number="1.2.2">
+<h3><span class="header-section-number">1.2.2</span> Ways of working<a href="index.html#ways-of-working" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>It is important you develop rigorous <strong>ways of working</strong> within the RStudio environment.</p>
+<ul>
+<li><p>R is a learning curve if you have never done anything like this before. It can be scary. It can be intimidating. But once you have a bit of familiarity with how things work, it is incredibly powerful.</p></li>
+<li><p>You will be working from practical worksheets which will have all the code you need. Your job is to try to <strong>understand</strong> what the code is doing and <strong>not</strong> to remember the code. Comments in your code really help.</p></li>
+<li><p>To help you do this, you should load the R files into your RStudio session, and add your own comments to help you understand what is going on. This will really help when you return to them at a later date. Comments are prefaced by a hash (<code>#</code>) that is ignored by R. Then you can save your code (with comments), run it and return to it later and modify at your leisure.</p></li>
+</ul>
+<p>The module places a strong emphasis placed on learning by doing, which means that you encouraged to unpick the code that you are given, adapt it and play with it. It is not about remembering or being able to recall each function used but about understanding what is being done. If you can remember what you did previously (i.e. the operations you undertook) and understand what you did, you will be able to return to your code the next time you want to do something similar. To help you with this you should:</p>
+<ol style="list-style-type: decimal">
+<li>Always run your code from an R script… <strong>always</strong>! These are provided for each practical;</li>
+<li>Annotate you scripts with comments. These prefixed by a hash (<code>#</code>) in the code;</li>
+<li>Save your R script to your folder;</li>
+<li>In your RStudio session, you should set the working directory to the folder location.</li>
+</ol>
+</div>
+<div id="projects-files-and-folder-management" class="section level3 hasAnchor" number="1.2.3">
+<h3><span class="header-section-number">1.2.3</span> Projects, Files and Folder Management<a href="index.html#projects-files-and-folder-management" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>You should create a separate directory for each week’s practical. Then you should copy the R file to that folder, open the RStudio App (<strong>Do not just double click on the <code>.R</code> file</strong>), create a new project, navigating to the folder you have just created:<br />
+</p>
+<p><strong>File &gt; New Project &gt; Existing Directory</strong></p>
+<p>Projects provide a container for the work you have done. They have a <code>.Rproj</code> file extension and keep everything you need for that piece of work is in one place, separate from other projects that you are working on (see <a href="https://r4ds.had.co.nz/workflow-projects.html" class="uri">https://r4ds.had.co.nz/workflow-projects.html</a>).</p>
+<p>After you have done the practical, ran and created code, put comments in etc, you can save the R file. When you close R Studio it will give you the option to <strong>Save Current Workspace</strong>. If you do this, then the next time you open that project the working environment will have all the data and variables you loaded or created in your session.</p>
+</div>
+<div id="practicals" class="section level3 hasAnchor" number="1.2.4">
+<h3><span class="header-section-number">1.2.4</span> Practicals<a href="index.html#practicals" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The code for each practical is contained in an R file. This has code for you to run (this is not a typing class), modify and play around with, as well as comments with explanations of what is being done. You should:</p>
+<ul>
+<li>Create a folder for this practical. It should be in suitable place, e.g. in your <code>geog3195</code> folder) and should have a suitable name (e.g. <code>week0</code>). <strong>Note</strong> that generally you should avoid spaces, hyphens and non-text characters in file and folder names.</li>
+<li>Go to the VLE and download the <code>weekX.R</code> file, and move it to your folder.</li>
+<li>Open RStudio and create a new project, navigating to your folder and give the project a sensible name (e.g. <code>weekX</code> - the <code>.Rproj</code> bit is automatically added).</li>
+<li>Highlight blocks of code in your script that you want to run. This can be done in a number of ways if the code is highlighted or the cursor is on the line of code
+<ul>
+<li>click on the Run icon at the top left of the script pane.</li>
+<li>entering / pressing <strong>Ctrl + Enter</strong> keys on a PC or <strong>Cmd + Enter</strong> on a Mac.</li>
+</ul></li>
+<li>Generally avoid entering code directly into the console: the point is to create and modify the code in the script and run it from there.</li>
+<li>Undertake the tasks in the worksheet.</li>
+</ul>
+</div>
+<div id="packages" class="section level3 hasAnchor" number="1.2.5">
+<h3><span class="header-section-number">1.2.5</span> Packages<a href="index.html#packages" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The <code>base</code> installation of R includes many functions and commands. However, more often we are interested in using some particular functionality, encoded into <strong>packages</strong> contributed by the R developer community. Installing packages for the first time can be done at the command line in the R console using the <code>install.packages</code> command as in the example below to install the <code>tidyverse</code> library or via the RStudio menu via <strong>Tools &gt; Install Packages</strong>.</p>
+<p>When you install these packages it is strongly suggested you also install the <em>dependencies</em>. These are other packages that are required by the package that is being installed. This can be done by selecting check the box in the menu or including <code>dependency = TRUE</code> in the command line as below (don’t run this yet!):</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="index.html#cb1-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;tidyverse&quot;</span>, <span class="at">dependency =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p>You may have to set a <strong>mirror</strong> site from which the packages will be downloaded to your computer. Generally you should pick one that is nearby to you.</p>
+<p>Further descriptions of packages, their installation and their data structures will be given as needed in the practicals. There are literally 1000s of packages that have been contributed to the R project by various researchers and organisations. These can be located by name at <a href="http://cran.r-project.org/web/packages/available_packages_by_name.html" class="uri">http://cran.r-project.org/web/packages/available_packages_by_name.html</a> if you know the package you wish to use. It is also possible to search the CRAN website to find packages to perform particular tasks at <a href="http://www.r-project.org/search.html" class="uri">http://www.r-project.org/search.html</a>. Additionally many packages include user guides and vignettes as well as a PDF document describing the package and listed at the top of the index page of the help files for the package.</p>
+<p>As well as <code>tidyverse</code> you should install <code>sf</code> for spatial data. This can be done as below:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="index.html#cb2-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;sf&quot;</span>, <span class="at">dep =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p>Remember: you will only have to install a package once!! So when the above code has run in your script you should comment it out. For example you might want to include something like the below in your R script.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="index.html#cb3-1" tabindex="-1"></a><span class="co"># packages only need to be loaded once</span></span>
+<span id="cb3-2"><a href="index.html#cb3-2" tabindex="-1"></a><span class="co"># install.packages(&quot;sf&quot;, dep = TRUE)</span></span></code></pre></div>
+<p>Once the package has been installed on your computer then the package can be called using the <code>library()</code> function into each of your R sessions as below.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="index.html#cb4-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb4-2"><a href="index.html#cb4-2" tabindex="-1"></a><span class="fu">library</span>(sf)</span></code></pre></div>
+<p>We will use tools (functions) in these packages next week in the first formal practical to load data, undertake some GIS operations and export graphics.</p>
+</div>
+<div id="further-resources" class="section level3 hasAnchor" number="1.2.6">
+<h3><span class="header-section-number">1.2.6</span> Further Resources<a href="index.html#further-resources" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The aim of this section has been to familiarise you with the R environment, if you have not used R before and to make sure you are up and running. If you have but not for a while them hopefully this has acted as a refresher. If this is new to you then you should consider exploring R in a bit. ore detail before we get going in anger next week. Other good on-line <em>get started in R</em> guides include:</p>
+<ul>
+<li>The Owen guide (only up to page 28) : <a href="https://cran.r-project.org/doc/contrib/Owen-TheRGuide.pdf" class="uri">https://cran.r-project.org/doc/contrib/Owen-TheRGuide.pdf</a></li>
+<li>An Introduction to R - <a href="https://cran.r-project.org/doc/contrib/Lam-IntroductionToR_LHL.pdf" class="uri">https://cran.r-project.org/doc/contrib/Lam-IntroductionToR_LHL.pdf</a></li>
+<li>R for beginners <a href="https://cran.r-project.org/doc/contrib/Paradis-rdebuts_en.pdf" class="uri">https://cran.r-project.org/doc/contrib/Paradis-rdebuts_en.pdf</a></li>
+</ul>
+<p>And of course there are my own offerings, particularly Chapter 1 in <span class="citation">Comber and Brunsdon (<a href="#ref-comber2020geographical">2021</a>)</span>, and the early chapters of <span class="citation">Brunsdon and Comber (<a href="#ref-brunsdon2018introduction">2025</a>)</span>.</p>
+</div>
+</div>
+<div id="using-r-as-a-gis" class="section level2 hasAnchor" number="1.3">
+<h2><span class="header-section-number">1.3</span> Using R as a GIS<a href="index.html#using-r-as-a-gis" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>This section is intended to refresh your spatial data handling skills in R/RStudio. It uses a series of worked examples to illustrate some fundamental and commonly applied operations on data and spatial datasets. It is based on Chapter 5 of <span class="citation">Brunsdon and Comber (<a href="#ref-brunsdon2018introduction">2025</a>)</span> and uses a series of worked examples to illustrate some fundamental and commonly applied spatial operations on spatial datasets. Many of these form the basis of most GIS software.</p>
+<p>Specifically, in GIS and spatial analysis, we are often interested in finding out how the information contained in one spatial dataset relates to that contained in another. The datasets may be ones you have read into R from shapefiles or ones that you have created in the course of your analysis. Essentially, the operations illustrate different methods for extracting information from one spatial dataset based on the spatial extent of another. Many of these are what are frequently referred to as <em>overlay</em> operations in GIS software such as ArcGIS or QGIS, but here are extended to include a number of other types of data manipulation. The sections below describe how to create a point layer from a data table with location attributes and the following operations:</p>
+<ul>
+<li>Intersections and clipping one dataset to the extent of another</li>
+<li>Creating buffers around features</li>
+<li>Merging the features in a spatial dataset</li>
+<li>Point-in-Polygon and Area calculations</li>
+<li>Creating distance attributes</li>
+</ul>
+<p>An R script with all the code for this practical is provided.</p>
+<div id="data" class="section level3 hasAnchor" number="1.3.1">
+<h3><span class="header-section-number">1.3.1</span> Data<a href="index.html#data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Make sure the <code>sf</code>, <code>tidyverse</code> and <code>sf</code> packages are installed as described above:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="index.html#cb5-1" tabindex="-1"></a><span class="co"># load the packages</span></span>
+<span id="cb5-2"><a href="index.html#cb5-2" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb5-3"><a href="index.html#cb5-3" tabindex="-1"></a><span class="fu">library</span>(sf)</span></code></pre></div>
+<p>And load some data using the code below. This downloads data for Chapter 7 of <span class="citation">Comber and Brunsdon (<a href="#ref-comber2020geographical">2021</a>)</span> from a repository:<a href="https://archive.researchdata.leeds.ac.uk/741/1/ch7.Rdata" class="uri">https://archive.researchdata.leeds.ac.uk/741/1/ch7.Rdata</a></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="index.html#cb6-1" tabindex="-1"></a><span class="fu">download.file</span>(<span class="st">&quot;https://archive.researchdata.leeds.ac.uk/741/1/ch7.Rdata&quot;</span>,</span>
+<span id="cb6-2"><a href="index.html#cb6-2" tabindex="-1"></a>              <span class="st">&quot;./wk1.RData&quot;</span>, <span class="at">mode =</span> <span class="st">&quot;wb&quot;</span>)</span></code></pre></div>
+<p>You should see file called <code>wk1.RData</code> appear in your working directory and then you can load the data:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="index.html#cb7-1" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;wk1.RData&quot;</span>)</span></code></pre></div>
+<div class="noticebox">
+<p><strong>Note</strong> that you can check where your working directory is by entering <code>getwd()</code> and you can change (reset) it by going to <strong>Session &gt; Set Working Directory…</strong>.</p>
+</div>
+<p>If you check what is is loaded you should see 3 objects have been loaded into the session via the <code>wk1.RData</code> file.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="index.html#cb8-1" tabindex="-1"></a><span class="fu">ls</span>()</span></code></pre></div>
+<p>Three data files are loaded:</p>
+<ol style="list-style-type: decimal">
+<li><code>oa</code> a multipolygon <code>sf</code> object of Liverpool census Output Areas (OAs) (<span class="math inline">\(n = 1584\)</span>)</li>
+<li><code>lsoa</code> a multipolygon <code>sf</code> object of Liverpool census Lower Super Output Areas (LSOAs) (<span class="math inline">\(n = 298\)</span>)</li>
+<li><code>properties</code> a point <code>sf</code> object scraped from Nestoria (<a href="https://www.nestoria.co.uk" class="uri">https://www.nestoria.co.uk</a>) (<span class="math inline">\(n = 4230\)</span>)</li>
+</ol>
+<p>You can examine these in the usual way:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="index.html#cb9-1" tabindex="-1"></a><span class="co"># look at the structure</span></span>
+<span id="cb9-2"><a href="index.html#cb9-2" tabindex="-1"></a><span class="fu">str</span>(oa)</span>
+<span id="cb9-3"><a href="index.html#cb9-3" tabindex="-1"></a><span class="fu">str</span>(lsoa)</span>
+<span id="cb9-4"><a href="index.html#cb9-4" tabindex="-1"></a><span class="co"># examine the first 6 rows</span></span>
+<span id="cb9-5"><a href="index.html#cb9-5" tabindex="-1"></a><span class="fu">head</span>(properties)</span></code></pre></div>
+<p>You may get a warning about <code>old-style crs object detected</code> and you can run the code below to correct that:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="index.html#cb10-1" tabindex="-1"></a>properties <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(properties, <span class="dv">4326</span>)</span></code></pre></div>
+<pre><code>## old-style crs object detected; please recreate object with a recent sf::st_crs()</code></pre>
+<p>The census data attributes in <code>oa</code> and <code>lsoa</code> describe economic well-being (unemployment (the <code>unmplyd</code> attribute)), life-stage indicators (percentage of under 16 years (<code>u16</code>), 16-24 years (<code>u25</code>), 25-44 years (<code>u45</code>), 45-64 years (<code>u65</code>) and over 65 years (<code>o65</code>) and an environmental variable of the percentage of the census area containing greenspaces (<code>gs_area</code>). The unemployment and age data were from the 2011 UK population census (<a href="https://www.nomisweb.co.uk" class="uri">https://www.nomisweb.co.uk</a>) and the greenspace proportions were extracted from the Ordnance Survey Open Greenspace layer (<a href="https://www.ordnancesurvey.co.uk/opendatadownload/products.html" class="uri">https://www.ordnancesurvey.co.uk/opendatadownload/products.html</a>). The spatial frameworks were from the EDINA data library (<a href="https://borders.ukdataservice.ac.uk" class="uri">https://borders.ukdataservice.ac.uk</a>). The layer are projected to the OSGB projection (EPSG 27700) and has a geo-demographic class label (<code>OAC</code>) from the OAC (see <a href="https://data.cdrc.ac.uk/dataset/output-area-classification-2011" class="uri">https://data.cdrc.ac.uk/dataset/output-area-classification-2011</a>).</p>
+<p>We will work mainly with the <code>oa</code> and <code>properties</code> layers in this practical.</p>
+<p>The <code>properties</code> data was downloaded on 30th May 2019 using an API (<a href="https://www.programmableweb.com/api/nestoria" class="uri">https://www.programmableweb.com/api/nestoria</a>). It contains latitude (<code>Lat</code>) and longitude (<code>Lon</code>) in decimal degrees,allowing an <code>sf</code> point layer to be created from it, price in 1000s of pounds (£), the number of bedrooms and 38 binary variables indicating the presence of different keywords in the property listing such as Conservatory, Garage, Wood Floor etc.</p>
+<p>The code below creates a flat data table in <code>tibble</code> format from the <code>properties</code> spatial point layer. The aim here is to have a simple data table with location attributes to work with</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="index.html#cb12-1" tabindex="-1"></a><span class="co"># create a tibble (like a data frame) of property price bedrooms and location</span></span>
+<span id="cb12-2"><a href="index.html#cb12-2" tabindex="-1"></a>props <span class="ot">&lt;-</span> </span>
+<span id="cb12-3"><a href="index.html#cb12-3" tabindex="-1"></a>  <span class="co"># extract the data frame by dropping geometry</span></span>
+<span id="cb12-4"><a href="index.html#cb12-4" tabindex="-1"></a>  properties <span class="sc">|&gt;</span> <span class="fu">st_drop_geometry</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb12-5"><a href="index.html#cb12-5" tabindex="-1"></a>  <span class="co"># select price, bedrooms, type and location</span></span>
+<span id="cb12-6"><a href="index.html#cb12-6" tabindex="-1"></a>  <span class="fu">select</span>(Price, Beds, Lon, Lat) <span class="sc">|&gt;</span> </span>
+<span id="cb12-7"><a href="index.html#cb12-7" tabindex="-1"></a>  <span class="co"># conver to tibble format data table</span></span>
+<span id="cb12-8"><a href="index.html#cb12-8" tabindex="-1"></a>  <span class="fu">tibble</span>()</span>
+<span id="cb12-9"><a href="index.html#cb12-9" tabindex="-1"></a><span class="co"># check</span></span>
+<span id="cb12-10"><a href="index.html#cb12-10" tabindex="-1"></a>props</span></code></pre></div>
+<pre><code>## # A tibble: 4,230 × 4
+##    Price Beds    Lon   Lat
+##    &lt;dbl&gt; &lt;ord&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1  35.0 1     -2.93  53.4
+##  2  93   1     -3.00  53.4
+##  3  75   1     -3.03  53.5
+##  4 122.  1     -2.99  53.4
+##  5 128.  1     -2.97  53.4
+##  6 128.  1     -2.97  53.4
+##  7 110   1     -2.98  53.4
+##  8  82.5 1     -2.96  53.4
+##  9  77   1     -2.98  53.4
+## 10  69.5 1     -2.95  53.4
+## # ℹ 4,220 more rows</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="index.html#cb14-1" tabindex="-1"></a><span class="co"># remove the original layer and check</span></span>
+<span id="cb14-2"><a href="index.html#cb14-2" tabindex="-1"></a><span class="fu">rm</span>(properties)</span>
+<span id="cb14-3"><a href="index.html#cb14-3" tabindex="-1"></a><span class="fu">ls</span>()</span></code></pre></div>
+<p>Examining <code>props</code> shows that it has 4,230 observations and 4 fields or attributes. This is as standard flat data table format, with rows representing observations (people, places, dates, or in this cases house sales) and columns represent their attributes.</p>
+<div class="noticebox">
+<p><strong>Note: Piping</strong>
+The syntax above uses piping syntax (<code>|&gt;</code>) to pass the outputs of one function to the input of another. We will cover this syntax in more detail next week. But for now note that the functions <code>st_drop_geometry()</code>, <code>select</code> and <code>tibble()</code> both have a data table of some kind as the first argument.</p>
+</div>
+</div>
+<div id="creating-point-data" class="section level3 hasAnchor" number="1.3.2">
+<h3><span class="header-section-number">1.3.2</span> Creating point data<a href="index.html#creating-point-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The properties data <code>props</code> has locational attributes, <code>Lat</code> and <code>Lon</code> that can be used to convert it from a flat data table to point data using the <code>st_as_sf()</code> function:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="index.html#cb15-1" tabindex="-1"></a><span class="co"># check the names</span></span>
+<span id="cb15-2"><a href="index.html#cb15-2" tabindex="-1"></a><span class="fu">names</span>(props)</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="index.html#cb16-1" tabindex="-1"></a><span class="co"># pass them in to the function as the `coords` parameter</span></span>
+<span id="cb16-2"><a href="index.html#cb16-2" tabindex="-1"></a>properties <span class="ot">=</span> <span class="fu">st_as_sf</span>(props, <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">&quot;Lon&quot;</span>, <span class="st">&quot;Lat&quot;</span>), <span class="at">crs =</span> <span class="dv">4326</span>)</span></code></pre></div>
+<p>Note the use of <code>crs = 4326</code>: this specifies the projection of the coordinates in the <code>Lat</code> and <code>Lon</code> attributes. Here we know they are WGS84 the global standard for location, in which location is recorded in decimal degrees (see <a href="https://en.wikipedia.org/wiki/World_Geodetic_System" class="uri">https://en.wikipedia.org/wiki/World_Geodetic_System</a>), and the EPSG code for WGS84 is 4326 (<a href="https://epsg.io/4326" class="uri">https://epsg.io/4326</a>))</p>
+<p>This can be plotted using a standard <code>ggplot</code> approach using the code below. This will be covered in detail in next week’s practical.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="index.html#cb17-1" tabindex="-1"></a><span class="fu">ggplot</span>(properties) <span class="sc">+</span> </span>
+<span id="cb17-2"><a href="index.html#cb17-2" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">col =</span> Price)) <span class="sc">+</span></span>
+<span id="cb17-3"><a href="index.html#cb17-3" tabindex="-1"></a>  <span class="fu">scale_colour_viridis_c</span>(<span class="at">option =</span> <span class="st">&quot;inferno&quot;</span>, <span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:ch1fig2"></span>
+<img src="_main_files/figure-html/ch1fig2-1.png" alt="Proprties for sale in the Liverpool area." width="672" />
+<p class="caption">
+Figure 1.2: Proprties for sale in the Liverpool area.
+</p>
+</div>
+<div class="qbox">
+<div class="center">
+<p><strong>Task 1</strong></p>
+</div>
+<p>Write some code that generates an map of the number of bedrooms for the observations / records in the <code>properties</code> layer.</p>
+<p><strong>NB</strong> You could attempt the tasks after the timetabled practical session. Worked answers are provided in the last section of the worksheet.</p>
+</div>
+</div>
+<div id="spatial-operations" class="section level3 hasAnchor" number="1.3.3">
+<h3><span class="header-section-number">1.3.3</span> Spatial Operations<a href="index.html#spatial-operations" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Now, consider the situation where the aim was to analyse the incidence of properties for sale in the Output Areas of Liverpool: we do not want to analyse <em>all</em> of the properties data but only those records that describe events in our study area - the area we are interested in.</p>
+<p>This can be plotted using the usual commands as in the code below. You can see that the plot extent is defined by the spatial extent of the 2 layers (<code>oa</code> and <code>properties</code>):</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="index.html#cb18-1" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb18-2"><a href="index.html#cb18-2" tabindex="-1"></a>  <span class="co"># plot the areas</span></span>
+<span id="cb18-3"><a href="index.html#cb18-3" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> oa, <span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">lwd =</span> <span class="fl">0.1</span>, <span class="at">col =</span> <span class="st">&quot;black&quot;</span>) <span class="sc">+</span></span>
+<span id="cb18-4"><a href="index.html#cb18-4" tabindex="-1"></a>  <span class="co"># add the points </span></span>
+<span id="cb18-5"><a href="index.html#cb18-5" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> properties, <span class="at">size =</span> <span class="fl">0.4</span>, <span class="at">col =</span> <span class="st">&quot;#FB6A4A&quot;</span>) <span class="sc">+</span></span>
+<span id="cb18-6"><a href="index.html#cb18-6" tabindex="-1"></a>  <span class="co"># define some style / plotting options</span></span>
+<span id="cb18-7"><a href="index.html#cb18-7" tabindex="-1"></a>  <span class="fu">theme_linedraw</span>()</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:ch1fig3"></span>
+<img src="_main_files/figure-html/ch1fig3-1.png" alt="The OAs in Liverpool and the locations of properties for sale." width="672" />
+<p class="caption">
+Figure 1.3: The OAs in Liverpool and the locations of properties for sale.
+</p>
+</div>
+<p>There are a number of ways of clipping spatial data in R. The simplest of these is to use the spatial extent of one as an index to subset another.</p>
+<p><strong>BUT</strong> to undertake <strong>any spatial operation</strong> with 2 spatial layers, they must be in the same projection. The <code>ggplot</code> operation above was able to handle the different projections of <code>oa</code> and <code>proprties</code> but spatial operations will fail. Examine the properties layer and note its projection, particularly through the <code>Bounding box</code> and <code>Geodetic CRS</code> or <code>Projected CRS</code> metadata at the top of the print out and the <code>geometry</code> attributes:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="index.html#cb19-1" tabindex="-1"></a>oa</span>
+<span id="cb19-2"><a href="index.html#cb19-2" tabindex="-1"></a>properties</span></code></pre></div>
+<p>Now change the projection of <code>properties</code> to the Ordnance Survey OSGB projection (EPSG 27700 - see <a href="https://epsg.io/27700" class="uri">https://epsg.io/27700</a>) and re-examine:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="index.html#cb20-1" tabindex="-1"></a>properties <span class="ot">=</span> <span class="fu">st_transform</span>(properties, <span class="dv">27700</span>)</span>
+<span id="cb20-2"><a href="index.html#cb20-2" tabindex="-1"></a>properties</span></code></pre></div>
+<p>The spatial extent of the <code>oa</code> layer can now be used to clip out the intersecting observations form the <code>proprties</code> layer:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="index.html#cb21-1" tabindex="-1"></a>prop_clip <span class="ot">=</span> properties[oa,]</span></code></pre></div>
+<p>This simply <em>clips out</em> the data from <code>properties</code> that is within the spatial extent of <code>oa</code>. You can check this:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="index.html#cb22-1" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb22-2"><a href="index.html#cb22-2" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> oa) <span class="sc">+</span></span>
+<span id="cb22-3"><a href="index.html#cb22-3" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> prop_clip)</span></code></pre></div>
+<p>However, such clip (or crop) operations simply subset data based on their spatial extents. There may be occasions when you wish to combine the <em>attributes</em> of difference datasets based on the <em>spatial intersection</em>. The <code>st_intersection</code> in <code>sf</code> allows us to do this as shown in the code below.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="index.html#cb23-1" tabindex="-1"></a>prop_int <span class="ot">&lt;-</span> <span class="fu">st_intersection</span>(oa, properties)</span></code></pre></div>
+<pre><code>## Warning: attribute variables are assumed to be spatially constant throughout all geometries</code></pre>
+<p>The <code>st_intersection</code> operation and the clip operation are based on spatial extents, do the same thing and the outputs are the same dimension but with subtle differences:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="index.html#cb25-1" tabindex="-1"></a>prop_clip</span>
+<span id="cb25-2"><a href="index.html#cb25-2" tabindex="-1"></a>prop_int</span></code></pre></div>
+<p>If you examine the data created by the intersection, you will notice that each of the intersecting points has the full attribution from both input datasets (you may have to scroll up in your console to see this!):</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="index.html#cb26-1" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">data.frame</span>(prop_clip))</span>
+<span id="cb26-2"><a href="index.html#cb26-2" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">data.frame</span>(prop_int))</span></code></pre></div>
+<div class="qbox">
+<div class="center">
+<p><strong>Task 2</strong></p>
+</div>
+<p>Write some code that selects the polygon in <code>oa</code> with the OA code E00033902 (in the <code>code</code> attribute in <code>oa</code>) and then clips out the properties in that polygon. How many properties are there in E00033902?</p>
+</div>
+</div>
+<div id="merging-spatial-features-and-buffers" class="section level3 hasAnchor" number="1.3.4">
+<h3><span class="header-section-number">1.3.4</span> Merging spatial features and Buffers<a href="index.html#merging-spatial-features-and-buffers" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>In many situations, we are interested in events or features that occur near to our area of interest as well as those within it. Environmental events such as tornadoes, for example, do not stop at state lines or other administrative boundaries. Similarly, if we were studying crimes locations or spatial access to facilities such as shops or health services, we would want to know about locations near to the study area border. Buffer operations provide a convenient way of doing this and buffers can be created in R using the <code>st_buffer</code> function in <code>sf</code>.</p>
+<p>Continuing with the example above, we might be interested in extracting the properties within a certain distance of the Liverpool area, say 2km. Thus the objective is to create a 2km buffer around Liverpool and to use that to select from the properties dataset. The buffer function allow us to do that, and requires a distance for the buffer to be specified in terms of the units used in the projection.</p>
+<p>The code below create a buffer, but does it for each OA - this is not we need in this case!</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="index.html#cb27-1" tabindex="-1"></a><span class="co"># apply a buffer to each object</span></span>
+<span id="cb27-2"><a href="index.html#cb27-2" tabindex="-1"></a>buf_liv <span class="ot">&lt;-</span> <span class="fu">st_buffer</span>(<span class="at">x =</span> oa, <span class="at">dist =</span> <span class="dv">2000</span>)</span>
+<span id="cb27-3"><a href="index.html#cb27-3" tabindex="-1"></a><span class="co"># map</span></span>
+<span id="cb27-4"><a href="index.html#cb27-4" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb27-5"><a href="index.html#cb27-5" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> buf_liv)</span></code></pre></div>
+<p>The code below uses <code>st_union</code> to merge all the OAs in <code>oa</code> to a single polygon and then uses that as the object to be buffered:</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="index.html#cb28-1" tabindex="-1"></a><span class="co"># union the oa layer to a single polygon</span></span>
+<span id="cb28-2"><a href="index.html#cb28-2" tabindex="-1"></a>liv_merge <span class="ot">&lt;-</span> <span class="fu">st_sf</span>(<span class="fu">st_union</span>(oa))</span>
+<span id="cb28-3"><a href="index.html#cb28-3" tabindex="-1"></a><span class="co"># buffer this</span></span>
+<span id="cb28-4"><a href="index.html#cb28-4" tabindex="-1"></a>buf_liv <span class="ot">&lt;-</span> <span class="fu">st_buffer</span>(liv_merge, <span class="dv">2000</span>)</span>
+<span id="cb28-5"><a href="index.html#cb28-5" tabindex="-1"></a><span class="co"># and map</span></span>
+<span id="cb28-6"><a href="index.html#cb28-6" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb28-7"><a href="index.html#cb28-7" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> liv_merge) <span class="sc">+</span></span>
+<span id="cb28-8"><a href="index.html#cb28-8" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> buf_liv, <span class="at">fill =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
+<span id="cb28-9"><a href="index.html#cb28-9" tabindex="-1"></a>  <span class="fu">theme_linedraw</span>()</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:ch1fig4"></span>
+<img src="_main_files/figure-html/ch1fig4-1.png" alt="The outline of the Liverpool area (in grey) and a 2km buffer." width="672" />
+<p class="caption">
+Figure 1.4: The outline of the Liverpool area (in grey) and a 2km buffer.
+</p>
+</div>
+</div>
+<div id="point-in-polygon-and-area-calculations" class="section level3 hasAnchor" number="1.3.5">
+<h3><span class="header-section-number">1.3.5</span> Point-in-polygon and Area calculations<a href="index.html#point-in-polygon-and-area-calculations" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Point-in-polygon</strong></p>
+<p>It is often useful to count the number of points falling within different zones in a polygon data set. This can be done using the the <code>st_contains</code> function in <code>sf</code>.</p>
+<p>The code below returns a list of counts of the number properties that occur inside each OA to the variable <code>prop.count</code> and prints the first six of these to the console using the <code>head</code> function:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="index.html#cb29-1" tabindex="-1"></a>tmp <span class="ot">=</span> <span class="fu">st_contains</span>(oa, properties, <span class="at">sparse =</span> F)</span>
+<span id="cb29-2"><a href="index.html#cb29-2" tabindex="-1"></a>prop.count <span class="ot">=</span> <span class="fu">rowSums</span>(tmp)</span>
+<span id="cb29-3"><a href="index.html#cb29-3" tabindex="-1"></a><span class="fu">head</span>(prop.count)</span></code></pre></div>
+<pre><code>## [1] 3 0 0 5 4 5</code></pre>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="index.html#cb31-1" tabindex="-1"></a><span class="fu">length</span>(prop.count)</span></code></pre></div>
+<pre><code>## [1] 1584</code></pre>
+<p>Each of the observations in <code>prop.count</code> corresponds in order to the OAs in <code>oa</code> and could be attached to the data in the following way:</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="index.html#cb33-1" tabindex="-1"></a>oa<span class="sc">$</span>prop.count <span class="ot">=</span> prop.count</span></code></pre></div>
+<p>This could be mapped using the code below, using best practice for counts (choropleths should only be used for rates!):</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="index.html#cb34-1" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb34-2"><a href="index.html#cb34-2" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> oa) <span class="sc">+</span></span>
+<span id="cb34-3"><a href="index.html#cb34-3" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> <span class="fu">st_centroid</span>(oa), <span class="fu">aes</span>(<span class="at">size =</span> prop.count, <span class="at">col =</span> prop.count), <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb34-4"><a href="index.html#cb34-4" tabindex="-1"></a>  <span class="fu">scale_colour_distiller</span>(<span class="at">palette =</span> <span class="st">&quot;RdPu&quot;</span>, <span class="at">name =</span> <span class="st">&quot;Property</span><span class="sc">\n</span><span class="st">Count&quot;</span>) <span class="sc">+</span></span>
+<span id="cb34-5"><a href="index.html#cb34-5" tabindex="-1"></a>  <span class="fu">theme_linedraw</span>()</span></code></pre></div>
+<pre><code>## Warning: st_centroid assumes attributes are constant over geometries</code></pre>
+<div class="figure"><span style="display:block;" id="fig:ch1fig5"></span>
+<img src="_main_files/figure-html/ch1fig5-1.png" alt="The the counts of properties for sale in the OAs in Liverpool." width="672" />
+<p class="caption">
+Figure 1.5: The the counts of properties for sale in the OAs in Liverpool.
+</p>
+</div>
+<p><strong>Area calculations</strong>
+Another useful operation is to be able calculate polygon areas. The <code>st_area</code> function in and <code>sf</code> does this. To check the projection, and therefore the map units, of an <code>sf</code> objects use the <code>st_crs</code> function:</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="index.html#cb36-1" tabindex="-1"></a><span class="fu">st_crs</span>(oa)</span></code></pre></div>
+<p>This declares the projection to be in metres. To see the areas in square metres enter:</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="index.html#cb37-1" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">st_area</span>(oa))</span></code></pre></div>
+<p>The <code>Units</code> are indicated. As these are not particularly useful and more realistic measures are to report areas in hectares or square kilometres. This requires the <code>units</code> package:</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="index.html#cb38-1" tabindex="-1"></a><span class="fu">library</span>(units)</span>
+<span id="cb38-2"><a href="index.html#cb38-2" tabindex="-1"></a><span class="co"># hectares</span></span>
+<span id="cb38-3"><a href="index.html#cb38-3" tabindex="-1"></a><span class="fu">st_area</span>(oa) <span class="sc">|&gt;</span> <span class="fu">set_units</span>(<span class="st">&quot;ha&quot;</span>) <span class="sc">|&gt;</span> <span class="fu">head</span>()</span>
+<span id="cb38-4"><a href="index.html#cb38-4" tabindex="-1"></a><span class="co"># square kilometres</span></span>
+<span id="cb38-5"><a href="index.html#cb38-5" tabindex="-1"></a><span class="fu">st_area</span>(oa) <span class="sc">|&gt;</span> <span class="fu">set_units</span>(<span class="st">&quot;km^2&quot;</span>) <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code></pre></div>
+<div class="qbox">
+<div class="center">
+<p><strong>Task 3</strong></p>
+</div>
+<p>Your task is to create the code to produce maps of the densities of properties in each LSOA in Liverpool in <em>properties per square kilometre</em>. For the analysis you will need to use the <code>properties</code> point data and the <code>lsoa</code> dataset and undertake a point in polygon operation, apply an area function and undertake a conversion to square kilometres. The maps should be produced using the <code>ggplot</code> and <code>geom_sf</code> functions in the <code>ggplot2</code> package (Hint: use the <code>scale_fill_distiller</code> function to change the default palette. The help for this function has the names of other Sequential palettes.</p>
+</div>
+</div>
+<div id="creating-distance-attributes" class="section level3 hasAnchor" number="1.3.6">
+<h3><span class="header-section-number">1.3.6</span> Creating distance attributes<a href="index.html#creating-distance-attributes" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Distance is fundamental to spatial analysis. For example, we may wish to analyse the number of locations (e.g. health facilities, schools, etc) within a certain distance of the features we are considering. In the exercise below distance measures are used to evaluate differences in accessibility for different social groups, as recorded in census areas. Such approaches form the basis of supply and demand modelling and provide inputs into location-allocation models.</p>
+<p>Distance could be approximated using a series of buffers created at specific distance intervals around our features (whether point or polygons). These could be used to determine the number of features or locations that are within different distance ranges, as specified by the buffers using the <code>poly.counts</code> function above. However distances can be measured directly and there a number of functions available in R to do this.</p>
+<p>First, the most commonly used is the <code>dist</code> function. This calculates the Euclidean distance between points in <span class="math inline">\(n-\)</span>dimensional feature space. The example below developed from the help for <code>dist</code> shows how it is used to calculate the distances between 5 records (rows) in a feature space of 20 hypothetical variables:</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="index.html#cb39-1" tabindex="-1"></a><span class="co"># create some random data</span></span>
+<span id="cb39-2"><a href="index.html#cb39-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>) <span class="co"># for reproducibility</span></span>
+<span id="cb39-3"><a href="index.html#cb39-3" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(<span class="dv">100</span>), <span class="at">nrow =</span> <span class="dv">5</span>)</span>
+<span id="cb39-4"><a href="index.html#cb39-4" tabindex="-1"></a><span class="fu">colnames</span>(x) <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;Var&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>)</span>
+<span id="cb39-5"><a href="index.html#cb39-5" tabindex="-1"></a><span class="fu">dist</span>(x)</span>
+<span id="cb39-6"><a href="index.html#cb39-6" tabindex="-1"></a><span class="fu">as.matrix</span>(<span class="fu">dist</span>(x))</span></code></pre></div>
+<p>If your data is projected (i.e. in metres, feet etc) then <code>dist</code> can also be used to calculate the Euclidean distance between pairs of coordinates (i.e. 2 variables not 20!):</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="index.html#cb40-1" tabindex="-1"></a>coords <span class="ot">=</span> <span class="fu">st_coordinates</span>(<span class="fu">st_centroid</span>(oa)) </span>
+<span id="cb40-2"><a href="index.html#cb40-2" tabindex="-1"></a>dmat <span class="ot">=</span> <span class="fu">as.matrix</span>(<span class="fu">dist</span>(coords, <span class="at">diag =</span> F))</span>
+<span id="cb40-3"><a href="index.html#cb40-3" tabindex="-1"></a><span class="fu">dim</span>(dmat)</span>
+<span id="cb40-4"><a href="index.html#cb40-4" tabindex="-1"></a>dmat[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>]</span></code></pre></div>
+<p>The distance functions return a to-from matrix of the distances between each pair of locations. These could describe distances between <em>any</em> objects and such approaches underpin supply and demand modelling and accessibility analyses.
+When determining geographic distances, it is important that you consider the projection properties of your data: if the data are projected using degrees (i.e. in latitude and longitude) then this needs to be considered in any calculation of distance. The <code>st_distance</code> function in <code>sf</code> calculates the Cartesian minimum distance (straight line) distance between two spatial datasets of class <code>sf</code> projected in planar coordinates.</p>
+<p>The code below calculates the distance between 2 features:</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="index.html#cb41-1" tabindex="-1"></a><span class="fu">st_distance</span>(oa[<span class="dv">100</span>,], properties[<span class="dv">2</span>,])</span></code></pre></div>
+<pre><code>## Units: [m]
+##          [,1]
+## [1,] 3118.617</code></pre>
+<p>And this can be extended to calculates multiple distances using a form of apply function. The code below uses <code>st_distance</code> to determine the distance from the 100^th observation in <code>oa</code> to each of the properties for sale:</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="index.html#cb43-1" tabindex="-1"></a>g1 <span class="ot">=</span> <span class="fu">st_geometry</span>(oa[<span class="dv">100</span>,])</span>
+<span id="cb43-2"><a href="index.html#cb43-2" tabindex="-1"></a>g2 <span class="ot">=</span> <span class="fu">st_geometry</span>(properties) </span>
+<span id="cb43-3"><a href="index.html#cb43-3" tabindex="-1"></a>dlist <span class="ot">=</span> <span class="fu">mapply</span>(st_distance, g1, g2)</span>
+<span id="cb43-4"><a href="index.html#cb43-4" tabindex="-1"></a><span class="fu">length</span>(dlist)</span></code></pre></div>
+<pre><code>## [1] 4230</code></pre>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="index.html#cb45-1" tabindex="-1"></a><span class="fu">head</span>(dlist)</span></code></pre></div>
+<pre><code>## [1]  4440.633  3118.617 10518.848  4435.707  2519.499  2519.499</code></pre>
+<p>You could check this by mapping the properties data, shaded by their distance to this location:</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="index.html#cb47-1" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb47-2"><a href="index.html#cb47-2" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> <span class="fu">cbind</span>(properties, dlist), <span class="fu">aes</span>(<span class="at">col =</span> dlist)) <span class="sc">+</span></span>
+<span id="cb47-3"><a href="index.html#cb47-3" tabindex="-1"></a>  <span class="fu">scale_colour_viridis_c</span>(<span class="at">name =</span> <span class="st">&quot;Distance (m)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb47-4"><a href="index.html#cb47-4" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> oa[<span class="dv">100</span>,], <span class="at">col =</span> <span class="st">&quot;red&quot;</span>, <span class="at">lwd =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb47-5"><a href="index.html#cb47-5" tabindex="-1"></a>  <span class="fu">theme_linedraw</span>()</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:ch1fig6"></span>
+<img src="_main_files/figure-html/ch1fig6-1.png" alt="A map of the proprties for sale inthe Liverpool area shaded by their distance to the 100th observation." width="672" />
+<p class="caption">
+Figure 1.6: A map of the proprties for sale inthe Liverpool area shaded by their distance to the 100th observation.
+</p>
+</div>
+</div>
+<div id="reading-and-writing-data-in-and-out-of-rrstudio" class="section level3 hasAnchor" number="1.3.7">
+<h3><span class="header-section-number">1.3.7</span> Reading and writing data in and out of R/RStudio<a href="index.html#reading-and-writing-data-in-and-out-of-rrstudio" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>There are 2 basic approaches:</p>
+<ol style="list-style-type: decimal">
+<li>read and write data in and out of R/Rstudio in propriety formats such as shapefiles, CSV files etc.</li>
+<li>read and write data using <code>.Rdata</code> files in R’s binary format and the load and save functions.</li>
+</ol>
+<p>The code below provides does these as a reference for you:</p>
+<p><strong>Tabular data (CSV format)</strong></p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="index.html#cb48-1" tabindex="-1"></a><span class="fu">write.csv</span>(props, <span class="at">file =</span> <span class="st">&quot;props.csv&quot;</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb48-2"><a href="index.html#cb48-2" tabindex="-1"></a>p2 <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">&quot;props.csv&quot;</span>, <span class="at">header=</span><span class="cn">TRUE</span>)</span></code></pre></div>
+<p><strong>Tabular data (.RData format)</strong></p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="index.html#cb49-1" tabindex="-1"></a><span class="fu">save</span>(props, <span class="at">file =</span> <span class="st">&quot;props.RData&quot;</span>)</span>
+<span id="cb49-2"><a href="index.html#cb49-2" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;props.RData&quot;</span>) <span class="co"># notice that this needs no assignation e.g. to p2 or props</span></span></code></pre></div>
+<p><strong>Spatial data (Proprietary format)</strong></p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="index.html#cb50-1" tabindex="-1"></a><span class="co"># as shapefile</span></span>
+<span id="cb50-2"><a href="index.html#cb50-2" tabindex="-1"></a><span class="fu">st_write</span>(properties, <span class="st">&quot;point.shp&quot;</span>, <span class="at">delete_layer =</span> T)</span>
+<span id="cb50-3"><a href="index.html#cb50-3" tabindex="-1"></a>p2 <span class="ot">=</span> <span class="fu">st_read</span>(<span class="st">&quot;point.shp&quot;</span>)</span>
+<span id="cb50-4"><a href="index.html#cb50-4" tabindex="-1"></a><span class="co"># as GeoPackage</span></span>
+<span id="cb50-5"><a href="index.html#cb50-5" tabindex="-1"></a><span class="fu">st_write</span>(oa, <span class="st">&quot;area.gpkg&quot;</span>, <span class="at">delete_layer =</span> T)</span>
+<span id="cb50-6"><a href="index.html#cb50-6" tabindex="-1"></a>a2 <span class="ot">=</span> <span class="fu">st_read</span>(<span class="st">&quot;area.gpkg&quot;</span>)</span></code></pre></div>
+<p><strong>Spatial data (R format)</strong></p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="index.html#cb51-1" tabindex="-1"></a><span class="fu">save</span>(oa, <span class="at">file =</span> <span class="st">&quot;areas.RData&quot;</span>)</span>
+<span id="cb51-2"><a href="index.html#cb51-2" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;areas.RData&quot;</span>) <span class="co"># notice that this needs no assignation e.g. to p2 or props</span></span></code></pre></div>
+</div>
+<div id="answers-to-tasks" class="section level3 hasAnchor" number="1.3.8">
+<h3><span class="header-section-number">1.3.8</span> Answers to Tasks<a href="index.html#answers-to-tasks" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Task 1</strong> Write some code that generates an map of the number of bedrooms for the observations / records in the <code>properties</code> layer.</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="index.html#cb52-1" tabindex="-1"></a><span class="co"># if you look at the Beds attributes </span></span>
+<span id="cb52-2"><a href="index.html#cb52-2" tabindex="-1"></a><span class="co"># you will see it is an ordinal value (ie an ordered category)</span></span>
+<span id="cb52-3"><a href="index.html#cb52-3" tabindex="-1"></a>properties</span>
+<span id="cb52-4"><a href="index.html#cb52-4" tabindex="-1"></a><span class="co"># so each vale is automatically assigned a group </span></span>
+<span id="cb52-5"><a href="index.html#cb52-5" tabindex="-1"></a><span class="fu">ggplot</span>(properties) <span class="sc">+</span> </span>
+<span id="cb52-6"><a href="index.html#cb52-6" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">col =</span> Beds)) <span class="sc">+</span></span>
+<span id="cb52-7"><a href="index.html#cb52-7" tabindex="-1"></a>  <span class="fu">scale_colour_viridis_d</span>(<span class="at">option =</span> <span class="st">&quot;inferno&quot;</span>, <span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>)</span></code></pre></div>
+<p><strong>Task 2</strong> Write some code that selects the polygon in <code>oa</code> with the OA code E00033902 (in the <code>code</code> attribute in <code>oa</code>) and then clips out the properties in that polygon. How many properties are there in E00033902?</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="index.html#cb53-1" tabindex="-1"></a><span class="co"># Task 2</span></span>
+<span id="cb53-2"><a href="index.html#cb53-2" tabindex="-1"></a><span class="do">## There are lots of ways of doing this but each of them uses a logical statement</span></span>
+<span id="cb53-3"><a href="index.html#cb53-3" tabindex="-1"></a></span>
+<span id="cb53-4"><a href="index.html#cb53-4" tabindex="-1"></a><span class="co"># 1. using an index to create a subset and then clip</span></span>
+<span id="cb53-5"><a href="index.html#cb53-5" tabindex="-1"></a>index <span class="ot">=</span> oa<span class="sc">$</span>code <span class="sc">==</span> <span class="st">&quot;E00033902&quot;</span></span>
+<span id="cb53-6"><a href="index.html#cb53-6" tabindex="-1"></a>oa_select <span class="ot">=</span> oa[index,]</span>
+<span id="cb53-7"><a href="index.html#cb53-7" tabindex="-1"></a>properties[oa_select,]</span>
+<span id="cb53-8"><a href="index.html#cb53-8" tabindex="-1"></a></span>
+<span id="cb53-9"><a href="index.html#cb53-9" tabindex="-1"></a><span class="co"># 2. using the layer you have created already </span></span>
+<span id="cb53-10"><a href="index.html#cb53-10" tabindex="-1"></a><span class="fu">sum</span>(prop_int<span class="sc">$</span>code <span class="sc">==</span> <span class="st">&quot;E00033902&quot;</span>)</span></code></pre></div>
+<p><strong>Task 3</strong> Produce a map of the densities of properties for sale in each LSOA block in Liverpool in <em>properties per square kilometre</em>.</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="index.html#cb54-1" tabindex="-1"></a><span class="co"># Task 3</span></span>
+<span id="cb54-2"><a href="index.html#cb54-2" tabindex="-1"></a><span class="co"># point in polygon</span></span>
+<span id="cb54-3"><a href="index.html#cb54-3" tabindex="-1"></a>p.count <span class="ot">&lt;-</span>  <span class="fu">rowSums</span>(<span class="fu">st_contains</span>(lsoa,properties,<span class="at">sparse =</span> F))</span>
+<span id="cb54-4"><a href="index.html#cb54-4" tabindex="-1"></a><span class="co"># area calculation</span></span>
+<span id="cb54-5"><a href="index.html#cb54-5" tabindex="-1"></a>lsoa.area <span class="ot">&lt;-</span> <span class="fu">st_area</span>(lsoa) <span class="sc">|&gt;</span> <span class="fu">set_units</span>(<span class="st">&quot;km^2&quot;</span>)</span>
+<span id="cb54-6"><a href="index.html#cb54-6" tabindex="-1"></a><span class="co"># combine and assign to the oa data</span></span>
+<span id="cb54-7"><a href="index.html#cb54-7" tabindex="-1"></a>lsoa<span class="sc">$</span>p.p.sqkm <span class="ot">&lt;-</span> <span class="fu">as.vector</span>(p.count<span class="sc">/</span>lsoa.area)</span>
+<span id="cb54-8"><a href="index.html#cb54-8" tabindex="-1"></a><span class="co"># map</span></span>
+<span id="cb54-9"><a href="index.html#cb54-9" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> lsoa) <span class="sc">+</span></span>
+<span id="cb54-10"><a href="index.html#cb54-10" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> p.p.sqkm)) <span class="sc">+</span></span>
+<span id="cb54-11"><a href="index.html#cb54-11" tabindex="-1"></a>  <span class="fu">scale_fill_distiller</span>(<span class="at">palette =</span> <span class="st">&quot;RdPu&quot;</span>, <span class="at">name =</span> <span class="st">&quot;Property</span><span class="sc">\n</span><span class="st">Count&quot;</span>) </span></code></pre></div>
+</div>
+<div id="useful-resources" class="section level3 hasAnchor" number="1.3.9">
+<h3><span class="header-section-number">1.3.9</span> Useful Resources<a href="index.html#useful-resources" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>There are few links in the list below that you may find useful:</p>
+<ul>
+<li>Piping syntax (I love this guy!) <a href="https://www.youtube.com/watch?v=0_lSx0CJiSc" class="uri">https://www.youtube.com/watch?v=0_lSx0CJiSc</a></li>
+<li>Spatial operations, Chapter 4 in <a href="https://geocompr.robinlovelace.net/spatial-operations.html" class="uri">https://geocompr.robinlovelace.net/spatial-operations.html</a></li>
+<li>An Intro to Spatial Data Analysis <a href="https://www.spatialanalysisonline.com/An%20Introduction%20to%20Spatial%20Data%20Analysis%20in%20R.pdf" class="uri">https://www.spatialanalysisonline.com/An%20Introduction%20to%20Spatial%20Data%20Analysis%20in%20R.pdf</a></li>
+<li>Making Maps with R <a href="https://bookdown.org/nicohahn/making_maps_with_r5/docs/introduction.html" class="uri">https://bookdown.org/nicohahn/making_maps_with_r5/docs/introduction.html</a></li>
+<li>Chapter 5 in <a href="https://geocompr.robinlovelace.net/adv-map.html" class="uri">https://geocompr.robinlovelace.net/adv-map.html</a></li>
+<li>An Introduction to Spatial Data Analysis and Visualisation in R <a href="https://data.cdrc.ac.uk/dataset/introduction-spatial-data-analysis-and-visualisation-r" class="uri">https://data.cdrc.ac.uk/dataset/introduction-spatial-data-analysis-and-visualisation-r</a></li>
+</ul>
+
+</div>
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-brunsdon2018introduction" class="csl-entry">
+Brunsdon, Chris, and Lex Comber. 2025. <em>An Introduction to r for Spatial Analysis and Mapping (3e)</em>. Sage.
+</div>
+<div id="ref-comber2020geographical" class="csl-entry">
+Comber, Lex, and Chris Brunsdon. 2021. <em>Geographical Data Science and Spatial Data Analysis: An Introduction in r</em>. Sage.
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+
+<a href="exploratory-data-analysis.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["_main.pdf", "_main.epub"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

@@ -1,0 +1,88 @@
+# Creating documents in RMarkdown
+
+## Overview {-}
+
+In this practical you will create an RMarkdown (`.Rmd`) document in either `html` or `PDF` format. It can include anything, but the following things are included in RMarkdown document on the VLE (`Rep_example.Rmd`):
+
+- text in paragraphs
+- plots (e.g. scatterplots)
+- maps
+- tables
+- some hidden code 
+- some visible code
+
+**NOTE** 
+
+1) you may have to install the `rmarkdown` package on University computers - you should not have to but  you never know! You should test this by running the code:
+```{r eval = F}
+if (!is.element("rmarkdown", installed.packages()))
+    install.packages("rmarkdown", dep = T)
+```
+
+2) You may need to use a simply named folder. This means removing any non-text characters in the name. So 
+
+- **not** C:\\Geocomp & Loc Anal\\week9
+- **instead** C:\\Geocomp\\week9
+
+## Resources
+
+This tutorial https://rmarkdown.rstudio.com/articles_intro.html may help and some other potentially useful resources include:
+
+- https://www.neonscience.org/rmd-code-intro
+- https://rpubs.com/mnewco8290/94529
+- http://www.jacolienvanrij.com/Tutorials/tutorialMarkdown.html
+
+Also there are Cheatsheets 
+
+- https://rmarkdown.rstudio.com/lesson-15.html
+- they can also be accessed through the Rstudio menu **Help > Cheat Sheets > R Markdown Cheat Sheet**
+
+Documents created in this way allow you to connect the code, the analysis and the data in a single environment, supporting transparency and reproducibility. 
+
+## Tasks
+
+**Task 1**
+
+This just gets you to create,  save and compile a simple R Markdown document.
+
+1. Open a new RMarkdown document:
+
+**File > New File > R Markdown**
+
+use HTML format.
+
+Give it a name, save it with a name in your working folder, and try to run it by clicking on the "knit" icon. If you get an error here, you probably need to install the `rmarkdown` package for some reason.
+
+2. Then change the 3rd line from 
+
+- from `output: html_document`
+- to `output: pdf_document`
+
+and compile the document again to create a PDF file.
+**NOTE** that if you are on a University PC you may get a 'cannot compile PDF' error message. In which case you may need to install a PDF compiler.
+```{r eval = F}
+# only run this if you get the above errror!
+tinytex::install_tinytex()
+```
+
+**Task 2**
+
+Go through the Rep_Example.Rmd files on the VLE. I have chopped down a GWR Practical as a short example in the RMD file. You should 
+
+- make sure that you can identify sections of words and code that produce text, plots, maps, hidden / visible code and tables as indicated above. 
+- pay attention to the way that the code snippets presented, especially how the code blocks are bracketed by the backticks ( ` ).
+- try to create both PDF and HTML outputs by changing the outputs as below in the RMD header:
+  - `output: pdf_document`
+  - `output: html_document`
+
+
+```{r echo = F, eval = F}
+bookdown::publish_book(name = "GEOG3195", account = "lexcomber")
+```
+
+
+
+
+
+
+

@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Unit 5 Spatial Models: spatial autocorrelation and cluster analysis | GEOG3915 GeoComputation and Spatial Analysis practicals</title>
+  <meta name="description" content="This contains materials to support the University of Leeds GEOG3195 module, delivered by Lex Comber" />
+  <meta name="generator" content="bookdown 0.48 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Unit 5 Spatial Models: spatial autocorrelation and cluster analysis | GEOG3915 GeoComputation and Spatial Analysis practicals" />
+  <meta property="og:type" content="book" />
+  <meta property="og:image" content="https://bookdown.org/lexcomber/geog3915/images/GIS_in_the_bin.jpg" />
+  <meta property="og:description" content="This contains materials to support the University of Leeds GEOG3195 module, delivered by Lex Comber" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Unit 5 Spatial Models: spatial autocorrelation and cluster analysis | GEOG3915 GeoComputation and Spatial Analysis practicals" />
+  
+  <meta name="twitter:description" content="This contains materials to support the University of Leeds GEOG3195 module, delivered by Lex Comber" />
+  <meta name="twitter:image" content="https://bookdown.org/lexcomber/geog3915/images/GIS_in_the_bin.jpg" />
+
+<meta name="author" content="Lex Comber" />
+
+
+<meta name="date" content="2026-09-20" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="regression.html"/>
+<link rel="next" href="spatial-varying-coefficient-models.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">GEOG3915 Practicals</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Getting Started</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#installing-rrstudio"><i class="fa fa-check"></i><b>1.1</b> Installing R/RStudio</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#r-rstudio-refresh"><i class="fa fa-check"></i><b>1.2</b> R / RStudio Refresh</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="index.html"><a href="index.html#the-rstudio-interface"><i class="fa fa-check"></i><b>1.2.1</b> The RStudio Interface</a></li>
+<li class="chapter" data-level="1.2.2" data-path="index.html"><a href="index.html#ways-of-working"><i class="fa fa-check"></i><b>1.2.2</b> Ways of working</a></li>
+<li class="chapter" data-level="1.2.3" data-path="index.html"><a href="index.html#projects-files-and-folder-management"><i class="fa fa-check"></i><b>1.2.3</b> Projects, Files and Folder Management</a></li>
+<li class="chapter" data-level="1.2.4" data-path="index.html"><a href="index.html#practicals"><i class="fa fa-check"></i><b>1.2.4</b> Practicals</a></li>
+<li class="chapter" data-level="1.2.5" data-path="index.html"><a href="index.html#packages"><i class="fa fa-check"></i><b>1.2.5</b> Packages</a></li>
+<li class="chapter" data-level="1.2.6" data-path="index.html"><a href="index.html#further-resources"><i class="fa fa-check"></i><b>1.2.6</b> Further Resources</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#using-r-as-a-gis"><i class="fa fa-check"></i><b>1.3</b> Using R as a GIS</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="index.html"><a href="index.html#data"><i class="fa fa-check"></i><b>1.3.1</b> Data</a></li>
+<li class="chapter" data-level="1.3.2" data-path="index.html"><a href="index.html#creating-point-data"><i class="fa fa-check"></i><b>1.3.2</b> Creating point data</a></li>
+<li class="chapter" data-level="1.3.3" data-path="index.html"><a href="index.html#spatial-operations"><i class="fa fa-check"></i><b>1.3.3</b> Spatial Operations</a></li>
+<li class="chapter" data-level="1.3.4" data-path="index.html"><a href="index.html#merging-spatial-features-and-buffers"><i class="fa fa-check"></i><b>1.3.4</b> Merging spatial features and Buffers</a></li>
+<li class="chapter" data-level="1.3.5" data-path="index.html"><a href="index.html#point-in-polygon-and-area-calculations"><i class="fa fa-check"></i><b>1.3.5</b> Point-in-polygon and Area calculations</a></li>
+<li class="chapter" data-level="1.3.6" data-path="index.html"><a href="index.html#creating-distance-attributes"><i class="fa fa-check"></i><b>1.3.6</b> Creating distance attributes</a></li>
+<li class="chapter" data-level="1.3.7" data-path="index.html"><a href="index.html#reading-and-writing-data-in-and-out-of-rrstudio"><i class="fa fa-check"></i><b>1.3.7</b> Reading and writing data in and out of R/RStudio</a></li>
+<li class="chapter" data-level="1.3.8" data-path="index.html"><a href="index.html#answers-to-tasks"><i class="fa fa-check"></i><b>1.3.8</b> Answers to Tasks</a></li>
+<li class="chapter" data-level="1.3.9" data-path="index.html"><a href="index.html#useful-resources"><i class="fa fa-check"></i><b>1.3.9</b> Useful Resources</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html"><i class="fa fa-check"></i><b>2</b> Exploratory Data Analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#overview"><i class="fa fa-check"></i>Overview</a></li>
+<li class="chapter" data-level="2.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#data-data-summaries-and-generic-plotting-in-r"><i class="fa fa-check"></i><b>2.1</b> Data, data summaries and generic plotting in R</a></li>
+<li class="chapter" data-level="2.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#an-introduction-to-visualisation-using-the-ggplot2-package"><i class="fa fa-check"></i><b>2.2</b> An introduction to visualisation using the <code>ggplot2</code> package</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#ggplot-basics"><i class="fa fa-check"></i><b>2.2.1</b> <code>ggplot</code> basics</a></li>
+<li class="chapter" data-level="2.2.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#groups-with-ggplot"><i class="fa fa-check"></i><b>2.2.2</b> Groups with <code>ggplot</code></a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#data-wrangling-with-dplyr"><i class="fa fa-check"></i><b>2.3</b> Data wrangling with <code>dplyr</code></a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#summary"><i class="fa fa-check"></i><b>2.3.1</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#using-piping-syntax"><i class="fa fa-check"></i><b>2.4</b> Using piping syntax</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#select"><i class="fa fa-check"></i><b>2.4.1</b> <code>select</code></a></li>
+<li class="chapter" data-level="2.4.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#mutate"><i class="fa fa-check"></i><b>2.4.2</b> <code>mutate</code></a></li>
+<li class="chapter" data-level="2.4.3" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#group_by-and-summarise-changing-the-unit-of-observation"><i class="fa fa-check"></i><b>2.4.3</b> <code>group_by</code> and <code>summarise</code>: changing the unit of observation</a></li>
+<li class="chapter" data-level="2.4.4" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#a-final-example"><i class="fa fa-check"></i><b>2.4.4</b> A final example</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#answers-to-tasks-1"><i class="fa fa-check"></i>Answers to Tasks</a></li>
+<li class="chapter" data-level="" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#additional-resources"><i class="fa fa-check"></i>Additional Resources</a></li>
+<li class="chapter" data-level="" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#optional-enhanced-mapping-with-the-ggplot2-package"><i class="fa fa-check"></i>Optional: enhanced mapping with the <code>ggplot2</code> package</a></li>
+<li class="chapter" data-level="" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#appendix-named-colours"><i class="fa fa-check"></i>Appendix: Named Colours</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="spatial-interpolation.html"><a href="spatial-interpolation.html"><i class="fa fa-check"></i><b>3</b> Spatial Interpolation</a>
+<ul>
+<li class="chapter" data-level="" data-path="spatial-interpolation.html"><a href="spatial-interpolation.html#overview-1"><i class="fa fa-check"></i>Overview</a></li>
+<li class="chapter" data-level="3.1" data-path="spatial-interpolation.html"><a href="spatial-interpolation.html#kernel-density-estimation-point-observations"><i class="fa fa-check"></i><b>3.1</b> Kernel Density Estimation (point observations)</a></li>
+<li class="chapter" data-level="3.2" data-path="spatial-interpolation.html"><a href="spatial-interpolation.html#inverse-distance-weighting-point-values"><i class="fa fa-check"></i><b>3.2</b> Inverse Distance Weighting (point values)</a></li>
+<li class="chapter" data-level="3.3" data-path="spatial-interpolation.html"><a href="spatial-interpolation.html#area-weighted-interpolation-area-to-area"><i class="fa fa-check"></i><b>3.3</b> Area Weighted interpolation (area to area)</a></li>
+<li class="chapter" data-level="3.4" data-path="spatial-interpolation.html"><a href="spatial-interpolation.html#dasymetric-interpolation"><i class="fa fa-check"></i><b>3.4</b> Dasymetric Interpolation</a></li>
+<li class="chapter" data-level="" data-path="spatial-interpolation.html"><a href="spatial-interpolation.html#answers-to-tasks-2"><i class="fa fa-check"></i>Answers to Tasks</a></li>
+<li class="chapter" data-level="" data-path="spatial-interpolation.html"><a href="spatial-interpolation.html#optional-fine-tuning-idw"><i class="fa fa-check"></i>Optional: Fine tuning IDW</a>
+<ul>
+<li class="chapter" data-level="" data-path="spatial-interpolation.html"><a href="spatial-interpolation.html#answer-to-additional-task"><i class="fa fa-check"></i>Answer to Additional Task</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>4</b> Regression</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#overview-2"><i class="fa fa-check"></i>Overview</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#which-regression-approach"><i class="fa fa-check"></i>Which regression approach?</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#packages-1"><i class="fa fa-check"></i>Packages</a></li>
+</ul></li>
+<li class="chapter" data-level="4.1" data-path="regression.html"><a href="regression.html#standard-linear-regression-models-ols"><i class="fa fa-check"></i><b>4.1</b> Standard linear regression models (OLS)</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#specifying-the-model"><i class="fa fa-check"></i>Specifying the model</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="regression.html"><a href="regression.html#binomial-logistic-regression-for-binary-variables"><i class="fa fa-check"></i><b>4.2</b> Binomial Logistic Regression for binary variables</a></li>
+<li class="chapter" data-level="4.3" data-path="regression.html"><a href="regression.html#poisson-regression-for-count-variables"><i class="fa fa-check"></i><b>4.3</b> Poisson Regression for count variables</a></li>
+<li class="chapter" data-level="4.4" data-path="regression.html"><a href="regression.html#outliers-and-robust-regression"><i class="fa fa-check"></i><b>4.4</b> Outliers and Robust regression</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#addendum-prediction-vs-inference"><i class="fa fa-check"></i>Addendum: Prediction vs Inference</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#answers-to-tasks-3"><i class="fa fa-check"></i>Answers to Tasks</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#optional-the-maup"><i class="fa fa-check"></i>Optional: the MAUP</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="regression.html"><a href="regression.html#introduction"><i class="fa fa-check"></i><b>4.4.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.4.2" data-path="regression.html"><a href="regression.html#impact-on-correlations-of-counts"><i class="fa fa-check"></i><b>4.4.2</b> Impact on Correlations of Counts</a></li>
+<li class="chapter" data-level="4.4.3" data-path="regression.html"><a href="regression.html#impact-on-models"><i class="fa fa-check"></i><b>4.4.3</b> Impact on models</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#additional-resources-1"><i class="fa fa-check"></i>Additional Resources</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><i class="fa fa-check"></i><b>5</b> Spatial Models: spatial autocorrelation and cluster analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#overview-3"><i class="fa fa-check"></i>Overview</a></li>
+<li class="chapter" data-level="" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#data-and-packages"><i class="fa fa-check"></i>Data and Packages</a></li>
+<li class="chapter" data-level="5.1" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#defining-nearby-neighbour-lists"><i class="fa fa-check"></i><b>5.1</b> Defining nearby: neighbour lists</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#neigbours-by-ajacency"><i class="fa fa-check"></i><b>5.1.1</b> Neigbours by ajacency</a></li>
+<li class="chapter" data-level="5.1.2" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#neighbours-by-nearest-n"><i class="fa fa-check"></i><b>5.1.2</b> Neighbours by nearest <span class="math inline">\(n\)</span></a></li>
+<li class="chapter" data-level="5.1.3" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#neighbours-by-distance"><i class="fa fa-check"></i><b>5.1.3</b> Neighbours by distance</a></li>
+<li class="chapter" data-level="5.1.4" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#summary-1"><i class="fa fa-check"></i><b>5.1.4</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#spatial-autocorrelation-and-clusters"><i class="fa fa-check"></i><b>5.2</b> Spatial Autocorrelation and Clusters</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#neighbours-and-lagged-mean-plots"><i class="fa fa-check"></i><b>5.2.1</b> Neighbours and Lagged Mean Plots</a></li>
+<li class="chapter" data-level="5.2.2" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#morans-i-for-determining-clusters-and-spatial-autocorrelation"><i class="fa fa-check"></i><b>5.2.2</b> Moran’s I for determining Clusters and Spatial Autocorrelation</a></li>
+<li class="chapter" data-level="5.2.3" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#lisa-for-determining-local-clusters-and-spatial-autocorrelation"><i class="fa fa-check"></i><b>5.2.3</b> LISA for determining <em>local</em> clusters and spatial autocorrelation</a></li>
+<li class="chapter" data-level="5.2.4" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#getis-ord-g-statistic"><i class="fa fa-check"></i><b>5.2.4</b> Getis-Ord G statistic</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#answers-to-tasks-4"><i class="fa fa-check"></i>Answers to Tasks</a></li>
+<li class="chapter" data-level="" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#useful-links"><i class="fa fa-check"></i>Useful Links</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html"><i class="fa fa-check"></i><b>6</b> Spatial Varying Coefficient Models</a>
+<ul>
+<li class="chapter" data-level="" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#overview-4"><i class="fa fa-check"></i>Overview</a></li>
+<li class="chapter" data-level="" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#data-and-packages-1"><i class="fa fa-check"></i>Data and Packages</a></li>
+<li class="chapter" data-level="6.1" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#local-vs-global-models"><i class="fa fa-check"></i><b>6.1</b> Local vs Global models</a></li>
+<li class="chapter" data-level="6.2" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#geographically-weighted-regression"><i class="fa fa-check"></i><b>6.2</b> Geographically Weighted Regression</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#description"><i class="fa fa-check"></i><b>6.2.1</b> Description</a></li>
+<li class="chapter" data-level="6.2.2" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#undertaking-a-gwr"><i class="fa fa-check"></i><b>6.2.2</b> Undertaking a GWR</a></li>
+<li class="chapter" data-level="6.2.3" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#evaluating-the-results"><i class="fa fa-check"></i><b>6.2.3</b> Evaluating the results</a></li>
+<li class="chapter" data-level="6.2.4" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#mapping-gwr-outputs"><i class="fa fa-check"></i><b>6.2.4</b> Mapping GWR outputs</a></li>
+<li class="chapter" data-level="6.2.5" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#gwr-summary"><i class="fa fa-check"></i><b>6.2.5</b> GWR Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#multi-scale-gwr"><i class="fa fa-check"></i><b>6.3</b> Multi-scale GWR</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#description-1"><i class="fa fa-check"></i><b>6.3.1</b> Description</a></li>
+<li class="chapter" data-level="6.3.2" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#undertaking-a-mgwr"><i class="fa fa-check"></i><b>6.3.2</b> Undertaking a MGWR</a></li>
+<li class="chapter" data-level="6.3.3" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#evaluating-the-results-1"><i class="fa fa-check"></i><b>6.3.3</b> Evaluating the results</a></li>
+<li class="chapter" data-level="6.3.4" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#mapping-mgwr-outputs"><i class="fa fa-check"></i><b>6.3.4</b> Mapping MGWR outputs</a></li>
+<li class="chapter" data-level="6.3.5" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#comparing-gwr-and-mgwr"><i class="fa fa-check"></i><b>6.3.5</b> Comparing GWR and MGWR</a></li>
+<li class="chapter" data-level="6.3.6" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#mgwr-summary"><i class="fa fa-check"></i><b>6.3.6</b> MGWR Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#optional-generalised-additive-models"><i class="fa fa-check"></i>Optional: Generalised Additive Models</a>
+<ul>
+<li class="chapter" data-level="6.3.7" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#description-2"><i class="fa fa-check"></i><b>6.3.7</b> Description</a></li>
+<li class="chapter" data-level="6.3.8" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#undertaking-a-ggp-gam"><i class="fa fa-check"></i><b>6.3.8</b> Undertaking a GGP-GAM</a></li>
+<li class="chapter" data-level="6.3.9" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#evaluating-the-results-2"><i class="fa fa-check"></i><b>6.3.9</b> Evaluating the results</a></li>
+<li class="chapter" data-level="6.3.10" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#ggp-gam-svcs"><i class="fa fa-check"></i><b>6.3.10</b> GGP-GAM SVCs</a></li>
+<li class="chapter" data-level="6.3.11" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#ggp-gam-summary"><i class="fa fa-check"></i><b>6.3.11</b> GGP-GAM summary</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#answers-to-tasks-5"><i class="fa fa-check"></i>Answers to Tasks</a></li>
+<li class="chapter" data-level="" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#references"><i class="fa fa-check"></i>References</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html"><i class="fa fa-check"></i><b>7</b> Classification and Alternative Representations</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#classification"><i class="fa fa-check"></i><b>7.1</b> Classification</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#overview-5"><i class="fa fa-check"></i><b>7.1.1</b> Overview</a></li>
+<li class="chapter" data-level="7.1.2" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#pca-transformation"><i class="fa fa-check"></i><b>7.1.2</b> PCA transformation</a></li>
+<li class="chapter" data-level="7.1.3" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#k-means-cluster-analysis"><i class="fa fa-check"></i><b>7.1.3</b> <span class="math inline">\(k\)</span>-means Cluster Analysis</a></li>
+<li class="chapter" data-level="7.1.4" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#diagnostics"><i class="fa fa-check"></i><b>7.1.4</b> Diagnostics</a></li>
+<li class="chapter" data-level="7.1.5" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#mapping"><i class="fa fa-check"></i><b>7.1.5</b> Mapping</a></li>
+<li class="chapter" data-level="7.1.6" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#further-resources-1"><i class="fa fa-check"></i><b>7.1.6</b> Further Resources</a></li>
+<li class="chapter" data-level="7.1.7" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#references-1"><i class="fa fa-check"></i><b>7.1.7</b> References</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#optional-alternative-spatial-visualisations"><i class="fa fa-check"></i><b>7.2</b> Optional: Alternative spatial visualisations</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#overview-6"><i class="fa fa-check"></i><b>7.2.1</b> Overview</a></li>
+<li class="chapter" data-level="7.2.2" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#the-invisibility-problem"><i class="fa fa-check"></i><b>7.2.2</b> The invisibility problem</a></li>
+<li class="chapter" data-level="7.2.3" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#cartograms"><i class="fa fa-check"></i><b>7.2.3</b> Cartograms</a></li>
+<li class="chapter" data-level="7.2.4" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#hexagonal-binning-and-tile-maps"><i class="fa fa-check"></i><b>7.2.4</b> Hexagonal binning and Tile maps</a></li>
+<li class="chapter" data-level="7.2.5" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#references-2"><i class="fa fa-check"></i><b>7.2.5</b> References</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="creating-documents-in-rmarkdown.html"><a href="creating-documents-in-rmarkdown.html"><i class="fa fa-check"></i><b>8</b> Creating documents in RMarkdown</a>
+<ul>
+<li class="chapter" data-level="" data-path="creating-documents-in-rmarkdown.html"><a href="creating-documents-in-rmarkdown.html#overview-7"><i class="fa fa-check"></i>Overview</a></li>
+<li class="chapter" data-level="8.1" data-path="creating-documents-in-rmarkdown.html"><a href="creating-documents-in-rmarkdown.html#resources"><i class="fa fa-check"></i><b>8.1</b> Resources</a></li>
+<li class="chapter" data-level="8.2" data-path="creating-documents-in-rmarkdown.html"><a href="creating-documents-in-rmarkdown.html#tasks"><i class="fa fa-check"></i><b>8.2</b> Tasks</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">GEOG3915 GeoComputation and Spatial Analysis practicals</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="spatial-models-spatial-autocorrelation-and-cluster-analysis" class="section level1 hasAnchor" number="5">
+<h1><span class="header-section-number">Unit 5</span> Spatial Models: spatial autocorrelation and cluster analysis<a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#spatial-models-spatial-autocorrelation-and-cluster-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="overview-3" class="section level2 unnumbered hasAnchor">
+<h2>Overview<a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#overview-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>This practical focusses on cluster analysis (i.e. determining whether your data are are spatially clustered, also known as spatially autocorrelated) and autoregressive models (optional). These are given a comprehensive treatment (equations references etc).</p>
+<p>Essentially the practical describes how to undertake cluster analyses using different methods for statistically testing for the similarity of nearby observations (i.e. spatial autocorrelation). It extends the practicals from GEOG2150 to show other techniques and develops ideas of how we measure <code>nearby</code>.</p>
+<p>Autocorrelation is the similarity between attribute values of nearby observations when examined over the entire study region. Measures spatial autocorrelation describe the degree of attribute similarity and essentially allow Tobler’s Law to be evaluated.</p>
+<p>There are a number of approaches for doing this, as described in Chapters 7 and 8 of <span class="citation">Brunsdon and Comber (<a href="#ref-brunsdon2018introduction">2025</a>)</span> and in some of the relevant contributions in the GIS Body of Knowledge (see AM-22 - Global Measures of Spatial Association <a href="http://gistbok.ucgis.org/bok-topics/global-measures-spatial-association" class="uri">http://gistbok.ucgis.org/bok-topics/global-measures-spatial-association</a> and FC-37 - Spatial Autocorrelation <a href="http://gistbok.ucgis.org/bok-topics/spatial-autocorrelation" class="uri">http://gistbok.ucgis.org/bok-topics/spatial-autocorrelation</a>).</p>
+<p>This practical illustrates the use of a spatially Lagged Mean, Moran’s I <span class="citation">(<a href="#ref-moran1950notes">Moran 1950</a>)</span>, Local Indicators of Spatial Association (LISA) <span class="citation">(<a href="#ref-anselin1995local">Anselin 1995</a>)</span> and Getis and Ord’s G Statistic <span class="citation">(<a href="#ref-getis1992analysis">Getis and Ord 1992</a>)</span> to determine whether there is clustering in our data. We can undertake these tests in R very easily using tools in the <code>spdep</code> package.</p>
+<p>However, all of these approaches depended on some measure of “what observations are nearby to what other observations”. Again the <code>spdep</code> package supports a number of different ways of constructing neighbour lists. These are also explored in a bit of detail (extending the work you did in GEOG2150).</p>
+</div>
+<div id="data-and-packages" class="section level2 unnumbered hasAnchor">
+<h2>Data and Packages<a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#data-and-packages" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>For this section we will again work with the Brexit referendum data over the 380 UK Local Authority Districts (LADs) with socio-economic data collected from the 2011 Census. The data were made available in by The Electoral Commission and used by <span class="citation">Beecham et al. (<a href="#ref-beecham2020regionally">2020</a>)</span> for some advanced visual analysis of the trends. It was used in Week 2 for the EDA work.</p>
+<p>The code below loads some packages and then the data. It transforms the data from WG84 (in degrees) to OSGB projection (in metres) and generates a map of the leave share.</p>
+<div class="sourceCode" id="cb297"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb297-1"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb297-1" tabindex="-1"></a>packages <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;sf&quot;</span>, <span class="st">&quot;tmap&quot;</span>, <span class="st">&quot;spdep&quot;</span>, <span class="st">&quot;spatialreg&quot;</span>, <span class="st">&quot;cowplot&quot;</span>, <span class="st">&quot;tidyverse&quot;</span>)</span>
+<span id="cb297-2"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb297-2" tabindex="-1"></a><span class="co"># check which packages are not installed</span></span>
+<span id="cb297-3"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb297-3" tabindex="-1"></a>not_installed <span class="ot">&lt;-</span> packages[<span class="sc">!</span>packages <span class="sc">%in%</span> <span class="fu">installed.packages</span>()[, <span class="st">&quot;Package&quot;</span>]]</span>
+<span id="cb297-4"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb297-4" tabindex="-1"></a><span class="co"># install missing packages</span></span>
+<span id="cb297-5"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb297-5" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">length</span>(not_installed) <span class="sc">&gt;</span> <span class="dv">1</span>) {</span>
+<span id="cb297-6"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb297-6" tabindex="-1"></a>  <span class="fu">install.packages</span>(not_installed, <span class="at">repos =</span> <span class="st">&quot;https://cran.rstudio.com/&quot;</span>, <span class="at">dep =</span> T)</span>
+<span id="cb297-7"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb297-7" tabindex="-1"></a>}</span>
+<span id="cb297-8"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb297-8" tabindex="-1"></a><span class="co"># load packages</span></span>
+<span id="cb297-9"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb297-9" tabindex="-1"></a><span class="fu">library</span>(sf)         <span class="co"># for spatial data</span></span>
+<span id="cb297-10"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb297-10" tabindex="-1"></a><span class="fu">library</span>(tmap)       <span class="co"># for online mapping -- don&#39;t worry if you cannot install this!</span></span>
+<span id="cb297-11"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb297-11" tabindex="-1"></a><span class="fu">library</span>(spdep)      <span class="co"># for spatial analysis</span></span>
+<span id="cb297-12"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb297-12" tabindex="-1"></a><span class="fu">library</span>(spatialreg) <span class="co"># for spatial regression </span></span>
+<span id="cb297-13"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb297-13" tabindex="-1"></a><span class="fu">library</span>(cowplot)    <span class="co"># for combining plots</span></span>
+<span id="cb297-14"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb297-14" tabindex="-1"></a><span class="fu">library</span>(tidyverse)  <span class="co"># for everything else! </span></span>
+<span id="cb297-15"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb297-15" tabindex="-1"></a><span class="co"># load the data</span></span>
+<span id="cb297-16"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb297-16" tabindex="-1"></a>gb <span class="ot">=</span> <span class="fu">st_read</span>(<span class="st">&#39;data_gb.geojson&#39;</span>, <span class="at">quiet =</span> T)</span>
+<span id="cb297-17"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb297-17" tabindex="-1"></a><span class="co"># transform to OSGB projection</span></span>
+<span id="cb297-18"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb297-18" tabindex="-1"></a>gb <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(gb, <span class="dv">27700</span>)</span>
+<span id="cb297-19"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb297-19" tabindex="-1"></a><span class="co"># create the map</span></span>
+<span id="cb297-20"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb297-20" tabindex="-1"></a>p_vote <span class="ot">=</span> </span>
+<span id="cb297-21"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb297-21" tabindex="-1"></a>  <span class="fu">ggplot</span>(gb) <span class="sc">+</span> </span>
+<span id="cb297-22"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb297-22" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> share_leave)) <span class="sc">+</span></span>
+<span id="cb297-23"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb297-23" tabindex="-1"></a>  <span class="fu">scale_fill_gradient2</span>(<span class="at">midpoint =</span> <span class="fl">0.5</span>, <span class="at">low =</span> <span class="st">&quot;red&quot;</span>, <span class="at">high =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb297-24"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb297-24" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb297-25"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb297-25" tabindex="-1"></a>p_vote</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:ch7fig1"></span>
+<img src="_main_files/figure-html/ch7fig1-1.png" alt="The Leave vote share over LADs." width="672" />
+<p class="caption">
+Figure 5.1: The Leave vote share over LADs.
+</p>
+</div>
+<p>The map shows some distinct and well-reported patterns. However, a key question a geographer might ask is whether the spatially patterns of the leave vote can be examined in a more quantifiable way. Neighbour lists can be constructed to support measures of spatial autocorrelation.</p>
+</div>
+<div id="defining-nearby-neighbour-lists" class="section level2 hasAnchor" number="5.1">
+<h2><span class="header-section-number">5.1</span> Defining nearby: neighbour lists<a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#defining-nearby-neighbour-lists" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="neigbours-by-ajacency" class="section level3 hasAnchor" number="5.1.1">
+<h3><span class="header-section-number">5.1.1</span> Neigbours by ajacency<a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#neigbours-by-ajacency" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Neighbours can be defined in several ways, but a common definition is that a pair of areas (or polygons) which share some part of their boundaries are neighbours. If this is the “queen’s case” definition, then even a pair of areas meeting at a single corner point are considered neighbours. The more restrictive “rook’s case” requires that the common boundary must be a linear feature. Neighbour lists of either case can be extracted using the <code>poly2nb</code> function in the <code>spdep</code> package. These are stored in an <code>nb</code> object – basically a list of neighbouring polygons for each LAD polygon. Note that in this case Queen’s case neighbours are computed. This is the default. To compute the Rook’s case, the optional argument <code>queen=FALSE</code> would be added to the call to <code>poly2nb</code> below.</p>
+<div class="sourceCode" id="cb298"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb298-1"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb298-1" tabindex="-1"></a><span class="co"># determine adjacency </span></span>
+<span id="cb298-2"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb298-2" tabindex="-1"></a>g.nb <span class="ot">&lt;-</span> <span class="fu">poly2nb</span>(gb) </span></code></pre></div>
+<pre><code>## Warning in poly2nb(gb): some observations have no neighbours;
+## if this seems unexpected, try increasing the snap argument.</code></pre>
+<pre><code>## Warning in poly2nb(gb): neighbour object has 7 sub-graphs;
+## if this sub-graph count seems unexpected, try increasing the snap argument.</code></pre>
+<div class="sourceCode" id="cb301"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb301-1"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb301-1" tabindex="-1"></a><span class="co"># examine</span></span>
+<span id="cb301-2"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb301-2" tabindex="-1"></a>g.nb</span></code></pre></div>
+<pre><code>## Neighbour list object:
+## Number of regions: 380 
+## Number of nonzero links: 1888 
+## Percentage nonzero weights: 1.307479 
+## Average number of links: 4.968421 
+## 6 regions with no links:
+## 101, 125, 126, 171, 174, 179
+## 7 disjoint connected subgraphs</code></pre>
+<p>Now from this it is clear that some LADs have no neighbour: observations 101, 125, 126, 171, 174 and 179. On inspection these are island LADs. You can examine these visually using the code below and then zooming in - have a look at the Isle of Wight or Anglesey, for example.</p>
+<div class="noticebox">
+<p><strong>NB</strong> The code below uses the <code>tmap</code> package for online interactive mapping. This module has not covered mapping using the <code>tmap</code> package this year as it is in the process of being redefined.</p>
+</div>
+<div class="sourceCode" id="cb303"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb303-1"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb303-1" tabindex="-1"></a><span class="co"># examine zero links locations</span></span>
+<span id="cb303-2"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb303-2" tabindex="-1"></a>gb<span class="sc">$</span>rn <span class="ot">=</span> <span class="fu">rownames</span>(gb) </span>
+<span id="cb303-3"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb303-3" tabindex="-1"></a><span class="fu">tmap_mode</span>(<span class="st">&quot;view&quot;</span>)</span>
+<span id="cb303-4"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb303-4" tabindex="-1"></a><span class="fu">tm_shape</span>(gb) <span class="sc">+</span> </span>
+<span id="cb303-5"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb303-5" tabindex="-1"></a>  <span class="fu">tm_borders</span>() <span class="sc">+</span></span>
+<span id="cb303-6"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb303-6" tabindex="-1"></a>  <span class="fu">tm_text</span>(<span class="at">text =</span> <span class="st">&quot;rn&quot;</span>) <span class="sc">+</span></span>
+<span id="cb303-7"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb303-7" tabindex="-1"></a>  <span class="fu">tm_basemap</span>(<span class="st">&quot;OpenStreetMap&quot;</span>)</span>
+<span id="cb303-8"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb303-8" tabindex="-1"></a><span class="fu">tmap_mode</span>(<span class="st">&quot;plot&quot;</span>)</span></code></pre></div>
+<p>Now in order to complete the adjacency analysis, the list needs to be updated with links for island LADs. The table below shows the links and record numbers (IDs) of adjacent LADs:</p>
+<table>
+<caption><span id="tab:tab1">Table 5.1: </span>The Islands LADs.</caption>
+<colgroup>
+<col width="10%" />
+<col width="21%" />
+<col width="45%" />
+<col width="22%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="right">ID.code</th>
+<th align="left">Authority.Name</th>
+<th align="left">Adjacent.to</th>
+<th align="left">Adjacent.ID.codes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">101</td>
+<td align="left">Scilly Isles</td>
+<td align="left">Cornwall</td>
+<td align="left">100</td>
+</tr>
+<tr class="even">
+<td align="right">125</td>
+<td align="left">Isle of Wight</td>
+<td align="left">New Forest, Southampton, Portsmouth</td>
+<td align="left">247, 124, 123</td>
+</tr>
+<tr class="odd">
+<td align="right">126</td>
+<td align="left">Anglesey</td>
+<td align="left">Gwynedd</td>
+<td align="left">127</td>
+</tr>
+<tr class="even">
+<td align="right">171</td>
+<td align="left">Orkneys</td>
+<td align="left">Highland, Shetland</td>
+<td align="left">165, 174</td>
+</tr>
+<tr class="odd">
+<td align="right">174</td>
+<td align="left">Shetland Islands</td>
+<td align="left">Orkneys</td>
+<td align="left">171</td>
+</tr>
+<tr class="even">
+<td align="right">179</td>
+<td align="left">Outer Hebredes</td>
+<td align="left">Highland</td>
+<td align="left">165</td>
+</tr>
+</tbody>
+</table>
+<p>We can can use this information (discovered by examining the data using the zoomable online maps) to edit adjacency list as below. Notice the double bracket syntax that is used with list format data, <code>g.nb</code> and the use of <code>asinteger</code> to force the numeric values to be integers:</p>
+<div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb304-1"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb304-1" tabindex="-1"></a><span class="do">## edit the links</span></span>
+<span id="cb304-2"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb304-2" tabindex="-1"></a>g.nb[[<span class="dv">101</span>]] <span class="ot">=</span> <span class="fu">as.integer</span>(<span class="dv">100</span>)</span>
+<span id="cb304-3"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb304-3" tabindex="-1"></a>g.nb[[<span class="dv">125</span>]] <span class="ot">=</span> <span class="fu">as.integer</span>(<span class="fu">c</span>(<span class="dv">247</span>, <span class="dv">124</span>, <span class="dv">123</span>))</span>
+<span id="cb304-4"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb304-4" tabindex="-1"></a>g.nb[[<span class="dv">126</span>]] <span class="ot">=</span> <span class="fu">as.integer</span>(<span class="dv">127</span>)</span>
+<span id="cb304-5"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb304-5" tabindex="-1"></a>g.nb[[<span class="dv">171</span>]] <span class="ot">=</span> <span class="fu">as.integer</span>(<span class="fu">c</span>(<span class="dv">165</span>, <span class="dv">174</span>))</span>
+<span id="cb304-6"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb304-6" tabindex="-1"></a>g.nb[[<span class="dv">174</span>]] <span class="ot">=</span> <span class="fu">as.integer</span>(<span class="dv">171</span>)</span>
+<span id="cb304-7"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb304-7" tabindex="-1"></a>g.nb[[<span class="dv">179</span>]] <span class="ot">=</span> <span class="fu">as.integer</span>(<span class="dv">165</span>)</span></code></pre></div>
+<p>We can re-examine the adjacency list and see that there are now no zero links.</p>
+<div class="sourceCode" id="cb305"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb305-1"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb305-1" tabindex="-1"></a>g.nb</span></code></pre></div>
+<pre><code>## Neighbour list object:
+## Number of regions: 380 
+## Number of nonzero links: 1897 
+## Percentage nonzero weights: 1.313712 
+## Average number of links: 4.992105 
+## 7 disjoint connected subgraphs</code></pre>
+<p>It is also possible to plot an <code>nb</code> object – this represents neighbours as a network. The <code>nb2lines</code> function in <code>spdep</code> requires a <code>coords</code> parameter of the centroids of the (LAD) polygons regarded as neighbours. In the code below, this is created by the <code>st_centroid</code> function nested inside the <code>st_geometry</code> function. You should examine the help for these to see what they do if it is not apparent by their naming. The results may be plotted as a map as in the Figure below.</p>
+<div class="sourceCode" id="cb307"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb307-1"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb307-1" tabindex="-1"></a><span class="co"># Create a line layer showing Queen&#39;s case contiguities</span></span>
+<span id="cb307-2"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb307-2" tabindex="-1"></a>gg.net <span class="ot">&lt;-</span> <span class="fu">nb2lines</span>(g.nb,<span class="at">coords=</span><span class="fu">st_geometry</span>(<span class="fu">st_centroid</span>(gb)), <span class="at">as_sf =</span> F) </span></code></pre></div>
+<pre><code>## Warning: st_centroid assumes attributes are constant over geometries</code></pre>
+<div class="sourceCode" id="cb309"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb309-1"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb309-1" tabindex="-1"></a><span class="co"># Plot the contiguity and the GB layer</span></span>
+<span id="cb309-2"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb309-2" tabindex="-1"></a>p_adj <span class="ot">=</span> </span>
+<span id="cb309-3"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb309-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(gb) <span class="sc">+</span> <span class="fu">geom_sf</span>(<span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">lwd =</span> <span class="fl">0.1</span>) <span class="sc">+</span> </span>
+<span id="cb309-4"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb309-4" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> gg.net, <span class="at">col=</span><span class="st">&#39;red&#39;</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">lwd =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb309-5"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb309-5" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">subtitle =</span>  <span class="st">&quot;Adj&quot;</span>)</span>
+<span id="cb309-6"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb309-6" tabindex="-1"></a>p_adj</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:ch7fig2"></span>
+<img src="_main_files/figure-html/ch7fig2-1.png" alt="A map of LAD connectivity by ajacency." width="672" />
+<p class="caption">
+Figure 5.2: A map of LAD connectivity by ajacency.
+</p>
+</div>
+</div>
+<div id="neighbours-by-nearest-n" class="section level3 hasAnchor" number="5.1.2">
+<h3><span class="header-section-number">5.1.2</span> Neighbours by nearest <span class="math inline">\(n\)</span><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#neighbours-by-nearest-n" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>An alternative approach for defining neighbours by adjacency (area contiguity) is to determine the <span class="math inline">\(k\)</span> nearest neighbours. This is simple to apply using the <code>knearneigh</code> function in <code>spdep</code>, but the selection <span class="math inline">\(k\)</span> requires strong justification when used in practice. Note that this function uses point locations, extracted from the LAD geometric centroids.</p>
+<div class="sourceCode" id="cb310"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb310-1"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb310-1" tabindex="-1"></a>g.nb2 <span class="ot">&lt;-</span> <span class="fu">knearneigh</span>(<span class="fu">st_centroid</span>(gb), <span class="at">k =</span> <span class="dv">5</span>)</span></code></pre></div>
+<pre><code>## Warning: st_centroid assumes attributes are constant over geometries</code></pre>
+<div class="sourceCode" id="cb312"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb312-1"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb312-1" tabindex="-1"></a><span class="co"># convert to knn object</span></span>
+<span id="cb312-2"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb312-2" tabindex="-1"></a>g.nb2 <span class="ot">&lt;-</span> <span class="fu">knn2nb</span>(g.nb2)</span>
+<span id="cb312-3"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb312-3" tabindex="-1"></a>g.nb2</span></code></pre></div>
+<pre><code>## Neighbour list object:
+## Number of regions: 380 
+## Number of nonzero links: 1900 
+## Percentage nonzero weights: 1.315789 
+## Average number of links: 5 
+## Non-symmetric neighbours list</code></pre>
+<p>This can be mapped as before:</p>
+<div class="sourceCode" id="cb314"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb314-1"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb314-1" tabindex="-1"></a>gg.net <span class="ot">&lt;-</span> <span class="fu">nb2lines</span>(g.nb2,<span class="at">coords=</span><span class="fu">st_geometry</span>(<span class="fu">st_centroid</span>(gb)), <span class="at">as_sf =</span> F) </span></code></pre></div>
+<pre><code>## Warning: st_centroid assumes attributes are constant over geometries</code></pre>
+<div class="sourceCode" id="cb316"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb316-1"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb316-1" tabindex="-1"></a><span class="co"># Plot the contiguity and the GB layer</span></span>
+<span id="cb316-2"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb316-2" tabindex="-1"></a>p_nn <span class="ot">=</span> </span>
+<span id="cb316-3"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb316-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(gb) <span class="sc">+</span> <span class="fu">geom_sf</span>(<span class="at">lwd =</span> <span class="fl">0.1</span>, <span class="at">fill =</span> <span class="cn">NA</span>) <span class="sc">+</span> </span>
+<span id="cb316-4"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb316-4" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> gg.net, <span class="at">col=</span><span class="st">&#39;red&#39;</span>, <span class="at">alpha =</span> <span class="fl">0.4</span>, <span class="at">lwd =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
+<span id="cb316-5"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb316-5" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">subtitle =</span>  <span class="st">&quot;NN&quot;</span>)</span>
+<span id="cb316-6"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb316-6" tabindex="-1"></a>p_nn</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:pnn"></span>
+<img src="_main_files/figure-html/pnn-1.png" alt="A map of LAD connectivity by nearest 5 neighbours." width="672" />
+<p class="caption">
+Figure 5.3: A map of LAD connectivity by nearest 5 neighbours.
+</p>
+</div>
+</div>
+<div id="neighbours-by-distance" class="section level3 hasAnchor" number="5.1.3">
+<h3><span class="header-section-number">5.1.3</span> Neighbours by distance<a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#neighbours-by-distance" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>A final approach is to identify observations that are within a certain distance range. The code below uses a 100km radius, but again in practice there needs to be some justification for selecting a specific range (for example relating to some theoretical spatial dispersal, etc). Again this takes points and the LADs centroids are passed to the <code>dnearneigh</code> function:</p>
+<div class="sourceCode" id="cb317"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb317-1"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb317-1" tabindex="-1"></a>g.nb3 <span class="ot">&lt;-</span> <span class="fu">dnearneigh</span>(<span class="fu">st_centroid</span>(gb), <span class="at">d1 =</span> <span class="dv">0</span>, <span class="at">d2 =</span> <span class="dv">100000</span>)</span></code></pre></div>
+<pre><code>## Warning: st_centroid assumes attributes are constant over geometries</code></pre>
+<pre><code>## Warning in dnearneigh(st_centroid(gb), d1 = 0, d2 = 1e+05): neighbour object has 5 sub-graphs</code></pre>
+<div class="sourceCode" id="cb320"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb320-1"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb320-1" tabindex="-1"></a>g.nb3</span></code></pre></div>
+<pre><code>## Neighbour list object:
+## Number of regions: 380 
+## Number of nonzero links: 26724 
+## Percentage nonzero weights: 18.50693 
+## Average number of links: 70.32632 
+## 4 regions with no links:
+## 101, 171, 174, 179
+## 5 disjoint connected subgraphs</code></pre>
+<p>Examining these we can see these remote islands:</p>
+<div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb322-1"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb322-1" tabindex="-1"></a>gb<span class="sc">$</span>lad15nm[<span class="fu">c</span>(<span class="dv">101</span>, <span class="dv">171</span>, <span class="dv">174</span>, <span class="dv">179</span>)]</span></code></pre></div>
+<p>These locations either need to be connected in the network as before or excluded from the analysis (because they are more than 100km from each other). Here they are linked (to the Highland local authority, record 165)</p>
+<div class="sourceCode" id="cb323"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb323-1"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb323-1" tabindex="-1"></a><span class="co"># connect islands as before</span></span>
+<span id="cb323-2"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb323-2" tabindex="-1"></a>g.nb3[[<span class="dv">101</span>]] <span class="ot">=</span> <span class="fu">as.integer</span>(<span class="dv">100</span>) <span class="co"># Scilly to Cornwall</span></span>
+<span id="cb323-3"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb323-3" tabindex="-1"></a>g.nb3[[<span class="dv">171</span>]] <span class="ot">=</span> <span class="fu">as.integer</span>(<span class="fu">c</span>(<span class="dv">165</span>, <span class="dv">174</span>)) <span class="co"># Orkney to Highland &amp; Shetland</span></span>
+<span id="cb323-4"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb323-4" tabindex="-1"></a>g.nb3[[<span class="dv">174</span>]] <span class="ot">=</span> <span class="fu">as.integer</span>(<span class="dv">171</span>, <span class="dv">165</span>) <span class="co"># Shetland to Orkney &amp; Highland</span></span>
+<span id="cb323-5"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb323-5" tabindex="-1"></a>g.nb3[[<span class="dv">179</span>]] <span class="ot">=</span> <span class="fu">as.integer</span>(<span class="dv">165</span>) <span class="co">#Hebrides to Highland</span></span></code></pre></div>
+<p>This can again be mapped (the creation of <code>gg.net</code> will take a few moments to run):</p>
+<div class="sourceCode" id="cb324"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb324-1"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb324-1" tabindex="-1"></a><span class="co"># Create a line layer showing Queen&#39;s case contiguities</span></span>
+<span id="cb324-2"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb324-2" tabindex="-1"></a>gg.net <span class="ot">&lt;-</span> <span class="fu">nb2lines</span>(g.nb3, <span class="at">coords=</span><span class="fu">st_geometry</span>(<span class="fu">st_centroid</span>(gb)), <span class="at">as_sf =</span> F) </span></code></pre></div>
+<pre><code>## Warning: st_centroid assumes attributes are constant over geometries</code></pre>
+<div class="sourceCode" id="cb326"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb326-1"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb326-1" tabindex="-1"></a><span class="co"># Plot the contiguity and the GB layer</span></span>
+<span id="cb326-2"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb326-2" tabindex="-1"></a>p_dist <span class="ot">=</span> </span>
+<span id="cb326-3"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb326-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(gb) <span class="sc">+</span> <span class="fu">geom_sf</span>(<span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">lwd =</span> <span class="fl">0.1</span>) <span class="sc">+</span> </span>
+<span id="cb326-4"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb326-4" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> gg.net, <span class="at">col=</span><span class="st">&#39;red&#39;</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">lwd =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb326-5"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb326-5" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">subtitle =</span>  <span class="st">&quot;Dist&quot;</span>)</span>
+<span id="cb326-6"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb326-6" tabindex="-1"></a>p_dist</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:pdist"></span>
+<img src="_main_files/figure-html/pdist-1.png" alt="A map of LAD connectivity by distance (100km)." width="672" />
+<p class="caption">
+Figure 5.4: A map of LAD connectivity by distance (100km).
+</p>
+</div>
+</div>
+<div id="summary-1" class="section level3 hasAnchor" number="5.1.4">
+<h3><span class="header-section-number">5.1.4</span> Summary<a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#summary-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Many spatial models require some measure of <code>nearby</code>. Neighbour lists provide a convenient way of capturing nearby observations and these can be constructed in different ways, with potential implications for the spatial analyses that use such information (such as spatial regression or measures of spatial autocorrelation). The code plots subsets of each map generated from each neighbour list to illustrate this.</p>
+<div class="sourceCode" id="cb327"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb327-1"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb327-1" tabindex="-1"></a>p1 <span class="ot">=</span> p_adj  <span class="sc">+</span> </span>
+<span id="cb327-2"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb327-2" tabindex="-1"></a>  <span class="fu">coord_sf</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">180000</span>, <span class="dv">380000</span>), </span>
+<span id="cb327-3"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb327-3" tabindex="-1"></a>           <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">170000</span>, <span class="dv">400000</span>), <span class="at">datum =</span> <span class="dv">27700</span>) <span class="sc">+</span></span>
+<span id="cb327-4"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb327-4" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_blank</span>(), </span>
+<span id="cb327-5"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb327-5" tabindex="-1"></a>        <span class="at">axis.ticks =</span> <span class="fu">element_blank</span>())</span>
+<span id="cb327-6"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb327-6" tabindex="-1"></a>p2 <span class="ot">=</span> p_nn  <span class="sc">+</span> </span>
+<span id="cb327-7"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb327-7" tabindex="-1"></a>  <span class="fu">coord_sf</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">180000</span>, <span class="dv">380000</span>), </span>
+<span id="cb327-8"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb327-8" tabindex="-1"></a>           <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">170000</span>, <span class="dv">400000</span>), <span class="at">datum =</span> <span class="dv">27700</span>) <span class="sc">+</span></span>
+<span id="cb327-9"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb327-9" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_blank</span>(), </span>
+<span id="cb327-10"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb327-10" tabindex="-1"></a>        <span class="at">axis.ticks =</span> <span class="fu">element_blank</span>())</span>
+<span id="cb327-11"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb327-11" tabindex="-1"></a>p3 <span class="ot">=</span> p_dist  <span class="sc">+</span> </span>
+<span id="cb327-12"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb327-12" tabindex="-1"></a><span class="fu">coord_sf</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">180000</span>, <span class="dv">380000</span>), </span>
+<span id="cb327-13"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb327-13" tabindex="-1"></a>           <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">170000</span>, <span class="dv">400000</span>), <span class="at">datum =</span> <span class="dv">27700</span>) <span class="sc">+</span></span>
+<span id="cb327-14"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb327-14" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_blank</span>(), </span>
+<span id="cb327-15"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb327-15" tabindex="-1"></a>        <span class="at">axis.ticks =</span> <span class="fu">element_blank</span>())</span>
+<span id="cb327-16"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb327-16" tabindex="-1"></a><span class="fu">plot_grid</span>(p1, p2, p3, <span class="at">ncol =</span> <span class="dv">3</span>)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:pall"></span>
+<img src="_main_files/figure-html/pall-1.png" alt="Details of the different maps of LAD connectivity." width="672" />
+<p class="caption">
+Figure 5.5: Details of the different maps of LAD connectivity.
+</p>
+</div>
+</div>
+</div>
+<div id="spatial-autocorrelation-and-clusters" class="section level2 hasAnchor" number="5.2">
+<h2><span class="header-section-number">5.2</span> Spatial Autocorrelation and Clusters<a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#spatial-autocorrelation-and-clusters" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="neighbours-and-lagged-mean-plots" class="section level3 hasAnchor" number="5.2.1">
+<h3><span class="header-section-number">5.2.1</span> Neighbours and Lagged Mean Plots<a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#neighbours-and-lagged-mean-plots" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>One simple approach for determining clusters is to compare the value in each county with the average values of its neighbours. This can be achieved via the <code>lag.listw</code> function in the <code>spdep</code> library.</p>
+<p>The lagged mean approach calculates a weighted mean from the values ( <span class="math inline">\(z_i\)</span> ) of each neighbouring observation (polygon or area) <span class="math inline">\(i\)</span>. If <span class="math inline">\(\delta_i\)</span> is the set of indices of the neighbours of polygon <span class="math inline">\(i\)</span>, and <span class="math inline">\(|\delta_i|\)</span> is the number of elements in this set, then this mean (denoted as <span class="math inline">\(\tilde{z_i}\)</span> is defined by</p>
+<p><span class="math display">\[
+\tilde{z_i} = \sum_{j \in \delta_i} \frac{1}{|\delta_i|} z_i
+\label{laggedmean}
+\]</span></p>
+<p>Thus, the lagged mean is a weighted combination of values of the neighbours. In this case, the weights are the same within each neighbour list, but in some cases they may differ (for example, if weighting were inversely related to distance between polygon centres).</p>
+<p>Neighbour weights can be generated using the <code>nb2listw</code> which results in <code>listw</code> objects. The function <code>lag.listw</code> then computes a spatially lagged mean (i.e. a vector of <span class="math inline">\(z_i\)</span> values) – here, these are calculated, and then mapped as in the figure below, along side the original map. What this shows is a smoother general pattern of the spatial trends in the data.</p>
+<div class="sourceCode" id="cb328"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb328-1"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb328-1" tabindex="-1"></a><span class="co"># compute the weighted list from the g.nb object</span></span>
+<span id="cb328-2"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb328-2" tabindex="-1"></a>g.lw <span class="ot">=</span> <span class="fu">nb2listw</span>(g.nb)</span>
+<span id="cb328-3"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb328-3" tabindex="-1"></a><span class="co"># compute the lagged means</span></span>
+<span id="cb328-4"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb328-4" tabindex="-1"></a>gb<span class="sc">$</span>lagged.means <span class="ot">&lt;-</span> <span class="fu">lag.listw</span>(g.lw, gb<span class="sc">$</span>share_leave)</span>
+<span id="cb328-5"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb328-5" tabindex="-1"></a>p_lagged <span class="ot">=</span> </span>
+<span id="cb328-6"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb328-6" tabindex="-1"></a>  <span class="fu">ggplot</span>(gb) <span class="sc">+</span> <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> lagged.means)) <span class="sc">+</span></span>
+<span id="cb328-7"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb328-7" tabindex="-1"></a>  <span class="fu">scale_fill_gradient2</span>(<span class="at">midpoint =</span> <span class="fl">0.5</span>, <span class="at">low =</span> <span class="st">&quot;red&quot;</span>, <span class="at">high =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb328-8"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb328-8" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb328-9"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb328-9" tabindex="-1"></a><span class="fu">plot_grid</span>(p_vote, p_lagged)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:ch7fig3"></span>
+<img src="_main_files/figure-html/ch7fig3-1.png" alt="The vote leave shared (left) and a map of the spatially lagged mean of the leave vote share (right)." width="672" />
+<p class="caption">
+Figure 5.6: The vote leave shared (left) and a map of the spatially lagged mean of the leave vote share (right).
+</p>
+</div>
+<p>A lagged mean plot is produced – as described this is a scatter plot of <span class="math inline">\(z_i\)</span> (<code>share_leave</code>) against the lagged mean, <span class="math inline">\(\tilde{z_i}\)</span> . Here the line <span class="math inline">\(x = y\)</span> is added to the plot as a point of reference. The idea is that when nearby polygons tend to have similar <span class="math inline">\(z_i\)</span> values, there should be a linear trend in the plots. However, if each <span class="math inline">\(z_i\)</span> is independent, then <span class="math inline">\(\tilde{z_i}\)</span> will be uncorrelated to <span class="math inline">\(z_i\)</span> and the plots will show no pattern. Below, code is given to produce this plot shown:</p>
+<div class="sourceCode" id="cb329"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb329-1"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb329-1" tabindex="-1"></a>p_lm <span class="ot">=</span> </span>
+<span id="cb329-2"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb329-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">data =</span> gb, <span class="fu">aes</span>(<span class="at">x =</span> share_leave, <span class="at">y =</span> lagged.means)) <span class="sc">+</span></span>
+<span id="cb329-3"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb329-3" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">1</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb329-4"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb329-4" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fu">mean</span>(gb<span class="sc">$</span>lagged.means), <span class="at">lty =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb329-5"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb329-5" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(gb<span class="sc">$</span>share_leave), <span class="at">lty =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb329-6"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb329-6" tabindex="-1"></a>  <span class="fu">geom_abline</span>() <span class="sc">+</span></span>
+<span id="cb329-7"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb329-7" tabindex="-1"></a>  <span class="fu">coord_equal</span>()</span>
+<span id="cb329-8"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb329-8" tabindex="-1"></a>p_lm</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:ch7fig4"></span>
+<img src="_main_files/figure-html/ch7fig4-1.png" alt="The lagged mean plot." width="672" />
+<p class="caption">
+Figure 5.7: The lagged mean plot.
+</p>
+</div>
+<p>The key reason for this is plot is to see whether there is a linear pattern relationship, suggests autocorrelation is present, i.e. that there is a fair some degree of positive association between <span class="math inline">\(z_i\)</span> and <span class="math inline">\(\tilde{z_i}\)</span>. This means generally that when <span class="math inline">\(z_i\)</span> is above average, so is <span class="math inline">\(\tilde{z_i}\)</span> , and when one is below average, so is the other.</p>
+<p>In this case we have the first piece of evidence that there is spatially autocorrelation on the leave share vote: the lagged mean plot indicates that some spatial autocorrelation is present. However, a key question a geographer might ask is whether the spatial patterns of the leave vote are statistically (significantly) clustered.</p>
+</div>
+<div id="morans-i-for-determining-clusters-and-spatial-autocorrelation" class="section level3 hasAnchor" number="5.2.2">
+<h3><span class="header-section-number">5.2.2</span> Moran’s I for determining Clusters and Spatial Autocorrelation<a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#morans-i-for-determining-clusters-and-spatial-autocorrelation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Having found spatial autocorrelation in the lagged man plots, we can test for this statistically to determine whether nearby observations (such as the <code>share_leave</code> values in the LAS data) are spatially <em>clustered</em>. That is, co-dependency between pairs of adjacent or neighbouring values is present. Moran’s I, LISA and G statistics allow us to test for this, and provide a measure of the degree of clustering amongst neighbouring observations. The Moran’s I coefficient <span class="citation">(<a href="#ref-moran1950notes">Moran 1950</a>)</span> is defined as follows::</p>
+<p><span class="math display">\[
+I = \frac{n}{\sum_i \sum_j w_{ij}} \frac{\sum_i \sum_j w_{ij} (z_i - \bar{z}) (z_j - \bar{z})}{\sum_i (z_i - \bar{z})^2}
+\label{morani}
+\]</span></p>
+<p>where <span class="math inline">\(w_{ij}\)</span> is the <span class="math inline">\(i,j\)</span>th element of a neighbour or adjacency weights matrix <span class="math inline">\(\mathbf{W}\)</span>, as defined above using the <code>nb2listw</code> function, specifying the degree of dependency between polygons <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span>, <span class="math inline">\(z\)</span> is the attribute examined for autocorrelation and <span class="math inline">\(\bar{z}\)</span> is the mean of that attribute.</p>
+<p>From the above equation description it is clear that in order to compute some measure of autocorrelation, information about observation nearness or adjacency is needed: for example what LADs in the UK are adjacent to, or neighbouring, what other LADs. We can used the weighted list <code>g.lw</code> created above. The code below uses the weighted list to compute Moran’s I for the vote leave share variable (<code>share_leave</code>) with the <code>moran.test()</code> function as in the code below :</p>
+<div class="sourceCode" id="cb330"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb330-1"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb330-1" tabindex="-1"></a><span class="co"># do a Moran&#39;s I</span></span>
+<span id="cb330-2"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb330-2" tabindex="-1"></a><span class="fu">moran.test</span>(<span class="at">x =</span> gb<span class="sc">$</span>share_leave, <span class="at">listw =</span> g.lw) </span></code></pre></div>
+<pre><code>## 
+##  Moran I test under randomisation
+## 
+## data:  gb$share_leave  
+## weights: g.lw    
+## 
+## Moran I statistic standard deviate = 18.268, p-value &lt; 2.2e-16
+## alternative hypothesis: greater
+## sample estimates:
+## Moran I statistic       Expectation          Variance 
+##       0.626791902      -0.002638522       0.001187123</code></pre>
+<p>This tells us that it is highly correlated: Moran’s I has theoretical limits from -1 for perfect dispersion or repulsion, to +1 for perfect clustering, with 0 indicting a perfectly random pattern.</p>
+<p>In order to explore this a bit more deeply we can use a Moran plot or Moran scatterplot – see <span class="citation">Anselin (<a href="#ref-anselin1995local">1995</a>)</span>; <span class="citation">Anselin (<a href="#ref-anselin2019moran">2019</a>)</span>. This generates a scatter plot of the average of the neighbouring LADs leave share (referred to as <em>spatially lagged</em>) against the leave share value recorded for each LAD. The four quadrants are determined by the mean for each of these and indicate high-high values (top right) and low-low vales (bottom left). So the top right shows LADs which have high leave share rates and are surrounded with LADS which also have high leave share rates.</p>
+<p>This is the same as the lagged mean plot above, but addition to the <code>ggplot</code> version earlier, this approach also identifies points with a high influence in providing a best-fit line to the plot.</p>
+<div class="sourceCode" id="cb332"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb332-1"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb332-1" tabindex="-1"></a><span class="co"># create and assign the Moran plot</span></span>
+<span id="cb332-2"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb332-2" tabindex="-1"></a><span class="fu">moran.plot</span>(<span class="at">x =</span> gb<span class="sc">$</span>share_leave, <span class="at">listw =</span> g.lw, <span class="at">asp =</span> <span class="dv">1</span>)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:ch7fig5"></span>
+<img src="_main_files/figure-html/ch7fig5-1.png" alt="The Moran plot of the leave vote." width="672" />
+<p class="caption">
+Figure 5.8: The Moran plot of the leave vote.
+</p>
+</div>
+<p>This shows a strong positive linear trend reflecting the autocorrelation of the <code>share_leave</code> attribute. The labelled points are those with a high influence in providing a best-fit line to the plot.</p>
+<p>Returning to the Moran’s I value, this suggests large amount of spatial autocorrelation in the <code>share_leave</code> attribute. This is fine, but one problem is deciding whether the above value is sufficiently high to suggest that an autocorrelated process model is a plausible alternative to an assumption that the voting rates are independent. There are two issues here:</p>
+<ol style="list-style-type: decimal">
+<li>Is this value of <span class="math inline">\(I\)</span> a relatively large level on an absolute scale?</li>
+<li>How likely is the observed <span class="math inline">\(I\)</span> value, or a larger value, to be observed if the rates were independent?</li>
+</ol>
+<p>The first of these is a benchmarking problem. Like correlation, Moran’s I is a dimensionless property so that, for example, with a given set of polygons and associated matrix, area-normalised rates of rainfall would have the same Moran’s I regardless of whether rainfall was measured in millimetres or inches. However, while standard correlation is always restricted to lie within the range [-1, +1], making, say, a value of 0.8 reasonably easy to interpret, the range of Moran’s I varies with the nature of the <code>lw</code> object, the weighted adjacency matrix, <span class="math inline">\(\mathbf{W}\)</span>.</p>
+<p>To overcome, this the function below determines the range of possible I values for any given <code>lw</code> object:</p>
+<div class="sourceCode" id="cb333"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb333-1"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb333-1" tabindex="-1"></a>moran.range <span class="ot">&lt;-</span> <span class="cf">function</span>(lw) {</span>
+<span id="cb333-2"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb333-2" tabindex="-1"></a>  wmat <span class="ot">&lt;-</span> <span class="fu">listw2mat</span>(lw)</span>
+<span id="cb333-3"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb333-3" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">range</span>(<span class="fu">eigen</span>((wmat <span class="sc">+</span> <span class="fu">t</span>(wmat))<span class="sc">/</span> <span class="dv">2</span>) <span class="sc">$</span>values))</span>
+<span id="cb333-4"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb333-4" tabindex="-1"></a>  } </span>
+<span id="cb333-5"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb333-5" tabindex="-1"></a><span class="fu">moran.range</span>(g.lw)</span></code></pre></div>
+<pre><code>## [1] -0.8657588  1.1079643</code></pre>
+<p>Here, <span class="math inline">\(I\)</span> can range between -0.87 and 1.11. Thus on an absolute scale the reported value suggests a high level of spatial autocorrelation: i.e. that the leave share of the vote <strong>is</strong> strongly clustered. However, another key question a geographer might ask is <strong>where</strong> is the leave vote significantly clustered. This can be done with a LISA statistic.</p>
+<div class="qbox">
+<div class="center">
+<p><strong>Task 1</strong></p>
+</div>
+<p>Undertake a Moran’s I test and Moran plot of the <code>private_transport_to_work</code> variable. Comment on how it compares to the <code>share_leave</code> attribute.</p>
+</div>
+</div>
+<div id="lisa-for-determining-local-clusters-and-spatial-autocorrelation" class="section level3 hasAnchor" number="5.2.3">
+<h3><span class="header-section-number">5.2.3</span> LISA for determining <em>local</em> clusters and spatial autocorrelation<a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#lisa-for-determining-local-clusters-and-spatial-autocorrelation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The value of <span class="math inline">\(I\)</span> above is a <strong>global</strong> value - it summarises the whole study area. In reality some regions of the study area may be more clustered than others. <span class="citation">Anselin (<a href="#ref-anselin1995local">1995</a>)</span> proposed the idea of local indicators of spatial association (LISAs). He states two requirements for a LISA:</p>
+<ul>
+<li>The LISA for each observation gives an indication of the extent of significant spatial clustering of similar values around that observation.</li>
+<li>The sum (or mean) of LISAs for all observations is proportional to a global indicator of spatial association.</li>
+</ul>
+<p>It is possible to apply a statistical test to the LISA for each observation, and thus test whether the local contribution to clustering around observation is significantly different from zero. This provides a framework for identifying localities where there is a significant degree of spatial autocorrelation or clustering (or repulsion). An initial example of a LISA may be derived from the Moran’s I index.</p>
+<p>This uses the mean neighbourhood values of adjacent polygons to detect clustering, <span class="math inline">\(I_i\)</span>, a local measure of clustering. It indicates repulsion when <span class="math inline">\(I_i\)</span> is a large negative value, clustering when it is a large positive value and if the magnitude is not particularly large (for either positive or negative values) this suggests that there is little evidence for either clustering or repulsion. For each <span class="math inline">\(I_i\)</span>, a significance test may be carried out against a hypothesis of no spatial association.</p>
+<p>The code snippets below undertake this</p>
+<ol style="list-style-type: decimal">
+<li>Compute the local Moran’s I (and map the result)</li>
+</ol>
+<div class="sourceCode" id="cb335"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb335-1"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb335-1" tabindex="-1"></a><span class="co"># note how the result is assigned directly to gb</span></span>
+<span id="cb335-2"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb335-2" tabindex="-1"></a>gb<span class="sc">$</span>lI <span class="ot">&lt;-</span> <span class="fu">localmoran</span>(<span class="at">x =</span> gb<span class="sc">$</span>share_leave, <span class="at">listw =</span> g.lw)[, <span class="dv">1</span>] </span>
+<span id="cb335-3"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb335-3" tabindex="-1"></a><span class="co"># create the map</span></span>
+<span id="cb335-4"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb335-4" tabindex="-1"></a>p_lisa <span class="ot">=</span> </span>
+<span id="cb335-5"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb335-5" tabindex="-1"></a>  <span class="fu">ggplot</span>(gb) <span class="sc">+</span></span>
+<span id="cb335-6"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb335-6" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill=</span> lI), <span class="at">lwd =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb335-7"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb335-7" tabindex="-1"></a>  <span class="fu">scale_fill_gradient2</span>(<span class="at">midpoint =</span> <span class="dv">0</span>, <span class="at">name =</span> <span class="st">&quot;Local</span><span class="sc">\n</span><span class="st">Moran&#39;s I&quot;</span>,</span>
+<span id="cb335-8"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb335-8" tabindex="-1"></a>                      <span class="at">high =</span> <span class="st">&quot;darkgreen&quot;</span>, <span class="at">low =</span> <span class="st">&quot;white&quot;</span>) <span class="sc">+</span></span>
+<span id="cb335-9"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb335-9" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb335-10"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb335-10" tabindex="-1"></a><span class="co"># print the map</span></span>
+<span id="cb335-11"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb335-11" tabindex="-1"></a>p_lisa</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:ch7fig6"></span>
+<img src="_main_files/figure-html/ch7fig6-1.png" alt="A map of the local Moran's I." width="672" />
+<p class="caption">
+Figure 5.9: A map of the local Moran’s I.
+</p>
+</div>
+<p>The map shows there is some evidence for both positive and negative <span class="math inline">\(I_i\)</span> values - i.e. that there is a high degree of clustering and some dispersion. However, it is useful to consider the p-values for each of these values, as described above.</p>
+<ol start="2" style="list-style-type: decimal">
+<li>Compute the p-values</li>
+</ol>
+<p>These are calculated and mapped below. In this case a manual shading scheme (i.e. one in which the shading interval breaks are specified directly) is used, based on conventional <em>critical</em> p-values.</p>
+<div class="sourceCode" id="cb336"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb336-1"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb336-1" tabindex="-1"></a><span class="co"># Create the local p values</span></span>
+<span id="cb336-2"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb336-2" tabindex="-1"></a>gb<span class="sc">$</span>pval <span class="ot">&lt;-</span> <span class="fu">localmoran</span>(gb<span class="sc">$</span>share_leave,g.lw)[, <span class="dv">5</span>]</span></code></pre></div>
+<p>The p-values can be plotted. Here the palette shows significantly clustered areas in white, remembering that lower p-values are more important.</p>
+<div class="sourceCode" id="cb337"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb337-1"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb337-1" tabindex="-1"></a>p_lisa_pval <span class="ot">=</span> </span>
+<span id="cb337-2"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb337-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(gb) <span class="sc">+</span></span>
+<span id="cb337-3"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb337-3" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill=</span> pval), <span class="at">lwd =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb337-4"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb337-4" tabindex="-1"></a>  <span class="fu">scale_fill_gradient2</span>(<span class="at">midpoint =</span> <span class="fl">0.05</span>, </span>
+<span id="cb337-5"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb337-5" tabindex="-1"></a>                       <span class="at">name =</span> <span class="st">&quot;p-values&quot;</span>, </span>
+<span id="cb337-6"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb337-6" tabindex="-1"></a>                       <span class="at">high =</span> <span class="st">&quot;red&quot;</span>, <span class="at">low =</span> <span class="st">&quot;white&quot;</span>) <span class="sc">+</span></span>
+<span id="cb337-7"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb337-7" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb337-8"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb337-8" tabindex="-1"></a><span class="co"># print the map</span></span>
+<span id="cb337-9"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb337-9" tabindex="-1"></a>p_lisa_pval </span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:ch7fig7"></span>
+<img src="_main_files/figure-html/ch7fig7-1.png" alt="A map signficant (white) and insignificant (reds) areas local Moran's I." width="672" />
+<p class="caption">
+Figure 5.10: A map signficant (white) and insignificant (reds) areas local Moran’s I.
+</p>
+</div>
+<p>From the resultant map, a number of places can be identified where the <em>p-value</em> is notably low (white) and therefore statistically surprising, suggesting the possibility of a cluster of either high or low values, in this case in highly localised areas around in Scotland, the East Midlands, Birmingham and around London.</p>
+<p>It is instructive to examine the maps together:</p>
+<div class="sourceCode" id="cb338"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb338-1"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb338-1" tabindex="-1"></a><span class="fu">plot_grid</span>(p_lisa <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>), </span>
+<span id="cb338-2"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb338-2" tabindex="-1"></a>          p_lisa_pval <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>),</span>
+<span id="cb338-3"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb338-3" tabindex="-1"></a>          <span class="at">ncol =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p>And we can use the p-values to significantly spatially autocorrelated local highlight areas as in:</p>
+<div class="sourceCode" id="cb339"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb339-1"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb339-1" tabindex="-1"></a>index  <span class="ot">=</span> gb<span class="sc">$</span>pval <span class="sc">&lt;=</span> <span class="fl">0.05</span></span>
+<span id="cb339-2"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb339-2" tabindex="-1"></a>p_vote <span class="sc">+</span> <span class="fu">geom_sf</span>(<span class="at">data =</span> gb[index,], <span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">col =</span> <span class="st">&quot;black&quot;</span>, <span class="at">lwd =</span> <span class="fl">0.5</span>)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:ch7fig8"></span>
+<img src="_main_files/figure-html/ch7fig8-1.png" alt="A map of the local Moran's I of the leave vote, with significantly clustered areas highlighted." width="672" />
+<p class="caption">
+Figure 5.11: A map of the local Moran’s I of the leave vote, with significantly clustered areas highlighted.
+</p>
+</div>
+<div class="qbox">
+<div class="center">
+<p><strong>Task 2</strong></p>
+</div>
+<p>Undertake a LISA analysis of the <code>degree_educated</code> variable and map the significantly autocorrelated LADs (no need to use <code>midpoint = 0.5</code>).</p>
+</div>
+</div>
+<div id="getis-ord-g-statistic" class="section level3 hasAnchor" number="5.2.4">
+<h3><span class="header-section-number">5.2.4</span> Getis-Ord G statistic<a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#getis-ord-g-statistic" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>An alternative to the analyses and maps above is to use a Getis and Ord <span class="math inline">\(G\)</span> Statistic <span class="citation">(<a href="#ref-getis1992analysis">Getis and Ord 1992</a>)</span> in order to identify whether either high or low values cluster spatially. Statistically significant clusters are those with high values, where other areas within the predefined distance also share high values too.</p>
+<div class="sourceCode" id="cb340"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb340-1"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb340-1" tabindex="-1"></a>gb<span class="sc">$</span>gstat <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">localG</span>(gb<span class="sc">$</span>share_leave, g.lw))</span></code></pre></div>
+<p>This can be mapped in the same way as the LISA (with a subtly different syntax). This shows clusters of high leave votes (red) and low ones (blue).</p>
+<div class="sourceCode" id="cb341"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb341-1"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb341-1" tabindex="-1"></a>p_geto <span class="ot">=</span> </span>
+<span id="cb341-2"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb341-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(gb) <span class="sc">+</span> </span>
+<span id="cb341-3"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb341-3" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> gstat)) <span class="sc">+</span> </span>
+<span id="cb341-4"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb341-4" tabindex="-1"></a>  <span class="fu">scale_fill_gradient2</span>(<span class="at">midpoint =</span> <span class="fl">0.5</span>, <span class="at">low =</span> <span class="st">&quot;red&quot;</span>, <span class="at">high =</span> <span class="st">&quot;blue&quot;</span>, </span>
+<span id="cb341-5"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb341-5" tabindex="-1"></a>                       <span class="at">name =</span> <span class="st">&quot;G Statistic&quot;</span>)<span class="sc">+</span></span>
+<span id="cb341-6"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb341-6" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb341-7"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb341-7" tabindex="-1"></a>p_geto</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:ch7fig9"></span>
+<img src="_main_files/figure-html/ch7fig9-1.png" alt="The Getis &amp; Ord G-statistic of the leave vote." width="672" />
+<p class="caption">
+Figure 5.12: The Getis &amp; Ord G-statistic of the leave vote.
+</p>
+</div>
+<p>The impacts (benefits?) of incorporating a broader idea of Neighbourhood can be seen here: the key leave areas have a positive <span class="math inline">\(G\)</span> (in blue) and the key remain areas a negative one in red. So the interpretation of the <span class="math inline">\(G\)</span> is slightly different:</p>
+<ul>
+<li>in a LISA negative values indicate dispersion and positive ones clustering. But we have no idea about the values of the variable itself;</li>
+<li>in a <span class="math inline">\(G\)</span> analysis the results are given as z-scores (a way of standardising the distribution of numeric variables to the same scale) and larger values indicate high clustering and the direction (positive or negative) indicates high or low value clusters.</li>
+</ul>
+<div class="qbox">
+<div class="center">
+<p><strong>Task 3</strong></p>
+</div>
+<p>Recreate the <span class="math inline">\(G\)</span> Statistic, but this time using the three neighbourhood lists, <code>g.nb</code>, <code>g.nb2</code> and <code>g.nb3</code> and compare the mapped results.</p>
+</div>
+</div>
+</div>
+<div id="answers-to-tasks-4" class="section level2 unnumbered hasAnchor">
+<h2>Answers to Tasks<a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#answers-to-tasks-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Task 1</strong>: Undertake a Moran’s I test and Moran plot of the <code>private_transport_to_work</code> variable. Comment on how it compares to the <code>share_leave</code> attributes.</p>
+<div class="sourceCode" id="cb342"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb342-1"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb342-1" tabindex="-1"></a><span class="co"># Task 1</span></span>
+<span id="cb342-2"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb342-2" tabindex="-1"></a><span class="co"># moran test</span></span>
+<span id="cb342-3"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb342-3" tabindex="-1"></a><span class="fu">moran.test</span>(gb<span class="sc">$</span>private_transport_to_work, g.lw) </span></code></pre></div>
+<pre><code>## 
+##  Moran I test under randomisation
+## 
+## data:  gb$private_transport_to_work  
+## weights: g.lw    
+## 
+## Moran I statistic standard deviate = 21.754, p-value &lt; 2.2e-16
+## alternative hypothesis: greater
+## sample estimates:
+## Moran I statistic       Expectation          Variance 
+##       0.741982709      -0.002638522       0.001171646</code></pre>
+<div class="sourceCode" id="cb344"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb344-1"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb344-1" tabindex="-1"></a><span class="co"># moran plot</span></span>
+<span id="cb344-2"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb344-2" tabindex="-1"></a><span class="fu">moran.plot</span>(gb<span class="sc">$</span>private_transport_to_work, g.lw)</span></code></pre></div>
+<p><img src="_main_files/figure-html/ch7fig10-1.png" alt="" width="672" /></p>
+<p>There are a number of things to note from this plot:</p>
+<ul>
+<li>the spatial autocorrelation is stronger (0.74) indicating a stronger degree of clustering</li>
+<li>the Moran plot reflects this with a tighter scatterplot</li>
+<li>there is an easier explanation: levels of public transport to work will be highly related to urban / rural context and these by definition have a strong geographical component: nearby areas are likely to have similar levels of this variable just because of what it captures (from high levels of transport infrastructure in rural areas to low levels in rural ones).</li>
+</ul>
+<p><strong>Task 2</strong>: Undertake a LISA analysis of the <code>degree_educated</code> variable and map the significantly autocorrelated LADs as in the figure above (no need to use <code>midpoint = 0.5</code>).</p>
+<p>The results are shown in below. They show some areas significant spatial autocorrelation the East, East Midlands and London.</p>
+<div class="sourceCode" id="cb345"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb345-1"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb345-1" tabindex="-1"></a><span class="co"># Task 2</span></span>
+<span id="cb345-2"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb345-2" tabindex="-1"></a><span class="co"># create the p-value</span></span>
+<span id="cb345-3"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb345-3" tabindex="-1"></a>g.lw <span class="ot">=</span> <span class="fu">nb2listw</span>(g.nb)</span>
+<span id="cb345-4"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb345-4" tabindex="-1"></a><span class="co"># no need to calculate the LISA </span></span>
+<span id="cb345-5"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb345-5" tabindex="-1"></a>lI <span class="ot">=</span> <span class="fu">localmoran</span>(gb<span class="sc">$</span>degree_educated,g.lw)[, <span class="dv">1</span>]</span>
+<span id="cb345-6"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb345-6" tabindex="-1"></a><span class="co"># just the significance is needed for the task! </span></span>
+<span id="cb345-7"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb345-7" tabindex="-1"></a>pval <span class="ot">=</span> <span class="fu">localmoran</span>(gb<span class="sc">$</span>degree_educated,g.lw)[, <span class="dv">5</span>]</span>
+<span id="cb345-8"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb345-8" tabindex="-1"></a><span class="co"># now find areas that are significant (ie p-values &lt; 0.05)</span></span>
+<span id="cb345-9"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb345-9" tabindex="-1"></a>index  <span class="ot">=</span> pval <span class="sc">&lt;=</span> <span class="fl">0.05</span></span>
+<span id="cb345-10"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb345-10" tabindex="-1"></a><span class="co"># and use this to just map the significant areas</span></span>
+<span id="cb345-11"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb345-11" tabindex="-1"></a>p_de_sig <span class="ot">=</span> </span>
+<span id="cb345-12"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb345-12" tabindex="-1"></a>  <span class="fu">ggplot</span>(gb) <span class="sc">+</span> <span class="fu">geom_sf</span>(<span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">lwd =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb345-13"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb345-13" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> gb[index,], <span class="at">fill =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb345-14"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb345-14" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb345-15"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb345-15" tabindex="-1"></a>p_de_sig</span></code></pre></div>
+<p><img src="_main_files/figure-html/ch7fig11-1.png" alt="" width="672" /></p>
+<p><strong>Task 3</strong>: Recreate the <span class="math inline">\(G\)</span> Statistic, but this time using the three neighbourhood lists, <code>g.nb</code>, <code>g.nb2</code> and <code>g.nb3</code> and compare the mapped results.</p>
+<div class="sourceCode" id="cb346"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb346-1"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb346-1" tabindex="-1"></a><span class="co"># Task 3</span></span>
+<span id="cb346-2"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb346-2" tabindex="-1"></a><span class="co"># convert to weighted neighbourhood list </span></span>
+<span id="cb346-3"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb346-3" tabindex="-1"></a>g.lw1 <span class="ot">=</span> <span class="fu">nb2listw</span>(g.nb)  <span class="co"># adjacency</span></span>
+<span id="cb346-4"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb346-4" tabindex="-1"></a>g.lw2 <span class="ot">=</span> <span class="fu">nb2listw</span>(g.nb2) <span class="co"># nearest n = 5</span></span>
+<span id="cb346-5"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb346-5" tabindex="-1"></a>g.lw3 <span class="ot">=</span> <span class="fu">nb2listw</span>(g.nb3) <span class="co"># distance = 100km</span></span>
+<span id="cb346-6"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb346-6" tabindex="-1"></a></span>
+<span id="cb346-7"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb346-7" tabindex="-1"></a><span class="co"># calculate the G stat</span></span>
+<span id="cb346-8"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb346-8" tabindex="-1"></a>gb<span class="sc">$</span>gstat1 <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">localG</span>(gb<span class="sc">$</span>share_leave, g.lw1))</span>
+<span id="cb346-9"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb346-9" tabindex="-1"></a>gb<span class="sc">$</span>gstat2 <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">localG</span>(gb<span class="sc">$</span>share_leave, g.lw2))</span>
+<span id="cb346-10"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb346-10" tabindex="-1"></a>gb<span class="sc">$</span>gstat3 <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">localG</span>(gb<span class="sc">$</span>share_leave, g.lw3))</span>
+<span id="cb346-11"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb346-11" tabindex="-1"></a></span>
+<span id="cb346-12"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb346-12" tabindex="-1"></a><span class="co"># plot</span></span>
+<span id="cb346-13"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb346-13" tabindex="-1"></a>p_g_adj <span class="ot">=</span> </span>
+<span id="cb346-14"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb346-14" tabindex="-1"></a>  <span class="fu">ggplot</span>(gb) <span class="sc">+</span> </span>
+<span id="cb346-15"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb346-15" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> gstat1)) <span class="sc">+</span> </span>
+<span id="cb346-16"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb346-16" tabindex="-1"></a>  <span class="fu">scale_fill_gradient2</span>(<span class="at">midpoint =</span> <span class="fl">0.5</span>, </span>
+<span id="cb346-17"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb346-17" tabindex="-1"></a>                       <span class="at">low =</span> <span class="st">&quot;red&quot;</span>, <span class="at">high =</span> <span class="st">&quot;blue&quot;</span>, </span>
+<span id="cb346-18"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb346-18" tabindex="-1"></a>                       <span class="at">name =</span> <span class="st">&quot;Adj&quot;</span>) <span class="sc">+</span></span>
+<span id="cb346-19"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb346-19" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span> </span>
+<span id="cb346-20"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb346-20" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_blank</span>(), </span>
+<span id="cb346-21"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb346-21" tabindex="-1"></a>        <span class="at">axis.ticks =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb346-22"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb346-22" tabindex="-1"></a>        <span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>)</span>
+<span id="cb346-23"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb346-23" tabindex="-1"></a></span>
+<span id="cb346-24"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb346-24" tabindex="-1"></a>p_g_nn <span class="ot">=</span> </span>
+<span id="cb346-25"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb346-25" tabindex="-1"></a>  <span class="fu">ggplot</span>(gb) <span class="sc">+</span> </span>
+<span id="cb346-26"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb346-26" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> gstat2)) <span class="sc">+</span> </span>
+<span id="cb346-27"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb346-27" tabindex="-1"></a>  <span class="fu">scale_fill_gradient2</span>(<span class="at">midpoint =</span> <span class="fl">0.5</span>, </span>
+<span id="cb346-28"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb346-28" tabindex="-1"></a>                       <span class="at">low =</span> <span class="st">&quot;red&quot;</span>, <span class="at">high =</span> <span class="st">&quot;blue&quot;</span>, </span>
+<span id="cb346-29"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb346-29" tabindex="-1"></a>                       <span class="at">name =</span> <span class="st">&quot;NN&quot;</span>) <span class="sc">+</span></span>
+<span id="cb346-30"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb346-30" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span> </span>
+<span id="cb346-31"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb346-31" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_blank</span>(), </span>
+<span id="cb346-32"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb346-32" tabindex="-1"></a>        <span class="at">axis.ticks =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb346-33"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb346-33" tabindex="-1"></a>        <span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>)</span>
+<span id="cb346-34"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb346-34" tabindex="-1"></a></span>
+<span id="cb346-35"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb346-35" tabindex="-1"></a>p_g_dist <span class="ot">=</span> </span>
+<span id="cb346-36"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb346-36" tabindex="-1"></a>  <span class="fu">ggplot</span>(gb) <span class="sc">+</span> </span>
+<span id="cb346-37"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb346-37" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> gstat3)) <span class="sc">+</span> </span>
+<span id="cb346-38"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb346-38" tabindex="-1"></a>  <span class="fu">scale_fill_gradient2</span>(<span class="at">midpoint =</span> <span class="fl">0.5</span>, </span>
+<span id="cb346-39"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb346-39" tabindex="-1"></a>                       <span class="at">low =</span> <span class="st">&quot;red&quot;</span>, <span class="at">high =</span> <span class="st">&quot;blue&quot;</span>, </span>
+<span id="cb346-40"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb346-40" tabindex="-1"></a>                       <span class="at">name =</span> <span class="st">&quot;Dist&quot;</span>) <span class="sc">+</span></span>
+<span id="cb346-41"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb346-41" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span> </span>
+<span id="cb346-42"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb346-42" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_blank</span>(), </span>
+<span id="cb346-43"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb346-43" tabindex="-1"></a>        <span class="at">axis.ticks =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb346-44"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb346-44" tabindex="-1"></a>        <span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>)</span>
+<span id="cb346-45"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb346-45" tabindex="-1"></a></span>
+<span id="cb346-46"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb346-46" tabindex="-1"></a><span class="fu">plot_grid</span>(p_g_adj, p_g_nn, p_g_dist, <span class="at">ncol =</span> <span class="dv">3</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/ch7fig12-1.png" alt="" width="960" /></p>
+<p>The Adjacency and nearest Neighbour patterns are similar. the Distance is different: much more highly clustered. This is because the adjacency and nearest neighbour lists are similar compared the distance list:</p>
+<div class="sourceCode" id="cb347"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb347-1"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb347-1" tabindex="-1"></a><span class="co"># for example!</span></span>
+<span id="cb347-2"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb347-2" tabindex="-1"></a>g.nb[[<span class="dv">300</span>]]</span>
+<span id="cb347-3"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb347-3" tabindex="-1"></a>g.nb2[[<span class="dv">300</span>]]</span>
+<span id="cb347-4"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#cb347-4" tabindex="-1"></a>g.nb3[[<span class="dv">300</span>]]</span></code></pre></div>
+<p>This demonstrates subtly different spatial patterns and hints at the different ways that the concept of a neighbourhood can be defined.</p>
+</div>
+<div id="useful-links" class="section level2 unnumbered hasAnchor">
+<h2>Useful Links<a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#useful-links" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li>There is a more in-depth visualisation practical from Roger Beecham developing the analyses of these data: <a href="http://homepages.see.leeds.ac.uk/~georjb/geocomp/03_datavis/lab.html" class="uri">http://homepages.see.leeds.ac.uk/~georjb/geocomp/03_datavis/lab.html</a></li>
+<li>There is an interesting Moran’s I R practical here: <a href="https://rpubs.com/quarcs-lab/spatial-autocorrelation" class="uri">https://rpubs.com/quarcs-lab/spatial-autocorrelation</a></li>
+<li>There is nice overview of Getis and Ord here: <a href="https://gistbok.ucgis.org/bok-topics/local-measures-spatial-association" class="uri">https://gistbok.ucgis.org/bok-topics/local-measures-spatial-association</a></li>
+</ul>
+
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-anselin1995local" class="csl-entry">
+Anselin, Luc. 1995. <span>“Local Indicators of Spatial Association—LISA.”</span> <em>Geographical Analysis</em> 27 (2): 93–115.
+</div>
+<div id="ref-anselin2019moran" class="csl-entry">
+Anselin, Luc. 2019. <span>“The Moran Scatterplot as an ESDA Tool to Assess Local Instability in Spatial Association.”</span> In <em>Spatial Analytical Perspectives on GIS</em>. Routledge.
+</div>
+<div id="ref-beecham2020regionally" class="csl-entry">
+Beecham, Roger, Nick Williams, and Alexis Comber. 2020. <span>“Regionally-Structured Explanations Behind Area-Level Populism: An Update to Recent Ecological Analyses.”</span> <em>Plos One</em> 15 (3): e0229974.
+</div>
+<div id="ref-brunsdon2018introduction" class="csl-entry">
+Brunsdon, Chris, and Lex Comber. 2025. <em>An Introduction to r for Spatial Analysis and Mapping (3e)</em>. Sage.
+</div>
+<div id="ref-getis1992analysis" class="csl-entry">
+Getis, Arthur, and J Keith Ord. 1992. <span>“The Analysis of Spatial Association by Use of Distance Statistics.”</span> <em>Geographical Analysis</em> 24 (3): 189–206.
+</div>
+<div id="ref-moran1950notes" class="csl-entry">
+Moran, Patrick AP. 1950. <span>“Notes on Continuous Stochastic Phenomena.”</span> <em>Biometrika</em> 37 (1/2): 17–23.
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="regression.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="spatial-varying-coefficient-models.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["_main.pdf", "_main.epub"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

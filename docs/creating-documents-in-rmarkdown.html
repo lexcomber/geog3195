@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Unit 8 Creating documents in RMarkdown | GEOG3915 GeoComputation and Spatial Analysis practicals</title>
+  <meta name="description" content="This contains materials to support the University of Leeds GEOG3195 module, delivered by Lex Comber" />
+  <meta name="generator" content="bookdown 0.48 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Unit 8 Creating documents in RMarkdown | GEOG3915 GeoComputation and Spatial Analysis practicals" />
+  <meta property="og:type" content="book" />
+  <meta property="og:image" content="https://bookdown.org/lexcomber/geog3915/images/GIS_in_the_bin.jpg" />
+  <meta property="og:description" content="This contains materials to support the University of Leeds GEOG3195 module, delivered by Lex Comber" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Unit 8 Creating documents in RMarkdown | GEOG3915 GeoComputation and Spatial Analysis practicals" />
+  
+  <meta name="twitter:description" content="This contains materials to support the University of Leeds GEOG3195 module, delivered by Lex Comber" />
+  <meta name="twitter:image" content="https://bookdown.org/lexcomber/geog3915/images/GIS_in_the_bin.jpg" />
+
+<meta name="author" content="Lex Comber" />
+
+
+<meta name="date" content="2026-09-20" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="classification-and-alternative-representations.html"/>
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">GEOG3915 Practicals</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Getting Started</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#installing-rrstudio"><i class="fa fa-check"></i><b>1.1</b> Installing R/RStudio</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#r-rstudio-refresh"><i class="fa fa-check"></i><b>1.2</b> R / RStudio Refresh</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="index.html"><a href="index.html#the-rstudio-interface"><i class="fa fa-check"></i><b>1.2.1</b> The RStudio Interface</a></li>
+<li class="chapter" data-level="1.2.2" data-path="index.html"><a href="index.html#ways-of-working"><i class="fa fa-check"></i><b>1.2.2</b> Ways of working</a></li>
+<li class="chapter" data-level="1.2.3" data-path="index.html"><a href="index.html#projects-files-and-folder-management"><i class="fa fa-check"></i><b>1.2.3</b> Projects, Files and Folder Management</a></li>
+<li class="chapter" data-level="1.2.4" data-path="index.html"><a href="index.html#practicals"><i class="fa fa-check"></i><b>1.2.4</b> Practicals</a></li>
+<li class="chapter" data-level="1.2.5" data-path="index.html"><a href="index.html#packages"><i class="fa fa-check"></i><b>1.2.5</b> Packages</a></li>
+<li class="chapter" data-level="1.2.6" data-path="index.html"><a href="index.html#further-resources"><i class="fa fa-check"></i><b>1.2.6</b> Further Resources</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#using-r-as-a-gis"><i class="fa fa-check"></i><b>1.3</b> Using R as a GIS</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="index.html"><a href="index.html#data"><i class="fa fa-check"></i><b>1.3.1</b> Data</a></li>
+<li class="chapter" data-level="1.3.2" data-path="index.html"><a href="index.html#creating-point-data"><i class="fa fa-check"></i><b>1.3.2</b> Creating point data</a></li>
+<li class="chapter" data-level="1.3.3" data-path="index.html"><a href="index.html#spatial-operations"><i class="fa fa-check"></i><b>1.3.3</b> Spatial Operations</a></li>
+<li class="chapter" data-level="1.3.4" data-path="index.html"><a href="index.html#merging-spatial-features-and-buffers"><i class="fa fa-check"></i><b>1.3.4</b> Merging spatial features and Buffers</a></li>
+<li class="chapter" data-level="1.3.5" data-path="index.html"><a href="index.html#point-in-polygon-and-area-calculations"><i class="fa fa-check"></i><b>1.3.5</b> Point-in-polygon and Area calculations</a></li>
+<li class="chapter" data-level="1.3.6" data-path="index.html"><a href="index.html#creating-distance-attributes"><i class="fa fa-check"></i><b>1.3.6</b> Creating distance attributes</a></li>
+<li class="chapter" data-level="1.3.7" data-path="index.html"><a href="index.html#reading-and-writing-data-in-and-out-of-rrstudio"><i class="fa fa-check"></i><b>1.3.7</b> Reading and writing data in and out of R/RStudio</a></li>
+<li class="chapter" data-level="1.3.8" data-path="index.html"><a href="index.html#answers-to-tasks"><i class="fa fa-check"></i><b>1.3.8</b> Answers to Tasks</a></li>
+<li class="chapter" data-level="1.3.9" data-path="index.html"><a href="index.html#useful-resources"><i class="fa fa-check"></i><b>1.3.9</b> Useful Resources</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html"><i class="fa fa-check"></i><b>2</b> Exploratory Data Analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#overview"><i class="fa fa-check"></i>Overview</a></li>
+<li class="chapter" data-level="2.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#data-data-summaries-and-generic-plotting-in-r"><i class="fa fa-check"></i><b>2.1</b> Data, data summaries and generic plotting in R</a></li>
+<li class="chapter" data-level="2.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#an-introduction-to-visualisation-using-the-ggplot2-package"><i class="fa fa-check"></i><b>2.2</b> An introduction to visualisation using the <code>ggplot2</code> package</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#ggplot-basics"><i class="fa fa-check"></i><b>2.2.1</b> <code>ggplot</code> basics</a></li>
+<li class="chapter" data-level="2.2.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#groups-with-ggplot"><i class="fa fa-check"></i><b>2.2.2</b> Groups with <code>ggplot</code></a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#data-wrangling-with-dplyr"><i class="fa fa-check"></i><b>2.3</b> Data wrangling with <code>dplyr</code></a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#summary"><i class="fa fa-check"></i><b>2.3.1</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#using-piping-syntax"><i class="fa fa-check"></i><b>2.4</b> Using piping syntax</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#select"><i class="fa fa-check"></i><b>2.4.1</b> <code>select</code></a></li>
+<li class="chapter" data-level="2.4.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#mutate"><i class="fa fa-check"></i><b>2.4.2</b> <code>mutate</code></a></li>
+<li class="chapter" data-level="2.4.3" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#group_by-and-summarise-changing-the-unit-of-observation"><i class="fa fa-check"></i><b>2.4.3</b> <code>group_by</code> and <code>summarise</code>: changing the unit of observation</a></li>
+<li class="chapter" data-level="2.4.4" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#a-final-example"><i class="fa fa-check"></i><b>2.4.4</b> A final example</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#answers-to-tasks-1"><i class="fa fa-check"></i>Answers to Tasks</a></li>
+<li class="chapter" data-level="" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#additional-resources"><i class="fa fa-check"></i>Additional Resources</a></li>
+<li class="chapter" data-level="" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#optional-enhanced-mapping-with-the-ggplot2-package"><i class="fa fa-check"></i>Optional: enhanced mapping with the <code>ggplot2</code> package</a></li>
+<li class="chapter" data-level="" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#appendix-named-colours"><i class="fa fa-check"></i>Appendix: Named Colours</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="spatial-interpolation.html"><a href="spatial-interpolation.html"><i class="fa fa-check"></i><b>3</b> Spatial Interpolation</a>
+<ul>
+<li class="chapter" data-level="" data-path="spatial-interpolation.html"><a href="spatial-interpolation.html#overview-1"><i class="fa fa-check"></i>Overview</a></li>
+<li class="chapter" data-level="3.1" data-path="spatial-interpolation.html"><a href="spatial-interpolation.html#kernel-density-estimation-point-observations"><i class="fa fa-check"></i><b>3.1</b> Kernel Density Estimation (point observations)</a></li>
+<li class="chapter" data-level="3.2" data-path="spatial-interpolation.html"><a href="spatial-interpolation.html#inverse-distance-weighting-point-values"><i class="fa fa-check"></i><b>3.2</b> Inverse Distance Weighting (point values)</a></li>
+<li class="chapter" data-level="3.3" data-path="spatial-interpolation.html"><a href="spatial-interpolation.html#area-weighted-interpolation-area-to-area"><i class="fa fa-check"></i><b>3.3</b> Area Weighted interpolation (area to area)</a></li>
+<li class="chapter" data-level="3.4" data-path="spatial-interpolation.html"><a href="spatial-interpolation.html#dasymetric-interpolation"><i class="fa fa-check"></i><b>3.4</b> Dasymetric Interpolation</a></li>
+<li class="chapter" data-level="" data-path="spatial-interpolation.html"><a href="spatial-interpolation.html#answers-to-tasks-2"><i class="fa fa-check"></i>Answers to Tasks</a></li>
+<li class="chapter" data-level="" data-path="spatial-interpolation.html"><a href="spatial-interpolation.html#optional-fine-tuning-idw"><i class="fa fa-check"></i>Optional: Fine tuning IDW</a>
+<ul>
+<li class="chapter" data-level="" data-path="spatial-interpolation.html"><a href="spatial-interpolation.html#answer-to-additional-task"><i class="fa fa-check"></i>Answer to Additional Task</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>4</b> Regression</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#overview-2"><i class="fa fa-check"></i>Overview</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#which-regression-approach"><i class="fa fa-check"></i>Which regression approach?</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#packages-1"><i class="fa fa-check"></i>Packages</a></li>
+</ul></li>
+<li class="chapter" data-level="4.1" data-path="regression.html"><a href="regression.html#standard-linear-regression-models-ols"><i class="fa fa-check"></i><b>4.1</b> Standard linear regression models (OLS)</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#specifying-the-model"><i class="fa fa-check"></i>Specifying the model</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="regression.html"><a href="regression.html#binomial-logistic-regression-for-binary-variables"><i class="fa fa-check"></i><b>4.2</b> Binomial Logistic Regression for binary variables</a></li>
+<li class="chapter" data-level="4.3" data-path="regression.html"><a href="regression.html#poisson-regression-for-count-variables"><i class="fa fa-check"></i><b>4.3</b> Poisson Regression for count variables</a></li>
+<li class="chapter" data-level="4.4" data-path="regression.html"><a href="regression.html#outliers-and-robust-regression"><i class="fa fa-check"></i><b>4.4</b> Outliers and Robust regression</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#addendum-prediction-vs-inference"><i class="fa fa-check"></i>Addendum: Prediction vs Inference</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#answers-to-tasks-3"><i class="fa fa-check"></i>Answers to Tasks</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#optional-the-maup"><i class="fa fa-check"></i>Optional: the MAUP</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="regression.html"><a href="regression.html#introduction"><i class="fa fa-check"></i><b>4.4.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.4.2" data-path="regression.html"><a href="regression.html#impact-on-correlations-of-counts"><i class="fa fa-check"></i><b>4.4.2</b> Impact on Correlations of Counts</a></li>
+<li class="chapter" data-level="4.4.3" data-path="regression.html"><a href="regression.html#impact-on-models"><i class="fa fa-check"></i><b>4.4.3</b> Impact on models</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#additional-resources-1"><i class="fa fa-check"></i>Additional Resources</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><i class="fa fa-check"></i><b>5</b> Spatial Models: spatial autocorrelation and cluster analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#overview-3"><i class="fa fa-check"></i>Overview</a></li>
+<li class="chapter" data-level="" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#data-and-packages"><i class="fa fa-check"></i>Data and Packages</a></li>
+<li class="chapter" data-level="5.1" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#defining-nearby-neighbour-lists"><i class="fa fa-check"></i><b>5.1</b> Defining nearby: neighbour lists</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#neigbours-by-ajacency"><i class="fa fa-check"></i><b>5.1.1</b> Neigbours by ajacency</a></li>
+<li class="chapter" data-level="5.1.2" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#neighbours-by-nearest-n"><i class="fa fa-check"></i><b>5.1.2</b> Neighbours by nearest <span class="math inline">\(n\)</span></a></li>
+<li class="chapter" data-level="5.1.3" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#neighbours-by-distance"><i class="fa fa-check"></i><b>5.1.3</b> Neighbours by distance</a></li>
+<li class="chapter" data-level="5.1.4" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#summary-1"><i class="fa fa-check"></i><b>5.1.4</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#spatial-autocorrelation-and-clusters"><i class="fa fa-check"></i><b>5.2</b> Spatial Autocorrelation and Clusters</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#neighbours-and-lagged-mean-plots"><i class="fa fa-check"></i><b>5.2.1</b> Neighbours and Lagged Mean Plots</a></li>
+<li class="chapter" data-level="5.2.2" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#morans-i-for-determining-clusters-and-spatial-autocorrelation"><i class="fa fa-check"></i><b>5.2.2</b> Moran’s I for determining Clusters and Spatial Autocorrelation</a></li>
+<li class="chapter" data-level="5.2.3" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#lisa-for-determining-local-clusters-and-spatial-autocorrelation"><i class="fa fa-check"></i><b>5.2.3</b> LISA for determining <em>local</em> clusters and spatial autocorrelation</a></li>
+<li class="chapter" data-level="5.2.4" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#getis-ord-g-statistic"><i class="fa fa-check"></i><b>5.2.4</b> Getis-Ord G statistic</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#answers-to-tasks-4"><i class="fa fa-check"></i>Answers to Tasks</a></li>
+<li class="chapter" data-level="" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#useful-links"><i class="fa fa-check"></i>Useful Links</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html"><i class="fa fa-check"></i><b>6</b> Spatial Varying Coefficient Models</a>
+<ul>
+<li class="chapter" data-level="" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#overview-4"><i class="fa fa-check"></i>Overview</a></li>
+<li class="chapter" data-level="" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#data-and-packages-1"><i class="fa fa-check"></i>Data and Packages</a></li>
+<li class="chapter" data-level="6.1" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#local-vs-global-models"><i class="fa fa-check"></i><b>6.1</b> Local vs Global models</a></li>
+<li class="chapter" data-level="6.2" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#geographically-weighted-regression"><i class="fa fa-check"></i><b>6.2</b> Geographically Weighted Regression</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#description"><i class="fa fa-check"></i><b>6.2.1</b> Description</a></li>
+<li class="chapter" data-level="6.2.2" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#undertaking-a-gwr"><i class="fa fa-check"></i><b>6.2.2</b> Undertaking a GWR</a></li>
+<li class="chapter" data-level="6.2.3" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#evaluating-the-results"><i class="fa fa-check"></i><b>6.2.3</b> Evaluating the results</a></li>
+<li class="chapter" data-level="6.2.4" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#mapping-gwr-outputs"><i class="fa fa-check"></i><b>6.2.4</b> Mapping GWR outputs</a></li>
+<li class="chapter" data-level="6.2.5" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#gwr-summary"><i class="fa fa-check"></i><b>6.2.5</b> GWR Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#multi-scale-gwr"><i class="fa fa-check"></i><b>6.3</b> Multi-scale GWR</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#description-1"><i class="fa fa-check"></i><b>6.3.1</b> Description</a></li>
+<li class="chapter" data-level="6.3.2" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#undertaking-a-mgwr"><i class="fa fa-check"></i><b>6.3.2</b> Undertaking a MGWR</a></li>
+<li class="chapter" data-level="6.3.3" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#evaluating-the-results-1"><i class="fa fa-check"></i><b>6.3.3</b> Evaluating the results</a></li>
+<li class="chapter" data-level="6.3.4" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#mapping-mgwr-outputs"><i class="fa fa-check"></i><b>6.3.4</b> Mapping MGWR outputs</a></li>
+<li class="chapter" data-level="6.3.5" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#comparing-gwr-and-mgwr"><i class="fa fa-check"></i><b>6.3.5</b> Comparing GWR and MGWR</a></li>
+<li class="chapter" data-level="6.3.6" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#mgwr-summary"><i class="fa fa-check"></i><b>6.3.6</b> MGWR Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#optional-generalised-additive-models"><i class="fa fa-check"></i>Optional: Generalised Additive Models</a>
+<ul>
+<li class="chapter" data-level="6.3.7" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#description-2"><i class="fa fa-check"></i><b>6.3.7</b> Description</a></li>
+<li class="chapter" data-level="6.3.8" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#undertaking-a-ggp-gam"><i class="fa fa-check"></i><b>6.3.8</b> Undertaking a GGP-GAM</a></li>
+<li class="chapter" data-level="6.3.9" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#evaluating-the-results-2"><i class="fa fa-check"></i><b>6.3.9</b> Evaluating the results</a></li>
+<li class="chapter" data-level="6.3.10" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#ggp-gam-svcs"><i class="fa fa-check"></i><b>6.3.10</b> GGP-GAM SVCs</a></li>
+<li class="chapter" data-level="6.3.11" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#ggp-gam-summary"><i class="fa fa-check"></i><b>6.3.11</b> GGP-GAM summary</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#answers-to-tasks-5"><i class="fa fa-check"></i>Answers to Tasks</a></li>
+<li class="chapter" data-level="" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#references"><i class="fa fa-check"></i>References</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html"><i class="fa fa-check"></i><b>7</b> Classification and Alternative Representations</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#classification"><i class="fa fa-check"></i><b>7.1</b> Classification</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#overview-5"><i class="fa fa-check"></i><b>7.1.1</b> Overview</a></li>
+<li class="chapter" data-level="7.1.2" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#pca-transformation"><i class="fa fa-check"></i><b>7.1.2</b> PCA transformation</a></li>
+<li class="chapter" data-level="7.1.3" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#k-means-cluster-analysis"><i class="fa fa-check"></i><b>7.1.3</b> <span class="math inline">\(k\)</span>-means Cluster Analysis</a></li>
+<li class="chapter" data-level="7.1.4" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#diagnostics"><i class="fa fa-check"></i><b>7.1.4</b> Diagnostics</a></li>
+<li class="chapter" data-level="7.1.5" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#mapping"><i class="fa fa-check"></i><b>7.1.5</b> Mapping</a></li>
+<li class="chapter" data-level="7.1.6" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#further-resources-1"><i class="fa fa-check"></i><b>7.1.6</b> Further Resources</a></li>
+<li class="chapter" data-level="7.1.7" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#references-1"><i class="fa fa-check"></i><b>7.1.7</b> References</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#optional-alternative-spatial-visualisations"><i class="fa fa-check"></i><b>7.2</b> Optional: Alternative spatial visualisations</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#overview-6"><i class="fa fa-check"></i><b>7.2.1</b> Overview</a></li>
+<li class="chapter" data-level="7.2.2" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#the-invisibility-problem"><i class="fa fa-check"></i><b>7.2.2</b> The invisibility problem</a></li>
+<li class="chapter" data-level="7.2.3" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#cartograms"><i class="fa fa-check"></i><b>7.2.3</b> Cartograms</a></li>
+<li class="chapter" data-level="7.2.4" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#hexagonal-binning-and-tile-maps"><i class="fa fa-check"></i><b>7.2.4</b> Hexagonal binning and Tile maps</a></li>
+<li class="chapter" data-level="7.2.5" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#references-2"><i class="fa fa-check"></i><b>7.2.5</b> References</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="creating-documents-in-rmarkdown.html"><a href="creating-documents-in-rmarkdown.html"><i class="fa fa-check"></i><b>8</b> Creating documents in RMarkdown</a>
+<ul>
+<li class="chapter" data-level="" data-path="creating-documents-in-rmarkdown.html"><a href="creating-documents-in-rmarkdown.html#overview-7"><i class="fa fa-check"></i>Overview</a></li>
+<li class="chapter" data-level="8.1" data-path="creating-documents-in-rmarkdown.html"><a href="creating-documents-in-rmarkdown.html#resources"><i class="fa fa-check"></i><b>8.1</b> Resources</a></li>
+<li class="chapter" data-level="8.2" data-path="creating-documents-in-rmarkdown.html"><a href="creating-documents-in-rmarkdown.html#tasks"><i class="fa fa-check"></i><b>8.2</b> Tasks</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">GEOG3915 GeoComputation and Spatial Analysis practicals</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="creating-documents-in-rmarkdown" class="section level1 hasAnchor" number="8">
+<h1><span class="header-section-number">Unit 8</span> Creating documents in RMarkdown<a href="creating-documents-in-rmarkdown.html#creating-documents-in-rmarkdown" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="overview-7" class="section level2 unnumbered hasAnchor">
+<h2>Overview<a href="creating-documents-in-rmarkdown.html#overview-7" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In this practical you will create an RMarkdown (<code>.Rmd</code>) document in either <code>html</code> or <code>PDF</code> format. It can include anything, but the following things are included in RMarkdown document on the VLE (<code>Rep_example.Rmd</code>):</p>
+<ul>
+<li>text in paragraphs</li>
+<li>plots (e.g. scatterplots)</li>
+<li>maps</li>
+<li>tables</li>
+<li>some hidden code</li>
+<li>some visible code</li>
+</ul>
+<p><strong>NOTE</strong></p>
+<ol style="list-style-type: decimal">
+<li>you may have to install the <code>rmarkdown</code> package on University computers - you should not have to but you never know! You should test this by running the code:</li>
+</ol>
+<div class="sourceCode" id="cb452"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb452-1"><a href="creating-documents-in-rmarkdown.html#cb452-1" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.element</span>(<span class="st">&quot;rmarkdown&quot;</span>, <span class="fu">installed.packages</span>()))</span>
+<span id="cb452-2"><a href="creating-documents-in-rmarkdown.html#cb452-2" tabindex="-1"></a>    <span class="fu">install.packages</span>(<span class="st">&quot;rmarkdown&quot;</span>, <span class="at">dep =</span> T)</span></code></pre></div>
+<ol start="2" style="list-style-type: decimal">
+<li>You may need to use a simply named folder. This means removing any non-text characters in the name. So</li>
+</ol>
+<ul>
+<li><strong>not</strong> C:\Geocomp &amp; Loc Anal\week9</li>
+<li><strong>instead</strong> C:\Geocomp\week9</li>
+</ul>
+</div>
+<div id="resources" class="section level2 hasAnchor" number="8.1">
+<h2><span class="header-section-number">8.1</span> Resources<a href="creating-documents-in-rmarkdown.html#resources" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>This tutorial <a href="https://rmarkdown.rstudio.com/articles_intro.html" class="uri">https://rmarkdown.rstudio.com/articles_intro.html</a> may help and some other potentially useful resources include:</p>
+<ul>
+<li><a href="https://www.neonscience.org/rmd-code-intro" class="uri">https://www.neonscience.org/rmd-code-intro</a></li>
+<li><a href="https://rpubs.com/mnewco8290/94529" class="uri">https://rpubs.com/mnewco8290/94529</a></li>
+<li><a href="http://www.jacolienvanrij.com/Tutorials/tutorialMarkdown.html" class="uri">http://www.jacolienvanrij.com/Tutorials/tutorialMarkdown.html</a></li>
+</ul>
+<p>Also there are Cheatsheets</p>
+<ul>
+<li><a href="https://rmarkdown.rstudio.com/lesson-15.html" class="uri">https://rmarkdown.rstudio.com/lesson-15.html</a></li>
+<li>they can also be accessed through the Rstudio menu <strong>Help &gt; Cheat Sheets &gt; R Markdown Cheat Sheet</strong></li>
+</ul>
+<p>Documents created in this way allow you to connect the code, the analysis and the data in a single environment, supporting transparency and reproducibility.</p>
+</div>
+<div id="tasks" class="section level2 hasAnchor" number="8.2">
+<h2><span class="header-section-number">8.2</span> Tasks<a href="creating-documents-in-rmarkdown.html#tasks" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Task 1</strong></p>
+<p>This just gets you to create, save and compile a simple R Markdown document.</p>
+<ol style="list-style-type: decimal">
+<li>Open a new RMarkdown document:</li>
+</ol>
+<p><strong>File &gt; New File &gt; R Markdown</strong></p>
+<p>use HTML format.</p>
+<p>Give it a name, save it with a name in your working folder, and try to run it by clicking on the “knit” icon. If you get an error here, you probably need to install the <code>rmarkdown</code> package for some reason.</p>
+<ol start="2" style="list-style-type: decimal">
+<li>Then change the 3rd line from</li>
+</ol>
+<ul>
+<li>from <code>output: html_document</code></li>
+<li>to <code>output: pdf_document</code></li>
+</ul>
+<p>and compile the document again to create a PDF file.
+<strong>NOTE</strong> that if you are on a University PC you may get a ‘cannot compile PDF’ error message. In which case you may need to install a PDF compiler.</p>
+<div class="sourceCode" id="cb453"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb453-1"><a href="creating-documents-in-rmarkdown.html#cb453-1" tabindex="-1"></a><span class="co"># only run this if you get the above errror!</span></span>
+<span id="cb453-2"><a href="creating-documents-in-rmarkdown.html#cb453-2" tabindex="-1"></a>tinytex<span class="sc">::</span><span class="fu">install_tinytex</span>()</span></code></pre></div>
+<p><strong>Task 2</strong></p>
+<p>Go through the Rep_Example.Rmd files on the VLE. I have chopped down a GWR Practical as a short example in the RMD file. You should</p>
+<ul>
+<li>make sure that you can identify sections of words and code that produce text, plots, maps, hidden / visible code and tables as indicated above.</li>
+<li>pay attention to the way that the code snippets presented, especially how the code blocks are bracketed by the backticks ( ` ).</li>
+<li>try to create both PDF and HTML outputs by changing the outputs as below in the RMD header:
+<ul>
+<li><code>output: pdf_document</code></li>
+<li><code>output: html_document</code></li>
+</ul></li>
+</ul>
+
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div class="csl-entry">
+Anselin, Luc. 1995. <span>“Local Indicators of Spatial Association—LISA.”</span> <em>Geographical Analysis</em> 27 (2): 93–115.
+</div>
+<div class="csl-entry">
+Anselin, Luc. 2019. <span>“The Moran Scatterplot as an ESDA Tool to Assess Local Instability in Spatial Association.”</span> In <em>Spatial Analytical Perspectives on GIS</em>. Routledge.
+</div>
+<div class="csl-entry">
+Beecham, Roger, Nick Williams, and Alexis Comber. 2020. <span>“Regionally-Structured Explanations Behind Area-Level Populism: An Update to Recent Ecological Analyses.”</span> <em>Plos One</em> 15 (3): e0229974.
+</div>
+<div class="csl-entry">
+Brunsdon, Chris, and Lex Comber. 2025. <em>An Introduction to r for Spatial Analysis and Mapping (3e)</em>. Sage.
+</div>
+<div class="csl-entry">
+Brunsdon, Chris, A Stewart Fotheringham, and Martin E Charlton. 1996. <span>“Geographically Weighted Regression: A Method for Exploring Spatial Nonstationarity.”</span> <em>Geographical Analysis</em> 28 (4): 281–98.
+</div>
+<div class="csl-entry">
+Comber, Alexis J, Chris Brunsdon, and Robert Radburn. 2011. <span>“A Spatial Analysis of Variations in Health Access: Linking Geography, Socio-Economic Status and Access Perceptions.”</span> <em>International Journal of Health Geographics</em> 10 (1): 1–11.
+</div>
+<div class="csl-entry">
+<span class="nocase">Comber, Alexis, Christopher Brunsdon, Martin Charlton, et al.</span> 2023. <span>“A Route Map for Successful Applications of Geographically Weighted Regression.”</span> <em>Geographical Analysis</em> 55 (1): 155–78.
+</div>
+<div class="csl-entry">
+Comber, Alexis, Martin Callaghan, Paul Harris, Binbin Lu, Nick Malleson, and Chris Brunsdon. 2022. <span>“Gwverse: A Template for a New Generic Geographically Weighted r Package.”</span> <em>Geographical Analysis</em> 54 (3): 685–709.
+</div>
+<div class="csl-entry">
+Comber, Alexis, Paul Harris, and Chris Brunsdon. 2024. <span>“Multiscale Spatially Varying Coefficient Modelling Using a Geographical Gaussian Process GAM.”</span> <em>International Journal of Geographical Information Science</em> 38 (1): 27–47.
+</div>
+<div class="csl-entry">
+Comber, Alexis, and Wen Zeng. 2019. <span>“Spatial Interpolation Using Areal Features: A Review of Methods and Opportunities Using New Forms of Data with Coded Illustrations.”</span> <em>Geography Compass</em> 13 (10): e12465.
+</div>
+<div class="csl-entry">
+Comber, Lex, and Chris Brunsdon. 2021. <em>Geographical Data Science and Spatial Data Analysis: An Introduction in r</em>. Sage.
+</div>
+<div class="csl-entry">
+Fisher, Peter F, and Mitchel Langford. 1996. <span>“Modeling Sensitivity to Accuracy in Classified Imagery: A Study of Areal Interpolation by Dasymetric Mapping.”</span> <em>The Professional Geographer</em> 48 (3): 299–309.
+</div>
+<div class="csl-entry">
+Fotheringham, A Stewart, Chris Brunsdon, and Martin Charlton. 2003. <em>Geographically Weighted Regression: The Analysis of Spatially Varying Relationships</em>. John Wiley &amp; Sons.
+</div>
+<div class="csl-entry">
+Fotheringham, A Stewart, Wenbai Yang, and Wei Kang. 2017. <span>“Multiscale Geographically Weighted Regression (MGWR).”</span> <em>Annals of the American Association of Geographers</em> 107 (6): 1247–65.
+</div>
+<div class="csl-entry">
+Getis, Arthur, and J Keith Ord. 1992. <span>“The Analysis of Spatial Association by Use of Distance Statistics.”</span> <em>Geographical Analysis</em> 24 (3): 189–206.
+</div>
+<div class="csl-entry">
+<span class="nocase">Gollini, Isabella, Binbin Lu, Martin Charlton, Christopher Brunsdon, Paul Harris, et al.</span> 2015. <span>“GWmodel: An r Package for Exploring Spatial Heterogeneity Using Geographically Weighted Models.”</span> <em>Journal of Statistical Software</em> 63 (i17).
+</div>
+<div class="csl-entry">
+Goodchild, Michael F. 2004. <span>“The Validity and Usefulness of Laws in Geographic Information Science and Geography.”</span> <em>Annals of the Association of American Geographers</em> 94 (2): 300–303.
+</div>
+<div class="csl-entry">
+Goodchild, Michael F, and N Siu-Ngan Lam. 1980. <span>“Areal Interpolation: A Variant of the Traditional Spatial Problem.”</span> <em>Geo-Processing</em> 1 (3): 297–312.
+</div>
+<div class="csl-entry">
+Hastie, T, and R Tibshirani. 1990. <span>“Generalized Additive Models. Chapman Hall &amp; CRC.”</span> <em>Monographs on Statistics &amp; Applied Probability. Chapman and Hall/CRC</em> 1.
+</div>
+<div class="csl-entry">
+Huber, Peter J. 2011. <span>“Robust Statistics.”</span> In <em>International Encyclopedia of Statistical Science</em>. Springer.
+</div>
+<div class="csl-entry">
+James, Gareth, Daniela Witten, Trevor Hastie, and Robert Tibshirani. 2013. <em>An Introduction to Statistical Learning</em>. Vol. 112. Springer.
+</div>
+<div class="csl-entry">
+Langford, Mitchel. 2013. <span>“An Evaluation of Small Area Population Estimation Techniques Using Open Access Ancillary Data.”</span> <em>Geographical Analysis</em> 45 (3): 324–44.
+</div>
+<div class="csl-entry">
+Langford, Mitchel, and David J Unwin. 1994. <span>“Generating and Mapping Population Density Surfaces Within a Geographical Information System.”</span> <em>The Cartographic Journal</em> 31 (1): 21–26.
+</div>
+<div class="csl-entry">
+Lu, Binbin, Paul Harris, Martin Charlton, and Chris Brunsdon. 2014. <span>“The GWmodel r Package: Further Topics for Exploring Spatial Heterogeneity Using Geographically Weighted Models.”</span> <em>Geo-Spatial Information Science</em> 17 (2): 85–101.
+</div>
+<div class="csl-entry">
+Moran, Patrick AP. 1950. <span>“Notes on Continuous Stochastic Phenomena.”</span> <em>Biometrika</em> 37 (1/2): 17–23.
+</div>
+<div class="csl-entry">
+Openshaw, Stan. 1984a. <span>“CATMOG 38: The Modifiable Areal Unit Problem.”</span> <em>Norwich: Geo-Abstracts</em>.
+</div>
+<div class="csl-entry">
+Openshaw, Stan. 1984b. <span>“Ecological Fallacies and the Analysis of Areal Census Data.”</span> <em>Environment and Planning A</em> 16 (1): 17–31.
+</div>
+<div class="csl-entry">
+Openshaw, Stan. 1996. <span>“Developing GIS-Relevant Zone-Based Spatial Analysis Methods.”</span> <em>Spatial Analysis: Modelling in a GIS Environment</em>, 55–73.
+</div>
+<div class="csl-entry">
+Oshan, Taylor M, Ziqi Li, Wei Kang, Levi J Wolf, and A Stewart Fotheringham. 2019. <span>“Mgwr: A Python Implementation of Multiscale Geographically Weighted Regression for Investigating Process Spatial Heterogeneity and Scale.”</span> <em>ISPRS International Journal of Geo-Information</em> 8 (6): 269.
+</div>
+<div class="csl-entry">
+Robinson, William S. 2009. <span>“Ecological Correlations and the Behavior of Individuals.”</span> <em>International Journal of Epidemiology</em> 38 (2): 337–41.
+</div>
+<div class="csl-entry">
+Wickham, Hadley. 2010. <span>“A Layered Grammar of Graphics.”</span> <em>Journal of Computational and Graphical Statistics</em> 19 (1): 3–28.
+</div>
+<div class="csl-entry">
+Wilkinson, Leland. 2012. <em>The Grammar of Graphics</em>. Springer.
+</div>
+<div class="csl-entry">
+Wood, Simon N. 2017. <em>Generalized Additive Models: An Introduction with r</em>. CRC press.
+</div>
+<div class="csl-entry">
+Yang, Wenbai. 2014. <span>“An Extension of Geographically Weighted Regression with Flexible Bandwidths.”</span> PhD thesis, University of St Andrews.
+</div>
+<div class="csl-entry">
+Zeng, Wen, and Alexis Comber. 2020. <span>“Using Household Counts as Ancillary Information for Areal Interpolation of Population: Comparing Formal and Informal, Online Data Sources.”</span> <em>Computers, Environment and Urban Systems</em> 80: 101440.
+</div>
+</div>
+</div>
+</div>
+
+
+
+
+
+
+
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="classification-and-alternative-representations.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["_main.pdf", "_main.epub"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

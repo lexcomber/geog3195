@@ -1,0 +1,1309 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Unit 6 Spatial Varying Coefficient Models | GEOG3915 GeoComputation and Spatial Analysis practicals</title>
+  <meta name="description" content="This contains materials to support the University of Leeds GEOG3195 module, delivered by Lex Comber" />
+  <meta name="generator" content="bookdown 0.48 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Unit 6 Spatial Varying Coefficient Models | GEOG3915 GeoComputation and Spatial Analysis practicals" />
+  <meta property="og:type" content="book" />
+  <meta property="og:image" content="https://bookdown.org/lexcomber/geog3915/images/GIS_in_the_bin.jpg" />
+  <meta property="og:description" content="This contains materials to support the University of Leeds GEOG3195 module, delivered by Lex Comber" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Unit 6 Spatial Varying Coefficient Models | GEOG3915 GeoComputation and Spatial Analysis practicals" />
+  
+  <meta name="twitter:description" content="This contains materials to support the University of Leeds GEOG3195 module, delivered by Lex Comber" />
+  <meta name="twitter:image" content="https://bookdown.org/lexcomber/geog3915/images/GIS_in_the_bin.jpg" />
+
+<meta name="author" content="Lex Comber" />
+
+
+<meta name="date" content="2026-09-20" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"/>
+<link rel="next" href="classification-and-alternative-representations.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">GEOG3915 Practicals</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Getting Started</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#installing-rrstudio"><i class="fa fa-check"></i><b>1.1</b> Installing R/RStudio</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#r-rstudio-refresh"><i class="fa fa-check"></i><b>1.2</b> R / RStudio Refresh</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="index.html"><a href="index.html#the-rstudio-interface"><i class="fa fa-check"></i><b>1.2.1</b> The RStudio Interface</a></li>
+<li class="chapter" data-level="1.2.2" data-path="index.html"><a href="index.html#ways-of-working"><i class="fa fa-check"></i><b>1.2.2</b> Ways of working</a></li>
+<li class="chapter" data-level="1.2.3" data-path="index.html"><a href="index.html#projects-files-and-folder-management"><i class="fa fa-check"></i><b>1.2.3</b> Projects, Files and Folder Management</a></li>
+<li class="chapter" data-level="1.2.4" data-path="index.html"><a href="index.html#practicals"><i class="fa fa-check"></i><b>1.2.4</b> Practicals</a></li>
+<li class="chapter" data-level="1.2.5" data-path="index.html"><a href="index.html#packages"><i class="fa fa-check"></i><b>1.2.5</b> Packages</a></li>
+<li class="chapter" data-level="1.2.6" data-path="index.html"><a href="index.html#further-resources"><i class="fa fa-check"></i><b>1.2.6</b> Further Resources</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#using-r-as-a-gis"><i class="fa fa-check"></i><b>1.3</b> Using R as a GIS</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="index.html"><a href="index.html#data"><i class="fa fa-check"></i><b>1.3.1</b> Data</a></li>
+<li class="chapter" data-level="1.3.2" data-path="index.html"><a href="index.html#creating-point-data"><i class="fa fa-check"></i><b>1.3.2</b> Creating point data</a></li>
+<li class="chapter" data-level="1.3.3" data-path="index.html"><a href="index.html#spatial-operations"><i class="fa fa-check"></i><b>1.3.3</b> Spatial Operations</a></li>
+<li class="chapter" data-level="1.3.4" data-path="index.html"><a href="index.html#merging-spatial-features-and-buffers"><i class="fa fa-check"></i><b>1.3.4</b> Merging spatial features and Buffers</a></li>
+<li class="chapter" data-level="1.3.5" data-path="index.html"><a href="index.html#point-in-polygon-and-area-calculations"><i class="fa fa-check"></i><b>1.3.5</b> Point-in-polygon and Area calculations</a></li>
+<li class="chapter" data-level="1.3.6" data-path="index.html"><a href="index.html#creating-distance-attributes"><i class="fa fa-check"></i><b>1.3.6</b> Creating distance attributes</a></li>
+<li class="chapter" data-level="1.3.7" data-path="index.html"><a href="index.html#reading-and-writing-data-in-and-out-of-rrstudio"><i class="fa fa-check"></i><b>1.3.7</b> Reading and writing data in and out of R/RStudio</a></li>
+<li class="chapter" data-level="1.3.8" data-path="index.html"><a href="index.html#answers-to-tasks"><i class="fa fa-check"></i><b>1.3.8</b> Answers to Tasks</a></li>
+<li class="chapter" data-level="1.3.9" data-path="index.html"><a href="index.html#useful-resources"><i class="fa fa-check"></i><b>1.3.9</b> Useful Resources</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html"><i class="fa fa-check"></i><b>2</b> Exploratory Data Analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#overview"><i class="fa fa-check"></i>Overview</a></li>
+<li class="chapter" data-level="2.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#data-data-summaries-and-generic-plotting-in-r"><i class="fa fa-check"></i><b>2.1</b> Data, data summaries and generic plotting in R</a></li>
+<li class="chapter" data-level="2.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#an-introduction-to-visualisation-using-the-ggplot2-package"><i class="fa fa-check"></i><b>2.2</b> An introduction to visualisation using the <code>ggplot2</code> package</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#ggplot-basics"><i class="fa fa-check"></i><b>2.2.1</b> <code>ggplot</code> basics</a></li>
+<li class="chapter" data-level="2.2.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#groups-with-ggplot"><i class="fa fa-check"></i><b>2.2.2</b> Groups with <code>ggplot</code></a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#data-wrangling-with-dplyr"><i class="fa fa-check"></i><b>2.3</b> Data wrangling with <code>dplyr</code></a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#summary"><i class="fa fa-check"></i><b>2.3.1</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#using-piping-syntax"><i class="fa fa-check"></i><b>2.4</b> Using piping syntax</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#select"><i class="fa fa-check"></i><b>2.4.1</b> <code>select</code></a></li>
+<li class="chapter" data-level="2.4.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#mutate"><i class="fa fa-check"></i><b>2.4.2</b> <code>mutate</code></a></li>
+<li class="chapter" data-level="2.4.3" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#group_by-and-summarise-changing-the-unit-of-observation"><i class="fa fa-check"></i><b>2.4.3</b> <code>group_by</code> and <code>summarise</code>: changing the unit of observation</a></li>
+<li class="chapter" data-level="2.4.4" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#a-final-example"><i class="fa fa-check"></i><b>2.4.4</b> A final example</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#answers-to-tasks-1"><i class="fa fa-check"></i>Answers to Tasks</a></li>
+<li class="chapter" data-level="" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#additional-resources"><i class="fa fa-check"></i>Additional Resources</a></li>
+<li class="chapter" data-level="" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#optional-enhanced-mapping-with-the-ggplot2-package"><i class="fa fa-check"></i>Optional: enhanced mapping with the <code>ggplot2</code> package</a></li>
+<li class="chapter" data-level="" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#appendix-named-colours"><i class="fa fa-check"></i>Appendix: Named Colours</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="spatial-interpolation.html"><a href="spatial-interpolation.html"><i class="fa fa-check"></i><b>3</b> Spatial Interpolation</a>
+<ul>
+<li class="chapter" data-level="" data-path="spatial-interpolation.html"><a href="spatial-interpolation.html#overview-1"><i class="fa fa-check"></i>Overview</a></li>
+<li class="chapter" data-level="3.1" data-path="spatial-interpolation.html"><a href="spatial-interpolation.html#kernel-density-estimation-point-observations"><i class="fa fa-check"></i><b>3.1</b> Kernel Density Estimation (point observations)</a></li>
+<li class="chapter" data-level="3.2" data-path="spatial-interpolation.html"><a href="spatial-interpolation.html#inverse-distance-weighting-point-values"><i class="fa fa-check"></i><b>3.2</b> Inverse Distance Weighting (point values)</a></li>
+<li class="chapter" data-level="3.3" data-path="spatial-interpolation.html"><a href="spatial-interpolation.html#area-weighted-interpolation-area-to-area"><i class="fa fa-check"></i><b>3.3</b> Area Weighted interpolation (area to area)</a></li>
+<li class="chapter" data-level="3.4" data-path="spatial-interpolation.html"><a href="spatial-interpolation.html#dasymetric-interpolation"><i class="fa fa-check"></i><b>3.4</b> Dasymetric Interpolation</a></li>
+<li class="chapter" data-level="" data-path="spatial-interpolation.html"><a href="spatial-interpolation.html#answers-to-tasks-2"><i class="fa fa-check"></i>Answers to Tasks</a></li>
+<li class="chapter" data-level="" data-path="spatial-interpolation.html"><a href="spatial-interpolation.html#optional-fine-tuning-idw"><i class="fa fa-check"></i>Optional: Fine tuning IDW</a>
+<ul>
+<li class="chapter" data-level="" data-path="spatial-interpolation.html"><a href="spatial-interpolation.html#answer-to-additional-task"><i class="fa fa-check"></i>Answer to Additional Task</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>4</b> Regression</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#overview-2"><i class="fa fa-check"></i>Overview</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#which-regression-approach"><i class="fa fa-check"></i>Which regression approach?</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#packages-1"><i class="fa fa-check"></i>Packages</a></li>
+</ul></li>
+<li class="chapter" data-level="4.1" data-path="regression.html"><a href="regression.html#standard-linear-regression-models-ols"><i class="fa fa-check"></i><b>4.1</b> Standard linear regression models (OLS)</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#specifying-the-model"><i class="fa fa-check"></i>Specifying the model</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="regression.html"><a href="regression.html#binomial-logistic-regression-for-binary-variables"><i class="fa fa-check"></i><b>4.2</b> Binomial Logistic Regression for binary variables</a></li>
+<li class="chapter" data-level="4.3" data-path="regression.html"><a href="regression.html#poisson-regression-for-count-variables"><i class="fa fa-check"></i><b>4.3</b> Poisson Regression for count variables</a></li>
+<li class="chapter" data-level="4.4" data-path="regression.html"><a href="regression.html#outliers-and-robust-regression"><i class="fa fa-check"></i><b>4.4</b> Outliers and Robust regression</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#addendum-prediction-vs-inference"><i class="fa fa-check"></i>Addendum: Prediction vs Inference</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#answers-to-tasks-3"><i class="fa fa-check"></i>Answers to Tasks</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#optional-the-maup"><i class="fa fa-check"></i>Optional: the MAUP</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="regression.html"><a href="regression.html#introduction"><i class="fa fa-check"></i><b>4.4.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.4.2" data-path="regression.html"><a href="regression.html#impact-on-correlations-of-counts"><i class="fa fa-check"></i><b>4.4.2</b> Impact on Correlations of Counts</a></li>
+<li class="chapter" data-level="4.4.3" data-path="regression.html"><a href="regression.html#impact-on-models"><i class="fa fa-check"></i><b>4.4.3</b> Impact on models</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#additional-resources-1"><i class="fa fa-check"></i>Additional Resources</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><i class="fa fa-check"></i><b>5</b> Spatial Models: spatial autocorrelation and cluster analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#overview-3"><i class="fa fa-check"></i>Overview</a></li>
+<li class="chapter" data-level="" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#data-and-packages"><i class="fa fa-check"></i>Data and Packages</a></li>
+<li class="chapter" data-level="5.1" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#defining-nearby-neighbour-lists"><i class="fa fa-check"></i><b>5.1</b> Defining nearby: neighbour lists</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#neigbours-by-ajacency"><i class="fa fa-check"></i><b>5.1.1</b> Neigbours by ajacency</a></li>
+<li class="chapter" data-level="5.1.2" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#neighbours-by-nearest-n"><i class="fa fa-check"></i><b>5.1.2</b> Neighbours by nearest <span class="math inline">\(n\)</span></a></li>
+<li class="chapter" data-level="5.1.3" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#neighbours-by-distance"><i class="fa fa-check"></i><b>5.1.3</b> Neighbours by distance</a></li>
+<li class="chapter" data-level="5.1.4" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#summary-1"><i class="fa fa-check"></i><b>5.1.4</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#spatial-autocorrelation-and-clusters"><i class="fa fa-check"></i><b>5.2</b> Spatial Autocorrelation and Clusters</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#neighbours-and-lagged-mean-plots"><i class="fa fa-check"></i><b>5.2.1</b> Neighbours and Lagged Mean Plots</a></li>
+<li class="chapter" data-level="5.2.2" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#morans-i-for-determining-clusters-and-spatial-autocorrelation"><i class="fa fa-check"></i><b>5.2.2</b> Moran’s I for determining Clusters and Spatial Autocorrelation</a></li>
+<li class="chapter" data-level="5.2.3" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#lisa-for-determining-local-clusters-and-spatial-autocorrelation"><i class="fa fa-check"></i><b>5.2.3</b> LISA for determining <em>local</em> clusters and spatial autocorrelation</a></li>
+<li class="chapter" data-level="5.2.4" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#getis-ord-g-statistic"><i class="fa fa-check"></i><b>5.2.4</b> Getis-Ord G statistic</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#answers-to-tasks-4"><i class="fa fa-check"></i>Answers to Tasks</a></li>
+<li class="chapter" data-level="" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#useful-links"><i class="fa fa-check"></i>Useful Links</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html"><i class="fa fa-check"></i><b>6</b> Spatial Varying Coefficient Models</a>
+<ul>
+<li class="chapter" data-level="" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#overview-4"><i class="fa fa-check"></i>Overview</a></li>
+<li class="chapter" data-level="" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#data-and-packages-1"><i class="fa fa-check"></i>Data and Packages</a></li>
+<li class="chapter" data-level="6.1" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#local-vs-global-models"><i class="fa fa-check"></i><b>6.1</b> Local vs Global models</a></li>
+<li class="chapter" data-level="6.2" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#geographically-weighted-regression"><i class="fa fa-check"></i><b>6.2</b> Geographically Weighted Regression</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#description"><i class="fa fa-check"></i><b>6.2.1</b> Description</a></li>
+<li class="chapter" data-level="6.2.2" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#undertaking-a-gwr"><i class="fa fa-check"></i><b>6.2.2</b> Undertaking a GWR</a></li>
+<li class="chapter" data-level="6.2.3" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#evaluating-the-results"><i class="fa fa-check"></i><b>6.2.3</b> Evaluating the results</a></li>
+<li class="chapter" data-level="6.2.4" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#mapping-gwr-outputs"><i class="fa fa-check"></i><b>6.2.4</b> Mapping GWR outputs</a></li>
+<li class="chapter" data-level="6.2.5" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#gwr-summary"><i class="fa fa-check"></i><b>6.2.5</b> GWR Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#multi-scale-gwr"><i class="fa fa-check"></i><b>6.3</b> Multi-scale GWR</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#description-1"><i class="fa fa-check"></i><b>6.3.1</b> Description</a></li>
+<li class="chapter" data-level="6.3.2" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#undertaking-a-mgwr"><i class="fa fa-check"></i><b>6.3.2</b> Undertaking a MGWR</a></li>
+<li class="chapter" data-level="6.3.3" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#evaluating-the-results-1"><i class="fa fa-check"></i><b>6.3.3</b> Evaluating the results</a></li>
+<li class="chapter" data-level="6.3.4" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#mapping-mgwr-outputs"><i class="fa fa-check"></i><b>6.3.4</b> Mapping MGWR outputs</a></li>
+<li class="chapter" data-level="6.3.5" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#comparing-gwr-and-mgwr"><i class="fa fa-check"></i><b>6.3.5</b> Comparing GWR and MGWR</a></li>
+<li class="chapter" data-level="6.3.6" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#mgwr-summary"><i class="fa fa-check"></i><b>6.3.6</b> MGWR Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#optional-generalised-additive-models"><i class="fa fa-check"></i>Optional: Generalised Additive Models</a>
+<ul>
+<li class="chapter" data-level="6.3.7" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#description-2"><i class="fa fa-check"></i><b>6.3.7</b> Description</a></li>
+<li class="chapter" data-level="6.3.8" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#undertaking-a-ggp-gam"><i class="fa fa-check"></i><b>6.3.8</b> Undertaking a GGP-GAM</a></li>
+<li class="chapter" data-level="6.3.9" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#evaluating-the-results-2"><i class="fa fa-check"></i><b>6.3.9</b> Evaluating the results</a></li>
+<li class="chapter" data-level="6.3.10" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#ggp-gam-svcs"><i class="fa fa-check"></i><b>6.3.10</b> GGP-GAM SVCs</a></li>
+<li class="chapter" data-level="6.3.11" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#ggp-gam-summary"><i class="fa fa-check"></i><b>6.3.11</b> GGP-GAM summary</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#answers-to-tasks-5"><i class="fa fa-check"></i>Answers to Tasks</a></li>
+<li class="chapter" data-level="" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#references"><i class="fa fa-check"></i>References</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html"><i class="fa fa-check"></i><b>7</b> Classification and Alternative Representations</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#classification"><i class="fa fa-check"></i><b>7.1</b> Classification</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#overview-5"><i class="fa fa-check"></i><b>7.1.1</b> Overview</a></li>
+<li class="chapter" data-level="7.1.2" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#pca-transformation"><i class="fa fa-check"></i><b>7.1.2</b> PCA transformation</a></li>
+<li class="chapter" data-level="7.1.3" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#k-means-cluster-analysis"><i class="fa fa-check"></i><b>7.1.3</b> <span class="math inline">\(k\)</span>-means Cluster Analysis</a></li>
+<li class="chapter" data-level="7.1.4" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#diagnostics"><i class="fa fa-check"></i><b>7.1.4</b> Diagnostics</a></li>
+<li class="chapter" data-level="7.1.5" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#mapping"><i class="fa fa-check"></i><b>7.1.5</b> Mapping</a></li>
+<li class="chapter" data-level="7.1.6" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#further-resources-1"><i class="fa fa-check"></i><b>7.1.6</b> Further Resources</a></li>
+<li class="chapter" data-level="7.1.7" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#references-1"><i class="fa fa-check"></i><b>7.1.7</b> References</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#optional-alternative-spatial-visualisations"><i class="fa fa-check"></i><b>7.2</b> Optional: Alternative spatial visualisations</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#overview-6"><i class="fa fa-check"></i><b>7.2.1</b> Overview</a></li>
+<li class="chapter" data-level="7.2.2" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#the-invisibility-problem"><i class="fa fa-check"></i><b>7.2.2</b> The invisibility problem</a></li>
+<li class="chapter" data-level="7.2.3" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#cartograms"><i class="fa fa-check"></i><b>7.2.3</b> Cartograms</a></li>
+<li class="chapter" data-level="7.2.4" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#hexagonal-binning-and-tile-maps"><i class="fa fa-check"></i><b>7.2.4</b> Hexagonal binning and Tile maps</a></li>
+<li class="chapter" data-level="7.2.5" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#references-2"><i class="fa fa-check"></i><b>7.2.5</b> References</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="creating-documents-in-rmarkdown.html"><a href="creating-documents-in-rmarkdown.html"><i class="fa fa-check"></i><b>8</b> Creating documents in RMarkdown</a>
+<ul>
+<li class="chapter" data-level="" data-path="creating-documents-in-rmarkdown.html"><a href="creating-documents-in-rmarkdown.html#overview-7"><i class="fa fa-check"></i>Overview</a></li>
+<li class="chapter" data-level="8.1" data-path="creating-documents-in-rmarkdown.html"><a href="creating-documents-in-rmarkdown.html#resources"><i class="fa fa-check"></i><b>8.1</b> Resources</a></li>
+<li class="chapter" data-level="8.2" data-path="creating-documents-in-rmarkdown.html"><a href="creating-documents-in-rmarkdown.html#tasks"><i class="fa fa-check"></i><b>8.2</b> Tasks</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">GEOG3915 GeoComputation and Spatial Analysis practicals</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="spatial-varying-coefficient-models" class="section level1 hasAnchor" number="6">
+<h1><span class="header-section-number">Unit 6</span> Spatial Varying Coefficient Models<a href="spatial-varying-coefficient-models.html#spatial-varying-coefficient-models" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="overview-4" class="section level2 unnumbered hasAnchor">
+<h2>Overview<a href="spatial-varying-coefficient-models.html#overview-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>This practical extends the regression models that you constructed in Week 4 to the spatial (special?) case, and particularly considers Spatially Varying Coefficient (SVC) models.</p>
+<p>A coefficient, <span class="math inline">\(\beta\)</span>, in a regression model describe the relationship between a driver (<span class="math inline">\(x\)</span>, predictor variable) and an outcome (<span class="math inline">\(y\)</span> the target variable). It describes how <span class="math inline">\(y\)</span> changes with changes in <span class="math inline">\(x\)</span>. When examined locally, that relationship may vary with location for a number of reasons:</p>
+<ul>
+<li>a poor conceptual model</li>
+<li>social geography is not physics: laws do not govern behaviours, preferences, attitudes and sentiment</li>
+<li>bad measurements</li>
+<li>unaccounted for local factors</li>
+<li><strong>OR</strong> process spatial heterogeneity (that is a process whose statistical relationships vary over space)</li>
+</ul>
+<p>In the latter case, ‘whole map’ or <em>global</em> regression models such as the linear regressions in Week 4, may unreasonably assume relationship spatial stationarity. The basic idea behind SVC models is that the relationship between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> may be *spatially non-stationary** (i.e. may vary in different in different locations).</p>
+<p>A key advantage of SVCs is that they generate coefficient estimates for different locations in the study area, which can be mapped. The maps indicate how the relationship between an outcome ( <span class="math inline">\(y\)</span> ) and factors ( <span class="math inline">\(x\)</span>’s ) varies spatially.</p>
+<p>This practical introduces Geographically Weighted Regression (GWR) <span class="citation">Fotheringham et al. (<a href="#ref-fotheringham2003geographically">2003</a>)</span> as an approach for handling spatially autocorrelated data. GWR is the SVC ‘brand leader’.</p>
+<p>The first part of the practical undertakes a standard GWR and the second explores <em>Multi-scale</em> GWR (MGWR) <span class="citation">Fotheringham et al. (<a href="#ref-fotheringham2017multiscale">2017</a>)</span>. MGWR is now considered as the default GWR <span class="citation">(<a href="#ref-comber2023route"><span class="nocase">Comber et al.</span> 2023</a>)</span>. The final <strong>optional</strong> section illustrates Generalised Additive Models with Gaussian Process splines. The latter are a recent advance <span class="citation">(<a href="#ref-comber2024multiscale">Comber et al. 2024</a>)</span> and are a faster and more precise alternative SVC to the GWR and able to handle a variety of response types (i.e. different distributions of <span class="math inline">\(y\)</span> ).</p>
+</div>
+<div id="data-and-packages-1" class="section level2 unnumbered hasAnchor">
+<h2>Data and Packages<a href="spatial-varying-coefficient-models.html#data-and-packages-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>This session will again use the Georgia data that was used in Week 4 and will again construct a regression model of the median income variable (<code>MedInc</code>), but with slightly different set of predictor variables.</p>
+<p>You will need the following packages</p>
+<div class="sourceCode" id="cb348"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb348-1"><a href="spatial-varying-coefficient-models.html#cb348-1" tabindex="-1"></a><span class="fu">library</span>(sf)         <span class="co"># for spatial data</span></span>
+<span id="cb348-2"><a href="spatial-varying-coefficient-models.html#cb348-2" tabindex="-1"></a><span class="fu">library</span>(tidyverse)  <span class="co"># for everything!</span></span>
+<span id="cb348-3"><a href="spatial-varying-coefficient-models.html#cb348-3" tabindex="-1"></a><span class="fu">library</span>(GWmodel)    <span class="co"># to undertake the GWR</span></span>
+<span id="cb348-4"><a href="spatial-varying-coefficient-models.html#cb348-4" tabindex="-1"></a><span class="fu">library</span>(cowplot)    <span class="co"># for plotting multiple graphics</span></span></code></pre></div>
+<p>And you will need to load the <code>georgia</code> data as in Week 4 which contains census data for the counties in Georgia, USA.</p>
+<div class="sourceCode" id="cb349"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb349-1"><a href="spatial-varying-coefficient-models.html#cb349-1" tabindex="-1"></a><span class="fu">download.file</span>(<span class="st">&quot;https://github.com/gwverse/gw/blob/main/data/georgia.rda?raw=True&quot;</span>,</span>
+<span id="cb349-2"><a href="spatial-varying-coefficient-models.html#cb349-2" tabindex="-1"></a>              <span class="st">&quot;./georgia.RData&quot;</span>, <span class="at">mode =</span> <span class="st">&quot;wb&quot;</span>)</span>
+<span id="cb349-3"><a href="spatial-varying-coefficient-models.html#cb349-3" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;georgia.RData&quot;</span>)</span></code></pre></div>
+<p>You should examine this in the usual way - you may want to practice your EDA and spatial EDA outside of the practical - and recall that this data has a number of County level variables including:</p>
+<ul>
+<li>% with college degree (<code>PctBach</code>)</li>
+<li>% elderly (<code>PctEld</code>)</li>
+<li>% foreign born (<code>PctFB</code>)</li>
+<li>median income of the county (<code>MedInc</code> in dollars)</li>
+</ul>
+</div>
+<div id="local-vs-global-models" class="section level2 hasAnchor" number="6.1">
+<h2><span class="header-section-number">6.1</span> Local vs Global models<a href="spatial-varying-coefficient-models.html#local-vs-global-models" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Recall that the classic OLS regression has the basic form of:</p>
+<p><span class="math display">\[
+y_i = \beta_{0} + \sum_{k=1}^{m}\beta_{k}x_{ik} + \epsilon_i
+\]</span></p>
+<p>where for observations indexed by <span class="math inline">\(i=1 \dots n\)</span>, <span class="math inline">\(y_i\)</span> is the response variable, <span class="math inline">\(x_{ik}\)</span> is the value of the <span class="math inline">\(k^{th}\)</span> predictor variable, <span class="math inline">\(m\)</span> is the number of predictor variables, <span class="math inline">\(\beta_0\)</span> is the intercept term, <span class="math inline">\(\beta_k\)</span> is the regression coefficient for the <span class="math inline">\(k_{th}\)</span> predictor variable and <span class="math inline">\(\epsilon_i\)</span> is the random error term that is independently normally distributed with zero mean and common variance <span class="math inline">\(\sigma^2\)</span>. OLS is commonly used for model estimation in linear regression models.</p>
+<p>And that this is specified using the function <code>lm</code> (<em>linear model</em>). The model we constructed in Week 5 is recreated here with the response variable <span class="math inline">\(y\)</span> is median income (<code>MedInc</code>), and the 6 (i.e. <span class="math inline">\(k\)</span>) socio-economic variables are <code>PctBach</code>, <code>PctEld</code> and <code>PctFB</code> are the different predictor variables, the <span class="math inline">\(k\)</span> different <span class="math inline">\(x\)</span>’s:</p>
+<div class="sourceCode" id="cb350"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb350-1"><a href="spatial-varying-coefficient-models.html#cb350-1" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">lm</span>(MedInc<span class="sc">~</span> PctBach <span class="sc">+</span> PctEld <span class="sc">+</span> PctFB, <span class="at">data =</span> georgia) </span>
+<span id="cb350-2"><a href="spatial-varying-coefficient-models.html#cb350-2" tabindex="-1"></a><span class="fu">summary</span>(m)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = MedInc ~ PctBach + PctEld + PctFB, data = georgia)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -27979  -4789   -922   2712  34805 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  51566.1     3528.2  14.616  &lt; 2e-16 ***
+## PctBach        798.0      147.9   5.397 2.49e-07 ***
+## PctEld       -1789.0      231.2  -7.738 1.21e-12 ***
+## PctFB        -1902.0      691.4  -2.751  0.00665 ** 
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 7672 on 155 degrees of freedom
+## Multiple R-squared:  0.4771, Adjusted R-squared:  0.4669 
+## F-statistic: 47.13 on 3 and 155 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>Recall also from Week 2 that we are interested in the following regression model properties:</p>
+<ul>
+<li><strong>Significance</strong> indicated by the <em>p-value</em> in the column <span class="math inline">\(Pr(&gt;|t|)\)</span> as a measure of how statistically surprising the relationship is;</li>
+<li>The <strong>Coefficient Estimates</strong> (the <span class="math inline">\(\beta_{k}\)</span> values) that describe how change in the <span class="math inline">\(x_k\)</span> are related (linearly) to changes in <span class="math inline">\(y\)</span>;</li>
+<li>And the <strong>Model fit</strong> given by the <span class="math inline">\(R^2\)</span> value, that tells us how well the model predicts <span class="math inline">\(y\)</span>.</li>
+</ul>
+<p>All well and good. However the implicit assumptions in linear regression that the relationships between the various <span class="math inline">\(x\)</span> terms and <span class="math inline">\(y\)</span> are linear, that the error terms have identical and independent normal distributions and that the relationships between the <span class="math inline">\(x_k\)</span>’s and <span class="math inline">\(y\)</span> are the same everywhere, are quite often a consequence of <strong>wishful thinking</strong>, rather than a rigorously derived conclusion. To take a step closer to reality, it is a good idea to look beyond these assumptions to obtain more reliable predictions, or to gain a better theoretical understanding of the process being considered.</p>
+<p>Regression models (and most other models) are aspatial and because they consider <em>all</em> of the data in the study area in one universal model, they are referred to as <em>Global</em> models. For example, the coefficient estimates of the model Median Income in Georgia assume that the contributions made by the different variables in predicting <code>MedInc</code> are the same across the study area. In reality this assumption of spatial invariance is violated in many instances when geographic phenomena are considered.<br />
+For example, the association between <code>PctBach</code> and <code>MedInc</code>, might be different in different places. This is a core concept for geographical data analysis, that of process <em>spatial heterogeneity</em>. That is, <em>how</em> and <em>where</em> processes, <em>relationships</em>, and other phenomena <em>vary spatially</em>, as introduced in Week 1 and reinforced in the lecture this week.</p>
+<p>The standard OLS regression model (above) can be extended to a Spatially Varying Coefficient (SVC) model. The form is the same except that now location is included and a value for each regression coefficient is assigned to a location <span class="math inline">\((u,v)\)</span> in space (e.g. <span class="math inline">\(u\)</span> is an Easting and <span class="math inline">\(v\)</span> a Northing), so that we denote it <span class="math inline">\(\beta_k(u,v)\)</span>:</p>
+<p><span class="math display">\[
+y = \beta_{0_(u_i, v_i)} + \sum_{m}^{k=1}\beta_{k}x_{ik_{(u_i, v_i)}} + \epsilon_{(u_i, v_i)}
+\]</span></p>
+<p>In this session you will explore GWR approaches for solving this equation (and thereby for handling the impacts of any spatial dependencies in the error terms) and for quantifying process spatial heterogeneity using Geographically Weighted Regression</p>
+<p>SVC approaches use relative location (i.e. distance between observations) and because degrees have different dimensions depending on where you are on the earth<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>, the data need to be converted to a Geographic projection. Here the the <code>georgia</code> data are transformed to a the EPSG 102003 USA Contiguous Albers Equal Area Conic projection.</p>
+<div class="sourceCode" id="cb352"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb352-1"><a href="spatial-varying-coefficient-models.html#cb352-1" tabindex="-1"></a>georgia <span class="ot">=</span> <span class="fu">st_transform</span>(georgia, <span class="st">&quot;ESRI:102003&quot;</span>)</span></code></pre></div>
+</div>
+<div id="geographically-weighted-regression" class="section level2 hasAnchor" number="6.2">
+<h2><span class="header-section-number">6.2</span> Geographically Weighted Regression<a href="spatial-varying-coefficient-models.html#geographically-weighted-regression" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="description" class="section level3 hasAnchor" number="6.2.1">
+<h3><span class="header-section-number">6.2.1</span> Description<a href="spatial-varying-coefficient-models.html#description" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>In overview, geographically weighted (GW) approaches use a moving window or kernel that passes through the study area. At each location being considered, data under the kernel are subsetted, weighted by their distance to the kernel centre and used to make a local calculation of some kind. In GWR this is a regression. In this way GW approaches construct a series of models at discrete locations rather than a single one for whole study area.</p>
+<p>There are a number of options for the shape of the kernel - see page 6 in <span class="citation"><span class="nocase">Gollini et al.</span> (<a href="#ref-gollini2015gwmodel">2015</a>)</span> - and the default is to use a bi-square kernel. This generates higher weights at locations very near to the kernel centre relative to those towards the edge.</p>
+<p>The size or <em>bandwidth</em> of the kernel is critical as it determines the degree of smoothing and the scale over which the GWR operates. This can and should be optimally determined rather than just picking a bandwidth. An optimal bandwidth for GWR can be found by minimising a model fit diagnostic. Options include a leave-one-out cross-validation (CV) score which optimises model prediction accuracy and the Akaike Information Criterion (AIC) which optimises model parsimony - that is it trades off prediction accuracy with model complexity (number of variables used). Note also that the kernel can be defined as a fixed value (i.e. a distance), or in an adaptive way (i.e. with a specific number of nearby data points). <span class="citation"><span class="nocase">Gollini et al.</span> (<a href="#ref-gollini2015gwmodel">2015</a>)</span> provide a description of this.</p>
+<p>Thus there are 2 basic steps to any GW approach:</p>
+<ol style="list-style-type: decimal">
+<li>Determine the optimal kernel bandwidth (i.e. how many data points to include in each local model or the kernel / window size);</li>
+<li>Fit the GW model.</li>
+</ol>
+</div>
+<div id="undertaking-a-gwr" class="section level3 hasAnchor" number="6.2.2">
+<h3><span class="header-section-number">6.2.2</span> Undertaking a GWR<a href="spatial-varying-coefficient-models.html#undertaking-a-gwr" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>These steps are undertaken in the code block below with an adaptive bandwidth, noting that <code>georgia</code> needs to be converted to an <code>sp</code> format data (the <code>GWmodel</code> package has not been updated to take <code>sf</code> format objects).</p>
+<p>The bandwidth - the kernel size - is critical: it how many data points / observations are included in each local model. However, determining the <em>optimal</em> bandwidth requires different potential bandwidths to be evaluated, which in turn requires some measure of model fit to be applied. There are 2 options for this in a GWR (as indicated above):</p>
+<ul>
+<li>leave-one-out Cross Validation (CV). This essentially removes each observation one at a time for a potential bandwidth, and provides a measure of how well the local model with that bandwidth predicts the value of each removed data point;</li>
+<li>Akaike’s Information Criterion (AIC or corrected AIC, AICc). This provides a measure of model parsimony, a kind of balance between model accuracy and model complexity. A parsimonious model is one that has a explanatory power but is as simple as possible.</li>
+</ul>
+<p>In determining the optimal GWR bandwidth, AIC is preferred to CV because it reflects model parsimony and its use tends to avoid over-fitting GWR models (thus AIC bandwidths tend to be larger than bandwidths found using CV).</p>
+<p>The <code>GWmodel</code> package <span class="citation">(<a href="#ref-lu2014gwmodel">Lu et al. 2014</a>)</span> has tools for determining the optimal GWR bandwidth. Note the the data can be in <code>sp</code> of <code>sf</code> formats - here <code>georgia</code> in <code>sf</code> format as in previous practicals:</p>
+<div class="sourceCode" id="cb353"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb353-1"><a href="spatial-varying-coefficient-models.html#cb353-1" tabindex="-1"></a><span class="co"># determine the kernel bandwidth</span></span>
+<span id="cb353-2"><a href="spatial-varying-coefficient-models.html#cb353-2" tabindex="-1"></a>bw <span class="ot">&lt;-</span> <span class="fu">bw.gwr</span>(MedInc<span class="sc">~</span> PctBach <span class="sc">+</span> PctEld <span class="sc">+</span> PctFB,</span>
+<span id="cb353-3"><a href="spatial-varying-coefficient-models.html#cb353-3" tabindex="-1"></a>             <span class="at">approach =</span> <span class="st">&quot;AIC&quot;</span>,</span>
+<span id="cb353-4"><a href="spatial-varying-coefficient-models.html#cb353-4" tabindex="-1"></a>             <span class="at">adaptive =</span> T,</span>
+<span id="cb353-5"><a href="spatial-varying-coefficient-models.html#cb353-5" tabindex="-1"></a>             <span class="at">data=</span>georgia) </span></code></pre></div>
+<p>You should have a look at the bandwidth: it is an <em>adaptive</em> bandwidth (kernel size) indicating that its size varies but the nearest 48 observations will be used to compute each local weighted regression. Here it, has a value of 48 indicating that 30% of the county data will be used in each local calculation (there are 159 records in the data):</p>
+<div class="sourceCode" id="cb354"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb354-1"><a href="spatial-varying-coefficient-models.html#cb354-1" tabindex="-1"></a>bw</span></code></pre></div>
+<pre><code>## [1] 48</code></pre>
+<p>Try running the below to see the fixed distance bandwidth</p>
+<div class="sourceCode" id="cb356"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb356-1"><a href="spatial-varying-coefficient-models.html#cb356-1" tabindex="-1"></a><span class="co"># determine the kernel bandwidth</span></span>
+<span id="cb356-2"><a href="spatial-varying-coefficient-models.html#cb356-2" tabindex="-1"></a>bw2 <span class="ot">&lt;-</span> <span class="fu">bw.gwr</span>(MedInc<span class="sc">~</span> PctBach <span class="sc">+</span> PctEld <span class="sc">+</span> PctFB, </span>
+<span id="cb356-3"><a href="spatial-varying-coefficient-models.html#cb356-3" tabindex="-1"></a>              <span class="at">approach =</span> <span class="st">&quot;AIC&quot;</span>,</span>
+<span id="cb356-4"><a href="spatial-varying-coefficient-models.html#cb356-4" tabindex="-1"></a>              <span class="at">adaptive =</span> F,</span>
+<span id="cb356-5"><a href="spatial-varying-coefficient-models.html#cb356-5" tabindex="-1"></a>              <span class="at">data=</span>georgia) </span>
+<span id="cb356-6"><a href="spatial-varying-coefficient-models.html#cb356-6" tabindex="-1"></a>bw2</span></code></pre></div>
+<p>This indicates a fixed bandwidth of ~130km. For comparison the distances between each of the counties is summarised below, suggesting that 130km is about 25% of the maximum distance:</p>
+<div class="sourceCode" id="cb357"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb357-1"><a href="spatial-varying-coefficient-models.html#cb357-1" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">as.vector</span>(<span class="fu">st_distance</span>(georgia)))</span></code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##       0   85620  156531  166238  237457  517837</code></pre>
+<p>You should now create the GWR model with adaptive bandwidth stored in <code>bw</code>, and have a look at the outputs:</p>
+<div class="sourceCode" id="cb359"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb359-1"><a href="spatial-varying-coefficient-models.html#cb359-1" tabindex="-1"></a><span class="co"># fit the GWR model</span></span>
+<span id="cb359-2"><a href="spatial-varying-coefficient-models.html#cb359-2" tabindex="-1"></a>m.gwr <span class="ot">&lt;-</span> <span class="fu">gwr.basic</span>(MedInc<span class="sc">~</span> PctBach <span class="sc">+</span> PctEld <span class="sc">+</span> PctFB, </span>
+<span id="cb359-3"><a href="spatial-varying-coefficient-models.html#cb359-3" tabindex="-1"></a>                   <span class="at">adaptive =</span> T,</span>
+<span id="cb359-4"><a href="spatial-varying-coefficient-models.html#cb359-4" tabindex="-1"></a>                   <span class="at">data =</span> georgia,</span>
+<span id="cb359-5"><a href="spatial-varying-coefficient-models.html#cb359-5" tabindex="-1"></a>                   <span class="at">bw =</span> bw)  </span>
+<span id="cb359-6"><a href="spatial-varying-coefficient-models.html#cb359-6" tabindex="-1"></a>m.gwr</span></code></pre></div>
+<pre><code>##    ***********************************************************************
+##    *                       Package   GWmodel                             *
+##    ***********************************************************************
+##    Program starts at: 2026-09-20 09:26:10.370536 
+##    Call:
+##    gwr.basic(formula = MedInc ~ PctBach + PctEld + PctFB, data = georgia, 
+##     bw = bw, adaptive = T)
+## 
+##    Dependent (y) variable:  MedInc
+##    Independent variables:  PctBach PctEld PctFB
+##    Number of data points: 159
+##    ***********************************************************************
+##    *                    Results of Global Regression                     *
+##    ***********************************************************************
+## 
+##    Call:
+##     lm(formula = formula, data = data)
+## 
+##    Residuals:
+##    Min     1Q Median     3Q    Max 
+## -27979  -4789   -922   2712  34805 
+## 
+##    Coefficients:
+##                Estimate Std. Error t value Pr(&gt;|t|)    
+##    (Intercept)  51566.1     3528.2  14.616  &lt; 2e-16 ***
+##    PctBach        798.0      147.9   5.397 2.49e-07 ***
+##    PctEld       -1789.0      231.2  -7.738 1.21e-12 ***
+##    PctFB        -1902.0      691.4  -2.751  0.00665 ** 
+## 
+##    ---Significance stars
+##    Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1 
+##    Residual standard error: 7672 on 155 degrees of freedom
+##    Multiple R-squared: 0.4771
+##    Adjusted R-squared: 0.4669 
+##    F-statistic: 47.13 on 3 and 155 DF,  p-value: &lt; 2.2e-16 
+##    ***Extra Diagnostic information
+##    Residual sum of squares: 9123479259
+##    Sigma(hat): 7623.079
+##    AIC:  3301.791
+##    AICc:  3302.183
+##    BIC:  3183.48
+##    ***********************************************************************
+##    *          Results of Geographically Weighted Regression              *
+##    ***********************************************************************
+## 
+##    *********************Model calibration information*********************
+##    Kernel function: bisquare 
+##    Adaptive bandwidth: 48 (number of nearest neighbours)
+##    Regression points: the same locations as observations are used.
+##    Distance metric: Euclidean distance metric is used.
+## 
+##    ****************Summary of GWR coefficient estimates:******************
+##                  Min.  1st Qu.   Median  3rd Qu.     Max.
+##    Intercept 36563.48 51275.92 57837.02 65500.51 87342.20
+##    PctBach    -117.35   248.02   493.77   892.79  1937.80
+##    PctEld    -3491.73 -2512.30 -2049.24 -1605.11  -793.53
+##    PctFB     -8282.45 -3704.42 -1873.14  -408.21  2581.19
+##    ************************Diagnostic information*************************
+##    Number of data points: 159 
+##    Effective number of parameters (2trace(S) - trace(S&#39;S)): 39.54086 
+##    Effective degrees of freedom (n-2trace(S) + trace(S&#39;S)): 119.4591 
+##    AICc (GWR book, Fotheringham, et al. 2002, p. 61, eq 2.33): 3228.437 
+##    AIC (GWR book, Fotheringham, et al. 2002,GWR p. 96, eq. 4.22): 3178.963 
+##    BIC (GWR book, Fotheringham, et al. 2002,GWR p. 61, eq. 2.34): 3145.556 
+##    Residual sum of squares: 3695485799 
+##    R-square value:  0.7881832 
+##    Adjusted R-square value:  0.7174802 
+## 
+##    ***********************************************************************
+##    Program stops at: 2026-09-20 09:26:10.380996</code></pre>
+<p>The printout gives quite a lot of information: the standard OLS regression model, a summary of the GWR coefficients and a whole range of fit measures (<span class="math inline">\(R^2\)</span>, AIC, BIC).</p>
+</div>
+<div id="evaluating-the-results" class="section level3 hasAnchor" number="6.2.3">
+<h3><span class="header-section-number">6.2.3</span> Evaluating the results<a href="spatial-varying-coefficient-models.html#evaluating-the-results" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The code above prints out the whole model summary. You should compare the summary of the <strong>local</strong> (i.e. spatially varying) GWR coefficient estimates with the <strong>global</strong> (i.e. fixed) outputs of the ordinary regression coefficient estimates. Note the first line of code below. The output of the GWR model has lots of information including a slot called <code>SDF</code> or spatial data frame and this is an <code>sp</code> format object.</p>
+<div class="sourceCode" id="cb361"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb361-1"><a href="spatial-varying-coefficient-models.html#cb361-1" tabindex="-1"></a><span class="co"># GWR outputs</span></span>
+<span id="cb361-2"><a href="spatial-varying-coefficient-models.html#cb361-2" tabindex="-1"></a><span class="fu">names</span>(m.gwr)</span></code></pre></div>
+<pre><code>## [1] &quot;GW.arguments&quot;  &quot;GW.diagnostic&quot; &quot;lm&quot;            &quot;SDF&quot;           &quot;timings&quot;      
+## [6] &quot;this.call&quot;     &quot;Ftests&quot;</code></pre>
+<p>Have a look at the SDF (a spatial object in <code>sp</code> format) and notice the use of <code>@data</code> to access the data table in the code below (it contains lots of information). The code below also extracts the coefficients from the OLS model:</p>
+<div class="sourceCode" id="cb363"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb363-1"><a href="spatial-varying-coefficient-models.html#cb363-1" tabindex="-1"></a><span class="fu">head</span>(m.gwr<span class="sc">$</span>SDF)</span>
+<span id="cb363-2"><a href="spatial-varying-coefficient-models.html#cb363-2" tabindex="-1"></a><span class="co"># the GWR betas (in the first 4 columns)</span></span>
+<span id="cb363-3"><a href="spatial-varying-coefficient-models.html#cb363-3" tabindex="-1"></a><span class="fu">summary</span>(m.gwr<span class="sc">$</span>SDF[, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>])</span>
+<span id="cb363-4"><a href="spatial-varying-coefficient-models.html#cb363-4" tabindex="-1"></a><span class="co"># the OLS coefficients</span></span>
+<span id="cb363-5"><a href="spatial-varying-coefficient-models.html#cb363-5" tabindex="-1"></a><span class="fu">coef</span>(m.gwr<span class="sc">$</span>lm)</span></code></pre></div>
+<p>So the object returned by the MGWR function has the MGWR coefficient estimates in the <code>SDF</code> of the <code>GWmodel</code> output which in<code>sf</code> format, and the global OLS coefficients are in the <code>lm</code> of the output.</p>
+<div class="sourceCode" id="cb364"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb364-1"><a href="spatial-varying-coefficient-models.html#cb364-1" tabindex="-1"></a><span class="co"># get a summary of the GWR coefficients</span></span>
+<span id="cb364-2"><a href="spatial-varying-coefficient-models.html#cb364-2" tabindex="-1"></a>coefs_gwr <span class="ot">=</span> <span class="fu">apply</span>(m.gwr<span class="sc">$</span>SDF <span class="sc">|&gt;</span> <span class="fu">st_drop_geometry</span>() <span class="sc">|&gt;</span> <span class="fu">select</span>( Intercept<span class="sc">:</span>PctFB), </span>
+<span id="cb364-3"><a href="spatial-varying-coefficient-models.html#cb364-3" tabindex="-1"></a>                  <span class="dv">2</span>, </span>
+<span id="cb364-4"><a href="spatial-varying-coefficient-models.html#cb364-4" tabindex="-1"></a>                  summary)</span>
+<span id="cb364-5"><a href="spatial-varying-coefficient-models.html#cb364-5" tabindex="-1"></a><span class="co"># link to bandwidths and create a table</span></span>
+<span id="cb364-6"><a href="spatial-varying-coefficient-models.html#cb364-6" tabindex="-1"></a>tab.gwr <span class="ot">=</span> <span class="fu">data.frame</span>(<span class="fu">t</span>(coefs_gwr), <span class="fu">coef</span>(m.gwr<span class="sc">$</span>lm))</span>
+<span id="cb364-7"><a href="spatial-varying-coefficient-models.html#cb364-7" tabindex="-1"></a><span class="co"># rename 2nd and 5th columns</span></span>
+<span id="cb364-8"><a href="spatial-varying-coefficient-models.html#cb364-8" tabindex="-1"></a><span class="fu">names</span>(tab.gwr)[<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">5</span>, <span class="dv">7</span>)] <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;Q1&quot;</span>, <span class="st">&quot;Q3&quot;</span>, <span class="st">&quot;Global.Coef&quot;</span>)</span>
+<span id="cb364-9"><a href="spatial-varying-coefficient-models.html#cb364-9" tabindex="-1"></a><span class="co"># have a look (to 1 significant figure)!</span></span>
+<span id="cb364-10"><a href="spatial-varying-coefficient-models.html#cb364-10" tabindex="-1"></a><span class="fu">round</span>(tab.gwr, <span class="dv">1</span>)</span></code></pre></div>
+<p>You could write this out to a csv file for inclusion in a report or similar as in the GWR coefficient example above.</p>
+<div class="sourceCode" id="cb365"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb365-1"><a href="spatial-varying-coefficient-models.html#cb365-1" tabindex="-1"></a><span class="fu">write.csv</span>(tab.gwr, <span class="at">file =</span> <span class="st">&quot;gwr_ceofs.csv&quot;</span>, <span class="at">row.names =</span> F)</span></code></pre></div>
+<table>
+<caption><span id="tab:unnamed-chunk-219">Table 6.1: </span>A comparison of the GWR and OLS regression coefficient estimates.</caption>
+<colgroup>
+<col width="14%" />
+<col width="11%" />
+<col width="11%" />
+<col width="11%" />
+<col width="11%" />
+<col width="11%" />
+<col width="11%" />
+<col width="17%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="right">Min.</th>
+<th align="right">Q1</th>
+<th align="right">Median</th>
+<th align="right">Mean</th>
+<th align="right">Q3</th>
+<th align="right">Max.</th>
+<th align="right">Global.Coef</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Intercept</td>
+<td align="right">36563.5</td>
+<td align="right">51275.9</td>
+<td align="right">57837.0</td>
+<td align="right">57684.2</td>
+<td align="right">65500.5</td>
+<td align="right">87342.2</td>
+<td align="right">51566.1</td>
+</tr>
+<tr class="even">
+<td align="left">PctBach</td>
+<td align="right">-117.4</td>
+<td align="right">248.0</td>
+<td align="right">493.8</td>
+<td align="right">597.2</td>
+<td align="right">892.8</td>
+<td align="right">1937.8</td>
+<td align="right">798.0</td>
+</tr>
+<tr class="odd">
+<td align="left">PctEld</td>
+<td align="right">-3491.7</td>
+<td align="right">-2512.3</td>
+<td align="right">-2049.2</td>
+<td align="right">-2095.0</td>
+<td align="right">-1605.1</td>
+<td align="right">-793.5</td>
+<td align="right">-1789.0</td>
+</tr>
+<tr class="even">
+<td align="left">PctFB</td>
+<td align="right">-8282.4</td>
+<td align="right">-3704.4</td>
+<td align="right">-1873.1</td>
+<td align="right">-2260.0</td>
+<td align="right">-408.2</td>
+<td align="right">2581.2</td>
+<td align="right">-1902.0</td>
+</tr>
+</tbody>
+</table>
+<p>So the Global coefficient estimates are similar to the Mean and Median values of the GWR output. But you can see the variation in the association between median income (<code>MedInc</code>) and the different coefficient estimates.</p>
+<p>So for example, for <code>PctBach</code> (with degrees) :</p>
+<ul>
+<li>the <em>global</em> coefficient estimate is 798.</li>
+<li>the <em>local</em> coefficient estimate varies from 248 to 892.8 between the 1st and 3rd quartiles.</li>
+</ul>
+</div>
+<div id="mapping-gwr-outputs" class="section level3 hasAnchor" number="6.2.4">
+<h3><span class="header-section-number">6.2.4</span> Mapping GWR outputs<a href="spatial-varying-coefficient-models.html#mapping-gwr-outputs" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The variation in the GWR coefficient estimates can be mapped to show how different factors are varying associated with Median Income in different parts of Georgia. Recall that these are held in the <code>SDF</code> of the <code>GWmodel</code> output which is in<code>sf</code> format. It is extracted in the code below.</p>
+<div class="sourceCode" id="cb366"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb366-1"><a href="spatial-varying-coefficient-models.html#cb366-1" tabindex="-1"></a>gwr_sf <span class="ot">=</span> m.gwr<span class="sc">$</span>SDF</span>
+<span id="cb366-2"><a href="spatial-varying-coefficient-models.html#cb366-2" tabindex="-1"></a>gwr_sf</span></code></pre></div>
+<p>There is lots of information in the GWR output, but here we are interested in are the coefficient estimates and the t-values whose names are the same as the inputs (and the t-values with <code>_TV</code>).</p>
+<p>The code below creates maps where large variation in the relationship between the predictor variable and median income was found as in the figure below:</p>
+<div class="sourceCode" id="cb367"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb367-1"><a href="spatial-varying-coefficient-models.html#cb367-1" tabindex="-1"></a><span class="fu">ggplot</span>(gwr_sf) <span class="sc">+</span></span>
+<span id="cb367-2"><a href="spatial-varying-coefficient-models.html#cb367-2" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> PctEld)) <span class="sc">+</span></span>
+<span id="cb367-3"><a href="spatial-varying-coefficient-models.html#cb367-3" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>() <span class="sc">+</span></span>
+<span id="cb367-4"><a href="spatial-varying-coefficient-models.html#cb367-4" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-222"></span>
+<img src="_main_files/figure-html/unnamed-chunk-222-1.png" alt="Maps of the GWR coefficient estimates." width="672" />
+<p class="caption">
+Figure 6.1: Maps of the GWR coefficient estimates.
+</p>
+</div>
+<p>It is also possible to create maps showing coefficients whose values flip from positive to negative in different parts of the state.</p>
+<div class="sourceCode" id="cb368"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb368-1"><a href="spatial-varying-coefficient-models.html#cb368-1" tabindex="-1"></a><span class="co"># PctFB</span></span>
+<span id="cb368-2"><a href="spatial-varying-coefficient-models.html#cb368-2" tabindex="-1"></a>p1 <span class="ot">=</span> <span class="fu">ggplot</span>(gwr_sf) <span class="sc">+</span></span>
+<span id="cb368-3"><a href="spatial-varying-coefficient-models.html#cb368-3" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> PctFB)) <span class="sc">+</span></span>
+<span id="cb368-4"><a href="spatial-varying-coefficient-models.html#cb368-4" tabindex="-1"></a>  <span class="fu">scale_fill_gradient2</span>(<span class="at">low =</span> <span class="st">&quot;red&quot;</span>, <span class="at">high =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb368-5"><a href="spatial-varying-coefficient-models.html#cb368-5" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb368-6"><a href="spatial-varying-coefficient-models.html#cb368-6" tabindex="-1"></a><span class="co"># PctBach</span></span>
+<span id="cb368-7"><a href="spatial-varying-coefficient-models.html#cb368-7" tabindex="-1"></a>p2 <span class="ot">=</span> <span class="fu">ggplot</span>(gwr_sf) <span class="sc">+</span></span>
+<span id="cb368-8"><a href="spatial-varying-coefficient-models.html#cb368-8" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> PctBach)) <span class="sc">+</span></span>
+<span id="cb368-9"><a href="spatial-varying-coefficient-models.html#cb368-9" tabindex="-1"></a>  <span class="fu">scale_fill_gradient2</span>(<span class="at">low =</span> <span class="st">&quot;red&quot;</span>, <span class="at">high =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb368-10"><a href="spatial-varying-coefficient-models.html#cb368-10" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb368-11"><a href="spatial-varying-coefficient-models.html#cb368-11" tabindex="-1"></a><span class="fu">plot_grid</span>(p1, p2, <span class="at">ncol =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-223"></span>
+<img src="_main_files/figure-html/unnamed-chunk-223-1.png" alt="Maps of GWR coefficient estimates, whose values flip from positive to negative." width="672" />
+<p class="caption">
+Figure 6.2: Maps of GWR coefficient estimates, whose values flip from positive to negative.
+</p>
+</div>
+<p>So what we see here are the <em>local</em> variations in the degree to which changes in different variables are associated with changes in Median Income. The maps above are not maps of the predictor variables (<code>PctBach</code>, <code>PctPov</code> and <code>PctBlack</code>). Rather, they show how the relationships between the inputs and Median Income vary spatially - the spatially vary strength of the relationships,</p>
+<p>Now a critical aspect is that coefficient significance through the p-value is now local rather than a global statistic. Here we need to go into the t-values from which p-values are derived<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>. Significant coefficient estimates are those whose t-values are less than -1.96 or greater than +1.96. It possible to identify and map these locations from the GWR outputs which have the t-values (<code>_TV</code>) for each input variable.</p>
+<p>The code below recreates one of the maps above maps but highlights areas where <code>PctBach</code> is a significant predictor of <code>MedInc</code> (see figure below). It shows that coefficients are highly localized.</p>
+<div class="sourceCode" id="cb369"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb369-1"><a href="spatial-varying-coefficient-models.html#cb369-1" tabindex="-1"></a><span class="co"># determine which are significant</span></span>
+<span id="cb369-2"><a href="spatial-varying-coefficient-models.html#cb369-2" tabindex="-1"></a>tval <span class="ot">=</span> gwr_sf <span class="sc">|&gt;</span>dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="fu">all_of</span>(<span class="st">&quot;PctBach_TV&quot;</span>)) <span class="sc">|&gt;</span> <span class="fu">st_drop_geometry</span>()</span>
+<span id="cb369-3"><a href="spatial-varying-coefficient-models.html#cb369-3" tabindex="-1"></a>signif <span class="ot">=</span> tval <span class="sc">&lt;</span> <span class="sc">-</span><span class="fl">1.96</span> <span class="sc">|</span> tval <span class="sc">&gt;</span> <span class="fl">1.96</span></span>
+<span id="cb369-4"><a href="spatial-varying-coefficient-models.html#cb369-4" tabindex="-1"></a><span class="co"># map the counties</span></span>
+<span id="cb369-5"><a href="spatial-varying-coefficient-models.html#cb369-5" tabindex="-1"></a><span class="fu">ggplot</span>(gwr_sf) <span class="sc">+</span></span>
+<span id="cb369-6"><a href="spatial-varying-coefficient-models.html#cb369-6" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> PctBach), <span class="at">col =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
+<span id="cb369-7"><a href="spatial-varying-coefficient-models.html#cb369-7" tabindex="-1"></a>  <span class="fu">scale_fill_gradient2</span>(<span class="at">low =</span> <span class="st">&quot;red&quot;</span>, <span class="at">high =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb369-8"><a href="spatial-varying-coefficient-models.html#cb369-8" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()  <span class="sc">+</span></span>
+<span id="cb369-9"><a href="spatial-varying-coefficient-models.html#cb369-9" tabindex="-1"></a>  <span class="co"># now add the tvalues layer</span></span>
+<span id="cb369-10"><a href="spatial-varying-coefficient-models.html#cb369-10" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> gwr_sf[signif,], <span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">col =</span> <span class="st">&quot;black&quot;</span>)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:ch8fig3"></span>
+<img src="_main_files/figure-html/ch8fig3-1.png" alt="A map of the spatial variation of the PctBach coefficient estimate, with significant areas highlighted." width="672" />
+<p class="caption">
+Figure 6.3: A map of the spatial variation of the PctBach coefficient estimate, with significant areas highlighted.
+</p>
+</div>
+</div>
+<div id="gwr-summary" class="section level3 hasAnchor" number="6.2.5">
+<h3><span class="header-section-number">6.2.5</span> GWR Summary<a href="spatial-varying-coefficient-models.html#gwr-summary" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>GWR investigates if and how relationships between response and predictor variables vary geographically. It is underpinned by the idea that whole map (constant coefficient) regressions such as those estimated by ordinary least squares may make unreasonable assumptions about the stationarity of the regression coefficients under investigation. Such approaches may wrongly assume that regression relationships (between predictor and target variables) are the same throughout the study area.</p>
+<p>GWR outputs provides measures of process heterogeneity – geographical variation in data relationships – through the generation of mappable and varying regression coefficients, and associated statistical inference. It has been extensively applied in a wide variety of scientific and socio-scientific disciplines.</p>
+<p>There are a number of things to note about GWR:</p>
+<ol style="list-style-type: decimal">
+<li><p>It reflects a desire to shift away from global, <em>whole map</em> <span class="citation">(<a href="#ref-openshaw1996developing">Openshaw 1996</a>)</span> and <em>one-size-fits-all</em> statistics, towards approaches that capture local process heterogeneity. This was articulated by Goodchild’s (2004) who proposed a 2nd law of geography: the principle of spatial heterogeneity or non-stationarity, noting the lack of a <em>concept of an average place on the Earth’s surface comparable, for example, to the concept of an average human</em> <span class="citation">(<a href="#ref-goodchild2004validity">Goodchild 2004</a>)</span>.</p></li>
+<li><p>There have been a number of criticisms of GWR (see Section 7.6 in <span class="citation"><span class="nocase">Gollini et al.</span> (<a href="#ref-gollini2015gwmodel">2015</a>)</span>).</p></li>
+<li><p>There have been a number of advances to standard GWR notably Multi-Scale which is now considered to be the <em>default</em> GWR. These have all been summarised in a GWR Route map paper <span class="citation">(<a href="#ref-comber2023route"><span class="nocase">Comber et al.</span> 2023</a>)</span>.</p></li>
+</ol>
+<p>Consideration of developments and limitations will be useful for your assignment write up.</p>
+<div class="qbox">
+<div class="center">
+<p><strong>Task 1</strong></p>
+</div>
+<p>Create a function for creating a <code>ggplot</code> of coefficients held in an <code>sf</code> polygon object, whose values flip, highlighting significant observations. Note that functions are defined in the following way:</p>
+<div class="sourceCode" id="cb370"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb370-1"><a href="spatial-varying-coefficient-models.html#cb370-1" tabindex="-1"></a>my_function_name <span class="ot">=</span> <span class="cf">function</span>(parameter1, paramter2) { <span class="co"># note the  curly brackets </span></span>
+<span id="cb370-2"><a href="spatial-varying-coefficient-models.html#cb370-2" tabindex="-1"></a>  <span class="co"># code to do stuff</span></span>
+<span id="cb370-3"><a href="spatial-varying-coefficient-models.html#cb370-3" tabindex="-1"></a>  <span class="co"># values to return</span></span>
+<span id="cb370-4"><a href="spatial-varying-coefficient-models.html#cb370-4" tabindex="-1"></a>}</span></code></pre></div>
+<p>A very simple example is below. This simply takes variable name from an <code>sf</code> object, creates a vector of values and returns the median and the mean:</p>
+<div class="sourceCode" id="cb371"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb371-1"><a href="spatial-varying-coefficient-models.html#cb371-1" tabindex="-1"></a>median_mean_from_sf <span class="ot">=</span> <span class="cf">function</span>(x, var_name) {</span>
+<span id="cb371-2"><a href="spatial-varying-coefficient-models.html#cb371-2" tabindex="-1"></a>  <span class="co"># do stuff</span></span>
+<span id="cb371-3"><a href="spatial-varying-coefficient-models.html#cb371-3" tabindex="-1"></a>  x <span class="ot">=</span> x <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="fu">all_of</span>(var_name)) <span class="sc">|&gt;</span> <span class="fu">st_drop_geometry</span>() <span class="sc">|&gt;</span> <span class="fu">unlist</span>()</span>
+<span id="cb371-4"><a href="spatial-varying-coefficient-models.html#cb371-4" tabindex="-1"></a>  mean_x <span class="ot">=</span> <span class="fu">mean</span>(x, <span class="at">na.rm =</span> T)</span>
+<span id="cb371-5"><a href="spatial-varying-coefficient-models.html#cb371-5" tabindex="-1"></a>  median_x <span class="ot">=</span> <span class="fu">median</span>(x, <span class="at">na.rm =</span> T)</span>
+<span id="cb371-6"><a href="spatial-varying-coefficient-models.html#cb371-6" tabindex="-1"></a>  <span class="co"># values to return</span></span>
+<span id="cb371-7"><a href="spatial-varying-coefficient-models.html#cb371-7" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">c</span>(<span class="at">Mean =</span> mean_x, <span class="at">Median =</span> median_x))</span>
+<span id="cb371-8"><a href="spatial-varying-coefficient-models.html#cb371-8" tabindex="-1"></a>}</span>
+<span id="cb371-9"><a href="spatial-varying-coefficient-models.html#cb371-9" tabindex="-1"></a><span class="co"># test it</span></span>
+<span id="cb371-10"><a href="spatial-varying-coefficient-models.html#cb371-10" tabindex="-1"></a><span class="fu">median_mean_from_sf</span>(<span class="at">x =</span> georgia, <span class="at">var_name =</span> <span class="st">&quot;MedInc&quot;</span>)</span></code></pre></div>
+<pre><code>##     Mean   Median 
+## 37147.09 34307.00</code></pre>
+<p>You should be able to use the code that was used to generate the plot above for the <code>do stuff</code> bit:</p>
+<div class="sourceCode" id="cb373"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb373-1"><a href="spatial-varying-coefficient-models.html#cb373-1" tabindex="-1"></a><span class="co"># determine which are significant</span></span>
+<span id="cb373-2"><a href="spatial-varying-coefficient-models.html#cb373-2" tabindex="-1"></a>tval <span class="ot">=</span> gwr_sf <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="fu">all_of</span>(<span class="st">&quot;PctBach_TV&quot;</span>)) <span class="sc">|&gt;</span> <span class="fu">st_drop_geometry</span>()</span>
+<span id="cb373-3"><a href="spatial-varying-coefficient-models.html#cb373-3" tabindex="-1"></a>signif <span class="ot">=</span> tval <span class="sc">&lt;</span> <span class="sc">-</span><span class="fl">1.96</span> <span class="sc">|</span> tval <span class="sc">&gt;</span> <span class="fl">1.96</span></span>
+<span id="cb373-4"><a href="spatial-varying-coefficient-models.html#cb373-4" tabindex="-1"></a><span class="co"># map the counties</span></span>
+<span id="cb373-5"><a href="spatial-varying-coefficient-models.html#cb373-5" tabindex="-1"></a><span class="fu">ggplot</span>(gwr_sf) <span class="sc">+</span></span>
+<span id="cb373-6"><a href="spatial-varying-coefficient-models.html#cb373-6" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> PctBach), <span class="at">col =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
+<span id="cb373-7"><a href="spatial-varying-coefficient-models.html#cb373-7" tabindex="-1"></a>  <span class="fu">scale_fill_gradient2</span>(<span class="at">low =</span> <span class="st">&quot;red&quot;</span>, <span class="at">high =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb373-8"><a href="spatial-varying-coefficient-models.html#cb373-8" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()  <span class="sc">+</span></span>
+<span id="cb373-9"><a href="spatial-varying-coefficient-models.html#cb373-9" tabindex="-1"></a>  <span class="co"># now add the tvalues layer</span></span>
+<span id="cb373-10"><a href="spatial-varying-coefficient-models.html#cb373-10" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> gwr_sf[signif,], <span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">col =</span> <span class="st">&quot;black&quot;</span>)</span></code></pre></div>
+<p><strong>NB</strong> You are advised to attempt the tasks after the timetabled practical session. Worked answers are provided in the last section of the worksheet.</p>
+</div>
+</div>
+</div>
+<div id="multi-scale-gwr" class="section level2 hasAnchor" number="6.3">
+<h2><span class="header-section-number">6.3</span> Multi-scale GWR<a href="spatial-varying-coefficient-models.html#multi-scale-gwr" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="description-1" class="section level3 hasAnchor" number="6.3.1">
+<h3><span class="header-section-number">6.3.1</span> Description<a href="spatial-varying-coefficient-models.html#description-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>In a standard GWR only a <strong>single</strong> bandwidth is determined and applied to each predictor variable. In reality some relationships in spatially heterogeneous processes may operate over larger scales than others&gt;f this is the case the <strong>best-on-average</strong> scale of relationship non-stationarity determined by a standard GWR may under- or over-estimate the scale of individual predictor-to-response relationships.</p>
+<p>To address this, Multi-scale GWR (MGWR) can be used <span class="citation">(<a href="#ref-yang2014extension">Yang 2014</a>; <a href="#ref-fotheringham2017multiscale">Fotheringham et al. 2017</a>; <a href="#ref-oshan2019mgwr">Oshan et al. 2019</a>)</span>. It determines a bandwidth for each predictor variable individually, thereby allowing individual response-to-predictor variable relationships to vary. The individual bandwidths provide insight into the scales of relationships between response and predictor variables, allowing for local to global bandwidths. Recent work has suggested that MGWR should be the default GWR <span class="citation">(<a href="#ref-comber2023route"><span class="nocase">Comber et al.</span> 2023</a>)</span>, with a standard GWR only being used in specific circumstances.</p>
+</div>
+<div id="undertaking-a-mgwr" class="section level3 hasAnchor" number="6.3.2">
+<h3><span class="header-section-number">6.3.2</span> Undertaking a MGWR<a href="spatial-varying-coefficient-models.html#undertaking-a-mgwr" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>A MGWR implementation in <code>GWmodel</code> is undertaken in 2 stages: first the bandwidths are found and then they are used to create the final model. Note both stages use the same function, <code>gwr.multiscale</code> but with different arguments passed to it.</p>
+<p>The code below undertakes illustrates the search for the optimal bandwidths, and then having found them passes into a second MGWR operation. These will generate a lot of text to your screen!</p>
+<div class="sourceCode" id="cb374"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb374-1"><a href="spatial-varying-coefficient-models.html#cb374-1" tabindex="-1"></a>gw.ms <span class="ot">&lt;-</span> <span class="fu">gwr.multiscale</span>(MedInc<span class="sc">~</span> PctBach <span class="sc">+</span> PctEld <span class="sc">+</span> PctFB,</span>
+<span id="cb374-2"><a href="spatial-varying-coefficient-models.html#cb374-2" tabindex="-1"></a>                        <span class="at">data =</span> georgia,</span>
+<span id="cb374-3"><a href="spatial-varying-coefficient-models.html#cb374-3" tabindex="-1"></a>                        <span class="at">adaptive =</span> T, </span>
+<span id="cb374-4"><a href="spatial-varying-coefficient-models.html#cb374-4" tabindex="-1"></a>                        <span class="at">max.iterations =</span> <span class="dv">1000</span>,</span>
+<span id="cb374-5"><a href="spatial-varying-coefficient-models.html#cb374-5" tabindex="-1"></a>                        <span class="at">kernel =</span> <span class="st">&quot;bisquare&quot;</span>,</span>
+<span id="cb374-6"><a href="spatial-varying-coefficient-models.html#cb374-6" tabindex="-1"></a>                        <span class="at">bws0=</span><span class="fu">c</span>(<span class="dv">100</span>,<span class="dv">100</span>,<span class="dv">100</span>),</span>
+<span id="cb374-7"><a href="spatial-varying-coefficient-models.html#cb374-7" tabindex="-1"></a>                        <span class="at">predictor.centered=</span><span class="fu">rep</span>(<span class="cn">FALSE</span>, <span class="dv">3</span>))</span></code></pre></div>
+<p>We can examine the bandwidths for the individual predictor variables:</p>
+<div class="sourceCode" id="cb375"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb375-1"><a href="spatial-varying-coefficient-models.html#cb375-1" tabindex="-1"></a>bws <span class="ot">=</span> gw.ms<span class="sc">$</span>GW.arguments<span class="sc">$</span>bws</span>
+<span id="cb375-2"><a href="spatial-varying-coefficient-models.html#cb375-2" tabindex="-1"></a>bws</span></code></pre></div>
+<pre><code>## [1]  80  53 157  18</code></pre>
+<p>These provide indication of the <em>spatial variation</em> (localness) of the scale of each predictor-to-response relationship. Recall that there are 159 counties in Georgia and in that context the adaptive bandwidths printed out above indicate these scales:</p>
+<div class="sourceCode" id="cb377"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb377-1"><a href="spatial-varying-coefficient-models.html#cb377-1" tabindex="-1"></a><span class="co"># proportions of data points used in each local regression</span></span>
+<span id="cb377-2"><a href="spatial-varying-coefficient-models.html#cb377-2" tabindex="-1"></a>bws <span class="sc">/</span><span class="fu">nrow</span>(georgia)</span></code></pre></div>
+<pre><code>## [1] 0.5031447 0.3333333 0.9874214 0.1132075</code></pre>
+<p>Consider the MGWR model above: a number of parameters were specified:</p>
+<div class="sourceCode" id="cb379"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb379-1"><a href="spatial-varying-coefficient-models.html#cb379-1" tabindex="-1"></a><span class="do">## DO NOT RUN THIS! ##</span></span>
+<span id="cb379-2"><a href="spatial-varying-coefficient-models.html#cb379-2" tabindex="-1"></a>gw.ms <span class="ot">&lt;-</span> <span class="fu">gwr.multiscale</span>(MedInc<span class="sc">~</span> PctBach <span class="sc">+</span> PctEld <span class="sc">+</span> PctFB,           <span class="co"># the formula</span></span>
+<span id="cb379-3"><a href="spatial-varying-coefficient-models.html#cb379-3" tabindex="-1"></a>                        <span class="at">data =</span> georgia,                          <span class="co"># the data</span></span>
+<span id="cb379-4"><a href="spatial-varying-coefficient-models.html#cb379-4" tabindex="-1"></a>                        <span class="at">adaptive =</span> T,                               <span class="co"># the GWR kernel type (distance or nearest neighbours)</span></span>
+<span id="cb379-5"><a href="spatial-varying-coefficient-models.html#cb379-5" tabindex="-1"></a>                        <span class="at">max.iterations =</span> <span class="dv">1000</span>,                      <span class="co"># the number of iterations that it will seek convergence for</span></span>
+<span id="cb379-6"><a href="spatial-varying-coefficient-models.html#cb379-6" tabindex="-1"></a>                        <span class="at">kernel =</span> <span class="st">&quot;bisquare&quot;</span>,                        <span class="co"># the kernel shape</span></span>
+<span id="cb379-7"><a href="spatial-varying-coefficient-models.html#cb379-7" tabindex="-1"></a>                        <span class="at">bws0=</span><span class="fu">c</span>(<span class="dv">100</span>,<span class="dv">100</span>,<span class="dv">100</span>),                        <span class="co"># an initial set of values for the bandwidths</span></span>
+<span id="cb379-8"><a href="spatial-varying-coefficient-models.html#cb379-8" tabindex="-1"></a>                        <span class="at">predictor.centered=</span><span class="fu">rep</span>(<span class="cn">FALSE</span>, <span class="dv">3</span>))           <span class="co"># whether to centre the predictors (quicker for bigger problems)</span></span></code></pre></div>
+<p>You should have a look at the help for this function for full explanations and other parameters at some point (like if you were doing an assignment based on this!)</p>
+</div>
+<div id="evaluating-the-results-1" class="section level3 hasAnchor" number="6.3.3">
+<h3><span class="header-section-number">6.3.3</span> Evaluating the results<a href="spatial-varying-coefficient-models.html#evaluating-the-results-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The coefficient estimate spatial variation can be examined (hint: have a look at what is returned by <code>names(gw.ms)</code>:</p>
+<div class="sourceCode" id="cb380"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb380-1"><a href="spatial-varying-coefficient-models.html#cb380-1" tabindex="-1"></a><span class="co"># get a summary of the MGWR coefficients</span></span>
+<span id="cb380-2"><a href="spatial-varying-coefficient-models.html#cb380-2" tabindex="-1"></a>coefs_mgwr <span class="ot">=</span> <span class="fu">apply</span>(gw.ms<span class="sc">$</span>SDF <span class="sc">|&gt;</span> <span class="fu">st_drop_geometry</span>() <span class="sc">|&gt;</span> <span class="fu">select</span>( Intercept<span class="sc">:</span>PctFB), </span>
+<span id="cb380-3"><a href="spatial-varying-coefficient-models.html#cb380-3" tabindex="-1"></a>                   <span class="dv">2</span>, </span>
+<span id="cb380-4"><a href="spatial-varying-coefficient-models.html#cb380-4" tabindex="-1"></a>                   summary)</span>
+<span id="cb380-5"><a href="spatial-varying-coefficient-models.html#cb380-5" tabindex="-1"></a><span class="co"># link to bandwidths and create a table</span></span>
+<span id="cb380-6"><a href="spatial-varying-coefficient-models.html#cb380-6" tabindex="-1"></a>tab.mgwr <span class="ot">=</span> <span class="fu">data.frame</span>(<span class="at">Bandwidth =</span> bws, </span>
+<span id="cb380-7"><a href="spatial-varying-coefficient-models.html#cb380-7" tabindex="-1"></a>                      <span class="fu">t</span>(<span class="fu">round</span>(coefs_mgwr,<span class="dv">1</span>)))</span>
+<span id="cb380-8"><a href="spatial-varying-coefficient-models.html#cb380-8" tabindex="-1"></a><span class="co"># rename 3rd and 6th columns</span></span>
+<span id="cb380-9"><a href="spatial-varying-coefficient-models.html#cb380-9" tabindex="-1"></a><span class="fu">names</span>(tab.mgwr)[<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">6</span>)] <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;Q1&quot;</span>, <span class="st">&quot;Q3&quot;</span>)</span>
+<span id="cb380-10"><a href="spatial-varying-coefficient-models.html#cb380-10" tabindex="-1"></a><span class="co"># have a look!</span></span>
+<span id="cb380-11"><a href="spatial-varying-coefficient-models.html#cb380-11" tabindex="-1"></a>tab.mgwr</span></code></pre></div>
+<table style="width:100%;">
+<caption><span id="tab:unnamed-chunk-232">Table 6.2: </span>The MSGWR variable specific bandwidths and coefficient estimates.</caption>
+<colgroup>
+<col width="14%" />
+<col width="14%" />
+<col width="13%" />
+<col width="11%" />
+<col width="11%" />
+<col width="11%" />
+<col width="11%" />
+<col width="11%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="right">Bandwidth</th>
+<th align="right">Min.</th>
+<th align="right">Q1</th>
+<th align="right">Median</th>
+<th align="right">Mean</th>
+<th align="right">Q3</th>
+<th align="right">Max.</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Intercept</td>
+<td align="right">80</td>
+<td align="right">52701.9</td>
+<td align="right">53320.6</td>
+<td align="right">54451.8</td>
+<td align="right">55197.4</td>
+<td align="right">57567.7</td>
+<td align="right">58229.0</td>
+</tr>
+<tr class="even">
+<td align="left">PctBach</td>
+<td align="right">53</td>
+<td align="right">562.9</td>
+<td align="right">718.9</td>
+<td align="right">1011.9</td>
+<td align="right">1092.0</td>
+<td align="right">1536.1</td>
+<td align="right">1601.1</td>
+</tr>
+<tr class="odd">
+<td align="left">PctEld</td>
+<td align="right">157</td>
+<td align="right">-2161.5</td>
+<td align="right">-2158.7</td>
+<td align="right">-2152.8</td>
+<td align="right">-2149.8</td>
+<td align="right">-2140.2</td>
+<td align="right">-2132.9</td>
+</tr>
+<tr class="even">
+<td align="left">PctFB</td>
+<td align="right">18</td>
+<td align="right">-14197.2</td>
+<td align="right">-6336.7</td>
+<td align="right">-4054.0</td>
+<td align="right">-4525.3</td>
+<td align="right">-2738.2</td>
+<td align="right">481.7</td>
+</tr>
+</tbody>
+</table>
+<p>You should examine these, particularly the degree to which the coefficient estimates vary in relation to their bandwidths. Notice that smaller bandwidths (a smaller moving window) results in greater variation and this reduces as the bandwidths tend towards the global (recall that there are <span class="math inline">\(n = 159\)</span> observations in the <code>georgia</code> data). So some of the bandwidths indicate highly local relationships with the target variable, while other are highly global, with bandwidths approaching <span class="math inline">\(n = all\)</span>.</p>
+<p>Notice the coefficients and the degree to which vary, alongside the bandwidths - high bandwidths of course result in less variation in the coefficient estimates.</p>
+<p>These tell us something about the <em>local-ness</em> of the interactions of different covariates with the target variable <code>MedInc</code>. For example, <code>PctFB</code>, has a small, highly local bandwidth, using few data points in each local regression. Whilst <code>PctEld</code> has a global relationship with <code>MedInc</code> and nearly all of the data points are used in each local regression model. The Intercept and `PctBach are somewhere in between with moderate local variation in the relationships with median income.</p>
+<p>Note for example that the standard GWR <code>PctFB</code> flipped from negative to positive and here it is negative potentially because of the more localised bandwidths (recall that the standard GWR model had a bandwidth of 48).</p>
+<p>As before, you could write this out to a csv file for inclusion in a report or similar as in the GWR coefficient example above. And the coefficients can be mapped. To a degree there is no point in mapping the coefficients whose bandwidths tend towards the global (i.e. are close to <span class="math inline">\(n\)</span>), but the others are potentially interesting.</p>
+<p>Again these are held in the <code>SDF</code> of the <code>GWmodel</code> output which is in <code>sf</code> format:</p>
+<div class="sourceCode" id="cb381"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb381-1"><a href="spatial-varying-coefficient-models.html#cb381-1" tabindex="-1"></a>mgwr_sf <span class="ot">=</span> gw.ms<span class="sc">$</span>SDF</span>
+<span id="cb381-2"><a href="spatial-varying-coefficient-models.html#cb381-2" tabindex="-1"></a>mgwr_sf</span></code></pre></div>
+</div>
+<div id="mapping-mgwr-outputs" class="section level3 hasAnchor" number="6.3.4">
+<h3><span class="header-section-number">6.3.4</span> Mapping MGWR outputs<a href="spatial-varying-coefficient-models.html#mapping-mgwr-outputs" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The code below creates the maps for the local covariates in the same way as before</p>
+<div class="sourceCode" id="cb382"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb382-1"><a href="spatial-varying-coefficient-models.html#cb382-1" tabindex="-1"></a><span class="co"># coefficients that are all of the same sign </span></span>
+<span id="cb382-2"><a href="spatial-varying-coefficient-models.html#cb382-2" tabindex="-1"></a>p1 <span class="ot">=</span> </span>
+<span id="cb382-3"><a href="spatial-varying-coefficient-models.html#cb382-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(mgwr_sf) <span class="sc">+</span></span>
+<span id="cb382-4"><a href="spatial-varying-coefficient-models.html#cb382-4" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> PctBach)) <span class="sc">+</span></span>
+<span id="cb382-5"><a href="spatial-varying-coefficient-models.html#cb382-5" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>() <span class="sc">+</span>  </span>
+<span id="cb382-6"><a href="spatial-varying-coefficient-models.html#cb382-6" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()  </span>
+<span id="cb382-7"><a href="spatial-varying-coefficient-models.html#cb382-7" tabindex="-1"></a><span class="co"># coefficients whose values flip </span></span>
+<span id="cb382-8"><a href="spatial-varying-coefficient-models.html#cb382-8" tabindex="-1"></a>p2 <span class="ot">=</span> </span>
+<span id="cb382-9"><a href="spatial-varying-coefficient-models.html#cb382-9" tabindex="-1"></a>  <span class="fu">ggplot</span>(mgwr_sf) <span class="sc">+</span></span>
+<span id="cb382-10"><a href="spatial-varying-coefficient-models.html#cb382-10" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> PctFB)) <span class="sc">+</span></span>
+<span id="cb382-11"><a href="spatial-varying-coefficient-models.html#cb382-11" tabindex="-1"></a>  <span class="fu">scale_fill_gradient2</span>(<span class="at">low =</span> <span class="st">&quot;red&quot;</span>, <span class="at">high =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb382-12"><a href="spatial-varying-coefficient-models.html#cb382-12" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb382-13"><a href="spatial-varying-coefficient-models.html#cb382-13" tabindex="-1"></a><span class="fu">plot_grid</span>(p1, p2, <span class="at">ncol =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-235"></span>
+<img src="_main_files/figure-html/unnamed-chunk-235-1.png" alt="Maps of the MGWR coefficient estimates." width="672" />
+<p class="caption">
+Figure 6.4: Maps of the MGWR coefficient estimates.
+</p>
+</div>
+<p>You may have noticed that t-values are also included in the outputs and gain significant areas can be identified and highlighted. This suggests a different spatial extent to that indicated by a standard GWR.</p>
+<div class="sourceCode" id="cb383"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb383-1"><a href="spatial-varying-coefficient-models.html#cb383-1" tabindex="-1"></a><span class="co"># determine which are significant</span></span>
+<span id="cb383-2"><a href="spatial-varying-coefficient-models.html#cb383-2" tabindex="-1"></a>tval <span class="ot">=</span> mgwr_sf<span class="sc">$</span>PctFB_TV</span>
+<span id="cb383-3"><a href="spatial-varying-coefficient-models.html#cb383-3" tabindex="-1"></a>signif <span class="ot">=</span> tval <span class="sc">&lt;</span> <span class="sc">-</span><span class="fl">1.96</span> <span class="sc">|</span> tval <span class="sc">&gt;</span> <span class="fl">1.96</span></span>
+<span id="cb383-4"><a href="spatial-varying-coefficient-models.html#cb383-4" tabindex="-1"></a><span class="fu">ggplot</span>(mgwr_sf) <span class="sc">+</span></span>
+<span id="cb383-5"><a href="spatial-varying-coefficient-models.html#cb383-5" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> PctFB), <span class="at">col =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
+<span id="cb383-6"><a href="spatial-varying-coefficient-models.html#cb383-6" tabindex="-1"></a>  <span class="fu">scale_fill_gradient2</span>(<span class="at">low =</span> <span class="st">&quot;red&quot;</span>, <span class="at">high =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb383-7"><a href="spatial-varying-coefficient-models.html#cb383-7" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()  <span class="sc">+</span></span>
+<span id="cb383-8"><a href="spatial-varying-coefficient-models.html#cb383-8" tabindex="-1"></a>  <span class="co"># now add the tvalues layer</span></span>
+<span id="cb383-9"><a href="spatial-varying-coefficient-models.html#cb383-9" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> mgwr_sf[signif,], <span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">col =</span> <span class="st">&quot;black&quot;</span>)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-236"></span>
+<img src="_main_files/figure-html/unnamed-chunk-236-1.png" alt="A map of the spatial variation of the PctFB coefficient estimate arising from a MGWR, with significant areas highlighted." width="672" />
+<p class="caption">
+Figure 6.5: A map of the spatial variation of the PctFB coefficient estimate arising from a MGWR, with significant areas highlighted.
+</p>
+</div>
+</div>
+<div id="comparing-gwr-and-mgwr" class="section level3 hasAnchor" number="6.3.5">
+<h3><span class="header-section-number">6.3.5</span> Comparing GWR and MGWR<a href="spatial-varying-coefficient-models.html#comparing-gwr-and-mgwr" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>It is instructive to compare the GWR and MGR outputs, both in terms of the numeric distributions and the spatial ones. The inter-quartile ranges of the numeric distributions give an idea about the different spatial variations and we can examine these with respect to the global coefficient estimates from the OLS model and the MGWR bandwidths:</p>
+<div class="sourceCode" id="cb384"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb384-1"><a href="spatial-varying-coefficient-models.html#cb384-1" tabindex="-1"></a><span class="co"># OLS</span></span>
+<span id="cb384-2"><a href="spatial-varying-coefficient-models.html#cb384-2" tabindex="-1"></a><span class="fu">coef</span>(m)</span></code></pre></div>
+<pre><code>## (Intercept)     PctBach      PctEld       PctFB 
+##  51566.0950    798.0094  -1788.9654  -1901.9645</code></pre>
+<div class="sourceCode" id="cb386"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb386-1"><a href="spatial-varying-coefficient-models.html#cb386-1" tabindex="-1"></a><span class="co"># GWR</span></span>
+<span id="cb386-2"><a href="spatial-varying-coefficient-models.html#cb386-2" tabindex="-1"></a><span class="fu">apply</span>(gwr_sf <span class="sc">|&gt;</span> <span class="fu">st_drop_geometry</span>() <span class="sc">|&gt;</span> <span class="fu">select</span>( Intercept<span class="sc">:</span>PctFB), </span>
+<span id="cb386-3"><a href="spatial-varying-coefficient-models.html#cb386-3" tabindex="-1"></a>      <span class="dv">2</span>, </span>
+<span id="cb386-4"><a href="spatial-varying-coefficient-models.html#cb386-4" tabindex="-1"></a>      summary) <span class="sc">|&gt;</span> <span class="fu">round</span>(<span class="dv">1</span>)</span></code></pre></div>
+<pre><code>##         Intercept PctBach  PctEld   PctFB
+## Min.      36563.5  -117.4 -3491.7 -8282.4
+## 1st Qu.   51275.9   248.0 -2512.3 -3704.4
+## Median    57837.0   493.8 -2049.2 -1873.1
+## Mean      57684.2   597.2 -2095.0 -2260.0
+## 3rd Qu.   65500.5   892.8 -1605.1  -408.2
+## Max.      87342.2  1937.8  -793.5  2581.2</code></pre>
+<div class="sourceCode" id="cb388"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb388-1"><a href="spatial-varying-coefficient-models.html#cb388-1" tabindex="-1"></a><span class="co"># MGWR</span></span>
+<span id="cb388-2"><a href="spatial-varying-coefficient-models.html#cb388-2" tabindex="-1"></a><span class="fu">apply</span>(mgwr_sf <span class="sc">|&gt;</span> <span class="fu">st_drop_geometry</span>() <span class="sc">|&gt;</span> <span class="fu">select</span>( Intercept<span class="sc">:</span>PctFB), </span>
+<span id="cb388-3"><a href="spatial-varying-coefficient-models.html#cb388-3" tabindex="-1"></a>      <span class="dv">2</span>, </span>
+<span id="cb388-4"><a href="spatial-varying-coefficient-models.html#cb388-4" tabindex="-1"></a>      summary) <span class="sc">|&gt;</span> <span class="fu">round</span>(<span class="dv">1</span>)</span></code></pre></div>
+<pre><code>##         Intercept PctBach  PctEld    PctFB
+## Min.      52701.9   562.9 -2161.5 -14197.2
+## 1st Qu.   53320.6   718.9 -2158.7  -6336.7
+## Median    54451.8  1011.9 -2152.8  -4054.0
+## Mean      55197.4  1092.0 -2149.8  -4525.3
+## 3rd Qu.   57567.7  1536.1 -2140.2  -2738.2
+## Max.      58229.0  1601.1 -2132.9    481.7</code></pre>
+<p>The maps similarly may show large differences in both the value of the coefficient estimates (see the figure below) in different places but also the significant areas (see the second figure).</p>
+<div class="sourceCode" id="cb390"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb390-1"><a href="spatial-varying-coefficient-models.html#cb390-1" tabindex="-1"></a><span class="co"># gwr</span></span>
+<span id="cb390-2"><a href="spatial-varying-coefficient-models.html#cb390-2" tabindex="-1"></a>p3 <span class="ot">=</span> </span>
+<span id="cb390-3"><a href="spatial-varying-coefficient-models.html#cb390-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(gwr_sf) <span class="sc">+</span></span>
+<span id="cb390-4"><a href="spatial-varying-coefficient-models.html#cb390-4" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> PctBach), <span class="at">col =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
+<span id="cb390-5"><a href="spatial-varying-coefficient-models.html#cb390-5" tabindex="-1"></a>  <span class="fu">scale_fill_gradient2</span>(<span class="at">low =</span> <span class="st">&quot;red&quot;</span>, <span class="at">high =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb390-6"><a href="spatial-varying-coefficient-models.html#cb390-6" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;GWR&quot;</span>)</span>
+<span id="cb390-7"><a href="spatial-varying-coefficient-models.html#cb390-7" tabindex="-1"></a><span class="co"># mgwr - recall the coefficients are all the same sign</span></span>
+<span id="cb390-8"><a href="spatial-varying-coefficient-models.html#cb390-8" tabindex="-1"></a>p4 <span class="ot">=</span> </span>
+<span id="cb390-9"><a href="spatial-varying-coefficient-models.html#cb390-9" tabindex="-1"></a>  <span class="fu">ggplot</span>(mgwr_sf) <span class="sc">+</span></span>
+<span id="cb390-10"><a href="spatial-varying-coefficient-models.html#cb390-10" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> PctBach), <span class="at">col =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
+<span id="cb390-11"><a href="spatial-varying-coefficient-models.html#cb390-11" tabindex="-1"></a>  <span class="fu">scale_fill_distiller</span>(<span class="at">palette =</span> <span class="st">&quot;Blues&quot;</span>) <span class="sc">+</span></span>
+<span id="cb390-12"><a href="spatial-varying-coefficient-models.html#cb390-12" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;MGWR&quot;</span>)</span>
+<span id="cb390-13"><a href="spatial-varying-coefficient-models.html#cb390-13" tabindex="-1"></a><span class="fu">plot_grid</span>(p3, p4, <span class="at">ncol =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-238"></span>
+<img src="_main_files/figure-html/unnamed-chunk-238-1.png" alt="Maps of the coefficients arising from a GWR and MGWR." width="672" />
+<p class="caption">
+Figure 6.6: Maps of the coefficients arising from a GWR and MGWR.
+</p>
+</div>
+<div class="sourceCode" id="cb391"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb391-1"><a href="spatial-varying-coefficient-models.html#cb391-1" tabindex="-1"></a><span class="co"># gwr</span></span>
+<span id="cb391-2"><a href="spatial-varying-coefficient-models.html#cb391-2" tabindex="-1"></a>tval <span class="ot">=</span> gwr_sf<span class="sc">$</span>PctFB_TV</span>
+<span id="cb391-3"><a href="spatial-varying-coefficient-models.html#cb391-3" tabindex="-1"></a>signif <span class="ot">=</span> tval <span class="sc">&lt;</span> <span class="sc">-</span><span class="fl">1.96</span> <span class="sc">|</span> tval <span class="sc">&gt;</span> <span class="fl">1.96</span></span>
+<span id="cb391-4"><a href="spatial-varying-coefficient-models.html#cb391-4" tabindex="-1"></a>p5 <span class="ot">=</span> </span>
+<span id="cb391-5"><a href="spatial-varying-coefficient-models.html#cb391-5" tabindex="-1"></a>  <span class="fu">ggplot</span>(gwr_sf) <span class="sc">+</span></span>
+<span id="cb391-6"><a href="spatial-varying-coefficient-models.html#cb391-6" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> PctFB), <span class="at">col =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
+<span id="cb391-7"><a href="spatial-varying-coefficient-models.html#cb391-7" tabindex="-1"></a>  <span class="fu">scale_fill_gradient2</span>(<span class="at">low =</span> <span class="st">&quot;red&quot;</span>, <span class="at">high =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb391-8"><a href="spatial-varying-coefficient-models.html#cb391-8" tabindex="-1"></a>  <span class="fu">theme_map</span>()  <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;GWR&quot;</span>) <span class="sc">+</span></span>
+<span id="cb391-9"><a href="spatial-varying-coefficient-models.html#cb391-9" tabindex="-1"></a>  <span class="co"># now add the tvalues layer</span></span>
+<span id="cb391-10"><a href="spatial-varying-coefficient-models.html#cb391-10" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> gwr_sf[signif,], <span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">col =</span> <span class="st">&quot;black&quot;</span>)</span>
+<span id="cb391-11"><a href="spatial-varying-coefficient-models.html#cb391-11" tabindex="-1"></a></span>
+<span id="cb391-12"><a href="spatial-varying-coefficient-models.html#cb391-12" tabindex="-1"></a><span class="co"># mgwr</span></span>
+<span id="cb391-13"><a href="spatial-varying-coefficient-models.html#cb391-13" tabindex="-1"></a>tval <span class="ot">=</span> mgwr_sf<span class="sc">$</span>PctFB_TV</span>
+<span id="cb391-14"><a href="spatial-varying-coefficient-models.html#cb391-14" tabindex="-1"></a>signif <span class="ot">=</span> tval <span class="sc">&lt;</span> <span class="sc">-</span><span class="fl">1.96</span> <span class="sc">|</span> tval <span class="sc">&gt;</span> <span class="fl">1.96</span></span>
+<span id="cb391-15"><a href="spatial-varying-coefficient-models.html#cb391-15" tabindex="-1"></a>p6 <span class="ot">=</span> </span>
+<span id="cb391-16"><a href="spatial-varying-coefficient-models.html#cb391-16" tabindex="-1"></a>  <span class="fu">ggplot</span>(mgwr_sf) <span class="sc">+</span></span>
+<span id="cb391-17"><a href="spatial-varying-coefficient-models.html#cb391-17" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> PctFB), <span class="at">col =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
+<span id="cb391-18"><a href="spatial-varying-coefficient-models.html#cb391-18" tabindex="-1"></a>  <span class="fu">scale_fill_gradient2</span>(<span class="at">low =</span> <span class="st">&quot;red&quot;</span>, <span class="at">high =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb391-19"><a href="spatial-varying-coefficient-models.html#cb391-19" tabindex="-1"></a>  <span class="fu">theme_map</span>()  <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;MGWR&quot;</span>) <span class="sc">+</span></span>
+<span id="cb391-20"><a href="spatial-varying-coefficient-models.html#cb391-20" tabindex="-1"></a>  <span class="co"># now add the tvalues layer</span></span>
+<span id="cb391-21"><a href="spatial-varying-coefficient-models.html#cb391-21" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> mgwr_sf[signif,], <span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">col =</span> <span class="st">&quot;black&quot;</span>)</span>
+<span id="cb391-22"><a href="spatial-varying-coefficient-models.html#cb391-22" tabindex="-1"></a><span class="fu">plot_grid</span>(p5, p6, <span class="at">ncol =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-239"></span>
+<img src="_main_files/figure-html/unnamed-chunk-239-1.png" alt="Maps of the significant coefficients arising from a GWR and MGWR." width="672" />
+<p class="caption">
+Figure 6.7: Maps of the significant coefficients arising from a GWR and MGWR.
+</p>
+</div>
+</div>
+<div id="mgwr-summary" class="section level3 hasAnchor" number="6.3.6">
+<h3><span class="header-section-number">6.3.6</span> MGWR Summary<a href="spatial-varying-coefficient-models.html#mgwr-summary" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>A single bandwidth is used in standard GWR under the assumption that the response-to-predictor relationships operate over the same scales for all of the variables contained in the model. This may be unrealistic because some relationships can operate at larger scales and others at smaller ones. A standard GWR will nullify these differences and find a best-on-average scale of relationship non-stationarity (geographical variation), as described through the bandwidth.</p>
+<p>MSGWR was proposed to allow for a mix of relationships between predictor and response variables: from highly local to global. In MGWR, the bandwidth for each relationship is determined separately, allowing the scale of individual response-to-predictor relationships to vary.</p>
+<p>For these reasons, the MGWR has been recommended as the default GWR. MGWR plus an OLS regression provides solid basis for making a decision to use a GWR and for determining the variation predictor variable to response variable relationships: the MGWR bandwidths indicate their different scales. A standard GWR should only be used in circumstances where all the predictors are found to have the same bandwidth.</p>
+</div>
+</div>
+<div id="optional-generalised-additive-models" class="section level2 unnumbered hasAnchor">
+<h2>Optional: Generalised Additive Models<a href="spatial-varying-coefficient-models.html#optional-generalised-additive-models" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="description-2" class="section level3 hasAnchor" number="6.3.7">
+<h3><span class="header-section-number">6.3.7</span> Description<a href="spatial-varying-coefficient-models.html#description-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+Generalised Additive Models (GAMs) <span class="citation">(<a href="#ref-hastie1990generalized">Hastie and Tibshirani 1990</a>)</span> generate multiple model terms (like mini-models) which are added together and to fit non-linear and data with varying relationships and complex interactions <span class="citation">(<a href="#ref-wood2017generalized">Wood 2017</a>)</span>. Consider the relationship between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> in the figure below: it varies in a discontinuous way and the GAM model is able to fit to that.
+<div class="figure"><span style="display:block;" id="fig:gam1"></span>
+<img src="_main_files/figure-html/gam1-1.png" alt="An example of a non-linear relationship between x and y." width="672" />
+<p class="caption">
+Figure 6.8: An example of a non-linear relationship between x and y.
+</p>
+</div>
+<p>To model non-linear relationships this GAMs use something called splines (also called smooths) which can be of different forms depending on the problem and data <span class="citation">(<a href="#ref-hastie1990generalized">Hastie and Tibshirani 1990</a>)</span>. A spline can be represented as a linear combination of functions called <em>basis functions</em>. Each of these is assigned a coefficient and these are linearly combined to generate the predictions of <span class="math inline">\(y\)</span>, <span class="math inline">\(\hat{y}\)</span>. If the splines are parameterised by observation location then they can be used to generate spatially varying coefficients <span class="citation">(<a href="#ref-comber2024multiscale">Comber et al. 2024</a>)</span>, and if the spline have a Gaussian Process (GP) form then they capture distance observation autocorrelation and decay in the manner suggested by Tobler’s 1st Law of Geography.</p>
+<p>Additionally GAMs based SVCs with GP splines address a number of long standing criticisms of GWR based approaches, heat are described in full in <span class="citation"><span class="nocase">Comber et al.</span> (<a href="#ref-comber2023route">2023</a>)</span> and summarised in <span class="citation">Comber et al. (<a href="#ref-comber2024multiscale">2024</a>)</span>:</p>
+<ul>
+<li>GWR and MGWR suffer from a lack of generic framework and a clear theoretical model</li>
+<li>GWR and MGW generate a collection of local models rather than a single model</li>
+<li>MGWR can only handle Gaussian and Poisson responses</li>
+<li>MGWR has no options for handling or penalizing collinearity, down-weighting outliers, handling heteroskedastic and autocorrelated error terms.</li>
+<li>there are concerns about GWR’s reliability as a spatial predictor</li>
+</ul>
+</div>
+<div id="undertaking-a-ggp-gam" class="section level3 hasAnchor" number="6.3.8">
+<h3><span class="header-section-number">6.3.8</span> Undertaking a GGP-GAM<a href="spatial-varying-coefficient-models.html#undertaking-a-ggp-gam" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The code below extracts the coordinates from the projected <code>georgia</code> data and converts these to kilometres. It also creates a dummy variable for the intercept.</p>
+<div class="sourceCode" id="cb392"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb392-1"><a href="spatial-varying-coefficient-models.html#cb392-1" tabindex="-1"></a><span class="fu">library</span>(mgcv)       <span class="co"># for GAMs</span></span>
+<span id="cb392-2"><a href="spatial-varying-coefficient-models.html#cb392-2" tabindex="-1"></a><span class="fu">library</span>(stgam)      <span class="co"># for GAM based SVCs</span></span>
+<span id="cb392-3"><a href="spatial-varying-coefficient-models.html#cb392-3" tabindex="-1"></a><span class="fu">library</span>(tidyverse)  <span class="co"># for everything else</span></span>
+<span id="cb392-4"><a href="spatial-varying-coefficient-models.html#cb392-4" tabindex="-1"></a>coords <span class="ot">=</span> <span class="fu">st_coordinates</span>(<span class="fu">st_centroid</span>(georgia))</span></code></pre></div>
+<pre><code>## Warning: st_centroid assumes attributes are constant over geometries</code></pre>
+<div class="sourceCode" id="cb394"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb394-1"><a href="spatial-varying-coefficient-models.html#cb394-1" tabindex="-1"></a><span class="co"># head(coords)</span></span>
+<span id="cb394-2"><a href="spatial-varying-coefficient-models.html#cb394-2" tabindex="-1"></a>df.gam <span class="ot">=</span> </span>
+<span id="cb394-3"><a href="spatial-varying-coefficient-models.html#cb394-3" tabindex="-1"></a>  georgia <span class="sc">|&gt;</span> </span>
+<span id="cb394-4"><a href="spatial-varying-coefficient-models.html#cb394-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Intercept =</span> <span class="dv">1</span>, </span>
+<span id="cb394-5"><a href="spatial-varying-coefficient-models.html#cb394-5" tabindex="-1"></a>         <span class="at">X =</span> coords[,<span class="st">&quot;X&quot;</span>]<span class="sc">/</span><span class="dv">1000</span>, </span>
+<span id="cb394-6"><a href="spatial-varying-coefficient-models.html#cb394-6" tabindex="-1"></a>         <span class="at">Y =</span> coords[,<span class="st">&quot;Y&quot;</span>]<span class="sc">/</span><span class="dv">1000</span>) <span class="sc">|&gt;</span></span>
+<span id="cb394-7"><a href="spatial-varying-coefficient-models.html#cb394-7" tabindex="-1"></a>  <span class="fu">st_drop_geometry</span>() <span class="sc">|&gt;</span></span>
+<span id="cb394-8"><a href="spatial-varying-coefficient-models.html#cb394-8" tabindex="-1"></a>  <span class="fu">as_tibble</span>()</span></code></pre></div>
+<p>First, just for illustration the <code>gam</code> function form the <code>mgcv</code> package is used to generate a standard parametric model. This generates the same OLS model as the that created by <code>lm</code> above and stored in <code>m</code>:</p>
+<div class="sourceCode" id="cb395"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb395-1"><a href="spatial-varying-coefficient-models.html#cb395-1" tabindex="-1"></a>gam_lm <span class="ot">=</span> <span class="fu">gam</span>(MedInc<span class="sc">~</span> PctBach <span class="sc">+</span> PctEld <span class="sc">+</span> PctFB, <span class="at">data =</span> df.gam)</span>
+<span id="cb395-2"><a href="spatial-varying-coefficient-models.html#cb395-2" tabindex="-1"></a><span class="fu">summary</span>(gam_lm)</span></code></pre></div>
+<p>Then a GGP-GAM can be fitted, specifying a GP spline, <code>s</code> for each covariate. Notice the stricture of the spline in the code below:</p>
+<div class="sourceCode" id="cb396"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb396-1"><a href="spatial-varying-coefficient-models.html#cb396-1" tabindex="-1"></a>gam.m <span class="ot">=</span> <span class="fu">gam</span>(MedInc<span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> </span>
+<span id="cb396-2"><a href="spatial-varying-coefficient-models.html#cb396-2" tabindex="-1"></a>              Intercept <span class="sc">+</span> <span class="fu">s</span>(X,Y,<span class="at">bs=</span><span class="st">&#39;gp&#39;</span>, <span class="at">by=</span>Intercept) <span class="sc">+</span> </span>
+<span id="cb396-3"><a href="spatial-varying-coefficient-models.html#cb396-3" tabindex="-1"></a>              PctBach <span class="sc">+</span> <span class="fu">s</span>(X,Y,<span class="at">bs=</span><span class="st">&#39;gp&#39;</span>, <span class="at">by=</span>PctBach) <span class="sc">+</span></span>
+<span id="cb396-4"><a href="spatial-varying-coefficient-models.html#cb396-4" tabindex="-1"></a>              PctEld <span class="sc">+</span> <span class="fu">s</span>(X,Y,<span class="at">bs=</span><span class="st">&#39;gp&#39;</span>, <span class="at">by=</span>PctEld) <span class="sc">+</span></span>
+<span id="cb396-5"><a href="spatial-varying-coefficient-models.html#cb396-5" tabindex="-1"></a>              PctFB <span class="sc">+</span> <span class="fu">s</span>(X,Y,<span class="at">bs=</span><span class="st">&#39;gp&#39;</span>, <span class="at">by=</span>PctFB),</span>
+<span id="cb396-6"><a href="spatial-varying-coefficient-models.html#cb396-6" tabindex="-1"></a>              <span class="at">data =</span> df.gam)            </span></code></pre></div>
+<p>It is possible to check that the GAM has fitted correctly (if you want to unpick this see the help for the <code>gam.check()</code> function):</p>
+<div class="sourceCode" id="cb397"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb397-1"><a href="spatial-varying-coefficient-models.html#cb397-1" tabindex="-1"></a><span class="fu">gam.check</span>(gam.m)</span></code></pre></div>
+</div>
+<div id="evaluating-the-results-2" class="section level3 hasAnchor" number="6.3.9">
+<h3><span class="header-section-number">6.3.9</span> Evaluating the results<a href="spatial-varying-coefficient-models.html#evaluating-the-results-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Next we can inspect the model:</p>
+<div class="sourceCode" id="cb398"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb398-1"><a href="spatial-varying-coefficient-models.html#cb398-1" tabindex="-1"></a><span class="fu">summary</span>(gam.m)</span></code></pre></div>
+<pre><code>## 
+## Family: gaussian 
+## Link function: identity 
+## 
+## Formula:
+## MedInc ~ 0 + Intercept + s(X, Y, bs = &quot;gp&quot;, by = Intercept) + 
+##     PctBach + s(X, Y, bs = &quot;gp&quot;, by = PctBach) + PctEld + s(X, 
+##     Y, bs = &quot;gp&quot;, by = PctEld) + PctFB + s(X, Y, bs = &quot;gp&quot;, by = PctFB)
+## 
+## Parametric coefficients:
+##           Estimate Std. Error t value Pr(&gt;|t|)    
+## Intercept  56001.1     3787.8  14.785   &lt;2e-16 ***
+## PctBach      453.9     3609.9   0.126    0.900    
+## PctEld      -273.6     2853.8  -0.096    0.924    
+## PctFB      17806.1   107586.4   0.166    0.869    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Approximate significance of smooth terms:
+##                     edf Ref.df     F p-value   
+## s(X,Y):Intercept 14.807 17.653 1.185 0.29120   
+## s(X,Y):PctBach    8.635 10.657 1.433 0.16957   
+## s(X,Y):PctEld     7.653  9.268 0.945 0.49627   
+## s(X,Y):PctFB     22.984 25.572 2.369 0.00145 **
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Rank: 132/135
+## R-sq.(adj) =  0.805   Deviance explained = 99.1%
+## GCV = 3.345e+07  Scale est. = 2.1547e+07  n = 159</code></pre>
+<p>This returns summaries of the GGP-GAM fixed (parametric) coefficient estimates which can be interpreted as the linear terms in the model, in a similar way as the results of the standard linear regression model. Here only the Intercept has a significant <strong>global</strong> effect, but the other covariates do not.</p>
+<p>Summaries of the spline smooth terms are also reported. The <code>edf</code> (effective degrees of freedom) summarises the complexity of the spline smooths, with an <code>edf</code> value of 1 indicating a straight line, 2 a quadratic curve etc. Higher <code>edf</code> values indicate increasing non-linearity in the relationship between the covariate and the response. Here, these are for each covariate over a 2-dimensional space defined by <span class="math inline">\((X,Y)\)</span>. The p-values relate to splines / smooths defined over this geographic space and their significance can be interpreted as indicating whether they vary locally over space. In contrast to the parametric coefficients, only the GP spline for <code>PctFB</code> is <strong>locally</strong> significant (i.e. its relationship with the target variable <span class="math inline">\(y\)</span> varies locally), whereas the other GP splines are not.</p>
+<p>This is a very different model to those suggested by GWR and MGWR: The GAM model suggests a large and significant global Intercept and a significant local effect associated with <code>PctFB</code>.</p>
+</div>
+<div id="ggp-gam-svcs" class="section level3 hasAnchor" number="6.3.10">
+<h3><span class="header-section-number">6.3.10</span> GGP-GAM SVCs<a href="spatial-varying-coefficient-models.html#ggp-gam-svcs" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>It also is possible to generate the GGP-GAM SVCs and how the relationships between <span class="math inline">\(y\)</span> and the <span class="math inline">\(x\)</span>s vary. The <code>calculate_vcs</code> function from the <code>stgam</code> package below does this for all of the covariates.</p>
+<div class="sourceCode" id="cb400"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb400-1"><a href="spatial-varying-coefficient-models.html#cb400-1" tabindex="-1"></a><span class="co"># function</span></span>
+<span id="cb400-2"><a href="spatial-varying-coefficient-models.html#cb400-2" tabindex="-1"></a>terms <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;Intercept&quot;</span>, <span class="st">&quot;PctBach&quot;</span>, <span class="st">&quot;PctEld&quot;</span>, <span class="st">&quot;PctFB&quot;</span>)</span>
+<span id="cb400-3"><a href="spatial-varying-coefficient-models.html#cb400-3" tabindex="-1"></a>gam_svc <span class="ot">=</span> <span class="fu">calculate_vcs</span>(df.gam, gam.m, terms)</span>
+<span id="cb400-4"><a href="spatial-varying-coefficient-models.html#cb400-4" tabindex="-1"></a><span class="co"># check the results</span></span>
+<span id="cb400-5"><a href="spatial-varying-coefficient-models.html#cb400-5" tabindex="-1"></a>gam_svc <span class="sc">|&gt;</span></span>
+<span id="cb400-6"><a href="spatial-varying-coefficient-models.html#cb400-6" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="st">&quot;b_&quot;</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb400-7"><a href="spatial-varying-coefficient-models.html#cb400-7" tabindex="-1"></a>  <span class="fu">sapply</span>(summary) <span class="sc">|&gt;</span> </span>
+<span id="cb400-8"><a href="spatial-varying-coefficient-models.html#cb400-8" tabindex="-1"></a>  <span class="fu">t</span>() <span class="sc">|&gt;</span> <span class="fu">round</span>(<span class="dv">1</span>)</span></code></pre></div>
+<pre><code>##                 Min. 1st Qu.  Median    Mean 3rd Qu.    Max.
+## b_Intercept  36238.8 51592.3 56266.4 56001.1 62292.5 70493.2
+## b_PctBach     -206.2   164.9   514.7   569.7   942.0  1455.1
+## b_PctEld     -2827.7 -2294.6 -1809.4 -1872.6 -1613.1  -463.6
+## b_PctFB     -12970.0 -5558.8 -1805.4 -2833.9  -135.3  5261.5</code></pre>
+<p>The SVC results and areas of significance can be mapped. The code below assigns the <code>georgia</code> geometry to the results of the SVC and maps the SVC of the significant covariates. Note the assignment of the geometry to the SVC object:</p>
+<p>The code below creates the maps for the local covariates:</p>
+<div class="sourceCode" id="cb402"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb402-1"><a href="spatial-varying-coefficient-models.html#cb402-1" tabindex="-1"></a><span class="co"># assign geometry </span></span>
+<span id="cb402-2"><a href="spatial-varying-coefficient-models.html#cb402-2" tabindex="-1"></a><span class="fu">st_geometry</span>(gam_svc) <span class="ot">&lt;-</span> <span class="fu">st_geometry</span>(georgia)</span>
+<span id="cb402-3"><a href="spatial-varying-coefficient-models.html#cb402-3" tabindex="-1"></a>p7 <span class="ot">=</span> <span class="fu">ggplot</span>(gam_svc) <span class="sc">+</span></span>
+<span id="cb402-4"><a href="spatial-varying-coefficient-models.html#cb402-4" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> b_PctFB), <span class="at">col =</span> <span class="cn">NA</span>) <span class="sc">+</span> </span>
+<span id="cb402-5"><a href="spatial-varying-coefficient-models.html#cb402-5" tabindex="-1"></a>  <span class="fu">scale_fill_gradient2</span>(<span class="at">low =</span> <span class="st">&quot;red&quot;</span>, <span class="at">high =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb402-6"><a href="spatial-varying-coefficient-models.html#cb402-6" tabindex="-1"></a>  <span class="fu">theme_map</span>()</span>
+<span id="cb402-7"><a href="spatial-varying-coefficient-models.html#cb402-7" tabindex="-1"></a>p7</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:ch8fig4a"></span>
+<img src="_main_files/figure-html/ch8fig4a-1.png" alt="Map of the GGP-GAM SVCs for PctFB." width="672" />
+<p class="caption">
+Figure 6.9: Map of the GGP-GAM SVCs for PctFB.
+</p>
+</div>
+<p>You could compare the GWR, MGWR and GGP-GAM outputs. They indicate subtly different spatial processes.</p>
+<div class="sourceCode" id="cb403"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb403-1"><a href="spatial-varying-coefficient-models.html#cb403-1" tabindex="-1"></a><span class="co"># GAM</span></span>
+<span id="cb403-2"><a href="spatial-varying-coefficient-models.html#cb403-2" tabindex="-1"></a><span class="fu">plot_grid</span>(p5, p6, p7 <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;GAM&quot;</span>), <span class="at">ncol =</span> <span class="dv">3</span>)</span></code></pre></div>
+</div>
+<div id="ggp-gam-summary" class="section level3 hasAnchor" number="6.3.11">
+<h3><span class="header-section-number">6.3.11</span> GGP-GAM summary<a href="spatial-varying-coefficient-models.html#ggp-gam-summary" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>This GAM with GPs generates a very different output the to MGWR, with many more coefficients (try running <code>coef(gam.m)</code>). The GAM SVC is quick and has a clear theoretical framework. However they lack an explicit quantification of the <em>scale</em> of the relationship between target and response variables, as is provided by the GWR and MGWR bandwidths. In contrast, they do however provide a measure of the spatial complexity of the predictor to response relationship and generate more reliable models (compare the <span class="math inline">\(R^2\)</span> fit metrics of the 3 models).</p>
+<p>Some useful descriptions of GAMs can be found at:</p>
+<ul>
+<li><a href="https://m-clark.github.io/generalized-additive-models/" class="uri">https://m-clark.github.io/generalized-additive-models/</a></li>
+<li><a href="http://r.qcbs.ca/workshop08/book-en/introduction-to-gams.html" class="uri">http://r.qcbs.ca/workshop08/book-en/introduction-to-gams.html</a></li>
+<li><a href="https://paulvanderlaken.com/2019/06/20/generalized-additive-models-tutorial-in-r-by-noam-ross/" class="uri">https://paulvanderlaken.com/2019/06/20/generalized-additive-models-tutorial-in-r-by-noam-ross/</a></li>
+</ul>
+<p>And this is a great video if you have a spare hour:</p>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=q4_t8jXcQgc" class="uri">https://www.youtube.com/watch?v=q4_t8jXcQgc</a></li>
+</ul>
+</div>
+</div>
+<div id="answers-to-tasks-5" class="section level2 unnumbered hasAnchor">
+<h2>Answers to Tasks<a href="spatial-varying-coefficient-models.html#answers-to-tasks-5" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Task 1</strong></p>
+<blockquote>
+<p>Create a function for creating a <code>ggplot</code> of coefficients held in an <code>sf</code> polygon object, whose values flip, highlighting significant observations.
+The function below takes three inputs:</p>
+</blockquote>
+<ul>
+<li><code>x</code> an <code>sf</code> object with the GWR coefficients</li>
+<li><code>var_name</code> the name of a variable in the GWR output</li>
+<li><code>vr_name_TV</code> the name of the t-values for the variable in the GWR output</li>
+</ul>
+<div class="sourceCode" id="cb404"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb404-1"><a href="spatial-varying-coefficient-models.html#cb404-1" tabindex="-1"></a>my_map_signif_coefs_func <span class="ot">=</span> <span class="cf">function</span>(x, var_name, var_name_TV) {</span>
+<span id="cb404-2"><a href="spatial-varying-coefficient-models.html#cb404-2" tabindex="-1"></a>  <span class="co"># determine which are significant</span></span>
+<span id="cb404-3"><a href="spatial-varying-coefficient-models.html#cb404-3" tabindex="-1"></a>  tval <span class="ot">=</span> x <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="fu">all_of</span>(var_name_TV)) <span class="sc">|&gt;</span> <span class="fu">st_drop_geometry</span>()</span>
+<span id="cb404-4"><a href="spatial-varying-coefficient-models.html#cb404-4" tabindex="-1"></a>  signif <span class="ot">=</span> tval <span class="sc">&lt;</span> <span class="sc">-</span><span class="fl">1.96</span> <span class="sc">|</span> tval <span class="sc">&gt;</span> <span class="fl">1.96</span></span>
+<span id="cb404-5"><a href="spatial-varying-coefficient-models.html#cb404-5" tabindex="-1"></a>  <span class="co"># map the counties</span></span>
+<span id="cb404-6"><a href="spatial-varying-coefficient-models.html#cb404-6" tabindex="-1"></a>  p_out <span class="ot">=</span> </span>
+<span id="cb404-7"><a href="spatial-varying-coefficient-models.html#cb404-7" tabindex="-1"></a>    <span class="fu">ggplot</span>(x) <span class="sc">+</span></span>
+<span id="cb404-8"><a href="spatial-varying-coefficient-models.html#cb404-8" tabindex="-1"></a>    <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> PctBach), <span class="at">col =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
+<span id="cb404-9"><a href="spatial-varying-coefficient-models.html#cb404-9" tabindex="-1"></a>    <span class="fu">scale_fill_gradient2</span>(<span class="at">low =</span> <span class="st">&quot;red&quot;</span>, <span class="at">high =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb404-10"><a href="spatial-varying-coefficient-models.html#cb404-10" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb404-11"><a href="spatial-varying-coefficient-models.html#cb404-11" tabindex="-1"></a>    <span class="co"># now add the tvalues layer</span></span>
+<span id="cb404-12"><a href="spatial-varying-coefficient-models.html#cb404-12" tabindex="-1"></a>    <span class="fu">geom_sf</span>(<span class="at">data =</span> x[signif,], <span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">col =</span> <span class="st">&quot;black&quot;</span>)</span>
+<span id="cb404-13"><a href="spatial-varying-coefficient-models.html#cb404-13" tabindex="-1"></a>  <span class="co"># return the output</span></span>
+<span id="cb404-14"><a href="spatial-varying-coefficient-models.html#cb404-14" tabindex="-1"></a>  <span class="fu">return</span>(p_out)</span>
+<span id="cb404-15"><a href="spatial-varying-coefficient-models.html#cb404-15" tabindex="-1"></a>}</span></code></pre></div>
+<p>Test it!</p>
+<div class="sourceCode" id="cb405"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb405-1"><a href="spatial-varying-coefficient-models.html#cb405-1" tabindex="-1"></a><span class="fu">my_map_signif_coefs_func</span>(<span class="at">x =</span> gwr_sf, <span class="at">var_name =</span> <span class="st">&quot;PctFB&quot;</span>, <span class="at">var_name_TV =</span> <span class="st">&quot;PctFB_TV&quot;</span>)</span>
+<span id="cb405-2"><a href="spatial-varying-coefficient-models.html#cb405-2" tabindex="-1"></a><span class="fu">my_map_signif_coefs_func</span>(<span class="at">x =</span> mgwr_sf, <span class="at">var_name =</span> <span class="st">&quot;PctFB&quot;</span>, <span class="at">var_name_TV =</span> <span class="st">&quot;PctBach_TV&quot;</span>)</span></code></pre></div>
+</div>
+<div id="references" class="section level2 unnumbered hasAnchor">
+<h2>References<a href="spatial-varying-coefficient-models.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-comber2023route" class="csl-entry">
+<span class="nocase">Comber, Alexis, Christopher Brunsdon, Martin Charlton, et al.</span> 2023. <span>“A Route Map for Successful Applications of Geographically Weighted Regression.”</span> <em>Geographical Analysis</em> 55 (1): 155–78.
+</div>
+<div id="ref-comber2024multiscale" class="csl-entry">
+Comber, Alexis, Paul Harris, and Chris Brunsdon. 2024. <span>“Multiscale Spatially Varying Coefficient Modelling Using a Geographical Gaussian Process GAM.”</span> <em>International Journal of Geographical Information Science</em> 38 (1): 27–47.
+</div>
+<div id="ref-fotheringham2003geographically" class="csl-entry">
+Fotheringham, A Stewart, Chris Brunsdon, and Martin Charlton. 2003. <em>Geographically Weighted Regression: The Analysis of Spatially Varying Relationships</em>. John Wiley &amp; Sons.
+</div>
+<div id="ref-fotheringham2017multiscale" class="csl-entry">
+Fotheringham, A Stewart, Wenbai Yang, and Wei Kang. 2017. <span>“Multiscale Geographically Weighted Regression (MGWR).”</span> <em>Annals of the American Association of Geographers</em> 107 (6): 1247–65.
+</div>
+<div id="ref-gollini2015gwmodel" class="csl-entry">
+<span class="nocase">Gollini, Isabella, Binbin Lu, Martin Charlton, Christopher Brunsdon, Paul Harris, et al.</span> 2015. <span>“GWmodel: An r Package for Exploring Spatial Heterogeneity Using Geographically Weighted Models.”</span> <em>Journal of Statistical Software</em> 63 (i17).
+</div>
+<div id="ref-goodchild2004validity" class="csl-entry">
+Goodchild, Michael F. 2004. <span>“The Validity and Usefulness of Laws in Geographic Information Science and Geography.”</span> <em>Annals of the Association of American Geographers</em> 94 (2): 300–303.
+</div>
+<div id="ref-hastie1990generalized" class="csl-entry">
+Hastie, T, and R Tibshirani. 1990. <span>“Generalized Additive Models. Chapman Hall &amp; CRC.”</span> <em>Monographs on Statistics &amp; Applied Probability. Chapman and Hall/CRC</em> 1.
+</div>
+<div id="ref-lu2014gwmodel" class="csl-entry">
+Lu, Binbin, Paul Harris, Martin Charlton, and Chris Brunsdon. 2014. <span>“The GWmodel r Package: Further Topics for Exploring Spatial Heterogeneity Using Geographically Weighted Models.”</span> <em>Geo-Spatial Information Science</em> 17 (2): 85–101.
+</div>
+<div id="ref-openshaw1996developing" class="csl-entry">
+Openshaw, Stan. 1996. <span>“Developing GIS-Relevant Zone-Based Spatial Analysis Methods.”</span> <em>Spatial Analysis: Modelling in a GIS Environment</em>, 55–73.
+</div>
+<div id="ref-oshan2019mgwr" class="csl-entry">
+Oshan, Taylor M, Ziqi Li, Wei Kang, Levi J Wolf, and A Stewart Fotheringham. 2019. <span>“Mgwr: A Python Implementation of Multiscale Geographically Weighted Regression for Investigating Process Spatial Heterogeneity and Scale.”</span> <em>ISPRS International Journal of Geo-Information</em> 8 (6): 269.
+</div>
+<div id="ref-wood2017generalized" class="csl-entry">
+Wood, Simon N. 2017. <em>Generalized Additive Models: An Introduction with r</em>. CRC press.
+</div>
+<div id="ref-yang2014extension" class="csl-entry">
+Yang, Wenbai. 2014. <span>“An Extension of Geographically Weighted Regression with Flexible Bandwidths.”</span> PhD thesis, University of St Andrews.
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="1">
+<li id="fn1"><p>see <a href="https://www.thoughtco.com/degree-of-latitude-and-longitude-distance-4070616" class="uri">https://www.thoughtco.com/degree-of-latitude-and-longitude-distance-4070616</a><a href="spatial-varying-coefficient-models.html#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>There is a nice description here at the start of this webpage - ignore all the MiniTab stuff! <a href="https://blog.minitab.com/blog/statistics-and-quality-data-analysis/what-are-t-values-and-p-values-in-statistics" class="uri">https://blog.minitab.com/blog/statistics-and-quality-data-analysis/what-are-t-values-and-p-values-in-statistics</a><a href="spatial-varying-coefficient-models.html#fnref2" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="classification-and-alternative-representations.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["_main.pdf", "_main.epub"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

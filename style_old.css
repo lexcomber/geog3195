@@ -1,0 +1,36 @@
+p.caption {
+  color: #777;
+  margin-top: 10px;
+}
+p code {
+  white-space: inherit;
+}
+pre {
+  word-break: normal;
+  word-wrap: normal;
+}
+pre code {
+  white-space: inherit;
+}
+
+
+.noticebox {
+  padding: 1em;
+  background: lightyellow;
+  color: black;
+  border: 2px solid red;
+  border-radius: 10px;
+}
+
+.qbox {
+  padding: 1em;
+  background: lightblue;
+  color: black;
+  border: 2px solid blue;
+  border-radius: 10px;
+}
+
+
+.center {
+  text-align: center;
+}

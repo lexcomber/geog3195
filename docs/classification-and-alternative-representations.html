@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Unit 7 Classification and Alternative Representations | GEOG3915 GeoComputation and Spatial Analysis practicals</title>
+  <meta name="description" content="This contains materials to support the University of Leeds GEOG3195 module, delivered by Lex Comber" />
+  <meta name="generator" content="bookdown 0.48 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Unit 7 Classification and Alternative Representations | GEOG3915 GeoComputation and Spatial Analysis practicals" />
+  <meta property="og:type" content="book" />
+  <meta property="og:image" content="https://bookdown.org/lexcomber/geog3915/images/GIS_in_the_bin.jpg" />
+  <meta property="og:description" content="This contains materials to support the University of Leeds GEOG3195 module, delivered by Lex Comber" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Unit 7 Classification and Alternative Representations | GEOG3915 GeoComputation and Spatial Analysis practicals" />
+  
+  <meta name="twitter:description" content="This contains materials to support the University of Leeds GEOG3195 module, delivered by Lex Comber" />
+  <meta name="twitter:image" content="https://bookdown.org/lexcomber/geog3915/images/GIS_in_the_bin.jpg" />
+
+<meta name="author" content="Lex Comber" />
+
+
+<meta name="date" content="2026-09-20" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="spatial-varying-coefficient-models.html"/>
+<link rel="next" href="creating-documents-in-rmarkdown.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">GEOG3915 Practicals</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Getting Started</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#installing-rrstudio"><i class="fa fa-check"></i><b>1.1</b> Installing R/RStudio</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#r-rstudio-refresh"><i class="fa fa-check"></i><b>1.2</b> R / RStudio Refresh</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="index.html"><a href="index.html#the-rstudio-interface"><i class="fa fa-check"></i><b>1.2.1</b> The RStudio Interface</a></li>
+<li class="chapter" data-level="1.2.2" data-path="index.html"><a href="index.html#ways-of-working"><i class="fa fa-check"></i><b>1.2.2</b> Ways of working</a></li>
+<li class="chapter" data-level="1.2.3" data-path="index.html"><a href="index.html#projects-files-and-folder-management"><i class="fa fa-check"></i><b>1.2.3</b> Projects, Files and Folder Management</a></li>
+<li class="chapter" data-level="1.2.4" data-path="index.html"><a href="index.html#practicals"><i class="fa fa-check"></i><b>1.2.4</b> Practicals</a></li>
+<li class="chapter" data-level="1.2.5" data-path="index.html"><a href="index.html#packages"><i class="fa fa-check"></i><b>1.2.5</b> Packages</a></li>
+<li class="chapter" data-level="1.2.6" data-path="index.html"><a href="index.html#further-resources"><i class="fa fa-check"></i><b>1.2.6</b> Further Resources</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#using-r-as-a-gis"><i class="fa fa-check"></i><b>1.3</b> Using R as a GIS</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="index.html"><a href="index.html#data"><i class="fa fa-check"></i><b>1.3.1</b> Data</a></li>
+<li class="chapter" data-level="1.3.2" data-path="index.html"><a href="index.html#creating-point-data"><i class="fa fa-check"></i><b>1.3.2</b> Creating point data</a></li>
+<li class="chapter" data-level="1.3.3" data-path="index.html"><a href="index.html#spatial-operations"><i class="fa fa-check"></i><b>1.3.3</b> Spatial Operations</a></li>
+<li class="chapter" data-level="1.3.4" data-path="index.html"><a href="index.html#merging-spatial-features-and-buffers"><i class="fa fa-check"></i><b>1.3.4</b> Merging spatial features and Buffers</a></li>
+<li class="chapter" data-level="1.3.5" data-path="index.html"><a href="index.html#point-in-polygon-and-area-calculations"><i class="fa fa-check"></i><b>1.3.5</b> Point-in-polygon and Area calculations</a></li>
+<li class="chapter" data-level="1.3.6" data-path="index.html"><a href="index.html#creating-distance-attributes"><i class="fa fa-check"></i><b>1.3.6</b> Creating distance attributes</a></li>
+<li class="chapter" data-level="1.3.7" data-path="index.html"><a href="index.html#reading-and-writing-data-in-and-out-of-rrstudio"><i class="fa fa-check"></i><b>1.3.7</b> Reading and writing data in and out of R/RStudio</a></li>
+<li class="chapter" data-level="1.3.8" data-path="index.html"><a href="index.html#answers-to-tasks"><i class="fa fa-check"></i><b>1.3.8</b> Answers to Tasks</a></li>
+<li class="chapter" data-level="1.3.9" data-path="index.html"><a href="index.html#useful-resources"><i class="fa fa-check"></i><b>1.3.9</b> Useful Resources</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html"><i class="fa fa-check"></i><b>2</b> Exploratory Data Analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#overview"><i class="fa fa-check"></i>Overview</a></li>
+<li class="chapter" data-level="2.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#data-data-summaries-and-generic-plotting-in-r"><i class="fa fa-check"></i><b>2.1</b> Data, data summaries and generic plotting in R</a></li>
+<li class="chapter" data-level="2.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#an-introduction-to-visualisation-using-the-ggplot2-package"><i class="fa fa-check"></i><b>2.2</b> An introduction to visualisation using the <code>ggplot2</code> package</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#ggplot-basics"><i class="fa fa-check"></i><b>2.2.1</b> <code>ggplot</code> basics</a></li>
+<li class="chapter" data-level="2.2.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#groups-with-ggplot"><i class="fa fa-check"></i><b>2.2.2</b> Groups with <code>ggplot</code></a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#data-wrangling-with-dplyr"><i class="fa fa-check"></i><b>2.3</b> Data wrangling with <code>dplyr</code></a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#summary"><i class="fa fa-check"></i><b>2.3.1</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#using-piping-syntax"><i class="fa fa-check"></i><b>2.4</b> Using piping syntax</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#select"><i class="fa fa-check"></i><b>2.4.1</b> <code>select</code></a></li>
+<li class="chapter" data-level="2.4.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#mutate"><i class="fa fa-check"></i><b>2.4.2</b> <code>mutate</code></a></li>
+<li class="chapter" data-level="2.4.3" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#group_by-and-summarise-changing-the-unit-of-observation"><i class="fa fa-check"></i><b>2.4.3</b> <code>group_by</code> and <code>summarise</code>: changing the unit of observation</a></li>
+<li class="chapter" data-level="2.4.4" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#a-final-example"><i class="fa fa-check"></i><b>2.4.4</b> A final example</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#answers-to-tasks-1"><i class="fa fa-check"></i>Answers to Tasks</a></li>
+<li class="chapter" data-level="" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#additional-resources"><i class="fa fa-check"></i>Additional Resources</a></li>
+<li class="chapter" data-level="" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#optional-enhanced-mapping-with-the-ggplot2-package"><i class="fa fa-check"></i>Optional: enhanced mapping with the <code>ggplot2</code> package</a></li>
+<li class="chapter" data-level="" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#appendix-named-colours"><i class="fa fa-check"></i>Appendix: Named Colours</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="spatial-interpolation.html"><a href="spatial-interpolation.html"><i class="fa fa-check"></i><b>3</b> Spatial Interpolation</a>
+<ul>
+<li class="chapter" data-level="" data-path="spatial-interpolation.html"><a href="spatial-interpolation.html#overview-1"><i class="fa fa-check"></i>Overview</a></li>
+<li class="chapter" data-level="3.1" data-path="spatial-interpolation.html"><a href="spatial-interpolation.html#kernel-density-estimation-point-observations"><i class="fa fa-check"></i><b>3.1</b> Kernel Density Estimation (point observations)</a></li>
+<li class="chapter" data-level="3.2" data-path="spatial-interpolation.html"><a href="spatial-interpolation.html#inverse-distance-weighting-point-values"><i class="fa fa-check"></i><b>3.2</b> Inverse Distance Weighting (point values)</a></li>
+<li class="chapter" data-level="3.3" data-path="spatial-interpolation.html"><a href="spatial-interpolation.html#area-weighted-interpolation-area-to-area"><i class="fa fa-check"></i><b>3.3</b> Area Weighted interpolation (area to area)</a></li>
+<li class="chapter" data-level="3.4" data-path="spatial-interpolation.html"><a href="spatial-interpolation.html#dasymetric-interpolation"><i class="fa fa-check"></i><b>3.4</b> Dasymetric Interpolation</a></li>
+<li class="chapter" data-level="" data-path="spatial-interpolation.html"><a href="spatial-interpolation.html#answers-to-tasks-2"><i class="fa fa-check"></i>Answers to Tasks</a></li>
+<li class="chapter" data-level="" data-path="spatial-interpolation.html"><a href="spatial-interpolation.html#optional-fine-tuning-idw"><i class="fa fa-check"></i>Optional: Fine tuning IDW</a>
+<ul>
+<li class="chapter" data-level="" data-path="spatial-interpolation.html"><a href="spatial-interpolation.html#answer-to-additional-task"><i class="fa fa-check"></i>Answer to Additional Task</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>4</b> Regression</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#overview-2"><i class="fa fa-check"></i>Overview</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#which-regression-approach"><i class="fa fa-check"></i>Which regression approach?</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#packages-1"><i class="fa fa-check"></i>Packages</a></li>
+</ul></li>
+<li class="chapter" data-level="4.1" data-path="regression.html"><a href="regression.html#standard-linear-regression-models-ols"><i class="fa fa-check"></i><b>4.1</b> Standard linear regression models (OLS)</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#specifying-the-model"><i class="fa fa-check"></i>Specifying the model</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="regression.html"><a href="regression.html#binomial-logistic-regression-for-binary-variables"><i class="fa fa-check"></i><b>4.2</b> Binomial Logistic Regression for binary variables</a></li>
+<li class="chapter" data-level="4.3" data-path="regression.html"><a href="regression.html#poisson-regression-for-count-variables"><i class="fa fa-check"></i><b>4.3</b> Poisson Regression for count variables</a></li>
+<li class="chapter" data-level="4.4" data-path="regression.html"><a href="regression.html#outliers-and-robust-regression"><i class="fa fa-check"></i><b>4.4</b> Outliers and Robust regression</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#addendum-prediction-vs-inference"><i class="fa fa-check"></i>Addendum: Prediction vs Inference</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#answers-to-tasks-3"><i class="fa fa-check"></i>Answers to Tasks</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#optional-the-maup"><i class="fa fa-check"></i>Optional: the MAUP</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="regression.html"><a href="regression.html#introduction"><i class="fa fa-check"></i><b>4.4.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.4.2" data-path="regression.html"><a href="regression.html#impact-on-correlations-of-counts"><i class="fa fa-check"></i><b>4.4.2</b> Impact on Correlations of Counts</a></li>
+<li class="chapter" data-level="4.4.3" data-path="regression.html"><a href="regression.html#impact-on-models"><i class="fa fa-check"></i><b>4.4.3</b> Impact on models</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#additional-resources-1"><i class="fa fa-check"></i>Additional Resources</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><i class="fa fa-check"></i><b>5</b> Spatial Models: spatial autocorrelation and cluster analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#overview-3"><i class="fa fa-check"></i>Overview</a></li>
+<li class="chapter" data-level="" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#data-and-packages"><i class="fa fa-check"></i>Data and Packages</a></li>
+<li class="chapter" data-level="5.1" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#defining-nearby-neighbour-lists"><i class="fa fa-check"></i><b>5.1</b> Defining nearby: neighbour lists</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#neigbours-by-ajacency"><i class="fa fa-check"></i><b>5.1.1</b> Neigbours by ajacency</a></li>
+<li class="chapter" data-level="5.1.2" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#neighbours-by-nearest-n"><i class="fa fa-check"></i><b>5.1.2</b> Neighbours by nearest <span class="math inline">\(n\)</span></a></li>
+<li class="chapter" data-level="5.1.3" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#neighbours-by-distance"><i class="fa fa-check"></i><b>5.1.3</b> Neighbours by distance</a></li>
+<li class="chapter" data-level="5.1.4" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#summary-1"><i class="fa fa-check"></i><b>5.1.4</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#spatial-autocorrelation-and-clusters"><i class="fa fa-check"></i><b>5.2</b> Spatial Autocorrelation and Clusters</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#neighbours-and-lagged-mean-plots"><i class="fa fa-check"></i><b>5.2.1</b> Neighbours and Lagged Mean Plots</a></li>
+<li class="chapter" data-level="5.2.2" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#morans-i-for-determining-clusters-and-spatial-autocorrelation"><i class="fa fa-check"></i><b>5.2.2</b> Moran’s I for determining Clusters and Spatial Autocorrelation</a></li>
+<li class="chapter" data-level="5.2.3" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#lisa-for-determining-local-clusters-and-spatial-autocorrelation"><i class="fa fa-check"></i><b>5.2.3</b> LISA for determining <em>local</em> clusters and spatial autocorrelation</a></li>
+<li class="chapter" data-level="5.2.4" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#getis-ord-g-statistic"><i class="fa fa-check"></i><b>5.2.4</b> Getis-Ord G statistic</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#answers-to-tasks-4"><i class="fa fa-check"></i>Answers to Tasks</a></li>
+<li class="chapter" data-level="" data-path="spatial-models-spatial-autocorrelation-and-cluster-analysis.html"><a href="spatial-models-spatial-autocorrelation-and-cluster-analysis.html#useful-links"><i class="fa fa-check"></i>Useful Links</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html"><i class="fa fa-check"></i><b>6</b> Spatial Varying Coefficient Models</a>
+<ul>
+<li class="chapter" data-level="" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#overview-4"><i class="fa fa-check"></i>Overview</a></li>
+<li class="chapter" data-level="" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#data-and-packages-1"><i class="fa fa-check"></i>Data and Packages</a></li>
+<li class="chapter" data-level="6.1" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#local-vs-global-models"><i class="fa fa-check"></i><b>6.1</b> Local vs Global models</a></li>
+<li class="chapter" data-level="6.2" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#geographically-weighted-regression"><i class="fa fa-check"></i><b>6.2</b> Geographically Weighted Regression</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#description"><i class="fa fa-check"></i><b>6.2.1</b> Description</a></li>
+<li class="chapter" data-level="6.2.2" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#undertaking-a-gwr"><i class="fa fa-check"></i><b>6.2.2</b> Undertaking a GWR</a></li>
+<li class="chapter" data-level="6.2.3" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#evaluating-the-results"><i class="fa fa-check"></i><b>6.2.3</b> Evaluating the results</a></li>
+<li class="chapter" data-level="6.2.4" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#mapping-gwr-outputs"><i class="fa fa-check"></i><b>6.2.4</b> Mapping GWR outputs</a></li>
+<li class="chapter" data-level="6.2.5" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#gwr-summary"><i class="fa fa-check"></i><b>6.2.5</b> GWR Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#multi-scale-gwr"><i class="fa fa-check"></i><b>6.3</b> Multi-scale GWR</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#description-1"><i class="fa fa-check"></i><b>6.3.1</b> Description</a></li>
+<li class="chapter" data-level="6.3.2" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#undertaking-a-mgwr"><i class="fa fa-check"></i><b>6.3.2</b> Undertaking a MGWR</a></li>
+<li class="chapter" data-level="6.3.3" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#evaluating-the-results-1"><i class="fa fa-check"></i><b>6.3.3</b> Evaluating the results</a></li>
+<li class="chapter" data-level="6.3.4" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#mapping-mgwr-outputs"><i class="fa fa-check"></i><b>6.3.4</b> Mapping MGWR outputs</a></li>
+<li class="chapter" data-level="6.3.5" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#comparing-gwr-and-mgwr"><i class="fa fa-check"></i><b>6.3.5</b> Comparing GWR and MGWR</a></li>
+<li class="chapter" data-level="6.3.6" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#mgwr-summary"><i class="fa fa-check"></i><b>6.3.6</b> MGWR Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#optional-generalised-additive-models"><i class="fa fa-check"></i>Optional: Generalised Additive Models</a>
+<ul>
+<li class="chapter" data-level="6.3.7" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#description-2"><i class="fa fa-check"></i><b>6.3.7</b> Description</a></li>
+<li class="chapter" data-level="6.3.8" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#undertaking-a-ggp-gam"><i class="fa fa-check"></i><b>6.3.8</b> Undertaking a GGP-GAM</a></li>
+<li class="chapter" data-level="6.3.9" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#evaluating-the-results-2"><i class="fa fa-check"></i><b>6.3.9</b> Evaluating the results</a></li>
+<li class="chapter" data-level="6.3.10" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#ggp-gam-svcs"><i class="fa fa-check"></i><b>6.3.10</b> GGP-GAM SVCs</a></li>
+<li class="chapter" data-level="6.3.11" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#ggp-gam-summary"><i class="fa fa-check"></i><b>6.3.11</b> GGP-GAM summary</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#answers-to-tasks-5"><i class="fa fa-check"></i>Answers to Tasks</a></li>
+<li class="chapter" data-level="" data-path="spatial-varying-coefficient-models.html"><a href="spatial-varying-coefficient-models.html#references"><i class="fa fa-check"></i>References</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html"><i class="fa fa-check"></i><b>7</b> Classification and Alternative Representations</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#classification"><i class="fa fa-check"></i><b>7.1</b> Classification</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#overview-5"><i class="fa fa-check"></i><b>7.1.1</b> Overview</a></li>
+<li class="chapter" data-level="7.1.2" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#pca-transformation"><i class="fa fa-check"></i><b>7.1.2</b> PCA transformation</a></li>
+<li class="chapter" data-level="7.1.3" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#k-means-cluster-analysis"><i class="fa fa-check"></i><b>7.1.3</b> <span class="math inline">\(k\)</span>-means Cluster Analysis</a></li>
+<li class="chapter" data-level="7.1.4" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#diagnostics"><i class="fa fa-check"></i><b>7.1.4</b> Diagnostics</a></li>
+<li class="chapter" data-level="7.1.5" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#mapping"><i class="fa fa-check"></i><b>7.1.5</b> Mapping</a></li>
+<li class="chapter" data-level="7.1.6" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#further-resources-1"><i class="fa fa-check"></i><b>7.1.6</b> Further Resources</a></li>
+<li class="chapter" data-level="7.1.7" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#references-1"><i class="fa fa-check"></i><b>7.1.7</b> References</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#optional-alternative-spatial-visualisations"><i class="fa fa-check"></i><b>7.2</b> Optional: Alternative spatial visualisations</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#overview-6"><i class="fa fa-check"></i><b>7.2.1</b> Overview</a></li>
+<li class="chapter" data-level="7.2.2" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#the-invisibility-problem"><i class="fa fa-check"></i><b>7.2.2</b> The invisibility problem</a></li>
+<li class="chapter" data-level="7.2.3" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#cartograms"><i class="fa fa-check"></i><b>7.2.3</b> Cartograms</a></li>
+<li class="chapter" data-level="7.2.4" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#hexagonal-binning-and-tile-maps"><i class="fa fa-check"></i><b>7.2.4</b> Hexagonal binning and Tile maps</a></li>
+<li class="chapter" data-level="7.2.5" data-path="classification-and-alternative-representations.html"><a href="classification-and-alternative-representations.html#references-2"><i class="fa fa-check"></i><b>7.2.5</b> References</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="creating-documents-in-rmarkdown.html"><a href="creating-documents-in-rmarkdown.html"><i class="fa fa-check"></i><b>8</b> Creating documents in RMarkdown</a>
+<ul>
+<li class="chapter" data-level="" data-path="creating-documents-in-rmarkdown.html"><a href="creating-documents-in-rmarkdown.html#overview-7"><i class="fa fa-check"></i>Overview</a></li>
+<li class="chapter" data-level="8.1" data-path="creating-documents-in-rmarkdown.html"><a href="creating-documents-in-rmarkdown.html#resources"><i class="fa fa-check"></i><b>8.1</b> Resources</a></li>
+<li class="chapter" data-level="8.2" data-path="creating-documents-in-rmarkdown.html"><a href="creating-documents-in-rmarkdown.html#tasks"><i class="fa fa-check"></i><b>8.2</b> Tasks</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">GEOG3915 GeoComputation and Spatial Analysis practicals</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="classification-and-alternative-representations" class="section level1 hasAnchor" number="7">
+<h1><span class="header-section-number">Unit 7</span> Classification and Alternative Representations<a href="classification-and-alternative-representations.html#classification-and-alternative-representations" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>This practical has 2 parts: the main practical on geodemographic classification and an optional section on alternative representations with cartograms. You are expected to undertake the Classification practical and the other part on Cartograms is there for you to play with if you are interested.</p>
+<div id="classification" class="section level2 hasAnchor" number="7.1">
+<h2><span class="header-section-number">7.1</span> Classification<a href="classification-and-alternative-representations.html#classification" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="overview-5" class="section level3 hasAnchor" number="7.1.1">
+<h3><span class="header-section-number">7.1.1</span> Overview<a href="classification-and-alternative-representations.html#overview-5" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>This part of the practical is based on <a href="https://rpubs.com/chrisbrunsdon/14998" class="uri">https://rpubs.com/chrisbrunsdon/14998</a> as reported in Brunsdon et al (2018) and this conference paper <a href="https://www.gla.ac.uk/media/media_401738_en.pdf" class="uri">https://www.gla.ac.uk/media/media_401738_en.pdf</a>.</p>
+<p>You will need to load the following packages for this practical. Some may need installing but you are even more experienced at this now.</p>
+<div class="sourceCode" id="cb406"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb406-1"><a href="classification-and-alternative-representations.html#cb406-1" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
+<span id="cb406-2"><a href="classification-and-alternative-representations.html#cb406-2" tabindex="-1"></a><span class="fu">library</span>(utils)</span>
+<span id="cb406-3"><a href="classification-and-alternative-representations.html#cb406-3" tabindex="-1"></a><span class="fu">library</span>(plyr)</span>
+<span id="cb406-4"><a href="classification-and-alternative-representations.html#cb406-4" tabindex="-1"></a><span class="fu">library</span>(RColorBrewer)</span>
+<span id="cb406-5"><a href="classification-and-alternative-representations.html#cb406-5" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb406-6"><a href="classification-and-alternative-representations.html#cb406-6" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<p>You will need the following files in your working directory from the VLE: <code>AllThemesTablesSA.csv</code>, the R file <code>create_vars.R</code> and the Irish census small areas <code>irish_small_areas.gpkg</code>.</p>
+<p>The raw data were downloaded from the Irish population census page:</p>
+<ul>
+<li>census attributes: <a href="http://www.cso.ie/en/census/census2011smallareapopulationstatisticssaps/" class="uri">http://www.cso.ie/en/census/census2011smallareapopulationstatisticssaps/</a></li>
+<li>census areas: <a href="http://www.cso.ie/en/media/csoie/census/documents/saps2011files/Complete_Set_Of_SAPS_2011.zip" class="uri">http://www.cso.ie/en/media/csoie/census/documents/saps2011files/Complete_Set_Of_SAPS_2011.zip</a></li>
+</ul>
+<p>You should check that data files are unzipped and in your working directory. The above links provide data for different spatial reporting units in Ireland. Here we will work at small area level.</p>
+<p>First load the raw data into your R session - this is large!</p>
+<div class="sourceCode" id="cb407"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb407-1"><a href="classification-and-alternative-representations.html#cb407-1" tabindex="-1"></a><span class="co"># SA - small areas - this gets the raw data</span></span>
+<span id="cb407-2"><a href="classification-and-alternative-representations.html#cb407-2" tabindex="-1"></a>SAData <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;AllThemesTablesSA.csv&quot;</span>)</span>
+<span id="cb407-3"><a href="classification-and-alternative-representations.html#cb407-3" tabindex="-1"></a><span class="fu">dim</span>(SAData)</span></code></pre></div>
+<pre><code>## [1] 18488   767</code></pre>
+<p>Next use the function in the <code>create_vars.R</code> script (that compute the derived variables). Notice the use of the <code>source</code> function to load in the code in the R file.</p>
+<div class="sourceCode" id="cb409"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb409-1"><a href="classification-and-alternative-representations.html#cb409-1" tabindex="-1"></a><span class="fu">source</span>(<span class="st">&quot;create_vars.R&quot;</span>)</span>
+<span id="cb409-2"><a href="classification-and-alternative-representations.html#cb409-2" tabindex="-1"></a><span class="co"># this function transforms the data</span></span>
+<span id="cb409-3"><a href="classification-and-alternative-representations.html#cb409-3" tabindex="-1"></a>SAVars <span class="ot">&lt;-</span> <span class="fu">CreateVariables</span>(SAData)</span>
+<span id="cb409-4"><a href="classification-and-alternative-representations.html#cb409-4" tabindex="-1"></a><span class="fu">dim</span>(SAVars)</span></code></pre></div>
+<pre><code>## [1] 18488    41</code></pre>
+<p>And have a look at the result</p>
+<div class="sourceCode" id="cb411"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb411-1"><a href="classification-and-alternative-representations.html#cb411-1" tabindex="-1"></a><span class="fu">head</span>(SAVars)</span></code></pre></div>
+<p>The <code>CreateVariables</code> function has grouped different census data attributes into 41 variables, expressed in percentage format, that we can use as the basis of some kind of geo-demographic classification.</p>
+<p>We will use a k-means cluster analysis in order to develop the classification (Hartigan and Wong, 1979).</p>
+<p>Now one of the problems with a cluster analysis of data large <span class="math inline">\(m\)</span> (columns, attributes or variables) is that the clustering approach can fail to identify a division of the attribute space (recall the operation of k-means from the lecture).</p>
+</div>
+<div id="pca-transformation" class="section level3 hasAnchor" number="7.1.2">
+<h3><span class="header-section-number">7.1.2</span> PCA transformation<a href="classification-and-alternative-representations.html#pca-transformation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Because of this issue, data reduction techniques are frequently used such as a Principal Components Analysis, or PCA. This is a very common operation but essentially what a PCA tries to do is to identify orthogonal components within the multivariate / multi-dimensional attribute space (there are 40 potential explanatory variables) that summarise the variation in the data attributes. The idea is that we can use some of the PCA components, as summaries of the variables, as the inputs into the classification. Recall that what we are trying to do here is to group similar census areas.</p>
+<p>Typically, 3 or 4 components found through a PCA will explain 70-90% of the variation in the data.</p>
+<div class="sourceCode" id="cb412"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb412-1"><a href="classification-and-alternative-representations.html#cb412-1" tabindex="-1"></a>PCA <span class="ot">&lt;-</span> <span class="fu">princomp</span>(SAVars[, <span class="sc">-</span><span class="dv">1</span>], <span class="at">cor =</span> T, <span class="at">scores =</span> T)</span>
+<span id="cb412-2"><a href="classification-and-alternative-representations.html#cb412-2" tabindex="-1"></a>PCA<span class="sc">$</span>sdev<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span><span class="fu">sum</span>(PCA<span class="sc">$</span>sdev<span class="sc">^</span><span class="dv">2</span>)</span></code></pre></div>
+<p>The code above creates the PCA and lists the proportion of variance explained by each individual component. To determine how many of the components The next step is to investigate the cumulative amount of variance explained.</p>
+<div class="sourceCode" id="cb413"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb413-1"><a href="classification-and-alternative-representations.html#cb413-1" tabindex="-1"></a><span class="fu">cumsum</span>(PCA<span class="sc">$</span>sdev<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span><span class="fu">sum</span>(PCA<span class="sc">$</span>sdev<span class="sc">^</span><span class="dv">2</span>))</span></code></pre></div>
+<pre><code>##    Comp.1    Comp.2    Comp.3    Comp.4    Comp.5    Comp.6    Comp.7    Comp.8    Comp.9 
+## 0.2444728 0.3850054 0.4731222 0.5467045 0.5913962 0.6274209 0.6561050 0.6835007 0.7081846 
+##   Comp.10   Comp.11   Comp.12   Comp.13   Comp.14   Comp.15   Comp.16   Comp.17   Comp.18 
+## 0.7320644 0.7530682 0.7737740 0.7928943 0.8115662 0.8284073 0.8447404 0.8598050 0.8736685 
+##   Comp.19   Comp.20   Comp.21   Comp.22   Comp.23   Comp.24   Comp.25   Comp.26   Comp.27 
+## 0.8871886 0.8997834 0.9113383 0.9222372 0.9324414 0.9416523 0.9496740 0.9564315 0.9627463 
+##   Comp.28   Comp.29   Comp.30   Comp.31   Comp.32   Comp.33   Comp.34   Comp.35   Comp.36 
+## 0.9684955 0.9737239 0.9782914 0.9822813 0.9857684 0.9886730 0.9911977 0.9936910 0.9959040 
+##   Comp.37   Comp.38   Comp.39   Comp.40 
+## 0.9976004 0.9987066 0.9996529 1.0000000</code></pre>
+<p>Here we can see that the first 14 components account for 81.2% of the variance in the data. We will use these for a k-means cluster analysis.</p>
+</div>
+<div id="k-means-cluster-analysis" class="section level3 hasAnchor" number="7.1.3">
+<h3><span class="header-section-number">7.1.3</span> <span class="math inline">\(k\)</span>-means Cluster Analysis<a href="classification-and-alternative-representations.html#k-means-cluster-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>One of the critical issues is how many clusters A further issue is the size of the clusters. One problem frequently occurring with <span class="math inline">\(k\)</span>-means cluster analysis is that very unusual cases tend to form very small clusters. This is because of the nature of the clustering operation which seeks to minimise the within-cluster variation (such as is measured through the sum of squares of the variables), and small groups of similar but outlying observations contribute highly to this quantity unless they are assigned their own cluster. This sometimes means that increasing the number of clusters tends to create these very small ‘outlier’ clusters.</p>
+<p>The code below evaluates different clusters sizes - from 1 to 100 which is passed to the <code>centers</code> parameter in the <code>kmeans</code> function - and calculates the within sum of squares and the smallest number of census areas in each cluster. These are put into the <code>wss</code> and <code>smallest.clus</code> R objects respectively.</p>
+<p>Note that this takes time so progress is printed out for each 10%.</p>
+<div class="sourceCode" id="cb415"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb415-1"><a href="classification-and-alternative-representations.html#cb415-1" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
+<span id="cb415-2"><a href="classification-and-alternative-representations.html#cb415-2" tabindex="-1"></a><span class="fu">library</span>(utils)</span>
+<span id="cb415-3"><a href="classification-and-alternative-representations.html#cb415-3" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)  <span class="co"># Reproducible outcome</span></span>
+<span id="cb415-4"><a href="classification-and-alternative-representations.html#cb415-4" tabindex="-1"></a>smallest.clus <span class="ot">&lt;-</span> wss <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">100</span>) <span class="co"># define 2 variables</span></span>
+<span id="cb415-5"><a href="classification-and-alternative-representations.html#cb415-5" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>) {</span>
+<span id="cb415-6"><a href="classification-and-alternative-representations.html#cb415-6" tabindex="-1"></a>  clus <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(PCA<span class="sc">$</span>scores[, <span class="dv">1</span><span class="sc">:</span><span class="dv">14</span>], <span class="at">centers =</span> i, <span class="at">iter.max =</span> <span class="dv">100</span>, <span class="at">nstart =</span> <span class="dv">20</span>)</span>
+<span id="cb415-7"><a href="classification-and-alternative-representations.html#cb415-7" tabindex="-1"></a>    wss[i] <span class="ot">&lt;-</span> clus<span class="sc">$</span>tot.withinss</span>
+<span id="cb415-8"><a href="classification-and-alternative-representations.html#cb415-8" tabindex="-1"></a>    smallest.clus[i] <span class="ot">&lt;-</span> <span class="fu">min</span>(clus<span class="sc">$</span>size)</span>
+<span id="cb415-9"><a href="classification-and-alternative-representations.html#cb415-9" tabindex="-1"></a>    <span class="cf">if</span> (i<span class="sc">%%</span> <span class="dv">10</span> <span class="sc">==</span> <span class="dv">0</span>) <span class="fu">cat</span>(<span class="st">&quot;progress:&quot;</span>, i, <span class="st">&quot;% </span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb415-10"><a href="classification-and-alternative-representations.html#cb415-10" tabindex="-1"></a>}</span></code></pre></div>
+<pre><code>## progress: 10 %</code></pre>
+<pre><code>## progress: 20 %</code></pre>
+<pre><code>## progress: 30 % 
+## progress: 40 % 
+## progress: 50 % 
+## progress: 60 %</code></pre>
+<pre><code>## progress: 70 %</code></pre>
+<pre><code>## progress: 80 % 
+## progress: 90 %</code></pre>
+<pre><code>## progress: 100 %</code></pre>
+<p>We can now plot the sums of squares and the cluster sizes. These are useful diagnostics.</p>
+<div class="sourceCode" id="cb422"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb422-1"><a href="classification-and-alternative-representations.html#cb422-1" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, wss[<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>], <span class="at">type =</span> <span class="st">&quot;h&quot;</span>, <span class="at">main =</span> <span class="st">&quot;Cluster Scree Plot&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;Number of Clusters&quot;</span>, </span>
+<span id="cb422-2"><a href="classification-and-alternative-representations.html#cb422-2" tabindex="-1"></a>    <span class="at">ylab =</span> <span class="st">&quot;Within Cluster Sum of Squares&quot;</span>)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-258"></span>
+<img src="_main_files/figure-html/unnamed-chunk-258-1.png" alt="Fig1. A scree plot of WSS against cluster number." width="672" />
+<p class="caption">
+Figure 7.1: Fig1. A scree plot of WSS against cluster number.
+</p>
+</div>
+<p>This shows that as the number of clusters increases, the within cluster variance decreases - as you would expect - each group becomes more homogeneous as the number of groups increases.</p>
+<p>Then the smallest cluster size against the total number of clusters can be plotted. This shows the tipping point at which cluster size starts to drop off - again indicating very small, niche and not very universal clusters:</p>
+<div class="sourceCode" id="cb423"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb423-1"><a href="classification-and-alternative-representations.html#cb423-1" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, smallest.clus[<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>], <span class="at">type =</span> <span class="st">&quot;h&quot;</span>, <span class="at">main =</span> <span class="st">&quot;Smallest Cluster Plot&quot;</span>, </span>
+<span id="cb423-2"><a href="classification-and-alternative-representations.html#cb423-2" tabindex="-1"></a>    <span class="at">xlab =</span> <span class="st">&quot;Number of Clusters&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Smallest Cluster Size&quot;</span>)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-259"></span>
+<img src="_main_files/figure-html/unnamed-chunk-259-1.png" alt="Fig2. The smallest cluster size counts against cluster number." width="672" />
+<p class="caption">
+Figure 7.2: Fig2. The smallest cluster size counts against cluster number.
+</p>
+</div>
+<p>From this it seems that the ‘very small cluster’ phenomenon starts to occur when the number of clusters exceeds 18 - assuming a very small cluster has fewer than 15 small areas.</p>
+<p>Here, the classification for 18 clusters is re-calculated - this quantity is stored in <code>n.clus</code> in the code below. This will be used as it provides a reasonable trade off between within cluster sum of squares and minimum cluster size.</p>
+<div class="sourceCode" id="cb424"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb424-1"><a href="classification-and-alternative-representations.html#cb424-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb424-2"><a href="classification-and-alternative-representations.html#cb424-2" tabindex="-1"></a>n.clus <span class="ot">=</span> <span class="dv">18</span></span>
+<span id="cb424-3"><a href="classification-and-alternative-representations.html#cb424-3" tabindex="-1"></a>SAclus <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(PCA<span class="sc">$</span>scores[, <span class="dv">1</span><span class="sc">:</span><span class="dv">14</span>], <span class="at">centers =</span> n.clus, <span class="at">iter.max =</span> <span class="dv">100</span>, <span class="at">nstart =</span> <span class="dv">20</span>)</span>
+<span id="cb424-4"><a href="classification-and-alternative-representations.html#cb424-4" tabindex="-1"></a>SAclusters <span class="ot">&lt;-</span> SAclus<span class="sc">$</span>cluster</span></code></pre></div>
+</div>
+<div id="diagnostics" class="section level3 hasAnchor" number="7.1.4">
+<h3><span class="header-section-number">7.1.4</span> Diagnostics<a href="classification-and-alternative-representations.html#diagnostics" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The purpose of this section is to identify the characteristics of the clusters found above. Since the above computation applied the analysis to principal components it is helpful to characterise the clusters in terms of the original variables used in the PCA. To do this, firstly the <span class="math inline">\(z\)</span>-scores of each variable for the cluster centroids are computed. If the initial variable is <span class="math inline">\(x\)</span>, then the <span class="math inline">\(z\)</span>-score is given by</p>
+<p><span class="math display">\[ z = \frac{x - \bar{x}}{s} \]</span></p>
+<p>where <span class="math inline">\(\bar{x}\)</span> is the arithmetic mean of the <span class="math inline">\(x\)</span> values in the data set, and <span class="math inline">\(s\)</span> is the sample standard deviation defined by</p>
+<p><span class="math display">\[ s = + \sqrt{\frac{\sum{(x - \bar{x})^2}}{n - 1}} \]</span></p>
+<p>this standardisation allows values of each variable to be compared on a consistent scale - the <span class="math inline">\(z\)</span>-score in each case has a mean of zero and a standard deviation of one. Here, the <span class="math inline">\(x\)</span> values are actually cluster-wise mean values, whereas <span class="math inline">\(\bar{x}\)</span> and <span class="math inline">\(s\)</span> are computed for values for all Small Areas. This is useful for identifying which clusters have relatively high or low values of particular variables. The following code creates a set of <span class="math inline">\(z\)</span> scores for each cluster.</p>
+<div class="sourceCode" id="cb425"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb425-1"><a href="classification-and-alternative-representations.html#cb425-1" tabindex="-1"></a><span class="co"># We need this for the &#39;ddply&#39; function</span></span>
+<span id="cb425-2"><a href="classification-and-alternative-representations.html#cb425-2" tabindex="-1"></a><span class="fu">library</span>(plyr)</span>
+<span id="cb425-3"><a href="classification-and-alternative-representations.html#cb425-3" tabindex="-1"></a></span>
+<span id="cb425-4"><a href="classification-and-alternative-representations.html#cb425-4" tabindex="-1"></a><span class="co"># Compute a data frame (one row per cluster) containing the means of each</span></span>
+<span id="cb425-5"><a href="classification-and-alternative-representations.html#cb425-5" tabindex="-1"></a><span class="co"># variable in that cluster</span></span>
+<span id="cb425-6"><a href="classification-and-alternative-representations.html#cb425-6" tabindex="-1"></a>mean_by_cluster <span class="ot">&lt;-</span> <span class="fu">ddply</span>(SAVars, .(SAclusters), <span class="fu">numcolwise</span>(mean))[, <span class="sc">-</span><span class="dv">1</span>]</span>
+<span id="cb425-7"><a href="classification-and-alternative-representations.html#cb425-7" tabindex="-1"></a></span>
+<span id="cb425-8"><a href="classification-and-alternative-representations.html#cb425-8" tabindex="-1"></a><span class="co"># Compute the column-wise means for *all* observations</span></span>
+<span id="cb425-9"><a href="classification-and-alternative-representations.html#cb425-9" tabindex="-1"></a>mean_by_col <span class="ot">&lt;-</span> <span class="fu">apply</span>(SAVars[, <span class="sc">-</span><span class="dv">1</span>], <span class="dv">2</span>, mean)</span>
+<span id="cb425-10"><a href="classification-and-alternative-representations.html#cb425-10" tabindex="-1"></a></span>
+<span id="cb425-11"><a href="classification-and-alternative-representations.html#cb425-11" tabindex="-1"></a><span class="co"># Compute the column-wise *sample* sd&#39;s for *all* observations</span></span>
+<span id="cb425-12"><a href="classification-and-alternative-representations.html#cb425-12" tabindex="-1"></a>sd_by_col <span class="ot">&lt;-</span> <span class="fu">apply</span>(SAVars[, <span class="sc">-</span><span class="dv">1</span>], <span class="dv">2</span>, sd)</span>
+<span id="cb425-13"><a href="classification-and-alternative-representations.html#cb425-13" tabindex="-1"></a></span>
+<span id="cb425-14"><a href="classification-and-alternative-representations.html#cb425-14" tabindex="-1"></a><span class="co"># Create the z-scores via the &#39;scale&#39; function</span></span>
+<span id="cb425-15"><a href="classification-and-alternative-representations.html#cb425-15" tabindex="-1"></a>z_scores <span class="ot">&lt;-</span> <span class="fu">scale</span>(mean_by_cluster, <span class="at">center =</span> mean_by_col, <span class="at">scale =</span> sd_by_col)</span></code></pre></div>
+<p>The above code used the <code>ddply</code> function in the <code>plyr</code> package. This is used to split the original input data (the <code>SAVars</code> data frame) by the <code>SAclusters</code> variable which indicates the cluster membership of each census areas. This is an example of a split-apply-combine operation. The data frame is split into a number of sub-frames according to the value of <code>SAClusters</code>, then an operation is applied to each sub-frame (in this case computing a list of column means - the expression <code>numcolwise(mean)</code> takes a function (<code>mean</code>) and creates a new function, that is then applied to each numeric column in the input data), and finally these are combined together to create a single data frame.</p>
+<p>The result can be explored visually. The <code>heatmap</code> function provides a visual representation of the z_scores variable. It generates a grid-based image of the values in the two dimensional array. However, noting that the column and row labels are both categorical, non-ordinal variables. Although he cluster numbers are integers, no significance is attached to their values - they merely serve as labels. This implies that both rows and columns may be permuted, without loss of generality. Doing this can sometimes aid the clarity of the visualisation. In this case, rows are re-ordered on the basis of applying a dendrogram ordering algorithm to the result of a hierarchical clustering algorithm, where the values along each row are treated as a vector. The clustering is carried out on the basis of Euclidean distance between the vectors using the complete linkage [3] approach, and the re-ordering is based on the reorder.dendrogram function provided in the R <code>stats</code> package provided in standard distributions of R. As noted, this re-ordering is applied to the rows, but following this, a re-ordering is also applied to the columns - this time treating the columns as vectors, and computing Euclidean distances between these.</p>
+<div class="sourceCode" id="cb426"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb426-1"><a href="classification-and-alternative-representations.html#cb426-1" tabindex="-1"></a><span class="fu">heatmap</span>(<span class="fu">t</span>(z_scores),</span>
+<span id="cb426-2"><a href="classification-and-alternative-representations.html#cb426-2" tabindex="-1"></a>        <span class="at">scale =</span> <span class="st">&#39;none&#39;</span>,</span>
+<span id="cb426-3"><a href="classification-and-alternative-representations.html#cb426-3" tabindex="-1"></a>        <span class="at">col=</span><span class="fu">brewer.pal</span>(<span class="dv">6</span>,<span class="st">&#39;BrBG&#39;</span>),</span>
+<span id="cb426-4"><a href="classification-and-alternative-representations.html#cb426-4" tabindex="-1"></a>        <span class="at">breaks=</span><span class="fu">c</span>(<span class="sc">-</span><span class="fl">1e10</span>,<span class="sc">-</span><span class="dv">2</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="sc">+</span><span class="fl">1e10</span>),</span>
+<span id="cb426-5"><a href="classification-and-alternative-representations.html#cb426-5" tabindex="-1"></a>        <span class="at">xlab=</span><span class="st">&#39;Cluster Number&#39;</span>,</span>
+<span id="cb426-6"><a href="classification-and-alternative-representations.html#cb426-6" tabindex="-1"></a>        <span class="at">add.expr=</span><span class="fu">abline</span>(<span class="at">h=</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">40</span>)<span class="sc">+</span><span class="fl">0.5</span>,<span class="at">v=</span>(<span class="dv">0</span><span class="sc">:</span>n.clus)<span class="sc">+</span><span class="fl">0.5</span>,<span class="at">col=</span><span class="st">&#39;white&#39;</span>))</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-262"></span>
+<img src="_main_files/figure-html/unnamed-chunk-262-1.png" alt="Fig3. The contribution of different variables to the geodemographic classification of Ireland." width="864" />
+<p class="caption">
+Figure 7.3: Fig3. The contribution of different variables to the geodemographic classification of Ireland.
+</p>
+</div>
+<p>The shading of the elements of the heatmap is based on the Brewer <code>BrBG</code> palette - see e.g. <a href="http://colorbrewer2.org" class="uri">http://colorbrewer2.org</a> - with category cut-off points at -2, -1, 0, 1, and 2. Thin white lines are added to the grid so that the divisions between individual rows and columns can be seen using the <code>abline</code> function. Finally, the dendrograms are actually drawn against the axes, so that hierarchical groups of the <span class="math inline">\(k\)</span>-means clusters, and the of variables can be seen. The former is helpful in providing a hierarchical higher-level grouping of clusters, based on their similarities. It is also a useful detector for ‘clusters of outliers’ as described earlier. For example, the cluster dendrogram in the figure above suggests that cluster 17 is unusual (note that hierarchically, it is split away into a one element group before any other divisions are encountered), and a similar observation can be made for cluster 15. This dendrogram for the variable also suggests that the ‘People per room’ is unusual as it is quite distinct from all others in terms of its representation across the clusters.</p>
+</div>
+<div id="mapping" class="section level3 hasAnchor" number="7.1.5">
+<h3><span class="header-section-number">7.1.5</span> Mapping<a href="classification-and-alternative-representations.html#mapping" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>It would be interesting to map the spatial distribution of the clusters. The Irish census Small Areas file can be loaded using the <code>sf</code> package:</p>
+<div class="sourceCode" id="cb427"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb427-1"><a href="classification-and-alternative-representations.html#cb427-1" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb427-2"><a href="classification-and-alternative-representations.html#cb427-2" tabindex="-1"></a>sa <span class="ot">=</span> <span class="fu">st_read</span>(<span class="st">&quot;irish_small_areas.gpkg&quot;</span>, <span class="at">quiet =</span> T)</span></code></pre></div>
+<p>You could map these to have a quick look but this is a large file and the map might take time to render! So it is your choice whether you run the code below or not.</p>
+<div class="sourceCode" id="cb428"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb428-1"><a href="classification-and-alternative-representations.html#cb428-1" tabindex="-1"></a><span class="fu">ggplot</span>(sa) <span class="sc">+</span> <span class="fu">geom_sf</span>() <span class="sc">+</span></span>
+<span id="cb428-2"><a href="classification-and-alternative-representations.html#cb428-2" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<p>In order to map the geodemographic clusters, the spatial data and the data containing the 18 clusters need to be linked.</p>
+<p>In an earlier step the <code>CreateVariables</code> function was used to create the <code>SAVars</code> data frame. This has a column indicating the ID code of each Small Area called <code>GEOGID</code> and the spatial data has a similarly named variable:</p>
+<div class="sourceCode" id="cb429"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb429-1"><a href="classification-and-alternative-representations.html#cb429-1" tabindex="-1"></a><span class="fu">names</span>(SAVars)</span></code></pre></div>
+<pre><code>##  [1] &quot;GEOGID&quot;               &quot;Age0_4&quot;               &quot;Age5_14&quot;             
+##  [4] &quot;Age25_44&quot;             &quot;Age45_64&quot;             &quot;Age65over&quot;           
+##  [7] &quot;EU_National&quot;          &quot;ROW_National&quot;         &quot;Born_outside_Ireland&quot;
+## [10] &quot;Separated&quot;            &quot;SinglePerson&quot;         &quot;Pensioner&quot;           
+## [13] &quot;LoneParent&quot;           &quot;DINK&quot;                 &quot;NonDependentKids&quot;    
+## [16] &quot;RentPublic&quot;           &quot;RentPrivate&quot;          &quot;Flats&quot;               
+## [19] &quot;NoCenHeat&quot;            &quot;RoomsHH&quot;              &quot;PeopleRoom&quot;          
+## [22] &quot;SepticTank&quot;           &quot;HEQual&quot;               &quot;Employed&quot;            
+## [25] &quot;TwoCars&quot;              &quot;JTWPublic&quot;            &quot;HomeWork&quot;            
+## [28] &quot;LLTI&quot;                 &quot;UnpaidCare&quot;           &quot;Students&quot;            
+## [31] &quot;Unemployed&quot;           &quot;EconInactFam&quot;         &quot;Agric&quot;               
+## [34] &quot;Construction&quot;         &quot;Manufacturing&quot;        &quot;Commerce&quot;            
+## [37] &quot;Transport&quot;            &quot;Public&quot;               &quot;Professional&quot;        
+## [40] &quot;Internet&quot;             &quot;Broadband&quot;</code></pre>
+<div class="sourceCode" id="cb431"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb431-1"><a href="classification-and-alternative-representations.html#cb431-1" tabindex="-1"></a><span class="fu">names</span>(sa)</span></code></pre></div>
+<pre><code>##  [1] &quot;NUTS1&quot;      &quot;NUTS1NAME&quot;  &quot;NUTS2&quot;      &quot;NUTS2NAME&quot;  &quot;NUTS3&quot;      &quot;NUTS3NAME&quot; 
+##  [7] &quot;COUNTY&quot;     &quot;COUNTYNAME&quot; &quot;CSOED&quot;      &quot;OSIED&quot;      &quot;EDNAME&quot;     &quot;SMALL_AREA&quot;
+## [13] &quot;GEOGID&quot;     &quot;MALE2011&quot;   &quot;FEMALE2011&quot; &quot;TOTAL2011&quot;  &quot;PPOCC2011&quot;  &quot;UNOCC2011&quot; 
+## [19] &quot;VACANT2011&quot; &quot;HS2011&quot;     &quot;PCVAC2011&quot;  &quot;CREATEDATE&quot; &quot;geom&quot;</code></pre>
+<p>We can use one of the join functions in <code>dplyr</code>, part of the <code>tidyverse</code>, to link the spatial data and the classes in <code>SAclusters</code> if we attach this from <code>SAVars</code>.</p>
+<p>First link the classes and the SA code:</p>
+<div class="sourceCode" id="cb433"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb433-1"><a href="classification-and-alternative-representations.html#cb433-1" tabindex="-1"></a><span class="co"># attach the small area code to the classification </span></span>
+<span id="cb433-2"><a href="classification-and-alternative-representations.html#cb433-2" tabindex="-1"></a>df <span class="ot">=</span> <span class="fu">data.frame</span>(<span class="at">GEOGID =</span> SAVars<span class="sc">$</span>GEOGID,</span>
+<span id="cb433-3"><a href="classification-and-alternative-representations.html#cb433-3" tabindex="-1"></a>                <span class="at">Class =</span> SAclusters)</span>
+<span id="cb433-4"><a href="classification-and-alternative-representations.html#cb433-4" tabindex="-1"></a><span class="co"># check</span></span>
+<span id="cb433-5"><a href="classification-and-alternative-representations.html#cb433-5" tabindex="-1"></a><span class="fu">head</span>(df)</span></code></pre></div>
+<pre><code>##       GEOGID Class
+## 1 A017001001    10
+## 2 A017002001    10
+## 3 A017002002    10
+## 4 A017002003    10
+## 5 A017003001    18
+## 6 A017003002    10</code></pre>
+<p>Then link the result to the spatial data using the same piping syntax as in Week 7:</p>
+<div class="sourceCode" id="cb435"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb435-1"><a href="classification-and-alternative-representations.html#cb435-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb435-2"><a href="classification-and-alternative-representations.html#cb435-2" tabindex="-1"></a>sa <span class="ot">&lt;-</span> sa <span class="sc">%&gt;%</span> <span class="fu">left_join</span>(df)</span>
+<span id="cb435-3"><a href="classification-and-alternative-representations.html#cb435-3" tabindex="-1"></a><span class="co"># check the result</span></span>
+<span id="cb435-4"><a href="classification-and-alternative-representations.html#cb435-4" tabindex="-1"></a><span class="fu">head</span>(sa)</span></code></pre></div>
+<pre><code>## Simple feature collection with 6 features and 23 fields
+## Geometry type: MULTIPOLYGON
+## Dimension:     XY
+## Bounding box:  xmin: 268327.6 ymin: 137755.2 xmax: 315202.7 ymax: 179397
+## Projected CRS: TM65 / Irish Grid
+##   NUTS1 NUTS1NAME NUTS2            NUTS2NAME NUTS3       NUTS3NAME COUNTY     COUNTYNAME
+## 1   IE0   Ireland  IE02 Southern and Eastern IE022        Mid-East     15 Wicklow County
+## 2   IE0   Ireland  IE02 Southern and Eastern IE024 South-East (IE)     01  Carlow County
+## 3   IE0   Ireland  IE02 Southern and Eastern IE024 South-East (IE)     01  Carlow County
+## 4   IE0   Ireland  IE02 Southern and Eastern IE024 South-East (IE)     01  Carlow County
+## 5   IE0   Ireland  IE02 Southern and Eastern IE024 South-East (IE)     01  Carlow County
+## 6   IE0   Ireland  IE02 Southern and Eastern IE024 South-East (IE)     01  Carlow County
+##   CSOED  OSIED     EDNAME SMALL_AREA     GEOGID MALE2011 FEMALE2011 TOTAL2011 PPOCC2011
+## 1 15039 257005    Aughrim  257005002 A257005002      137        138       275        84
+## 2 01054 017049 Tinnahinch  017049001 A017049001      186        176       362       111
+## 3 01053 017032     Marley  017032001 A017032001      194        173       367       121
+## 4 01054 017049 Tinnahinch  017049002 A017049002       75         75       150        67
+## 5 01054 017049 Tinnahinch  017049003 A017049003       84         81       165        64
+## 6 01015 017005 Ballyellin  017005002 A017005002      105         99       204        71
+##   UNOCC2011 VACANT2011 HS2011 PCVAC2011 CREATEDATE Class                           geom
+## 1        18         15    102      14.7 27-03-2012    10 MULTIPOLYGON (((311852.7 17...
+## 2        25         24    136      17.6 27-03-2012    10 MULTIPOLYGON (((272943.1 13...
+## 3         8          5    129       3.9 27-03-2012    18 MULTIPOLYGON (((276637.4 14...
+## 4        29         29     96      30.2 27-03-2012     3 MULTIPOLYGON (((270715 1433...
+## 5        16         14     80      17.5 27-03-2012     7 MULTIPOLYGON (((270995 1436...
+## 6         6          5     77       6.5 27-03-2012    10 MULTIPOLYGON (((270502 1527...</code></pre>
+<p>Finally the result can be mapped:</p>
+<div class="sourceCode" id="cb437"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb437-1"><a href="classification-and-alternative-representations.html#cb437-1" tabindex="-1"></a><span class="fu">ggplot</span>(sa)<span class="sc">+</span></span>
+<span id="cb437-2"><a href="classification-and-alternative-representations.html#cb437-2" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> <span class="fu">as.factor</span>(Class)), <span class="at">col =</span> <span class="cn">NA</span>) <span class="sc">+</span> </span>
+<span id="cb437-3"><a href="classification-and-alternative-representations.html#cb437-3" tabindex="-1"></a>  <span class="fu">scale_fill_discrete</span>(<span class="at">name =</span> <span class="st">&quot;Class&quot;</span>) <span class="sc">+</span></span>
+<span id="cb437-4"><a href="classification-and-alternative-representations.html#cb437-4" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-268"></span>
+<img src="_main_files/figure-html/unnamed-chunk-268-1.png" alt="Fig4. A geodemographic classification of small areas in Ireland." width="672" />
+<p class="caption">
+Figure 7.4: Fig4. A geodemographic classification of small areas in Ireland.
+</p>
+</div>
+</div>
+<div id="further-resources-1" class="section level3 hasAnchor" number="7.1.6">
+<h3><span class="header-section-number">7.1.6</span> Further Resources<a href="classification-and-alternative-representations.html#further-resources-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Overviews of PCA:</p>
+<ul>
+<li><a href="https://towardsdatascience.com/tidying-up-with-pca-an-introduction-to-principal-components-analysis-f876599af383" class="uri">https://towardsdatascience.com/tidying-up-with-pca-an-introduction-to-principal-components-analysis-f876599af383</a></li>
+<li><a href="https://towardsdatascience.com/a-one-stop-shop-for-principal-component-analysis-5582fb7e0a9c" class="uri">https://towardsdatascience.com/a-one-stop-shop-for-principal-component-analysis-5582fb7e0a9c</a></li>
+<li><a href="https://builtin.com/data-science/step-step-explanation-principal-component-analysis" class="uri">https://builtin.com/data-science/step-step-explanation-principal-component-analysis</a></li>
+<li><a href="https://www.math.umd.edu/~petersd/666/html/iris_pca.html" class="uri">https://www.math.umd.edu/~petersd/666/html/iris_pca.html</a></li>
+</ul>
+<p>Overviews of k-means classification:</p>
+<ul>
+<li><a href="https://www.displayr.com/what-is-k-means-cluster-analysis/" class="uri">https://www.displayr.com/what-is-k-means-cluster-analysis/</a></li>
+<li><a href="https://www.statsandr.com/blog/clustering-analysis-k-means-and-hierarchical-clustering-by-hand-and-in-r/" class="uri">https://www.statsandr.com/blog/clustering-analysis-k-means-and-hierarchical-clustering-by-hand-and-in-r/</a></li>
+<li><a href="https://www.datacamp.com/community/tutorials/k-means-clustering-r" class="uri">https://www.datacamp.com/community/tutorials/k-means-clustering-r</a></li>
+</ul>
+</div>
+<div id="references-1" class="section level3 hasAnchor" number="7.1.7">
+<h3><span class="header-section-number">7.1.7</span> References<a href="classification-and-alternative-representations.html#references-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Adnan, M., Longley, P.A., Singleton, A.D. and Brunsdon, C., 2010. Towards real‐time geodemographics: Clustering algorithm performance for large multidimensional spatial databases. Transactions in GIS, 14(3), pp.283-297.</p>
+<p>Brunsdon, C., Longley, P., Singleton, A. and Ashby, D., 2011. Predicting participation in higher education: a comparative evaluation of the performance of geodemographic classifications. Journal of the Royal Statistical Society: Series A (Statistics in Society), 174(1), pp.17-30.</p>
+<p>Brunsdon, C., Charlton, M. and Rigby, J.E., 2018. An Open Source Geodemographic Classification of Small Areas in the Republic of Ireland. Applied Spatial Analysis and Policy, 11(2), pp.183-204.</p>
+<p>Hartigan, J. A. and Wong, M. A., 1979. A K-means clustering algorithm. Applied Statistics 28, 100–108.</p>
+<p>Charlton, M. E., Openshaw S., Wymer C., 1985. Some new classifications of census enumeration districts in Britain: a poor man’s ACORN, Journal of Economic and Social Measurement, 13, 69-98</p>
+<p>Sorensen, T., 1948. A method of establishing groups of equal amplitude in plant sociology based on similarity of species and its application to analyses of the vegetation on Danish commons, Biologiske Skrifter, 5, 1–34</p>
+<p>Kaufman, L. and Rousseeuw, P. J., 1990. Finding Groups in Data: An Introduction to Cluster Analysis John Wiley and Sons, New York.</p>
+<p>Gastner, M.T. and Newman, M. E. J., 2004. Diffusion-based method for producing density equalizing maps, Proceedings of the National Academy of Sciences, 101, 7499–7504.</p>
+<p>Tufte, E.R., 1990, Envisioning Information, Graphics Press, Cheshire, CT</p>
+</div>
+</div>
+<div id="optional-alternative-spatial-visualisations" class="section level2 hasAnchor" number="7.2">
+<h2><span class="header-section-number">7.2</span> Optional: Alternative spatial visualisations<a href="classification-and-alternative-representations.html#optional-alternative-spatial-visualisations" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="overview-6" class="section level3 hasAnchor" number="7.2.1">
+<h3><span class="header-section-number">7.2.1</span> Overview<a href="classification-and-alternative-representations.html#overview-6" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>This part of the practical is based on Chapter 8 of Comber and Brunsdon (2020). It describes alternative approaches for visualizing spatial data using cartograms, hexagonal binning and tile maps. Alternative visualisations approaches for spatial data are needed because of the so-called <em>invisibility problem</em>, in which the characteristics or properties of small but important areas or units may be difficult to pick out or may obscured by other mapped features under classic cartographic representations. Cartograms provide a way to overcome the invisibility problem by distorting the reporting units in order to communicate data properties and trends.</p>
+<p>You will need to have the following packages loaded into your R session:</p>
+<div class="sourceCode" id="cb438"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb438-1"><a href="classification-and-alternative-representations.html#cb438-1" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb438-2"><a href="classification-and-alternative-representations.html#cb438-2" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb438-3"><a href="classification-and-alternative-representations.html#cb438-3" tabindex="-1"></a><span class="fu">library</span>(cartogram)</span>
+<span id="cb438-4"><a href="classification-and-alternative-representations.html#cb438-4" tabindex="-1"></a><span class="fu">library</span>(geogrid)</span>
+<span id="cb438-5"><a href="classification-and-alternative-representations.html#cb438-5" tabindex="-1"></a><span class="fu">library</span>(cowplot)</span></code></pre></div>
+<p>You will need the following data in your working directory from the VLE: <code>nottingham.gpkg</code></p>
+</div>
+<div id="the-invisibility-problem" class="section level3 hasAnchor" number="7.2.2">
+<h3><span class="header-section-number">7.2.2</span> The invisibility problem<a href="classification-and-alternative-representations.html#the-invisibility-problem" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Many of the spatial areas we have used for analysis have used a consistent population-based reporting unit such as LSOAs and OAs. In large scale national spatial analyses, when values for those units are mapped, small areas with very large or very small values may be obscure, or if they are visible, their importance may be under-played. The figure below shows the distribution of the <code>llti</code> variable (the proportion of people with Limiting Long Term Illness - LLTI) across the LSOAs in Nottingham. However, what is not displayed is the full picture of LLTI. In this case then, an area based geography may be misleading. Reporting units are smaller in urban settings with the result that many of potentially important patterns are not obvious (LLTI is common in the major post-industrial urban conurbations, with small, dense LSOAs). Here the census geography is occluding information and preventing comparisons across different units. This exemplifies the <em>problem of invisibility</em> in choropleth mapping (Harris et al 2018), with important patterns obscured especially, not just because the reporting units are small but also because they have varying areal properties.</p>
+<p>Load the data and then construct the plot:</p>
+<div class="sourceCode" id="cb439"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb439-1"><a href="classification-and-alternative-representations.html#cb439-1" tabindex="-1"></a>nottingham <span class="ot">=</span> <span class="fu">st_read</span>(<span class="st">&quot;nottingham.gpkg&quot;</span>, <span class="at">quiet =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb440"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb440-1"><a href="classification-and-alternative-representations.html#cb440-1" tabindex="-1"></a><span class="fu">ggplot</span>(nottingham) <span class="sc">+</span></span>
+<span id="cb440-2"><a href="classification-and-alternative-representations.html#cb440-2" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> llti)) <span class="sc">+</span></span>
+<span id="cb440-3"><a href="classification-and-alternative-representations.html#cb440-3" tabindex="-1"></a>  <span class="fu">scale_fill_distiller</span>(<span class="at">palette =</span> <span class="st">&quot;GnBu&quot;</span>, </span>
+<span id="cb440-4"><a href="classification-and-alternative-representations.html#cb440-4" tabindex="-1"></a>                       <span class="at">name =</span> <span class="st">&quot;Limiting Long Term Illness&quot;</span>) <span class="sc">+</span></span>
+<span id="cb440-5"><a href="classification-and-alternative-representations.html#cb440-5" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-271"></span>
+<img src="_main_files/figure-html/unnamed-chunk-271-1.png" alt="LLTI over LSOAs in Nottingham." width="960" />
+<p class="caption">
+Figure 7.5: LLTI over LSOAs in Nottingham.
+</p>
+</div>
+<p>To overcome the invisibility problem, areal units can be distorted, converted, or even displayed in a different way but the problems of invisible dense regions of the map may persist, for example, if the data are converted to point symbols. <em>Cartograms</em> and <em>Hexbins</em> provide area based approaches for changing the geographic representation of areal reporting units whilst retaining some of the topology (adjacency between areas etc) and preserving all of the data values.</p>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>Areal reporting units are commonly used in choropleth maps to show the spatial distribution of continuous variables;</li>
+<li>However, these are often designed to provide consistent reporting of <em>population</em> geography, with the result that smaller units may be suffer from the invisibility problem in densely populated regions;</li>
+<li>Cartograms have been proposed as a way of overcoming this problem.</li>
+</ul>
+</div>
+<div id="cartograms" class="section level3 hasAnchor" number="7.2.3">
+<h3><span class="header-section-number">7.2.3</span> Cartograms<a href="classification-and-alternative-representations.html#cartograms" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Cartograms provide a way of revealing <em>invisible</em> places. They breaking the link between the size of units on the map and their actual physical size. Cartograms rescale units according to some attribute (e.g. <code>llti</code>). There is a relatively long literature on the use of cartograms, with perhaps Tobler (2004) providing the most accessible introduction to their history, with a more recent review in Nusrat and Kobourove (2016). There are a number of flavours of cartogram, as will be illustrated, but what they all seek to do is to transform spatial data / areal reporting units, by using the value of some property or variable, whilst maintaining as much of the topology (i.e. the spatial relationships between units) of the individual units and the whole dataset as possible. That is, the geography is changed in order to better describe the spatial distribution of the (usually) area based features, but the spatial relationship between and relative positioning of individual areas remains consistent.</p>
+<p>There are 3 basic types of cartogram, each of which is illustrated below:</p>
+<ol style="list-style-type: decimal">
+<li>Contiguous cartograms</li>
+<li>Non-contiguous cartograms</li>
+<li>Dorling cartograms</li>
+</ol>
+<p>These will be explored using the <code>cartogram</code> package and the <code>unemployed</code> variable in the <code>nottingham</code> dataset loaded earlier:</p>
+<div class="sourceCode" id="cb441"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb441-1"><a href="classification-and-alternative-representations.html#cb441-1" tabindex="-1"></a><span class="co"># create a map of the original data </span></span>
+<span id="cb441-2"><a href="classification-and-alternative-representations.html#cb441-2" tabindex="-1"></a>p1 <span class="ot">=</span> </span>
+<span id="cb441-3"><a href="classification-and-alternative-representations.html#cb441-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(nottingham) <span class="sc">+</span></span>
+<span id="cb441-4"><a href="classification-and-alternative-representations.html#cb441-4" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> unemployed)) <span class="sc">+</span></span>
+<span id="cb441-5"><a href="classification-and-alternative-representations.html#cb441-5" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>() <span class="sc">+</span></span>
+<span id="cb441-6"><a href="classification-and-alternative-representations.html#cb441-6" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Original&quot;</span>)</span>
+<span id="cb441-7"><a href="classification-and-alternative-representations.html#cb441-7" tabindex="-1"></a>p1</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:origdata"></span>
+<img src="_main_files/figure-html/origdata-1.png" alt="Unemployment rates over LSOAs in Nottingham." width="672" />
+<p class="caption">
+Figure 7.6: Unemployment rates over LSOAs in Nottingham.
+</p>
+</div>
+<p>The <em>contiguous cartogram</em> is the classic example. It maintains the topology (connectivity) between adjacent areas, but re-sizes them according to the attribute value of interest. It tries to maintain the original shape of each area but inevitably re-sizing comes at a distortion cost. A <em>key assumption</em> is that the original areas have some sort of meaning or are familiar to the viewer. Indeed the distortions only have meaning if the viewer is familiar with the original representation and therefore able to interpret the distortion. In this case the <code>cartogram</code> package makes use of the rubber sheet distortion algorithm (Dougenik et al,1985) although the most widely used is probably the density equalizing cartogram (Gastner and Newman, 2004).</p>
+<div class="sourceCode" id="cb442"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb442-1"><a href="classification-and-alternative-representations.html#cb442-1" tabindex="-1"></a><span class="fu">library</span>(cartogram)</span>
+<span id="cb442-2"><a href="classification-and-alternative-representations.html#cb442-2" tabindex="-1"></a><span class="co"># contiguous cartogram </span></span>
+<span id="cb442-3"><a href="classification-and-alternative-representations.html#cb442-3" tabindex="-1"></a>n_cart <span class="ot">&lt;-</span> <span class="fu">cartogram_cont</span>(nottingham, <span class="st">&quot;unemployed&quot;</span>, <span class="at">itermax=</span><span class="dv">10</span>)</span>
+<span id="cb442-4"><a href="classification-and-alternative-representations.html#cb442-4" tabindex="-1"></a>p2 <span class="ot">=</span></span>
+<span id="cb442-5"><a href="classification-and-alternative-representations.html#cb442-5" tabindex="-1"></a>  <span class="fu">ggplot</span>(n_cart) <span class="sc">+</span></span>
+<span id="cb442-6"><a href="classification-and-alternative-representations.html#cb442-6" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> unemployed)) <span class="sc">+</span></span>
+<span id="cb442-7"><a href="classification-and-alternative-representations.html#cb442-7" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>() <span class="sc">+</span></span>
+<span id="cb442-8"><a href="classification-and-alternative-representations.html#cb442-8" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Contiguous&quot;</span>)</span>
+<span id="cb442-9"><a href="classification-and-alternative-representations.html#cb442-9" tabindex="-1"></a>p2</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:cart1"></span>
+<img src="_main_files/figure-html/cart1-1.png" alt="Nottingham unemployment rates using a contiguous cartogram." width="672" />
+<p class="caption">
+Figure 7.7: Nottingham unemployment rates using a contiguous cartogram.
+</p>
+</div>
+<p>The <em>non-contiguous cartogram</em> simply re-sizes areas according to the value of interest. Each area or polygon is displayed separately, with the loss of loss of adjacency and topology, although this can be inferred by including the original polygon outlines. The <code>cartogram</code> package code uses the non-contiguous area approach of Olson (1975). The advantages of this approach are that original <em>form</em> of the map is preserved and the need to be familiar with the original interpret the cartogram is reduced. But small areas with large values are simply are only distinguished from their lower valued neighbours by a reduction in the emphasis placed on those neighbours.</p>
+<div class="sourceCode" id="cb443"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb443-1"><a href="classification-and-alternative-representations.html#cb443-1" tabindex="-1"></a><span class="co"># noncontiguous cartogram </span></span>
+<span id="cb443-2"><a href="classification-and-alternative-representations.html#cb443-2" tabindex="-1"></a>n_ncart <span class="ot">&lt;-</span> <span class="fu">cartogram_ncont</span>(nottingham, <span class="st">&quot;unemployed&quot;</span>)</span>
+<span id="cb443-3"><a href="classification-and-alternative-representations.html#cb443-3" tabindex="-1"></a>p3 <span class="ot">=</span> </span>
+<span id="cb443-4"><a href="classification-and-alternative-representations.html#cb443-4" tabindex="-1"></a>  <span class="fu">ggplot</span>(n_ncart) <span class="sc">+</span></span>
+<span id="cb443-5"><a href="classification-and-alternative-representations.html#cb443-5" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> unemployed)) <span class="sc">+</span></span>
+<span id="cb443-6"><a href="classification-and-alternative-representations.html#cb443-6" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>() <span class="sc">+</span></span>
+<span id="cb443-7"><a href="classification-and-alternative-representations.html#cb443-7" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Non-Contiguous&quot;</span>)</span>
+<span id="cb443-8"><a href="classification-and-alternative-representations.html#cb443-8" tabindex="-1"></a>p3</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:cart2"></span>
+<img src="_main_files/figure-html/cart2-1.png" alt="Nottingham unemployment rates using a non-contiguous cartogram." width="672" />
+<p class="caption">
+Figure 7.8: Nottingham unemployment rates using a non-contiguous cartogram.
+</p>
+</div>
+<p><em>Dorling</em> cartograms (Dorling, 1996) create non-overlapping symbols that are sized in proportion to the data values (proportional symbols). They use proportional circles, for which a spatial arrangement as close to the original is iteratively sought, preserving some of the topology. This also requires some playing with the <code>cartogram_dorling</code> function parameters to get a cartogram that preserves location.</p>
+<div class="sourceCode" id="cb444"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb444-1"><a href="classification-and-alternative-representations.html#cb444-1" tabindex="-1"></a><span class="co"># dorling cartogram </span></span>
+<span id="cb444-2"><a href="classification-and-alternative-representations.html#cb444-2" tabindex="-1"></a><span class="co"># without parameter tweaking! </span></span>
+<span id="cb444-3"><a href="classification-and-alternative-representations.html#cb444-3" tabindex="-1"></a><span class="co"># n_dorl &lt;- cartogram_dorling(nottingham, &quot;unemployed&quot;)</span></span>
+<span id="cb444-4"><a href="classification-and-alternative-representations.html#cb444-4" tabindex="-1"></a><span class="co"># with parameter tweaking! </span></span>
+<span id="cb444-5"><a href="classification-and-alternative-representations.html#cb444-5" tabindex="-1"></a>n_dorl <span class="ot">&lt;-</span> <span class="fu">cartogram_dorling</span>(nottingham, </span>
+<span id="cb444-6"><a href="classification-and-alternative-representations.html#cb444-6" tabindex="-1"></a>                            <span class="st">&quot;unemployed&quot;</span>, <span class="at">k =</span> <span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">5000</span>)</span>
+<span id="cb444-7"><a href="classification-and-alternative-representations.html#cb444-7" tabindex="-1"></a>p4 <span class="ot">=</span> </span>
+<span id="cb444-8"><a href="classification-and-alternative-representations.html#cb444-8" tabindex="-1"></a>  <span class="fu">ggplot</span>(nottingham) <span class="sc">+</span> <span class="fu">geom_sf</span>(<span class="at">col =</span> <span class="st">&quot;lightgrey&quot;</span>)<span class="sc">+</span></span>
+<span id="cb444-9"><a href="classification-and-alternative-representations.html#cb444-9" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> n_dorl, <span class="fu">aes</span>(<span class="at">fill =</span> unemployed)) <span class="sc">+</span></span>
+<span id="cb444-10"><a href="classification-and-alternative-representations.html#cb444-10" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>() <span class="sc">+</span> </span>
+<span id="cb444-11"><a href="classification-and-alternative-representations.html#cb444-11" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Non-Contiguous&quot;</span>)  </span>
+<span id="cb444-12"><a href="classification-and-alternative-representations.html#cb444-12" tabindex="-1"></a>p4</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:cart3"></span>
+<img src="_main_files/figure-html/cart3-1.png" alt="Nottingham unemployment rates using a Dorling cartogram." width="672" />
+<p class="caption">
+Figure 7.9: Nottingham unemployment rates using a Dorling cartogram.
+</p>
+</div>
+<p>We can examine all of these together using the <code>plot_grid</code> function:</p>
+<div class="sourceCode" id="cb445"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb445-1"><a href="classification-and-alternative-representations.html#cb445-1" tabindex="-1"></a><span class="fu">plot_grid</span>(p1, p2, p3, p4, <span class="at">ncol =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p>Different flavours of cartograms provide a way to overcome the invisibility problem in standard choropleth maps by spatially exaggerating areas with high values and reducing the map space given to areas with low values. However, all cartograms but especially contiguous cartograms, impose a high level of distortion - the <em>distortion problem</em> (Harris et al, 2018), changing the shape and locations of areas on the map, such that areas with the lowest values are both allocated the lowest amount of map space and distorted. They can also massively over or under emphasise the difference between values at different locations, resulting in different kinds of <em>mis-representation</em>.</p>
+<p>This presents a challenge: cartograms can fail if the level of geographical distortion makes the map difficult to interpret, despite the aim of improving the communication of spatial data. There are number of potential approaches for dealing with mis-representation. One critical but frequently overlooked solution is make sure the original map is always presented alongside the cartogram.</p>
+<p>Another is to carefully rescale the attribute value that is being mapped in order to achieve an acceptable balance between invisibility and distortion, using square roots or logs of counts (squares or exponential for proportions). The code below creates contiguous cartograms scaled in this way as well as the original contiguous cartogram.</p>
+<div class="sourceCode" id="cb446"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb446-1"><a href="classification-and-alternative-representations.html#cb446-1" tabindex="-1"></a><span class="co"># rescale the value</span></span>
+<span id="cb446-2"><a href="classification-and-alternative-representations.html#cb446-2" tabindex="-1"></a>nottingham<span class="sc">$</span>u_sq <span class="ot">=</span> (nottingham<span class="sc">$</span>unemployed)<span class="sc">^</span><span class="dv">3</span></span>
+<span id="cb446-3"><a href="classification-and-alternative-representations.html#cb446-3" tabindex="-1"></a>nottingham<span class="sc">$</span>u_exp <span class="ot">=</span> <span class="fu">exp</span>(nottingham<span class="sc">$</span>unemployed)</span>
+<span id="cb446-4"><a href="classification-and-alternative-representations.html#cb446-4" tabindex="-1"></a><span class="co"># create cartograms</span></span>
+<span id="cb446-5"><a href="classification-and-alternative-representations.html#cb446-5" tabindex="-1"></a>n_cart_sq <span class="ot">&lt;-</span> <span class="fu">cartogram_cont</span>(nottingham, <span class="st">&quot;u_sq&quot;</span>, <span class="at">itermax=</span><span class="dv">10</span>)</span>
+<span id="cb446-6"><a href="classification-and-alternative-representations.html#cb446-6" tabindex="-1"></a>n_cart_ex <span class="ot">&lt;-</span> <span class="fu">cartogram_cont</span>(nottingham, <span class="st">&quot;u_exp&quot;</span>, <span class="at">itermax=</span><span class="dv">10</span>)</span>
+<span id="cb446-7"><a href="classification-and-alternative-representations.html#cb446-7" tabindex="-1"></a><span class="co"># create plots</span></span>
+<span id="cb446-8"><a href="classification-and-alternative-representations.html#cb446-8" tabindex="-1"></a>p3 <span class="ot">=</span> </span>
+<span id="cb446-9"><a href="classification-and-alternative-representations.html#cb446-9" tabindex="-1"></a>  <span class="fu">ggplot</span>(n_cart_sq)<span class="sc">+</span></span>
+<span id="cb446-10"><a href="classification-and-alternative-representations.html#cb446-10" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> u_sq)) <span class="sc">+</span></span>
+<span id="cb446-11"><a href="classification-and-alternative-representations.html#cb446-11" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>() <span class="sc">+</span></span>
+<span id="cb446-12"><a href="classification-and-alternative-representations.html#cb446-12" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() </span>
+<span id="cb446-13"><a href="classification-and-alternative-representations.html#cb446-13" tabindex="-1"></a>p4 <span class="ot">=</span> </span>
+<span id="cb446-14"><a href="classification-and-alternative-representations.html#cb446-14" tabindex="-1"></a>  <span class="fu">ggplot</span>(n_cart_ex)<span class="sc">+</span></span>
+<span id="cb446-15"><a href="classification-and-alternative-representations.html#cb446-15" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> u_exp))<span class="sc">+</span></span>
+<span id="cb446-16"><a href="classification-and-alternative-representations.html#cb446-16" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>() <span class="sc">+</span></span>
+<span id="cb446-17"><a href="classification-and-alternative-representations.html#cb446-17" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() </span>
+<span id="cb446-18"><a href="classification-and-alternative-representations.html#cb446-18" tabindex="-1"></a>  <span class="co"># plot with original</span></span>
+<span id="cb446-19"><a href="classification-and-alternative-representations.html#cb446-19" tabindex="-1"></a><span class="fu">plot_grid</span>(p1, p2, p3, p4, <span class="at">ncol =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:cart5"></span>
+<img src="_main_files/figure-html/cart5-1.png" alt="Alternative representations of the Unemployment rates in Nottingham using rescaled data with cartograms." width="672" />
+<p class="caption">
+Figure 7.10: Alternative representations of the Unemployment rates in Nottingham using rescaled data with cartograms.
+</p>
+</div>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>Cartograms break the link between the mapped size of the reporting units on the map, and their actual physical size in reality;</li>
+<li>Areas (units) are rescaled areas according to some attribute, whilst seeking to preserve as much of the topology as possible (i.e. the spatial relationships between units);</li>
+<li>3 types of cartogram were illustrated below - Contiguous, Non-contiguous and Dorling;</li>
+<li>The critical assumption in the use of cartograms is that the original units have some sort of meaning and / or are familiar to the viewer.</li>
+</ul>
+</div>
+<div id="hexagonal-binning-and-tile-maps" class="section level3 hasAnchor" number="7.2.4">
+<h3><span class="header-section-number">7.2.4</span> Hexagonal binning and Tile maps<a href="classification-and-alternative-representations.html#hexagonal-binning-and-tile-maps" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>A further solution is to use equal area tile maps - an equal area cartogram - giving equal space to all map areas and making them all equally visible. Commonly used tiles shapes include squares and hexagons, which are shaded in the same way as a normal choropleth. The <code>geogrid</code> package provides functions to do this.</p>
+<p>First an initial grid is established of <span class="math inline">\(n\)</span> grid cells, where <span class="math inline">\(n\)</span> is the number of polygons in the input data. The arrangement of these mimics the coverage of the input data:</p>
+<div class="sourceCode" id="cb447"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb447-1"><a href="classification-and-alternative-representations.html#cb447-1" tabindex="-1"></a><span class="co"># create hex grid</span></span>
+<span id="cb447-2"><a href="classification-and-alternative-representations.html#cb447-2" tabindex="-1"></a>hg <span class="ot">=</span> <span class="fu">calculate_grid</span>(nottingham, <span class="at">learning_rate =</span> <span class="fl">0.05</span>, </span>
+<span id="cb447-3"><a href="classification-and-alternative-representations.html#cb447-3" tabindex="-1"></a>                    <span class="at">grid_type =</span> <span class="st">&quot;hexagonal&quot;</span>, <span class="at">verbose =</span> F)</span>
+<span id="cb447-4"><a href="classification-and-alternative-representations.html#cb447-4" tabindex="-1"></a><span class="co"># extract the spatial objects</span></span>
+<span id="cb447-5"><a href="classification-and-alternative-representations.html#cb447-5" tabindex="-1"></a>hg_points <span class="ot">=</span> <span class="fu">st_as_sf</span>(hg[[<span class="dv">1</span>]])</span>
+<span id="cb447-6"><a href="classification-and-alternative-representations.html#cb447-6" tabindex="-1"></a>hg_polys <span class="ot">=</span> <span class="fu">st_as_sf</span>(hg[[<span class="dv">2</span>]])</span></code></pre></div>
+<p>The spatial properties of the result can be compared with the input as in the figure below:</p>
+<div class="sourceCode" id="cb448"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb448-1"><a href="classification-and-alternative-representations.html#cb448-1" tabindex="-1"></a>p_orig <span class="ot">=</span> </span>
+<span id="cb448-2"><a href="classification-and-alternative-representations.html#cb448-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(hg_polys) <span class="sc">+</span> </span>
+<span id="cb448-3"><a href="classification-and-alternative-representations.html#cb448-3" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">col =</span> <span class="st">&quot;black&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb448-4"><a href="classification-and-alternative-representations.html#cb448-4" tabindex="-1"></a>  <span class="fu">theme_map</span>()</span>
+<span id="cb448-5"><a href="classification-and-alternative-representations.html#cb448-5" tabindex="-1"></a>p_hex <span class="ot">=</span> </span>
+<span id="cb448-6"><a href="classification-and-alternative-representations.html#cb448-6" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">data =</span> nottingham) <span class="sc">+</span> </span>
+<span id="cb448-7"><a href="classification-and-alternative-representations.html#cb448-7" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">col =</span> <span class="st">&quot;darkgrey&quot;</span>, <span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">lwd =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb448-8"><a href="classification-and-alternative-representations.html#cb448-8" tabindex="-1"></a>  <span class="fu">theme_map</span>()</span>
+<span id="cb448-9"><a href="classification-and-alternative-representations.html#cb448-9" tabindex="-1"></a><span class="fu">plot_grid</span>(p_orig, p_hex)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:bin2"></span>
+<img src="_main_files/figure-html/bin2-1.png" alt="Hexbins for the Nottingham LSOAs." width="672" />
+<p class="caption">
+Figure 7.11: Hexbins for the Nottingham LSOAs.
+</p>
+</div>
+<p>Then each of the original area / polygons is allocated to the nearest grid. This requires a combinatorial optimization routine to assign each original area to a new grid cell, in such a way that the distances between the old and new locations are minimised across all locations using Kuhn’s <em>Hungarian method</em> (Kuhn, 1955). This can take time to solve:</p>
+<div class="sourceCode" id="cb449"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb449-1"><a href="classification-and-alternative-representations.html#cb449-1" tabindex="-1"></a><span class="co"># assign data to hex</span></span>
+<span id="cb449-2"><a href="classification-and-alternative-representations.html#cb449-2" tabindex="-1"></a>hg <span class="ot">=</span> <span class="fu">assign_polygons</span>(nottingham, hg)</span></code></pre></div>
+<p>And of course the same can be done to create a square grid, again this takes time:</p>
+<div class="sourceCode" id="cb450"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb450-1"><a href="classification-and-alternative-representations.html#cb450-1" tabindex="-1"></a><span class="co"># create square grid and assign data</span></span>
+<span id="cb450-2"><a href="classification-and-alternative-representations.html#cb450-2" tabindex="-1"></a>sg <span class="ot">=</span> <span class="fu">calculate_grid</span>(nottingham, <span class="at">learning_rate =</span> <span class="fl">0.05</span>, </span>
+<span id="cb450-3"><a href="classification-and-alternative-representations.html#cb450-3" tabindex="-1"></a>                    <span class="at">grid_type =</span> <span class="st">&quot;regular&quot;</span>, <span class="at">verbose =</span> F)</span>
+<span id="cb450-4"><a href="classification-and-alternative-representations.html#cb450-4" tabindex="-1"></a>sg <span class="ot">=</span> <span class="fu">assign_polygons</span>(nottingham, sg)</span></code></pre></div>
+<p>And then the results can be plotted:</p>
+<div class="sourceCode" id="cb451"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb451-1"><a href="classification-and-alternative-representations.html#cb451-1" tabindex="-1"></a>p1 <span class="ot">=</span> </span>
+<span id="cb451-2"><a href="classification-and-alternative-representations.html#cb451-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(nottingham) <span class="sc">+</span></span>
+<span id="cb451-3"><a href="classification-and-alternative-representations.html#cb451-3" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> unemployed)) <span class="sc">+</span></span>
+<span id="cb451-4"><a href="classification-and-alternative-representations.html#cb451-4" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>(<span class="at">name =</span> <span class="st">&quot;Original&quot;</span>) <span class="sc">+</span></span>
+<span id="cb451-5"><a href="classification-and-alternative-representations.html#cb451-5" tabindex="-1"></a>  <span class="fu">theme_map</span>() </span>
+<span id="cb451-6"><a href="classification-and-alternative-representations.html#cb451-6" tabindex="-1"></a>p2 <span class="ot">=</span> </span>
+<span id="cb451-7"><a href="classification-and-alternative-representations.html#cb451-7" tabindex="-1"></a>  <span class="fu">ggplot</span>(hg) <span class="sc">+</span> </span>
+<span id="cb451-8"><a href="classification-and-alternative-representations.html#cb451-8" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> unemployed)) <span class="sc">+</span></span>
+<span id="cb451-9"><a href="classification-and-alternative-representations.html#cb451-9" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>(<span class="at">name =</span> <span class="st">&quot;Hexagon bins&quot;</span>) <span class="sc">+</span></span>
+<span id="cb451-10"><a href="classification-and-alternative-representations.html#cb451-10" tabindex="-1"></a>  <span class="fu">theme_map</span>()</span>
+<span id="cb451-11"><a href="classification-and-alternative-representations.html#cb451-11" tabindex="-1"></a>p3 <span class="ot">=</span> </span>
+<span id="cb451-12"><a href="classification-and-alternative-representations.html#cb451-12" tabindex="-1"></a>  <span class="fu">ggplot</span>(sg) <span class="sc">+</span> </span>
+<span id="cb451-13"><a href="classification-and-alternative-representations.html#cb451-13" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> unemployed)) <span class="sc">+</span></span>
+<span id="cb451-14"><a href="classification-and-alternative-representations.html#cb451-14" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>(<span class="at">name =</span> <span class="st">&quot;Square bins&quot;</span>) <span class="sc">+</span></span>
+<span id="cb451-15"><a href="classification-and-alternative-representations.html#cb451-15" tabindex="-1"></a>  <span class="fu">theme_map</span>()</span>
+<span id="cb451-16"><a href="classification-and-alternative-representations.html#cb451-16" tabindex="-1"></a><span class="fu">plot_grid</span>(p1, p2, p3, <span class="at">ncol =</span> <span class="dv">3</span>)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:bin3"></span>
+<img src="_main_files/figure-html/bin3-1.png" alt="Alternative representations of the Unemployment rates in Nottingham using rescaled data with regular bins." width="960" />
+<p class="caption">
+Figure 7.12: Alternative representations of the Unemployment rates in Nottingham using rescaled data with regular bins.
+</p>
+</div>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>Cartograms can suffer from distortion problems which over or under emphasise the differences between values at different locations;</li>
+<li>Such mis-representations can be overcome by presenting the original map always alongside the cartogram, by carefully rescaling the attribute value that is being mapped or by using equal area tile maps, which use heuristic searches to allocate each original area to a tile.</li>
+</ul>
+</div>
+<div id="references-2" class="section level3 hasAnchor" number="7.2.5">
+<h3><span class="header-section-number">7.2.5</span> References<a href="classification-and-alternative-representations.html#references-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Comber Lex and Chris Brunsdon (2020). Geographical Data Science and Spatial Data Analysis: and Introduction in R, Sage, ISBN: 978-1526449351 (December 2020)</p>
+<p>Dorling, Daniel. 1996. “Area Cartograms: Their Use and Creation.” Concepts and Techniques in Modern Geography (CATMOG).</p>
+<p>Dougenik, James A, Nicholas R Chrisman, and Duane R Niemeyer. 1985. “An Algorithm to Construct Continuous Area Cartograms.” The Professional Geographer 37 (1): 75–81.</p>
+<p>Gastner, Michael T, and Mark EJ Newman. 2004. “Diffusion-Based Method for Producing Density-Equalizing Maps.” Proceedings of the National Academy of Sciences 101 (20): 7499–7504.</p>
+<p>Kuhn, Harold W. 1955. “The Hungarian Method for the Assignment Problem.” Naval Research Logistics Quarterly 2 (1-2): 83–97.</p>
+<p>Harris, Richard, Martin Charlton, and Chris Brunsdon. 2018. “Mapping the Changing Residential Geography of White British Secondary School Children in England Using Visually Balanced Cartograms and Hexograms.” Journal of Maps 14 (1): 65–72.</p>
+<p>Nusrat, Sabrina, and Stephen Kobourov. 2016. “The State of the Art in Cartograms.” In Computer Graphics Forum, 35:619–42. 3. Wiley Online Library.</p>
+<p>Olson, Judy M. 1976. “Noncontiguous Area Cartograms.” The Professional Geographer 28 (4): 371–80.</p>
+<p>Tobler, Waldo. 2004. “Thirty Five Years of Computer Cartograms.” ANNALS of the Association of American Geographers 94 (1): 58–73.</p>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="spatial-varying-coefficient-models.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="creating-documents-in-rmarkdown.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["_main.pdf", "_main.epub"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
