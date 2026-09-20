@@ -1,13 +1,9 @@
-Welcome! 
+# GEOG3195 Spatial Analysis and GeoComputation 
 
-This is a minimal example of a book based on R Markdown and **bookdown** (https://github.com/rstudio/bookdown). 
+Alexis Comber<sup>1*</sup> 
+<sup>1</sup> School of Geography, University of Leeds, Leeds, UK.\
+<sup>*</sup> contact author: a.comber@leeds.ac.uk
 
-This template provides a skeleton file structure that you can edit to create your book. 
+This is the online practical document for GEOG3195 Spatial Analysis and GeoComputation taught by Lex Comber at the University of Leeds!
 
-The contents inside the .Rmd files provide some pointers to help you get started, but feel free to also delete the content in each file and start fresh.
-
-Additional resources:
-
-The **bookdown** book: https://bookdown.org/yihui/bookdown/
-
-The **bookdown** package reference site: https://pkgs.rstudio.com/bookdown
+Data and R scripts for each unit are provide via the module VLE. 
