@@ -7,8 +7,8 @@
 
 # Bookdown build folders
 _book/
-_main_cache/
-_main_files/
+/_main_cache/
+/_main_files/
 
 # Other generated/cache files
 rosm.cache/
