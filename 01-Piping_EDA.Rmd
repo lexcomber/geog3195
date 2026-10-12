@@ -2,6 +2,8 @@
 
 ## Overview{-}
 
+You will be working with Brexit vote spatial data over Local Authority Districts dataset in `geojson` format (`data_gb.geojson`). You will need to download this to your working folder from the VLE / Minerva.
+
 This session has 4 components:
 
 1. Data, data summaries and generic plotting in R (this should be refresher!)
@@ -1023,6 +1025,6 @@ kable_styling(ktab)
 ```
 
 ```{r echo = F, eval = F}
-knitr::purl("01-Piping_EDA.Rmd", output = "week2.R", documentation = 0)
+knitr::purl("01-Piping_EDA.Rmd", output = "Unit2.R", documentation = 0)
 bookdown::publish_book(name = "GEOG3195", account = "lexcomber")
 ```

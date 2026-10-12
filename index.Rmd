@@ -604,7 +604,7 @@ There are few links in the list below that you may find useful:
 
 
 ```{r echo = F, eval = F}
-knitr::purl("index.Rmd", output = "week1.R", documentation = 0)
+knitr::purl("index.Rmd", output = "Unit1.R", documentation = 0)
 bookdown::publish_book(name = "GEOG3195", account = "lexcomber")
 ```
 

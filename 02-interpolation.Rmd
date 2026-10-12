@@ -589,7 +589,7 @@ ggplot(params, aes(x = nmax_vals, y = RMSE, colour = factor(idp_vals))) + geom_p
 ```
 
 ```{r echo = F, eval = F}
-knitr::purl("02-Interpolation.Rmd", output = "week3.R", documentation = 0)
+knitr::purl("02-Interpolation.Rmd", output = "Unit3.R", documentation = 0)
 bookdown::publish_book(name = "GEOG3195", account = "lexcomber")
 ```
 
