@@ -168,3 +168,7 @@ creating-documents-in-rmarkdown
 resources
 tasks
 tab:unnamed-chunk-31
+fig:unnamed-chunk-9
+tab:unnamed-chunk-23
+tab:unnamed-chunk-26
+tab:unnamed-chunk-32

@@ -3,6 +3,8 @@
 
 ## Overview {-}
 
+You will be working with some county level data from the state of Georgia, USA. This will be downloaded on the fly. You also be working with point data (`place_survey_pts.gpkg`) and you will need to download this to your working folder from the VLE / Minerva.
+
 The main part of this practical shows how create models for understanding and for prediction. Confusingly these are both referred to as *inference* in the literature and so later in the worksheet there is small section distinguishing between these. 
 
 After this introduction the practical has the following parts:

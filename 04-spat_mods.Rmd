@@ -2,9 +2,10 @@
 
 ## Overview{-}
 
-This practical focusses on cluster analysis (i.e. determining whether your data are are spatially clustered, also known as spatially autocorrelated) and autoregressive models (optional). These are given a comprehensive treatment (equations references etc).
 
-Essentially the practical describes how to undertake cluster analyses using different methods for statistically testing for the similarity of nearby observations (i.e. spatial autocorrelation). It extends the practicals from GEOG2150 to show other techniques and develops ideas of how we measure `nearby`.
+This practical focusses on cluster analysis (i.e. determining whether your data are are spatially clustered, also known as spatially autocorrelated) and autoregressive models (optional). These are given a comprehensive treatment (equations references etc). You will be working with Brexit vote spatial data over Local Authority Districts (again!) in `geojson` format (`data_gb.geojson`). You will need to download this to your working folder from the VLE / Minerva.
+
+The practical describes how to undertake cluster analyses using different methods for statistically testing for the similarity of nearby observations (i.e. spatial autocorrelation). It extends the practicals from GEOG2150 to show other techniques and develops ideas of how we measure `nearby`.
 
 Autocorrelation is the similarity between attribute values of nearby observations when examined over the entire study region. Measures spatial autocorrelation describe the degree of attribute similarity and essentially allow Tobler's Law to be evaluated.
 
