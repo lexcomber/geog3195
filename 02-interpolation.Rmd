@@ -2,7 +2,7 @@
 
 ## Overview {-}
 
-The overarching theme of this practical is *Spatial Interpolation*. You will be working with some Leeds house price data (`point_data.RData`). You will need to download this file to your working folder from the VLE / Minerva. Other data will be downloaded on the fly.
+The overarching theme of this practical is *Spatial Interpolation*. You will be working with some Leeds house price data (`point_data.RData`). You will need to download this from the VLE / Minerva and move to your working folder. Other data will be downloaded on the fly.
 
 As described in this week's lecture spatial interpolation is the process of transforming spatial data from one geographical framework to another. This is not the same as re-projection (for example from an OSGB projection in metres to a WGS84 projection in degrees), rather is the reallocation of data to different spatial units. 
 

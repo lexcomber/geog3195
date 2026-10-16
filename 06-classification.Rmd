@@ -2,6 +2,12 @@
 
 This practical has 2 parts: the main practical on geodemographic classification and an optional section on alternative representations with cartograms. You are expected to undertake the Classification practical and the other part on Cartograms is there for you to play with if you are interested. 
 
+You will need to download three datasets from the VLE / Minerva and move them to your working folder:
+
+- `AllThemesTablesSA.csv`
+- `irish_small_areas.gpkg`
+- `nottingham.gpkg`
+
 ## Classification
 
 ### Overview 

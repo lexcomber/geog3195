@@ -2,7 +2,7 @@
 
 ## Overview{-}
 
-This practical extends the regression models that you constructed in Week 4 to the spatial (special?) case, and particularly considers Spatially Varying Coefficient (SVC) models. 
+This practical extends the regression models that you constructed in Week 4 to the spatial (special?) case, and particularly considers Spatially Varying Coefficient (SVC) models. You will be working with some county level data from the state of Georgia, USA. This will be downloaded on the fly.
 
 A coefficient, $\beta$, in a regression model describe the relationship between a driver ($x$, predictor variable) and an outcome ($y$ the target variable). It describes how $y$ changes with changes in $x$. When examined locally, that relationship may vary with location for a number of reasons: 
 
