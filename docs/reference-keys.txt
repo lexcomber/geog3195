@@ -184,3 +184,16 @@ fig:unnamed-chunk-10
 fig:unnamed-chunk-13
 fig:unnamed-chunk-19
 fig:unnamed-chunk-22
+getting-data-from-apis
+overview-8
+packages-and-data
+the-police-api
+getting-and-mapping-crime-data
+getting-and-mapping-more-crime-data
+getting-and-mapping-lots-of-crime-data
+getting-and-mapping-more-crime-data-1
+getting-and-mapping-even-more-crime-data
+and-afterwards
+the-nomis-api
+creating-a-townsend-index-of-deprivation
+linking-to-crime-data

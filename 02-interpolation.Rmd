@@ -233,17 +233,17 @@ st_crs(mask_sf) = st_crs(mask_sf)
 
 Now the aim in the Areal Interpolation is to transform House counts over *Source Zones* (`sz_sf`) to House counts over *Target Zones* (`tz_sf`). The data are mapped below using the `HSE_UNITS` (number of housing units - residential properties) in the source zone object (`sz_sf`) over census tracts in New Haven, Connecticut, USA. The aim is to  generate estimates over a 500m grid. The map below shows Target and Source Zones using the `plot_grid` from the `cowplot` package to combined them:
 ```{r, fig.cap = "Source zones (left) and Target zones (right)."}
-p1 = 
+p_sz = 
   ggplot(sz_sf) + 
   geom_sf(aes(fill = HSE_UNITS)) +
   scale_fill_distiller(palette = "YlGnBu", name = "House\nCount") +
   theme(axis.text=element_blank(), axis.ticks=element_blank(), 
         legend.position = c(0.2, 0.3))
-p2 = 
+p_tz = 
   ggplot(tz_sf) + 
   geom_sf(fill = NA, col = "black", lwd = 0.4) +
   theme(axis.text=element_blank(), axis.ticks=element_blank()) 
-plot_grid(p1,p2)
+plot_grid(p_sz,p_tz)
 ```
 
 The best known and most widely used areal interpolation approach is areal weighting [@goodchild1980areal]. This allocates the source zone attributes proportionately to the target zones based on the **proportions of their intersecting areas**. Area weighting is inherently volume preserving – that is the source zone values are maintained if the target zone values within the source zone are summed – and is easily implemented using polygon overlay operations. 
@@ -279,7 +279,7 @@ aw_fig =
   scale_fill_distiller(palette = "YlGnBu", name = "House\nCount") +
   theme(axis.text=element_blank(), axis.ticks=element_blank(), 
         legend.position = c(0.2, 0.3))
-plot_grid(p1, aw_fig)
+plot_grid(p_sz, aw_fig)
 ```
 
 

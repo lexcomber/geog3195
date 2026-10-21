@@ -863,7 +863,7 @@ st_write(points_sf, "OSMshops.gpkg", delete_layer = T)
 
 The wiki for buildings is here https://wiki.openstreetmap.org/wiki/Key:building. The code below extracts the building data for Leeds and undertakes the same tasks but using a slightly different syntax. Again this **will** take some time to run depending on your internet speed!
   
-```{r osm2}
+```{r osm2, cache = T}
 # OSM building  data
 q <- opq ("Harrogate, UK") |> 
   add_osm_feature ("building") |> 
