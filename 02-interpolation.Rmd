@@ -27,9 +27,8 @@ library(sf)
 library(cowplot)
 library(tidyverse)
 library(ggspatial)
-library(spdep)
 library(MASS)
-library(gstat)
+library(gstat) 
 ```
 
 
@@ -176,7 +175,7 @@ The `type='regular'` argument  generate a regular grid of points covering the LS
 Next, the IDW estimate is created from the `hp` data using the `idw` function. This requires the model to be specified (here the formula is `price ~ 1`). The parameter `idp` (interpolation distance parameter) here is set to 1.
 
 ```{r, message=F, warning=F}
-idw.est <- idw(formula = price~1, locations = hp, 
+idw.est <- ?idw(formula = price~1, locations = hp, 
                newdata = s.grid, idp = 1.0)
 ```
 
