@@ -56,13 +56,14 @@ if (length(not_installed) > 1) {
 library(sf)         # for spatial data
 library(tidyverse)  # for data wrangling & mapping (ggplot2)
 library(readxl)     # for loading Excel data
-library(rgl)        # for 3d plotting 
-## NB If you have a MAc you will need to install XQuartz for the rgl package 
-# - see https://www.xquartz.org
 library(car)        # for some stats tools
 library(MASS)       # for robust regression
 library(readxl)     # for loading remote Excel data
 library(cowplot)    # for combining plots
+## OPTIONAL ###
+library(rgl)        # for 3d plotting 
+## NB If you have a MAc you will need to install XQuartz for the rgl package 
+# - see https://www.xquartz.org
 ```
 
 
