@@ -693,6 +693,7 @@ The function below takes three inputs:
 - `x` an `sf` object with the GWR coefficients
 - `var_name` the name of a variable in the GWR output
 - `vr_name_TV` the name of the t-values for the variable in the GWR output
+- notice the need to specify the `.data[[var_name]]` in the mapping aesthetics!
 
 ```{r, eval = F}
 my_map_signif_coefs_func = function(x, var_name, var_name_TV) {
@@ -702,7 +703,7 @@ my_map_signif_coefs_func = function(x, var_name, var_name_TV) {
   # map the counties
   p_out = 
     ggplot(x) +
-    geom_sf(aes(fill = PctBach), col = NA) +
+    geom_sf(aes(fill = .data[[var_name]]), col = NA) +
     scale_fill_gradient2(low = "red", high = "blue") +
     theme_minimal() +
     # now add the tvalues layer
@@ -710,10 +711,6 @@ my_map_signif_coefs_func = function(x, var_name, var_name_TV) {
   # return the output
   return(p_out)
 }
-```
-Test it!
-
-```{r, eval = F}
 my_map_signif_coefs_func(x = gwr_sf, var_name = "PctFB", var_name_TV = "PctFB_TV")
 my_map_signif_coefs_func(x = mgwr_sf, var_name = "PctFB", var_name_TV = "PctBach_TV")
 ```

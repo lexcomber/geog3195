@@ -23,7 +23,7 @@
 <meta name="author" content="Lex Comber" />
 
 
-<meta name="date" content="2026-10-16" />
+<meta name="date" content="2026-11-18" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -485,7 +485,7 @@ y = \beta_{0_(u_i, v_i)} + \sum_{m}^{k=1}\beta_{k}x_{ik_{(u_i, v_i)}} + \epsilon
 <pre><code>##    ***********************************************************************
 ##    *                       Package   GWmodel                             *
 ##    ***********************************************************************
-##    Program starts at: 2026-10-16 13:41:51.771343 
+##    Program starts at: 2026-11-18 11:19:31.653794 
 ##    Call:
 ##    gwr.basic(formula = MedInc ~ PctBach + PctEld + PctFB, data = georgia, 
 ##     bw = bw, adaptive = T)
@@ -551,7 +551,7 @@ y = \beta_{0_(u_i, v_i)} + \sum_{m}^{k=1}\beta_{k}x_{ik_{(u_i, v_i)}} + \epsilon
 ##    Adjusted R-square value:  0.7174802 
 ## 
 ##    ***********************************************************************
-##    Program stops at: 2026-10-16 13:41:51.781603</code></pre>
+##    Program stops at: 2026-11-18 11:19:31.669323</code></pre>
 <p>The printout gives quite a lot of information: the standard OLS regression model, a summary of the GWR coefficients and a whole range of fit measures (<span class="math inline">\(R^2\)</span>, AIC, BIC).</p>
 </div>
 <div id="evaluating-the-results" class="section level3 hasAnchor" number="6.2.3">
@@ -1158,6 +1158,7 @@ The function below takes three inputs:</p>
 <li><code>x</code> an <code>sf</code> object with the GWR coefficients</li>
 <li><code>var_name</code> the name of a variable in the GWR output</li>
 <li><code>vr_name_TV</code> the name of the t-values for the variable in the GWR output</li>
+<li>notice the need to specify the <code>.data[[var_name]]</code> in the mapping aesthetics!</li>
 </ul>
 <div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="spatial-varying-coefficient-models.html#cb59-1" tabindex="-1"></a>my_map_signif_coefs_func <span class="ot">=</span> <span class="cf">function</span>(x, var_name, var_name_TV) {</span>
 <span id="cb59-2"><a href="spatial-varying-coefficient-models.html#cb59-2" tabindex="-1"></a>  <span class="co"># determine which are significant</span></span>
@@ -1166,17 +1167,16 @@ The function below takes three inputs:</p>
 <span id="cb59-5"><a href="spatial-varying-coefficient-models.html#cb59-5" tabindex="-1"></a>  <span class="co"># map the counties</span></span>
 <span id="cb59-6"><a href="spatial-varying-coefficient-models.html#cb59-6" tabindex="-1"></a>  p_out <span class="ot">=</span> </span>
 <span id="cb59-7"><a href="spatial-varying-coefficient-models.html#cb59-7" tabindex="-1"></a>    <span class="fu">ggplot</span>(x) <span class="sc">+</span></span>
-<span id="cb59-8"><a href="spatial-varying-coefficient-models.html#cb59-8" tabindex="-1"></a>    <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> PctBach), <span class="at">col =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
+<span id="cb59-8"><a href="spatial-varying-coefficient-models.html#cb59-8" tabindex="-1"></a>    <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> .data[[var_name]]), <span class="at">col =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
 <span id="cb59-9"><a href="spatial-varying-coefficient-models.html#cb59-9" tabindex="-1"></a>    <span class="fu">scale_fill_gradient2</span>(<span class="at">low =</span> <span class="st">&quot;red&quot;</span>, <span class="at">high =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
 <span id="cb59-10"><a href="spatial-varying-coefficient-models.html#cb59-10" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
 <span id="cb59-11"><a href="spatial-varying-coefficient-models.html#cb59-11" tabindex="-1"></a>    <span class="co"># now add the tvalues layer</span></span>
 <span id="cb59-12"><a href="spatial-varying-coefficient-models.html#cb59-12" tabindex="-1"></a>    <span class="fu">geom_sf</span>(<span class="at">data =</span> x[signif,], <span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">col =</span> <span class="st">&quot;black&quot;</span>)</span>
 <span id="cb59-13"><a href="spatial-varying-coefficient-models.html#cb59-13" tabindex="-1"></a>  <span class="co"># return the output</span></span>
 <span id="cb59-14"><a href="spatial-varying-coefficient-models.html#cb59-14" tabindex="-1"></a>  <span class="fu">return</span>(p_out)</span>
-<span id="cb59-15"><a href="spatial-varying-coefficient-models.html#cb59-15" tabindex="-1"></a>}</span></code></pre></div>
-<p>Test it!</p>
-<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="spatial-varying-coefficient-models.html#cb60-1" tabindex="-1"></a><span class="fu">my_map_signif_coefs_func</span>(<span class="at">x =</span> gwr_sf, <span class="at">var_name =</span> <span class="st">&quot;PctFB&quot;</span>, <span class="at">var_name_TV =</span> <span class="st">&quot;PctFB_TV&quot;</span>)</span>
-<span id="cb60-2"><a href="spatial-varying-coefficient-models.html#cb60-2" tabindex="-1"></a><span class="fu">my_map_signif_coefs_func</span>(<span class="at">x =</span> mgwr_sf, <span class="at">var_name =</span> <span class="st">&quot;PctFB&quot;</span>, <span class="at">var_name_TV =</span> <span class="st">&quot;PctBach_TV&quot;</span>)</span></code></pre></div>
+<span id="cb59-15"><a href="spatial-varying-coefficient-models.html#cb59-15" tabindex="-1"></a>}</span>
+<span id="cb59-16"><a href="spatial-varying-coefficient-models.html#cb59-16" tabindex="-1"></a><span class="fu">my_map_signif_coefs_func</span>(<span class="at">x =</span> gwr_sf, <span class="at">var_name =</span> <span class="st">&quot;PctFB&quot;</span>, <span class="at">var_name_TV =</span> <span class="st">&quot;PctFB_TV&quot;</span>)</span>
+<span id="cb59-17"><a href="spatial-varying-coefficient-models.html#cb59-17" tabindex="-1"></a><span class="fu">my_map_signif_coefs_func</span>(<span class="at">x =</span> mgwr_sf, <span class="at">var_name =</span> <span class="st">&quot;PctFB&quot;</span>, <span class="at">var_name_TV =</span> <span class="st">&quot;PctBach_TV&quot;</span>)</span></code></pre></div>
 </div>
 <div id="references" class="section level2 unnumbered hasAnchor">
 <h2>References<a href="spatial-varying-coefficient-models.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h2>
