@@ -21,7 +21,7 @@ rename <- dplyr::rename
 plot_grid <- cowplot::plot_grid
 ```
 
-# Getting Started
+# Getting Started 
 
 This is an on-line book written to support the practicals for the GEOG3915 GeoComputation and Spatial Analysis module, delivered by Lex Comber of the School of Geography, from the University of Leeds. It draws from *An Introduction to Spatial Analysis and Mapping* by @brunsdon2018introduction (link  [here](https://us.sagepub.com/en-us/nam/an-introduction-to-r-for-spatial-analysis-and-mapping/book258267)) which provides a foundation for spatial data handling, GIS-related operations and spatial analysis in R. 
 
