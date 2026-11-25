@@ -100,7 +100,7 @@ for (i in 1:100) {
 ```
 
 We can now plot the sums of squares and the cluster sizes. These are useful diagnostics.
-```{r, fig.cap = "Fig1. A scree plot of WSS against cluster number."}
+```{r wss_plot, fig.cap = "A scree plot of WSS against cluster number."}
 plot(1:100, wss[1:100], type = "h", main = "Cluster Scree Plot", xlab = "Number of Clusters", 
     ylab = "Within Cluster Sum of Squares")
 ```
@@ -108,7 +108,7 @@ plot(1:100, wss[1:100], type = "h", main = "Cluster Scree Plot", xlab = "Number 
 This shows that as the number of clusters increases, the within cluster variance decreases - as you would expect - each group becomes more homogeneous as the number of groups increases.  
 
 Then the smallest cluster size against the total number of clusters can be plotted. This shows the tipping point at which cluster size starts to drop off - again indicating very small, niche and not very universal clusters:
-```{r, fig.cap = "Fig2. The smallest cluster size counts against cluster number."}
+```{r nclus_plot, fig.cap = "The smallest cluster size counts against cluster number."}
 plot(1:100, smallest.clus[1:100], type = "h", main = "Smallest Cluster Plot", 
     xlab = "Number of Clusters", ylab = "Smallest Cluster Size")
 ```
@@ -158,7 +158,7 @@ The above code used the `ddply` function in the `plyr` package. This is used to 
 
 The result can be explored visually. The `heatmap` function provides a visual representation of the z_scores variable. It generates a grid-based image of the values in the two dimensional array. However, noting that the column and row labels are both categorical, non-ordinal variables. Although he cluster numbers are integers, no significance is attached to their values - they merely serve as labels. This implies that both rows and columns may be permuted, without loss of generality. Doing this can sometimes aid the clarity of the visualisation. In this case, rows are re-ordered on the basis of applying a dendrogram ordering algorithm to the result of a hierarchical clustering algorithm, where the values along each row are treated as a vector. The clustering is carried out on the basis of Euclidean distance between the vectors using the complete linkage [3] approach, and the re-ordering is based on the reorder.dendrogram function provided in the R `stats` package provided in standard distributions of R. As noted, this re-ordering is applied to the rows, but following this, a re-ordering is also applied to the columns - this time treating the columns as vectors, and computing Euclidean distances between these.
 
-```{r fig.width = 9, fig.height = 9, fig.cap = "Fig3. The contribution of different variables to the geodemographic classification of Ireland."}
+```{r fig_heatmap, fig.width = 9, fig.height = 9, fig.cap = "The contribution of different variables to the geodemographic classification of Ireland."}
 heatmap(t(z_scores),
         scale = 'none',
         col=brewer.pal(6,'BrBG'),
@@ -212,7 +212,7 @@ head(sa)
 ```
 
 Finally the result can be mapped:
-```{r cache = T, fig.cap = "Fig4. A geodemographic classification of small areas in Ireland."}
+```{r fig_map, cache = T, fig.cap = "A geodemographic classification of small areas in Ireland."}
 ggplot(sa)+
   geom_sf(aes(fill = as.factor(Class)), col = NA) + 
   scale_fill_discrete(name = "Class") +
@@ -281,7 +281,7 @@ Load the data and then construct the plot:
 nottingham = st_read("nottingham.gpkg", quiet = T)
 ```
 
-```{r cache = T, fig.width = 10,  eval=TRUE, results='hide',message=FALSE, fig.cap = "LLTI over LSOAs in Nottingham." }
+```{r fig_nottm, cache = T, fig.width = 10,  eval=TRUE, results='hide',message=FALSE, fig.cap = "LLTI over LSOAs in Nottingham." }
 ggplot(nottingham) +
   geom_sf(aes(fill = llti)) +
   scale_fill_distiller(palette = "GnBu", 

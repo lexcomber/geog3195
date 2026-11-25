@@ -23,7 +23,7 @@
 <meta name="author" content="Lex Comber" />
 
 
-<meta name="date" content="2026-10-16" />
+<meta name="date" content="2026-11-25" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -419,20 +419,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>We can now plot the sums of squares and the cluster sizes. These are useful diagnostics.</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="classification-and-alternative-representations.html#cb19-1" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, wss[<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>], <span class="at">type =</span> <span class="st">&quot;h&quot;</span>, <span class="at">main =</span> <span class="st">&quot;Cluster Scree Plot&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;Number of Clusters&quot;</span>, </span>
 <span id="cb19-2"><a href="classification-and-alternative-representations.html#cb19-2" tabindex="-1"></a>    <span class="at">ylab =</span> <span class="st">&quot;Within Cluster Sum of Squares&quot;</span>)</span></code></pre></div>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-9"></span>
-<img src="_main_files/figure-html/unnamed-chunk-9-1.png" alt="Fig1. A scree plot of WSS against cluster number." width="672" />
+<div class="figure">
+<img src="_main_files/figure-html/wss_plot-1.png" alt="A scree plot of WSS against cluster number." width="672" />
 <p class="caption">
-Figure 7.1: Fig1. A scree plot of WSS against cluster number.
+(#fig:wss_plot)A scree plot of WSS against cluster number.
 </p>
 </div>
 <p>This shows that as the number of clusters increases, the within cluster variance decreases - as you would expect - each group becomes more homogeneous as the number of groups increases.</p>
 <p>Then the smallest cluster size against the total number of clusters can be plotted. This shows the tipping point at which cluster size starts to drop off - again indicating very small, niche and not very universal clusters:</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="classification-and-alternative-representations.html#cb20-1" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, smallest.clus[<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>], <span class="at">type =</span> <span class="st">&quot;h&quot;</span>, <span class="at">main =</span> <span class="st">&quot;Smallest Cluster Plot&quot;</span>, </span>
 <span id="cb20-2"><a href="classification-and-alternative-representations.html#cb20-2" tabindex="-1"></a>    <span class="at">xlab =</span> <span class="st">&quot;Number of Clusters&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Smallest Cluster Size&quot;</span>)</span></code></pre></div>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-10"></span>
-<img src="_main_files/figure-html/unnamed-chunk-10-1.png" alt="Fig2. The smallest cluster size counts against cluster number." width="672" />
+<div class="figure">
+<img src="_main_files/figure-html/nclus_plot-1.png" alt="The smallest cluster size counts against cluster number." width="672" />
 <p class="caption">
-Figure 7.2: Fig2. The smallest cluster size counts against cluster number.
+(#fig:nclus_plot)The smallest cluster size counts against cluster number.
 </p>
 </div>
 <p>From this it seems that the ‘very small cluster’ phenomenon starts to occur when the number of clusters exceeds 18 - assuming a very small cluster has fewer than 15 small areas.</p>
@@ -472,10 +472,10 @@ Figure 7.2: Fig2. The smallest cluster size counts against cluster number.
 <span id="cb23-4"><a href="classification-and-alternative-representations.html#cb23-4" tabindex="-1"></a>        <span class="at">breaks=</span><span class="fu">c</span>(<span class="sc">-</span><span class="fl">1e10</span>,<span class="sc">-</span><span class="dv">2</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="sc">+</span><span class="fl">1e10</span>),</span>
 <span id="cb23-5"><a href="classification-and-alternative-representations.html#cb23-5" tabindex="-1"></a>        <span class="at">xlab=</span><span class="st">&#39;Cluster Number&#39;</span>,</span>
 <span id="cb23-6"><a href="classification-and-alternative-representations.html#cb23-6" tabindex="-1"></a>        <span class="at">add.expr=</span><span class="fu">abline</span>(<span class="at">h=</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">40</span>)<span class="sc">+</span><span class="fl">0.5</span>,<span class="at">v=</span>(<span class="dv">0</span><span class="sc">:</span>n.clus)<span class="sc">+</span><span class="fl">0.5</span>,<span class="at">col=</span><span class="st">&#39;white&#39;</span>))</span></code></pre></div>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-13"></span>
-<img src="_main_files/figure-html/unnamed-chunk-13-1.png" alt="Fig3. The contribution of different variables to the geodemographic classification of Ireland." width="864" />
+<div class="figure">
+<img src="_main_files/figure-html/fig_heatmap-1.png" alt="The contribution of different variables to the geodemographic classification of Ireland." width="864" />
 <p class="caption">
-Figure 7.3: Fig3. The contribution of different variables to the geodemographic classification of Ireland.
+(#fig:fig_heatmap)The contribution of different variables to the geodemographic classification of Ireland.
 </p>
 </div>
 <p>The shading of the elements of the heatmap is based on the Brewer <code>BrBG</code> palette - see e.g. <a href="http://colorbrewer2.org" class="uri">http://colorbrewer2.org</a> - with category cut-off points at -2, -1, 0, 1, and 2. Thin white lines are added to the grid so that the divisions between individual rows and columns can be seen using the <code>abline</code> function. Finally, the dendrograms are actually drawn against the axes, so that hierarchical groups of the <span class="math inline">\(k\)</span>-means clusters, and the of variables can be seen. The former is helpful in providing a hierarchical higher-level grouping of clusters, based on their similarities. It is also a useful detector for ‘clusters of outliers’ as described earlier. For example, the cluster dendrogram in the figure above suggests that cluster 17 is unusual (note that hierarchically, it is split away into a one element group before any other divisions are encountered), and a similar observation can be made for cluster 15. This dendrogram for the variable also suggests that the ‘People per room’ is unusual as it is quite distinct from all others in terms of its representation across the clusters.</p>
@@ -568,10 +568,10 @@ Figure 7.3: Fig3. The contribution of different variables to the geodemographic 
 <span id="cb34-2"><a href="classification-and-alternative-representations.html#cb34-2" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> <span class="fu">as.factor</span>(Class)), <span class="at">col =</span> <span class="cn">NA</span>) <span class="sc">+</span> </span>
 <span id="cb34-3"><a href="classification-and-alternative-representations.html#cb34-3" tabindex="-1"></a>  <span class="fu">scale_fill_discrete</span>(<span class="at">name =</span> <span class="st">&quot;Class&quot;</span>) <span class="sc">+</span></span>
 <span id="cb34-4"><a href="classification-and-alternative-representations.html#cb34-4" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-19"></span>
-<img src="_main_files/figure-html/unnamed-chunk-19-1.png" alt="Fig4. A geodemographic classification of small areas in Ireland." width="672" />
+<div class="figure">
+<img src="_main_files/figure-html/fig_map-1.png" alt="A geodemographic classification of small areas in Ireland." width="672" />
 <p class="caption">
-Figure 7.4: Fig4. A geodemographic classification of small areas in Ireland.
+(#fig:fig_map)A geodemographic classification of small areas in Ireland.
 </p>
 </div>
 </div>
@@ -627,10 +627,10 @@ Figure 7.4: Fig4. A geodemographic classification of small areas in Ireland.
 <span id="cb37-3"><a href="classification-and-alternative-representations.html#cb37-3" tabindex="-1"></a>  <span class="fu">scale_fill_distiller</span>(<span class="at">palette =</span> <span class="st">&quot;GnBu&quot;</span>, </span>
 <span id="cb37-4"><a href="classification-and-alternative-representations.html#cb37-4" tabindex="-1"></a>                       <span class="at">name =</span> <span class="st">&quot;Limiting Long Term Illness&quot;</span>) <span class="sc">+</span></span>
 <span id="cb37-5"><a href="classification-and-alternative-representations.html#cb37-5" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-22"></span>
-<img src="_main_files/figure-html/unnamed-chunk-22-1.png" alt="LLTI over LSOAs in Nottingham." width="960" />
+<div class="figure">
+<img src="_main_files/figure-html/fig_nottm-1.png" alt="LLTI over LSOAs in Nottingham." width="960" />
 <p class="caption">
-Figure 7.5: LLTI over LSOAs in Nottingham.
+(#fig:fig_nottm)LLTI over LSOAs in Nottingham.
 </p>
 </div>
 <p>To overcome the invisibility problem, areal units can be distorted, converted, or even displayed in a different way but the problems of invisible dense regions of the map may persist, for example, if the data are converted to point symbols. <em>Cartograms</em> and <em>Hexbins</em> provide area based approaches for changing the geographic representation of areal reporting units whilst retaining some of the topology (adjacency between areas etc) and preserving all of the data values.</p>
@@ -661,7 +661,7 @@ Figure 7.5: LLTI over LSOAs in Nottingham.
 <div class="figure"><span style="display:block;" id="fig:origdata"></span>
 <img src="_main_files/figure-html/origdata-1.png" alt="Unemployment rates over LSOAs in Nottingham." width="672" />
 <p class="caption">
-Figure 7.6: Unemployment rates over LSOAs in Nottingham.
+Figure 7.1: Unemployment rates over LSOAs in Nottingham.
 </p>
 </div>
 <p>The <em>contiguous cartogram</em> is the classic example. It maintains the topology (connectivity) between adjacent areas, but re-sizes them according to the attribute value of interest. It tries to maintain the original shape of each area but inevitably re-sizing comes at a distortion cost. A <em>key assumption</em> is that the original areas have some sort of meaning or are familiar to the viewer. Indeed the distortions only have meaning if the viewer is familiar with the original representation and therefore able to interpret the distortion. In this case the <code>cartogram</code> package makes use of the rubber sheet distortion algorithm (Dougenik et al,1985) although the most widely used is probably the density equalizing cartogram (Gastner and Newman, 2004).</p>
@@ -677,7 +677,7 @@ Figure 7.6: Unemployment rates over LSOAs in Nottingham.
 <div class="figure"><span style="display:block;" id="fig:cart1"></span>
 <img src="_main_files/figure-html/cart1-1.png" alt="Nottingham unemployment rates using a contiguous cartogram." width="672" />
 <p class="caption">
-Figure 7.7: Nottingham unemployment rates using a contiguous cartogram.
+Figure 7.2: Nottingham unemployment rates using a contiguous cartogram.
 </p>
 </div>
 <p>The <em>non-contiguous cartogram</em> simply re-sizes areas according to the value of interest. Each area or polygon is displayed separately, with the loss of loss of adjacency and topology, although this can be inferred by including the original polygon outlines. The <code>cartogram</code> package code uses the non-contiguous area approach of Olson (1975). The advantages of this approach are that original <em>form</em> of the map is preserved and the need to be familiar with the original interpret the cartogram is reduced. But small areas with large values are simply are only distinguished from their lower valued neighbours by a reduction in the emphasis placed on those neighbours.</p>
@@ -692,7 +692,7 @@ Figure 7.7: Nottingham unemployment rates using a contiguous cartogram.
 <div class="figure"><span style="display:block;" id="fig:cart2"></span>
 <img src="_main_files/figure-html/cart2-1.png" alt="Nottingham unemployment rates using a non-contiguous cartogram." width="672" />
 <p class="caption">
-Figure 7.8: Nottingham unemployment rates using a non-contiguous cartogram.
+Figure 7.3: Nottingham unemployment rates using a non-contiguous cartogram.
 </p>
 </div>
 <p><em>Dorling</em> cartograms (Dorling, 1996) create non-overlapping symbols that are sized in proportion to the data values (proportional symbols). They use proportional circles, for which a spatial arrangement as close to the original is iteratively sought, preserving some of the topology. This also requires some playing with the <code>cartogram_dorling</code> function parameters to get a cartogram that preserves location.</p>
@@ -711,7 +711,7 @@ Figure 7.8: Nottingham unemployment rates using a non-contiguous cartogram.
 <div class="figure"><span style="display:block;" id="fig:cart3"></span>
 <img src="_main_files/figure-html/cart3-1.png" alt="Nottingham unemployment rates using a Dorling cartogram." width="672" />
 <p class="caption">
-Figure 7.9: Nottingham unemployment rates using a Dorling cartogram.
+Figure 7.4: Nottingham unemployment rates using a Dorling cartogram.
 </p>
 </div>
 <p>We can examine all of these together using the <code>plot_grid</code> function:</p>
@@ -741,7 +741,7 @@ Figure 7.9: Nottingham unemployment rates using a Dorling cartogram.
 <div class="figure"><span style="display:block;" id="fig:cart5"></span>
 <img src="_main_files/figure-html/cart5-1.png" alt="Alternative representations of the Unemployment rates in Nottingham using rescaled data with cartograms." width="672" />
 <p class="caption">
-Figure 7.10: Alternative representations of the Unemployment rates in Nottingham using rescaled data with cartograms.
+Figure 7.5: Alternative representations of the Unemployment rates in Nottingham using rescaled data with cartograms.
 </p>
 </div>
 <p><strong>Key Points:</strong></p>
@@ -775,7 +775,7 @@ Figure 7.10: Alternative representations of the Unemployment rates in Nottingham
 <div class="figure"><span style="display:block;" id="fig:bin2"></span>
 <img src="_main_files/figure-html/bin2-1.png" alt="Hexbins for the Nottingham LSOAs." width="672" />
 <p class="caption">
-Figure 7.11: Hexbins for the Nottingham LSOAs.
+Figure 7.6: Hexbins for the Nottingham LSOAs.
 </p>
 </div>
 <p>Then each of the original area / polygons is allocated to the nearest grid. This requires a combinatorial optimization routine to assign each original area to a new grid cell, in such a way that the distances between the old and new locations are minimised across all locations using Kuhn’s <em>Hungarian method</em> (Kuhn, 1955). This can take time to solve:</p>
@@ -806,7 +806,7 @@ Figure 7.11: Hexbins for the Nottingham LSOAs.
 <div class="figure"><span style="display:block;" id="fig:bin3"></span>
 <img src="_main_files/figure-html/bin3-1.png" alt="Alternative representations of the Unemployment rates in Nottingham using rescaled data with regular bins." width="960" />
 <p class="caption">
-Figure 7.12: Alternative representations of the Unemployment rates in Nottingham using rescaled data with regular bins.
+Figure 7.7: Alternative representations of the Unemployment rates in Nottingham using rescaled data with regular bins.
 </p>
 </div>
 <p><strong>Key Points:</strong></p>
